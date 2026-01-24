@@ -1,0 +1,81 @@
+Aplicación web para un supermercado que permita al cliente visualizar los productos en stock, que pueda pedir algún producto en caso de que no se encuentre en el supermercado ya sea porque está fuera de stock, porque no se vende actualmente en el supermercado .... Y que se le informe al propietario en caso de bajo stock en un producto. 
+
+ 
+
+La aplicación web deberá permitir cambiar los precios de manera temporal (ofertas) o permanente.  
+
+cabecera(+nav) y pie de pagina tienen que ser igual en todas las paginas.
+tipo diseño aplicado mvc(modelo vista controlador).
+verificaciones en la vista con js(javascript).
+roles: dueño, cliente y administrador(por ahora y poner contraseñas seguras)
+inicio de sesión con tokens y medidas de seguridad símil.
+certificado para utilizar https.
+
+mvc:
+	bd:
+	modelo:
+	controlador:
+		
+	vista:
+		index.php
+		paginas.php
+		images:
+			images.png/jpg
+		css:
+			styles.css
+		js:
+			JavaScript.js
+
+navegación pagina:
+	inicio: ofertas, lo mas comprado y presentarse ligeramente.
+	loggin: nombre usuario y contraseña, opción se me a olvidado contraseña y opción de sing in
+		sing in: pide correo electrónico(que se valide en el cliente y que se compruebe que existe en verdad en 		el servidor), usuario, contraseña(cifrada), verificación al correo
+	catalogo: catalogo, reservas y pedidos(el dueño lo tiene que ver todas las reservas)		
+	
+
+ficha de diseño:
+	logo: color azul y rojo.
+	colores para pagina rojo y azul.
+	
+	
+	
+base de datos tablas:
+
+	datos usuarios:
+		id(auto increment)
+		nombre
+		nombre usuario
+		contraseña(encriptado)
+		rol
+roles: dueño, cliente y administrador(por ahora y poner contraseñas seguras)
+
+	
+	datos productos:
+		id(auto increment)
+		stock
+		precio
+		peso_precio(boolean)
+		categoría
+		url_imagen
+		porcentaje_descuento	
+		
+	datos reservas:
+		id(auto increment)
+		fecha
+		id_producto(foreing key)
+		id_usuario(foreing key)
+	
+	datos pedidos:
+		id(auto increment)
+		fecha
+		mensaje(100 caracteres)
+		realizado(boolean)
+		id_usuario(foreing key)
+		
+		
+		
+		
+		
+		
+quiero una pagina de inicio, que los colores principales sean azul(el mas importante) y rojo,(el background del body quiero que sea blanco) donde tenga una cabecera con un logo, nombre SuperAdoracion, debajo un nav que tiene dos lista  con 2 elementos cada una y que una este centrada y otra en la derecha que seria para inicio sesion y registro, despues tendra un carrusel de imagenes con las ofertas, a continuación se mostraran 4 imagenes con los productos mas vendidos de la tienda, despues  una descripción de la tienda y sus origenes con dos imagenes las cuales representara a la tienda y otra a los dueños una imagen debe esta a la derecha y otra a la izquierda mas abajo, para acabar un footer totalmente azul, con el numero de telefono del dueño, el correo electronico, localización,y logo copyright, todo esto tendra que tener
+		

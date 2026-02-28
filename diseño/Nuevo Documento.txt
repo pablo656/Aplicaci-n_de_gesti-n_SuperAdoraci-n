@@ -44,7 +44,6 @@ base de datos tablas:
 	datos usuarios:
 		id(auto increment)
 		nombre
-		nombre usuario
 		contraseña(encriptado)
 		rol
 roles: dueño, cliente y administrador(por ahora y poner contraseñas seguras)

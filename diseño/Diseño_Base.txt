@@ -26,11 +26,15 @@ mvc:
 		js:
 			JavaScript.js
 
-navegación pagina:
+navegación pagina cliente:
 	inicio: ofertas, lo mas comprado y presentarse ligeramente.
 	loggin: nombre usuario y contraseña, opción se me a olvidado contraseña y opción de sing in
-		sing in: pide correo electrónico(que se valide en el cliente y que se compruebe que existe en verdad en 		el servidor), usuario, contraseña(cifrada), verificación al correo
-	catalogo: catalogo, reservas y pedidos(el dueño lo tiene que ver todas las reservas)		
+		sing in: pide correo electrónico(que se valide en el cliente y que se compruebe que existe en verdad en el servidor), usuario, contraseña(cifrada), verificación al correo
+	catalogo: catalogo, reservas(el dueño lo tiene que ver todas las reservas)	
+	pedidos:
+		mostrar todos los pedido: soy perro mu perro 		que lo zepa.
+	reservas(dueño y administrador):	
+	
 	
 
 ficha de diseño:
@@ -43,9 +47,11 @@ base de datos tablas:
 
 	datos usuarios:
 		id(auto increment)
+		email
 		nombre
 		contraseña(encriptado)
 		rol
+		ultimo_inicio_de_sesión
 roles: dueño, cliente y administrador(por ahora y poner contraseñas seguras)
 
 	
@@ -72,9 +78,7 @@ roles: dueño, cliente y administrador(por ahora y poner contraseñas seguras)
 		id_usuario(foreing key)
 		
 		
+las reservas después de 7 días desaparace
+las pedidos después de 30 días desaparace
 		
-		
-		
-		
-quiero una pagina de inicio, que los colores principales sean azul(el mas importante) y rojo,(el background del body quiero que sea blanco) donde tenga una cabecera con un logo, nombre SuperAdoracion, debajo un nav que tiene dos lista  con 2 elementos cada una y que una este centrada y otra en la derecha que seria para inicio sesion y registro, despues tendra un carrusel de imagenes con las ofertas, a continuación se mostraran 4 imagenes con los productos mas vendidos de la tienda, despues  una descripción de la tienda y sus origenes con dos imagenes las cuales representara a la tienda y otra a los dueños una imagen debe esta a la derecha y otra a la izquierda mas abajo, para acabar un footer totalmente azul, con el numero de telefono del dueño, el correo electronico, localización,y logo copyright, todo esto tendra que tener
 		

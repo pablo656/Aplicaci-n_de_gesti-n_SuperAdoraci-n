@@ -1,6 +1,6 @@
 <?php
     require_once __DIR__ . "/../db/db.php";
-    class model{
+    class model_userser{
         private $conn;
         public function __construct()
         {
@@ -11,17 +11,17 @@
             if (!$this->conn) {
                 return null;
             }
-            $sql = "SELECT * FROM usuarios WHERE nombre = ? AND contrasena = ?";
+            $sql = "SELECT * FROM usuarios WHERE nombre = ?";
             $stmt = $this->conn->prepare($sql);
             if ($stmt === false) {
                 return null;
             }
-            $stmt->bind_param("ss", $user, $password);
+            $stmt->bind_param("s", $user);
             if (!$stmt->execute()) {
                 return null;
             }
             $result = $stmt->get_result();
-            if ($result->num_rows > 0) {
+            if ($result->num_rows > 0 && password_verify($password, $result->fetch_assoc()['contrasena'])) {
                 return $result->fetch_assoc();
             } else {
                 return null;

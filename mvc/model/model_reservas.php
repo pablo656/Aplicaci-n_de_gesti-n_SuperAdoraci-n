@@ -13,7 +13,7 @@ class model_reservas{
         $sql = "SELECT * FROM reservas";
         $result = $this->conn->query($sql);
         if ($result->num_rows > 0) {
-            return $result->fetch_all(MYSQLI_ASSOC);
+            return $result->fetch_all();
         } else {
             return null;
         }
@@ -22,52 +22,100 @@ class model_reservas{
         if (!$this->conn) {
             return false;
         }
-        if (!$this->consultar_reserva($id_producto)) {
+        $this->conn->begin_transaction();
+
+        if (!$this->consultar_reserva($id_producto, $cantidad)) {
             return false;
         }
-        $sql = "INSERT INTO reservas (id_usuario, id_producto,$cantidad) VALUES (?, ?)";
+        $sql = "INSERT INTO reservas (id_usuario, id_producto,cantidad) VALUES (?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
         if ($stmt === false) {
             return false;
         }
-        $stmt->bind_param("ss", $id_usuario, $id_producto);
+        $stmt->bind_param("iii", $id_usuario, $id_producto, $cantidad);
+        $result = $stmt->execute();
+        $stmt->close();
+        return $result;
+
+    }
+
+    public function eliminar_reserva($id_reserva){
+        if (!$this->conn) {
+            return false;
+        }
+        if (!$this->agregar_stock($id_reserva)) {
+            return false;
+        }
+        $sql = "DELETE FROM reservas WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        if ($stmt === false) {
+            return false;
+        }
+        $stmt->bind_param("i", $id_reserva);
         $result = $stmt->execute();
         $stmt->close();
         return $result;
     }
-    private function consultar_reserva($id_producto){
+
+    public function eliminar_reserva_por_id_usuario($id_usuario){
+        if (!$this->conn) {
+            return false;
+        }
+        $sql = "DELETE FROM reservas WHERE id_usuario = ?";
+        $stmt = $this->conn->prepare($sql);
+        if ($stmt === false) {
+            return false;
+        }
+        $stmt->bind_param("ii", $id_usuario);
+        $result = $stmt->execute();
+        $stmt->close();
+        return $result;
+    }
+
+    //podría ser útil para mostrar las reservas de un usuario específico
+    public function mostrar_reservas_usuario($id_usuario){
         if (!$this->conn) {
             return null;
         }
-        $sql = "SELECT * FROM productos WHERE id_producto = ?";
+        $sql = "SELECT * FROM reservas WHERE id_usuario = ?";
         $stmt = $this->conn->prepare($sql);
         if ($stmt === false) {
             return null;
         }
-        $stmt->bind_param("s", $id_producto);
+        $stmt->bind_param("i", $id_usuario);
         if (!$stmt->execute()) {
             return null;
         }
         $result = $stmt->get_result();
         if ($result->num_rows > 0) {
-            
+            return $result->fetch_all();
         } else {
             return null;
         }
     }
-    public function eliminar_reserva($id_reserva){
+
+    //funciones de clase
+
+    private function consultar_reserva($id, $cantidad){
         if (!$this->conn) {
-            return false;
+            return null;
         }
-        $sql = "DELETE FROM reservas WHERE id_reserva = ?";
+        $sql = "SELECT * FROM productos WHERE id = ? and stock >= ?";
         $stmt = $this->conn->prepare($sql);
         if ($stmt === false) {
-            return false;
+            return null;
         }
-        $stmt->bind_param("s", $id_reserva);
-        $result = $stmt->execute();
-        $stmt->close();
-        return $result;
+        $stmt->bind_param("ss", $id, $cantidad);
+        if (!$stmt->execute()) {
+            return null;
+        }
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            return true;
+        } else {
+            return null;
+        }
     }
+
 }
 ?>

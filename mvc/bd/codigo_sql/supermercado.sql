@@ -56,3 +56,13 @@ CREATE TABLE pedidos (
     fecha       DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
 );
+
+CREATE TRIGGER trg_reserva_insert
+AFTER INSERT ON reservas
+FOR EACH ROW
+    UPDATE productos SET stock = stock - NEW.cantidad WHERE id = NEW.id_producto;
+
+CREATE TRIGGER trg_reserva_delete
+AFTER DELETE ON reservas
+FOR EACH ROW
+    UPDATE productos SET stock = stock + OLD.cantidad WHERE id = OLD.id_producto;

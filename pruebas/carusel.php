@@ -4,6 +4,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <title>Carrusel</title>
+    <link rel="stylesheet" href="/git_develover/mvc/vista/css/header_style.css">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -55,7 +56,9 @@
     </style>
 </head>
 <body>
-
+<?php
+    include '../mvc/vista/layerHeader.php';
+?>
 <div class="wrap" id="carousel">
     <ul class="track">
         <li class="slide"><img src="baby-londok-calotes-closeup-dry-leaves.jpg" alt="Lagarto"></li>
@@ -86,6 +89,8 @@
 
     update();
 </script>
-
+<?php
+    include '../mvc/vista/footer.html';
+?>
 </body>
 </html>

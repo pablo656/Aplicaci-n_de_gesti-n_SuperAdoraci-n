@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>Carrusel</title>
+    <link rel="stylesheet" href="/git_develover/mvc/vista/css/header_style.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        .wrap {
+            position: relative;
+            margin: 0 12px;
+            overflow: hidden;
+            border-radius: 8px;
+            margin: 20px ;
+        }
+
+        .track {
+            display: flex;
+            transition: transform .35s ease;
+            list-style: none;
+        }
+
+        .slide {
+            min-width: 33.333%;
+            padding: 4px;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            border-radius: 4px;
+            display: block;
+        }
+
+        .btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,.5);
+            color: #fff;
+            border: none;
+            padding: 8px 14px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .prev { left: 8px; }
+        .next { right: 8px; }
+
+        @media (max-width: 600px) {
+            .slide { min-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+<?php
+    include '../mvc/vista/layerHeader.php';
+?>
+<div class="wrap" id="carousel">
+    <ul class="track">
+        <li class="slide"><img src="baby-londok-calotes-closeup-dry-leaves.jpg" alt="Lagarto"></li>
+        <li class="slide"><img src="black-swan-cygnus-atratus-illustrated-by-elizabeth-gould.jpg" alt="Cisne"></li>
+        <li class="slide"><img src="closeup-shot-european-cat-with-camera-lens.jpg" alt="Gato"></li>
+        <li class="slide"><img src="black-swan-cygnus-atratus-illustrated-by-elizabeth-gould.jpg" alt="Cisne 2"></li>
+        <li class="slide"><img src="baby-londok-calotes-closeup-dry-leaves.jpg" alt="Lagarto 2"></li>
+    </ul>
+    <button class="btn prev">&#8249;</button>
+    <button class="btn next">&#8250;</button>
+</div>
+
+<script>
+    const track = document.querySelector('.track');
+    const total = track.children.length;
+    const prev = document.querySelector('.prev');
+    const next = document.querySelector('.next');
+    const PER_VIEW = 3;
+    const max = total - PER_VIEW;
+    let i = 0;
+
+    function update() {
+        track.style.transform = `translateX(-${i * (100 / PER_VIEW)}%)`;
+    }
+
+    prev.addEventListener('click', () => { i = i <= 0 ? max : i - 1; update(); });
+    next.addEventListener('click', () => { i = i >= max ? 0 : i + 1; update(); });
+
+    update();
+</script>
+<?php
+    include '../mvc/vista/footer.html';
+?>
+</body>
+</html>

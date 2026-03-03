@@ -1,6 +1,6 @@
 <?php
     require_once __DIR__ . "/../db/db.php";
-    class model_userser{
+    class model_user{
         private $conn;
         public function __construct()
         {

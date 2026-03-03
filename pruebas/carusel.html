@@ -1,0 +1,61 @@
+<html>
+
+<head>
+    <style>
+        .carousel {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .carousel ul {
+            display: flex;
+            list-style-type: none;
+            width: 100%;
+            /* Ancho total de 3 imágenes */
+            transition: transform 0.6s ease-in-out;
+            margin: 0;
+            padding: 0;
+            /*ajustar la altura con el tamaño de la imagen*/
+            height: 100%;
+        }
+
+        .carousel li {
+            width: 33.33%;
+            height: 100%;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="carousel">
+        <ul>
+            <li><img src="baby-londok-calotes-closeup-dry-leaves.jpg" alt="Imagen 1"></li>
+            <li><img src="baby-londok-calotes-closeup-dry-leaves.jpg" alt="Imagen 2"></li>
+            <li><img src="baby-londok-calotes-closeup-dry-leaves.jpg" alt="Imagen 3"></li>
+        </ul>
+    </div>
+    <script>
+        const carousel = document.querySelector('.carousel ul');
+        const images = document.querySelectorAll('.carousel img');
+        let currentIndex = 0;
+
+        function moveCarousel() {
+            carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+
+        // Ejemplo: botones para navegar
+        document.querySelector('.next').addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % images.length;
+            moveCarousel();
+        });
+
+        document.querySelector('.prev').addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            moveCarousel();
+        });   
+    </script>
+
+</body>
+
+</html>

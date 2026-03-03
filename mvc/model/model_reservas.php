@@ -22,7 +22,6 @@ class model_reservas{
         if (!$this->conn) {
             return false;
         }
-        $this->conn->begin_transaction();
 
         if (!$this->consultar_reserva($id_producto, $cantidad)) {
             return false;

@@ -1,0 +1,1 @@
+modificar sql para que el trigger solo sume cuando la reserva no a sido entregada

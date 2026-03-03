@@ -17,7 +17,7 @@ CREATE TABLE productos (
     nombre               VARCHAR(150) NOT NULL,
     stock                INT DEFAULT 0,
     precio               DECIMAL(10,2) NOT NULL,
-    precio_por_peso      INT DEFAULT 0,
+    precio_por_peso      bit DEFAULT 0,
     categoria            VARCHAR(80),
     url_imagen           VARCHAR(500) NOT NULL,
     porcentaje_descuento DECIMAL(5,2) DEFAULT 0.00
@@ -28,6 +28,7 @@ CREATE TABLE reservas (
     id          INT AUTO_INCREMENT PRIMARY KEY,
     id_producto INT NOT NULL,
     id_usuario  INT NOT NULL,
+    cantidad  INT NOT NULL,
     fecha       DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_producto) REFERENCES productos(id),
     FOREIGN KEY (id_usuario)  REFERENCES usuarios(id)

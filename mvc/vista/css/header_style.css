@@ -17,8 +17,14 @@ header img {
 nav {
     background: #1a1a2e;
     display: flex;
-    justify-content: center;
+    justify-content: space-between; /* Cambiado de center a space-between */
+    align-items: center;
     flex-wrap: wrap;
+}
+
+nav div {
+    display: flex;
+    align-items: center;
 }
 
 nav a {
@@ -57,6 +63,11 @@ footer {
 @media (max-width: 480px) {
     nav {
         flex-direction: column;
+    }
+
+    nav div {
+        width: 100%;
+        justify-content: center;
     }
 
     nav a {

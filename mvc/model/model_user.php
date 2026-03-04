@@ -2,8 +2,7 @@
     require_once __DIR__ . "/../bd/bd.php";
     class model_user{
         private $conn;
-        public function __construct()
-        {
+        public function __construct(){
             $base = new bd();
             $this->conn = $base->conectar();
         }
@@ -48,7 +47,7 @@
 
         }
 
-        public function comprobarusuario_crear($user, $email){
+        private function comprobarusuario_crear($user, $email){
             if (!$this->conn) {
                 return null;
             }

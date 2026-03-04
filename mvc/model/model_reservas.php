@@ -11,9 +11,20 @@ class model_reservas{
             return null;
         }
         $sql = "SELECT * FROM reservas";
-        $result = $this->conn->query($sql);
+        $stmt = $this->conn->prepare($sql);
+        $reservas = [];
+        if ($stmt === false) {
+            return null;
+        }
+        if (!$stmt->execute()) {
+            return null;
+        }
+        $result = $stmt->get_result();
         if ($result->num_rows > 0) {
-            return $result->fetch_all();
+            while ($row = $result->fetch_assoc()) {
+                $reservas[] = $row;
+            }
+            return $reservas;
         } else {
             return null;
         }
@@ -78,6 +89,7 @@ class model_reservas{
         }
         $sql = "SELECT * FROM reservas WHERE id_usuario = ?";
         $stmt = $this->conn->prepare($sql);
+        $reservas_usuario = [];
         if ($stmt === false) {
             return null;
         }
@@ -87,7 +99,10 @@ class model_reservas{
         }
         $result = $stmt->get_result();
         if ($result->num_rows > 0) {
-            return $result->fetch_all();
+            while ($row = $result->fetch_assoc()) {
+                $reservas_usuario[] = $row;
+            }
+            return $reservas_usuario;
         } else {
             return null;
         }

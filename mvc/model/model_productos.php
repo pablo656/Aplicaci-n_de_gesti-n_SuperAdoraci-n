@@ -16,7 +16,7 @@ class model_productos{
                 $productos[]=$row;
             }
         }else{
-            die("Error al obtener los productos");
+           return false;
         }
         return $productos; 
     }
@@ -37,6 +37,22 @@ class model_productos{
             }
         }
     }	
+
+    //Buscar producto por nombre
+    //IMPORTANTE!!!:Esta función se aplicara para un buscador el cual en el caso de escribir "pa" te devolvera pan,patata y todas las productos que empiecen por "pa"
+    function buscar_producto($nombre){
+        $stmt=$this->conn->prepare("SELECT * FROM productos WHERE nombre LIKE ? ORDER BY nombre");
+        $stmt->bind_param("s",$nombre);
+        if(!$stmt->execute()){
+            return false;
+        }
+        $resutado=$stmt->get_result();
+        $productos=[];
+        while($row=$resutado->fetch_assoc()){
+            $productos[]=$row;
+        }
+        return $productos;
+    }
     //Eliminar producto
     public function del_producto($id){
         $stmt=$this->conn->prepare("SELECT * FROM productos WHERE id=?");
@@ -139,6 +155,7 @@ class model_productos{
         }
        
     }
+    
 
 }
 ?>

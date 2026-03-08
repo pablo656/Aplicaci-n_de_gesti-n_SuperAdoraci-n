@@ -9,7 +9,11 @@
 </head>
 <body>
 <header>
-    <img src="imagenes/Logo.jpeg" alt="Logo">
+    <picture>
+        <source media="(max-width: 768px)" srcset="imagenes/prueba_tablet.jpeg">
+        <img src="imagenes/prueba.jpeg" alt="Logo">
+    </picture>
+    
 </header>
 
 <nav>

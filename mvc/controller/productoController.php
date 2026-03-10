@@ -7,15 +7,15 @@
         }
 
         public function mostrar_productos(){
-            $productos=$this->mostrar_productos();
-            //require "vista" 
+            $productos=$this->model->mostrar_productos();
+            require("../vista/catalogo.php");
         }
         function buscar_producto($nombre){
             $productos_buscar=$this->buscar_producto($nombre);
-            //Descomentar linea de abajo en acso de que se valla a realizar de manera simultanea
-            //$productos=$this->mostrar_productos();
+            //Descomentar linea de abajo en caso de que se valla a realizar de manera simultanea
+            //$productos=$this->model->mostrar_productos();
 
-            //require "vista" 
+            require("../vista/catalogo.php");
         }
         public function add_productos($nombre,$stock,$precio,$precio_por_peso,$categoria,$imagen,$porcentaje_descuento){
             $tiposPermitidos = ['image/jpeg', 'image/jpg', 'image/png'];
@@ -48,17 +48,17 @@
             }else if(!in_array($mime, $tiposPermitidos)){
                 $errores[]="Solo se permiten archivos jpeg, png y jpg";
             }
-            if(!empty($errores)){
+            if(empty($errores)){
                 $this->model->add_productos($nombre,$stock,$precio,$precio_por_peso,$categoria,$imagen,$porcentaje_descuento);
             }
             //Para mostrar $errores
-            //require "vista"
+            require("../vista/catalogo.php");
         }
         public function del_producto($id){
-            return $this->model->del_producto();
+            return $this->model->del_producto($id);
         }
         public function update_producto($id, $nombre=null, $stock=null, $precio=null, $precio_por_peso=null, $categoria=null, $imagen=null, $porcentaje_descuento=null){
-            return $this->update_producto($id, $nombre=null, $stock=null, $precio=null, $precio_por_peso=null, $categoria=null, $imagen=null, $porcentaje_descuento=null);
+            return $this->model->update_producto($id, $nombre=null, $stock=null, $precio=null, $precio_por_peso=null, $categoria=null, $imagen=null, $porcentaje_descuento=null);
         }
 
     }

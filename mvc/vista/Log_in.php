@@ -18,3 +18,5 @@
     <a href="#">Sing in</a>
 </form>
 <script src="js/verificacion_log_in.js"></script>
+</body>
+</html>

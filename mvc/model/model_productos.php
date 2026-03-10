@@ -28,7 +28,7 @@ class model_productos{
         $ruta = $carpeta . $nombre_archivo;
         //Enviar la imagen a el archivo de imagenes
         if(move_uploaded_file($imagen['tmp_name'], $ruta)){
-            $stmt=$this->conn->prepare("INSERT INTO (nombre,stock,precio,precio_por_peso,categoria,url_imagen,porcentaje_descuento) VALUES (?,?,?,?,?,?,?)");
+            $stmt=$this->conn->prepare("INSERT INTO productos (nombre,stock,precio,precio_por_peso,categoria,url_imagen,porcentaje_descuento) VALUES (?,?,?,?,?,?,?)");
             $stmt->bind_param("siiissi",$nombre,$stock,$precio,$precio_por_peso,$categoria,$ruta,$porcentaje_descuento);
             if($stmt->execute()){
                 return true;

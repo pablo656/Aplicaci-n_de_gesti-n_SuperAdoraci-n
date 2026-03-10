@@ -20,3 +20,5 @@
     <a href="#">Log in</a>
 </form>
 <script src="js/verificacion_sing_in.js"></script>
+</body>
+</html>

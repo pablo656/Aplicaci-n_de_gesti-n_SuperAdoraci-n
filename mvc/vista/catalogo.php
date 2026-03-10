@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/catalogo_style.css">
-    <title>Document</title>
-</head>
-<body>
-    <?php require("layerHeader.php")?>
+
 <div class="contenido">
     <aside>
         <ul>
@@ -65,8 +56,8 @@
                         if($producto["porcentaje_descuento"]!=0){
                             if($producto["precio_por_peso"]){?>
                             <div class="descuento">
-                                <p class="sin_descuento"><?php echo $producto["precio"] ?>&euro;/Kg</p>
-                                <p class="precio"><?php echo $producto["precio"]-($producto["precio"]*($producto["porcentaje_descuento"]/100))?>&euro;</p>
+                                <p class="sin_descuento"><?php echo $producto["precio"] ?>&euro;</p>
+                                <p class="precio"><?php echo $producto["precio"]-($producto["precio"]*($producto["porcentaje_descuento"]/100))?>&euro;/Kg</p>
                             </div>
                             <?php
                             }else{?>

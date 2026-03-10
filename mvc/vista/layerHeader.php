@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title><?php echo $titulo?></title>
     <link rel="stylesheet" href="css/header_style.css">
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+    <!--Poner el campo link del CSS en el INDEX para que sea distinto dependiendo de la página--> 
+    <?php echo $css ?>
+
 </head>
 <body>
 <header>
     <picture>
-        <source media="(max-width: 768px)" srcset="imagenes/prueba_tablet.jpeg">
-        <img src="imagenes/prueba.jpeg" alt="Logo">
+        <source media="(max-width: 768px)" srcset="imagenes/banner_M.png">
+        <img src="imagenes/banner.png" alt="Logo">
     </picture>
     
 </header>
@@ -19,7 +22,7 @@
 <nav>
     <div>
         <a href="#">Inicio</a>
-        <a href="#">Catalogo</a>
+        <a href="IndexProducto.php">Catalogo</a>
         <a href="#">Pedidos</a>
     </div>
     <div>
@@ -28,8 +31,8 @@
             <a href="#">Perfil <i class="fi fi-sr-user" style="color: white; font-size: 1.2em;"></i></a>
             <?php
         }else{?>
-        <a href="#">Log in</a>
-        <a href="#">Sing in</a>
+        <a href="IndexHome.php?action=log">Log in</a>
+        <a href="IndexHome.php?action=sing">Sing in</a>
         <?php
         }?>
     </div>

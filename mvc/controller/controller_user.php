@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . "/../view/view_reservas.php";
+require_once __DIR__ . "/../model/model_user.php";
 class Controller_user{
     private $model_user;
     public function __construct(){
@@ -25,6 +25,19 @@ class Controller_user{
             require __DIR__ . '/../view/login.php';
             return $user;
         }
+    }
+    //Funciones para moverse entre Home, Log in,Sign in y Perfil
+    public function home(){
+        require("../vista/Inicio.php");
+    }
+    public function log(){
+        require("../vista/Log_in.php");
+    }
+    public function sing(){
+        require("../vista/Sign_in.php");
+    }
+    public function perfil(){
+        //require();
     }
 }
 ?>

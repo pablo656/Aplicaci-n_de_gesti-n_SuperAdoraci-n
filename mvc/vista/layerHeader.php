@@ -27,8 +27,9 @@
     </div>
     <div>
         <?php
-        if(isset($_SESSION["id"]) && isset($_SESSION["nombre"])&&isset($_SESSION["email"])){?>
+        if(isset($_SESSION["id"]) && isset($_SESSION["nombre"])&&isset($_SESSION["email"])&&isset($_SESSION["rol"])){?>
             <a href="#">Perfil <i class="fi fi-sr-user" style="color: white; font-size: 1.2em;"></i></a>
+            <a href="IndexHome.php?action=log_out">Log out</i></a>
             <?php
         }else{?>
         <a href="IndexHome.php?action=log">Log in</a>

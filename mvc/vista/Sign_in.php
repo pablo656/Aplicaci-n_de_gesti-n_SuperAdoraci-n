@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<form method="post" id="sing">
+<form method="post" id="sing" action="?action=crear">
     <h1>Iniciar sesión</h1>
     <label>Usuario</label><br>
     <input type="text" name="user"><br>

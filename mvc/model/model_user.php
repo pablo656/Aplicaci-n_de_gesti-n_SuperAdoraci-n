@@ -26,6 +26,7 @@
                 return null;
             }
         }
+        //Rol predeterminado cliente, para cambiar el rol, se tendra que crear una una función y página para el admin y dueño que permita cambiar el rol.
         public function crearusuario($user, $password, $email){
             if (!$this->conn) {
                 return false;
@@ -39,10 +40,29 @@
             if ($stmt === false) {
                 return false;
             }
+            
             $stmt->bind_param("sss", $user, $hash, $email);
-            $result = $stmt->execute();
+            //Linea posiblemente obsoleta borrar si llega a ser inutil
+            //$result = $stmt->execute();
+            if(!$stmt->execute()){
+                return false;
+            }
+            //Obtener ID del usuario creado
+            $id=$this->conn->insert_id;
             $stmt->close();
-            return $result;
+            $stmt=$this->conn->prepare("SELECT * FROM usuarios WHERE id=?");
+            $stmt->bind_param("i",$id);
+            if(!$stmt->execute()){
+                return false;
+            }
+            $resultado=$stmt->get_result();
+            $usuario=null;
+            while($row=$resultado->fetch_assoc()){
+                $usuario=$row;
+            }
+            $stmt->close();
+            //Se devuelve al usuario para crear una sessión en el controller
+            return $usuario;
 
 
         }

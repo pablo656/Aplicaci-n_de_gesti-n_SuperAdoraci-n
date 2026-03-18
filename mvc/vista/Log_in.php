@@ -8,14 +8,17 @@
 </head>
 <body>
 
-<form method="post" id="log">
+<form method="post" id="log"action="?action=comprobar">
     <h1>Iniciar sesión</h1>
     <label>Usuario</label><br>
     <input type="text" name="user"><br>
     <label>Contraseña</label><br>
     <input type="password" name="pass"><br><br>
-    <input type="submit" name="log" value="Log in"><br>
-    <a href="#">Sing in</a>
+    <input type="submit" name="log" value="Log in">
+    <div class="enlaces">
+        <a href="?action=log">Log in</a>
+        <a href="?action=Home">Volver atrás</a>
+    </div>
 </form>
 <script src="js/verificacion_log_in.js"></script>
 </body>

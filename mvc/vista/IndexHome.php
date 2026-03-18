@@ -25,9 +25,11 @@ if($action=="log"){
 }else if($action=="log_fallido"){
     $controller->log();
     //CAMBIAR!!!:Cambiar mensaje a uno más apropiado proximamente
-    echo "<script>alert('Error iniciar sessión')</script>";
+    echo "<script>alert('Usuario o contraseña incorrecto')</script>";
 }else if($action=="comprobar"){
-
+    $nombre=$_POST["user"];
+    $pass=$_POST["pass"];
+    $controller->loginar($nombre,$pass);
 }else if($action=="sing"){
     $controller->sing();
 }else if($action=="sing_fallido"){

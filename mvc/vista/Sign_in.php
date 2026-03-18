@@ -16,8 +16,11 @@
     <input type="email" name="email"><br>
     <label>Contraseña</label><br>
     <input type="password" name="pass"><br><br>
-    <input type="submit" name="sign" value="Sing in"><br>
-    <a href="#">Log in</a>
+    <input type="submit" name="sign" value="Sign in"> 
+    <div class="enlaces">
+        <a href="?action=log">Log in</a>
+        <a href="?action=Home">Volver atrás</a>
+    </div>
 </form>
 <script src="js/verificacion_sing_in.js"></script>
 </body>

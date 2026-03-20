@@ -16,7 +16,7 @@ if($action=="log"||$action=="comprobar"||$action=="log_fallido"){
     $css=null;
 }else{
     $titulo="Home";
-    $css=null;
+    $css="<link rel='stylesheet' href='css/inicio.css'>";
     require("../vista/layerHeader.php");
 }
 
@@ -24,7 +24,6 @@ if($action=="log"){
     $controller->log();
 }else if($action=="log_fallido"){
     $controller->log();
-    //CAMBIAR!!!:Cambiar mensaje a uno más apropiado proximamente
     echo "<script>alert('Usuario o contraseña incorrecto')</script>";
 }else if($action=="comprobar"){
     $nombre=$_POST["user"];
@@ -35,7 +34,6 @@ if($action=="log"){
 }else if($action=="sing_fallido"){
     //En caso de que falle el sing en el servidor
      $controller->sing();
-     //CAMBIAR!!!:Cambiar mensaje a uno más apropiado proximamente
      echo "<script>alert('Error: El usuario ya existe')</script>";
 }else if($action=="crear"){
     $nombre=$_POST["user"];

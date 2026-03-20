@@ -1,0 +1,231 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.wrap {
+    position: relative;
+    margin: 0 12px;
+    overflow: hidden;
+    border-radius: 8px;
+    margin: 20px ;
+}
+
+.track {
+    display: flex;
+    transition: transform .35s ease;
+    list-style: none;
+}
+
+.slide {
+    min-width: 33.333%;
+    padding: 4px;
+}
+
+.slide img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 4px;
+    display: block;
+}
+
+.btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,.5);
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.prev { left: 8px; }
+.next { right: 8px; }
+#carousel{
+    margin-bottom: 100px;
+}
+@media (max-width: 600px) {
+    .slide { min-width: 100%; }
+}
+
+
+h2 {
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #222;
+}
+h2::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 2px;
+  background: #888;
+  margin: 8px auto 50px;
+}
+/*Productos*/
+.productos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* ← centra los productos */
+    gap: 12px;
+    margin: 0 auto 40px auto;
+    margin-bottom: 100px;
+}
+
+/* Quita el margin-right del producto ya que ahora usa gap */
+.producto {
+    display: inline-block;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    width: 300px;
+    margin-right: 40px;
+    vertical-align: top;
+    text-align: center;
+}
+
+.producto img {
+    width: 100%;
+    height: 150px;
+    background: #f0f0f0;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.producto .nombre {
+    font-size: 1.2rem;
+    color: #111;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+.descuento {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    
+}
+.producto .sin_descuento {
+    font-size: 1rem;
+    color: #830000;
+    text-decoration: line-through;
+    margin-bottom: 20px;
+}
+
+.producto .precio {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #111;
+    margin-bottom: 20px;
+}
+
+.producto .reservar {
+    width: 100%;
+    padding: 15px;
+    background: #111;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.2s;
+}
+
+.producto .reservar:hover {
+    background: #444;
+}
+.vacio{
+    font-size: 2rem;
+    font-weight: bold;
+    color: #111;
+    align-self:center;
+}
+/*Texto*/
+section {
+  margin: 0 300px 40px 300px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0px;
+  align-items: center;
+}
+
+.seccion-invertida {
+  margin: 0 300px 40px 300px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0px;
+  align-items: center;
+  
+}
+.seccion-invertida > * { direction: ltr; }
+
+.texto h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.0rem;
+  font-weight: 600;
+  margin-bottom: 14px;
+  color: #222;
+}
+.texto p {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #555;
+  margin-bottom: 10px;
+  font-weight: 300;
+}
+
+.imagen-placeholder {
+  background: #ddd;
+  border-radius: 6px;
+  width: 70%;
+  aspect-ratio: 4 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 0.85rem;
+  font-weight: 300;
+  margin-left: auto;  
+  margin-right: 0;
+}
+
+.imagen-placeholder img {
+  width: 150%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.video-wrapper {
+  display: flex;
+  justify-content: flex-start; 
+  align-items: center;
+}
+
+.video {
+  position: relative;
+  width: 80%;
+  padding-bottom: 45%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.video iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+}
+
+@media (max-width: 600px) {
+  section, .seccion-invertida {
+    grid-template-columns: 1fr;
+    margin: 0 20px 40px 20px;
+    direction: ltr;
+  }
+  .video { width: 100%; padding-bottom: 56.25%; }
+}

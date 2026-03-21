@@ -1,61 +1,72 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+/* ── Variables (mismas que Inicio.css) ──────────────────── */
+:root {
+    --color-texto:      #1a1c2c;
+    --color-rojo:       #e31b23;
+    --color-rojo-hover: #b3141a;
+    --color-nav:        #1a1a2e;
+    --gap-lateral:      clamp(1rem, 3vw, 2.5rem);
 }
 
+/* ── Base ───────────────────────────────────────────────── */
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    font-family: sans-serif;
-    background: #f4f4f4; 
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    background: #f7f7f8;
+    color: var(--color-texto);
 }
 
+/* ── Layout principal ───────────────────────────────────── */
 .contenido {
     display: flex;
     flex: 1;
 }
 
-/* ASIDE */
+/* ── Barra lateral ──────────────────────────────────────── */
 aside {
     width: 200px;
-    background: #1a1c2c; 
-    border-right: 1px solid #444;
+    flex-shrink: 0;
+    background: var(--color-nav);
+    border-right: 1px solid #333;
     padding: 24px 0;
-    min-height: 100vh;
 }
 
 aside ul {
     list-style: none;
 }
+
 aside ul li:first-child a {
-    border-top: #444 solid 1px;
+    border-top: 1px solid #444;
 }
+
 aside ul li a {
-    border-bottom: #444 solid 1px;
     display: block;
     padding: 12px 20px;
-    color: #ffffff; 
+    color: #fff;
     cursor: pointer;
-    transition: background 0.2s;
     font-size: 0.9rem;
+    border-bottom: 1px solid #444;
+    transition: background .2s, padding-left .2s;
 }
 
 aside ul li a:hover {
-    background: #e31b23; 
-    color: #ffffff;
+    background: var(--color-rojo);
+    padding-left: 28px;
 }
 
-/* MAIN */
+/* ── Área principal ─────────────────────────────────────── */
 main {
     flex: 1;
-    padding: 32px;
+    padding: var(--gap-lateral);
+    min-width: 0;
 }
 
 main h1 {
-    font-size: 1.8rem;
-    color: #1a1c2c; 
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+    font-weight: 700;
+    color: var(--color-texto);
     margin-bottom: 4px;
 }
 
@@ -63,37 +74,59 @@ main h2 {
     font-size: 1rem;
     font-weight: 400;
     color: #888;
-    margin-bottom: 24px;
-}
-hr {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
-/* PRODUCTOS */
+hr {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin-bottom: 28px;
+}
+
+/* ── Grid de productos ──────────────────────────────────── */
+.cuadricula-productos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+/* ── Tarjeta de producto ────────────────────────────────── */
 .producto {
-    display: inline-block;
     background: #fff;
-    border: 1px solid #e0e0e0;
-    padding: 20px;
-    width: 300px;
-    margin: 0 12px 12px 0;
-    vertical-align: top;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .07);
+    display: flex;
+    flex-direction: column;
+    transition: transform .2s, box-shadow .2s;
+}
+
+.producto:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, .13);
+}
+
+.producto > img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    background: #ebebeb;
+    display: block;
+}
+
+.info-producto {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     text-align: center;
 }
 
-.producto img {
-    width: 100%;
-    height: 150px;
-    background: #f0f0f0;
-    display: block;
-    margin-bottom: 10px;
-}
-
 .producto .nombre {
-    font-size: 1.2rem;
-    color: #1a1c2c; 
-    margin-bottom: 20px;
-    font-weight: bold;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-texto);
+    margin-bottom: 8px;
 }
 
 .descuento {
@@ -104,37 +137,82 @@ hr {
 }
 
 .producto .sin_descuento {
-    font-size: 1rem;
-    color: #e31b23; 
+    font-size: 0.85rem;
+    color: #aaa;
     text-decoration: line-through;
-    margin-bottom: 20px;
 }
 
 .producto .precio {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #1a1c2c; 
-    margin-bottom: 20px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-rojo);
+    margin: 8px 0 14px;
 }
 
 .producto .reservar {
     width: 100%;
-    padding: 15px;
-    background: #e31b23; 
+    padding: 11px;
+    background: var(--color-rojo);
     color: #fff;
     border: none;
     cursor: pointer;
-    font-size: 1rem;
-    transition: background 0.2s;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: background .2s;
+    margin-top: auto;
 }
 
 .producto .reservar:hover {
-    background: #b3141a; 
+    background: var(--color-rojo-hover);
 }
 
 .vacio {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #1a1c2c; 
-    align-self: center;
+    font-size: 1.3rem;
+    color: #bbb;
+    text-align: center;
+    padding: 60px 20px;
+    grid-column: 1 / -1;
+}
+
+/* ── Responsive: tablet ─────────────────────────────────── */
+@media (max-width: 768px) {
+    .contenido {
+        flex-direction: column;
+    }
+
+    aside {
+        width: 100%;
+        padding: 0;
+        border-right: none;
+        border-bottom: 1px solid #333;
+    }
+
+    aside ul {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    aside ul li:first-child a {
+        border-top: none;
+    }
+
+    aside ul li a {
+        border-bottom: none;
+        border-right: 1px solid #444;
+        padding: 10px 16px;
+        font-size: 0.85rem;
+    }
+
+    aside ul li a:hover {
+        padding-left: 16px;
+    }
+}
+
+/* ── Responsive: móvil ──────────────────────────────────── */
+@media (max-width: 480px) {
+    .cuadricula-productos {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 12px;
+    }
 }

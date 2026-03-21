@@ -19,8 +19,10 @@ CREATE TABLE productos (
     precio               DECIMAL(10,2) NOT NULL,
     precio_por_peso      bit DEFAULT 0,
     categoria            VARCHAR(80),
+    subcategoria         VARCHAR(80) NULL,
     url_imagen           VARCHAR(500) NOT NULL,
     porcentaje_descuento DECIMAL(5,2) DEFAULT 0.00
+    
 );
 
 -- RESERVAS (se borran a los 7 días)
@@ -66,3 +68,4 @@ CREATE TRIGGER trg_reserva_delete
 AFTER DELETE ON reservas
 FOR EACH ROW
     UPDATE productos SET stock = stock + OLD.cantidad WHERE id = OLD.id_producto;
+

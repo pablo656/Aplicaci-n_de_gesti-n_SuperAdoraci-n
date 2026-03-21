@@ -11,13 +11,22 @@
             require("../vista/catalogo.php");
         }
         function buscar_producto($nombre){
-            $productos_buscar=$this->buscar_producto($nombre);
+            $productos=$this->buscar_producto($nombre);
             //Descomentar linea de abajo en caso de que se valla a realizar de manera simultanea
             //$productos=$this->model->mostrar_productos();
 
             require("../vista/catalogo.php");
         }
-        public function add_productos($nombre,$stock,$precio,$precio_por_peso,$categoria,$imagen,$porcentaje_descuento){
+        function buscar_por_categorias($categoria){
+            $productos=$this->model->buscar_por_categoria($categoria);
+            //header("Location:catalogo.php?action=$categoria");
+            require("../vista/catalogo.php");
+        }
+        function buscar_por_subcategoria($subcategoria){
+            $productos_buscar=$this->model->buscar_por_subcategoria($subcategoria);
+            header("Location:catalogo.php?action=$subcategoria");
+        }
+        public function add_productos($nombre,$stock,$precio,$precio_por_peso,$categoria,$subcategoria,$imagen,$porcentaje_descuento){
             $tiposPermitidos = ['image/jpeg', 'image/jpg', 'image/png'];
             $errores=[];
             if(empty($nombre)){
@@ -40,6 +49,9 @@
             if(empty($categoria)){
                 $errores[]="La categoria es obligatoria";
             }
+            if(emty($subcategoria)){
+                $subcategoria=null;
+            }
             $tiposPermitidos = ['image/jpeg', 'image/jpg', 'image/png'];
             $mime = mime_content_type($imagen);
 
@@ -57,7 +69,7 @@
         public function del_producto($id){
             return $this->model->del_producto($id);
         }
-        public function update_producto($id, $nombre=null, $stock=null, $precio=null, $precio_por_peso=null, $categoria=null, $imagen=null, $porcentaje_descuento=null){
+        public function update_producto($id, $nombre=null, $stock=null, $precio=null, $precio_por_peso=null, $categoria=null,$subcategoria=null, $imagen=null, $porcentaje_descuento=null){
             return $this->model->update_producto($id, $nombre=null, $stock=null, $precio=null, $precio_por_peso=null, $categoria=null, $imagen=null, $porcentaje_descuento=null);
         }
 

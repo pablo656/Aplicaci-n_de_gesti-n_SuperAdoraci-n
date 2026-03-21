@@ -21,7 +21,7 @@
 
 <nav>
     <div>
-        <a href="#">Inicio</a>
+        <a href="IndexHome.php">Inicio</a>
         <a href="IndexProducto.php">Catalogo</a>
         <a href="#">Pedidos</a>
     </div>

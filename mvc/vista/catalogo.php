@@ -2,11 +2,12 @@
 <div class="contenido">
     <aside>
         <ul>
-            <li><a>Bebidas</a></li>
-            <li><a>Comida</a></li>
-            <li><a>Productos para Mascotas</a></li>
-            <li><a>Productos de limpieza</a></li>
-            <li><a>Material de oficina</a></li>
+            <li><a href="IndexProducto.php?action=Bebidas">Bebidas</a></li>
+            <li><a href="IndexProducto.php?action=Comida">Comida</a></li>
+            <li><a href="IndexProducto.php?action=Mascotas">Mascotas</a></li>
+            <li><a href="IndexProducto.php?action=Limpieza_hogar">Limpieza y hogar</a></li>
+            <li><a href="IndexProducto.php?action=Papeleria_oficina">Papeleria y oficina</a></li>
+            <li><a href="IndexProducto.php?action=Salud_bienestar">Salud y bienestar</a></li>
         </ul>
     </aside>
     <main>

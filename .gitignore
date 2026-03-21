@@ -1,0 +1,22 @@
+# Claude Code
+CLAUDE.md
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# XAMPP / PHP
+/mvc/bd/bd.php
+
+# Uploaded images (runtime content)
+/mvc/imagenes/*
+!/mvc/imagenes/.gitkeep
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log

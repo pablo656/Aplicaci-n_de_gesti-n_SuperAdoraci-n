@@ -67,7 +67,7 @@ class model_productos{
         return $productos;
     }
     function buscar_por_subcategoria($subcategoria){
-        $stmt=$this->conn->prepare("SELECT * FROM productos WHERE categoria=? ORDER BY nombre");
+        $stmt=$this->conn->prepare("SELECT * FROM productos WHERE subcategoria=? ORDER BY nombre");
         $stmt->bind_param("s",$subcategoria);
         if(!$stmt->execute()){
             return false;

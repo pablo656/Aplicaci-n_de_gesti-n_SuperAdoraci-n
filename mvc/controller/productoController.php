@@ -20,11 +20,12 @@
         function buscar_por_categorias($categoria){
             $productos=$this->model->buscar_por_categoria($categoria);
             //header("Location:catalogo.php?action=$categoria");
+
             require("../vista/catalogo.php");
         }
         function buscar_por_subcategoria($subcategoria){
-            $productos_buscar=$this->model->buscar_por_subcategoria($subcategoria);
-            header("Location:catalogo.php?action=$subcategoria");
+            $productos=$this->model->buscar_por_subcategoria($subcategoria);
+            require("../vista/catalogo.php");
         }
         public function add_productos($nombre,$stock,$precio,$precio_por_peso,$categoria,$subcategoria,$imagen,$porcentaje_descuento){
             $tiposPermitidos = ['image/jpeg', 'image/jpg', 'image/png'];

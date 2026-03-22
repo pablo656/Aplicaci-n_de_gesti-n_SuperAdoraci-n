@@ -76,7 +76,32 @@ main h2 {
     color: #888;
     margin-bottom: 20px;
 }
+/*Breadcrumb*/
+.breadcrumb-wrapper {
+    margin-bottom: 10px;
+}
 
+.breadcrumb-enlace {
+    font-weight: bolder;
+    color: #888;
+    font-size: 16px;
+    text-decoration: underline;
+}
+
+.breadcrumb-enlace:hover {
+    color: #555;
+}
+
+.breadcrumb-texto {
+    color: #888;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.breadcrumb-separador {
+    color: #888;
+    font-size: 16px;
+}
 hr {
     border: none;
     border-top: 1px solid #e0e0e0;
@@ -173,6 +198,32 @@ hr {
     text-align: center;
     padding: 60px 20px;
     grid-column: 1 / -1;
+}
+/*Subcategoias*/
+.subcategorias {
+    margin-top: 0;
+    border-top: none;
+    padding-left: 0;
+    list-style: none;
+}
+
+.subcategorias li a {
+   background-color: white;
+    display: block;
+    padding: 10px 20px 10px 25px;
+    font-size: 0.85rem;
+    color: black;
+    border-left: 3px solid #e31b23; 
+    transition: background 0.2s;
+}
+
+.subcategorias li a:hover {
+    background: #e31b23;
+    color: #ffffff;
+}
+.subcategorias li a {
+    border-bottom: 1px solid black; /* ← añade esto */
+    border-left: 3px solid #e31b23;
 }
 
 /* ── Responsive: tablet ─────────────────────────────────── */

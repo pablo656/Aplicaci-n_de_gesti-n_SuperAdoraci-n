@@ -21,15 +21,15 @@ class model_productos{
         return $productos; 
     }
     //Añadir un producto 
-    public function add_productos($nombre,$stock,$precio,$precio_por_peso,$categoria,$imagen,$porcentaje_descuento){
+    public function add_productos($nombre,$stock,$precio,$precio_por_peso,$categoria,$subcategoria,$imagen,$porcentaje_descuento){
         //Crear imagen he indicar ruta
         $carpeta = "../imagenes";
         $nombre_archivo = uniqid() . "_" . basename($imagen['name']);
         $ruta = $carpeta . $nombre_archivo;
         //Enviar la imagen a el archivo de imagenes
         if(move_uploaded_file($imagen['tmp_name'], $ruta)){
-            $stmt=$this->conn->prepare("INSERT INTO productos (nombre,stock,precio,precio_por_peso,categoria,url_imagen,porcentaje_descuento) VALUES (?,?,?,?,?,?,?)");
-            $stmt->bind_param("siiissi",$nombre,$stock,$precio,$precio_por_peso,$categoria,$ruta,$porcentaje_descuento);
+            $stmt=$this->conn->prepare("INSERT INTO productos (nombre,stock,precio,precio_por_peso,categoria,subcategoria,url_imagen,porcentaje_descuento) VALUES (?,?,?,?,?,?,?,?)");
+            $stmt->bind_param("siiissi",$nombre,$stock,$precio,$precio_por_peso,$categoria,$subcategoria,$ruta,$porcentaje_descuento);
             if($stmt->execute()){
                 return true;
             }else{
@@ -43,6 +43,32 @@ class model_productos{
     function buscar_producto($nombre){
         $stmt=$this->conn->prepare("SELECT * FROM productos WHERE nombre LIKE ? ORDER BY nombre");
         $stmt->bind_param("s",$nombre);
+        if(!$stmt->execute()){
+            return false;
+        }
+        $resutado=$stmt->get_result();
+        $productos=[];
+        while($row=$resutado->fetch_assoc()){
+            $productos[]=$row;
+        }
+        return $productos;
+    }
+    function buscar_por_categoria($categoria){
+        $stmt=$this->conn->prepare("SELECT * FROM productos WHERE categoria=? ORDER BY nombre");
+        $stmt->bind_param("s",$categoria);
+        if(!$stmt->execute()){
+            return false;
+        }
+        $resutado=$stmt->get_result();
+        $productos=[];
+        while($row=$resutado->fetch_assoc()){
+            $productos[]=$row;
+        }
+        return $productos;
+    }
+    function buscar_por_subcategoria($subcategoria){
+        $stmt=$this->conn->prepare("SELECT * FROM productos WHERE subcategoria=? ORDER BY nombre");
+        $stmt->bind_param("s",$subcategoria);
         if(!$stmt->execute()){
             return false;
         }
@@ -81,7 +107,7 @@ class model_productos{
     /*IMPORTANTE!!!: Para llamar ha esta función se debe de hacer de esta manera
         $this->update_producto(id: 1,nombre:patata ,porcentaje_descuento: 50); 
         Se debe hacer asi para que la función sepa que datos en especifico estas mandando*/
-    public function update_producto($id, $nombre=null, $stock=null, $precio=null, $precio_por_peso=null, $categoria=null, $imagen=null, $porcentaje_descuento=null){
+    public function update_producto($id, $nombre=null, $stock=null, $precio=null, $precio_por_peso=null, $categoria=null,$subcategoria=null, $imagen=null, $porcentaje_descuento=null){
         $sql = "UPDATE productos SET ";
         $tipos = "";       
         $valores = [];    
@@ -110,6 +136,11 @@ class model_productos{
             $sql .= "categoria=?, ";
             $tipos .= "s";
             $valores[] = $categoria;
+        }
+        if($subcategoria !=null){
+            $sql.="categoria=?, ";
+            $tipos.="s";
+            $valores[]=$subcategoria;
         }
         if($imagen != null){
             // Obtener imagen antigua y reemplazarla

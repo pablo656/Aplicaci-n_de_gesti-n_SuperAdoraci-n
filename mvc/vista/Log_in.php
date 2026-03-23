@@ -9,14 +9,14 @@
 <body>
 
 <form method="post" id="log"action="?action=comprobar">
-    <h1>Iniciar sesión</h1>
+    <h1>Log in</h1>
     <label>Usuario</label><br>
     <input type="text" name="user"><br>
     <label>Contraseña</label><br>
     <input type="password" name="pass"><br><br>
     <input type="submit" name="log" value="Log in">
     <div class="enlaces">
-        <a href="?action=log">Log in</a>
+        <a href="?action=sing">Sign in</a>
         <a href="?action=Home">Volver atrás</a>
     </div>
 </form>

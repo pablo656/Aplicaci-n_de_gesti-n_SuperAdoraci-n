@@ -1,17 +1,57 @@
-
+<?php  $action=$_GET["action"] ?? "list";
+        $subcategoria = $_GET["subcategoria"] ?? null;
+         $categorias=["Comida","Bebidas","Mascotas","Papeleria_oficina","Salud_bienestar"];
+         $subcategorias = [
+        "Comida"            => ["Carne", "Panadería", "Pescados", "Snacks", "Pasta", "Conservas", "Salsas", "Arroz y legumbres", "Condimentos y salsas", "Despensa", "Congelados"],
+        "Bebidas"           => ["Agua", "Refrescos", "Zumos", "Bebidas alcohólicas"],
+        "Limpieza_hogar"    => ["Limpieza del hogar", "Limpieza de ropa", "Higiene personal", "Papel e higiene", "Ambientadores y velas", "Utensilios de limpieza"],
+        "Mascotas"          => ["Gatos", "Perros", "Pájaros"],
+        "Papeleria_oficina" => ["Material escolar", "Material de oficina", "Escritura y dibujo", "Archivadores y carpetas", "Folios"],
+        "Salud_bienestar"   => []
+        ];?>
 <div class="contenido">
     <aside>
         <ul>
-            <li><a>Bebidas</a></li>
-            <li><a>Comida</a></li>
-            <li><a>Productos para Mascotas</a></li>
-            <li><a>Productos de limpieza</a></li>
-            <li><a>Material de oficina</a></li>
+            <?php foreach($categorias as $cat): ?>
+                <li>
+                    <a href="IndexProducto.php?action=<?= $cat ?>"><?= str_replace("_", " ", $cat) ?></a>
+                    <?php if($action == $cat && isset($subcategorias[$cat]) && !empty($subcategorias[$cat])): ?>
+                        <ul class="subcategorias">
+                            <?php foreach($subcategorias[$cat] as $sub): ?>
+                                <li>
+                                    <a href="IndexProducto.php?action=<?= $cat ?>&subcategoria=<?= urlencode($sub) ?>">
+                                        <?= $sub ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </li>
+            <?php endforeach; ?>
         </ul>
     </aside>
     <main>
         <h1>Catálogo</h1>
-        <h2>Todos los productos</h2>
+       <?php
+            $breadcrums = "";
+            $separador = "<span class='breadcrumb-separador'> > </span>";
+
+            if($action != "list"){
+                $breadcrums = "<a href='IndexProducto.php' class='breadcrumb-enlace'>Todos los productos</a>";
+                if($subcategoria != null){
+                    $breadcrums .= $separador;
+                    $breadcrums .= "<a href='IndexProducto.php?action=$action' class='breadcrumb-enlace'>" . str_replace('_', ' ', $action) . "</a>";
+                    $breadcrums .= $separador;
+                    $breadcrums .= "<span class='breadcrumb-texto'>$subcategoria</span>";
+                }else{
+                    $breadcrums .= $separador;
+                    $breadcrums .= "<span class='breadcrumb-texto'>" . str_replace('_', ' ', $action) . "</span>";
+                }
+            }else{
+                $breadcrums = "<span class='breadcrumb-texto'>Todos los productos</span>";
+            }
+            echo "<div class='breadcrumb-wrapper'>" . $breadcrums . "</div>";
+        ?>
         <hr>
 
         <div class="cuadricula-productos">

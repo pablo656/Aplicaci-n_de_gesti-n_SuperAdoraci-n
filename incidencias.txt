@@ -1,0 +1,262 @@
+3.3. Incidencias
+
+(Dedicación total estimada incluida en las 25 horas del apartado 3)
+(Extensión aproximada: 1 folio máximo)
+
+================================================================================
+
+3.3.1. Definir un protocolo para resolución de incidencias
+
+Durante el desarrollo y la puesta en marcha de la aplicación web SuperAdoracion
+se establece el siguiente protocolo para gestionar cualquier incidencia que
+pueda surgir, tanto en fase de desarrollo como en producción.
+
+--------------------------------------------------------------------------------
+
+3.3.1.1. Recopilación de información
+
+Ante cualquier incidencia detectada, se recopilará la siguiente información:
+
+  - Fecha y hora exacta en que se detectó el problema.
+  - Usuario o rol afectado (cliente, administrador, dueño).
+  - Descripción detallada del error: mensaje de error mostrado, código HTTP
+    si aplica (500, 403, 404...), comportamiento inesperado observado.
+  - Pasos exactos para reproducir el error.
+  - Capturas de pantalla o registro de errores del servidor (error_log de
+    Apache/PHP en XAMPP: C:\xampp\apache\logs\error.log).
+  - Entorno: navegador utilizado, sistema operativo, versión de XAMPP.
+  - Módulo o sección de la aplicación afectada (Log in, Sign in, catálogo
+    de productos, reservas, panel de administración, etc.).
+
+--------------------------------------------------------------------------------
+
+3.3.1.2. Posible solución
+
+Una vez recopilada la información, se sigue el siguiente proceso de resolución:
+
+  1. Análisis de la causa raíz: revisar el código del modelo, controlador o
+     vista afectados (arquitectura MVC) y consultar el log de errores de PHP.
+
+  2. Reproducción del error en entorno local (XAMPP) antes de aplicar
+     ningún cambio en producción.
+
+  3. Corrección del código: se aplica el fix en la rama 'developer' del
+     repositorio Git, se prueba en local y, una vez validado, se fusiona
+     con la rama 'main'.
+
+  4. Verificación: se comprueba que el error ya no se reproduce y que el
+     resto de funcionalidades relacionadas siguen operando correctamente.
+
+  Incidencias habituales identificadas durante el desarrollo:
+
+  - Error en formularios de Log in / Sign in: validación incorrecta de
+    credenciales y gestión de sesiones ($_SESSION). Solución: revisión del
+    controlador de autenticación y corrección de la lógica de comprobación
+    en la base de datos (tabla usuarios).
+
+  - Error de stock negativo: triggers de base de datos (trg_reserva_insert,
+    trg_reserva_delete) no actualizando correctamente el stock. Solución:
+    revisión y corrección de los triggers en el fichero supermercado.sql.
+
+  - Imágenes de productos no visibles tras subida: ruta incorrecta al
+    directorio mvc/imagenes/. Solución: corrección de la ruta relativa en
+    el controlador de productos.
+
+  - Pérdida de sesión inesperada: session_start() no llamado antes de
+    acceder a $_SESSION en alguna vista. Solución: asegurar session_start()
+    al inicio de cada Index*.php.
+
+--------------------------------------------------------------------------------
+
+3.3.1.3. Registro
+
+Cada incidencia resuelta se registra con la siguiente ficha:
+
+  +----------------------+----------------------------------------------------+
+  | Campo                | Descripción                                        |
+  +----------------------+----------------------------------------------------+
+  | ID Incidencia        | Identificador único (ej: INC-001)                  |
+  | Fecha                | Fecha y hora de detección                          |
+  | Prioridad            | Alta / Media / Baja                                |
+  | Módulo afectado      | Sección de la app donde se produjo el error        |
+  | Descripción          | Explicación del error detectado                    |
+  | Causa raíz           | Motivo técnico del fallo                           |
+  | Solución aplicada    | Cambios realizados para resolverlo                 |
+  | Responsable          | Desarrollador que resolvió la incidencia           |
+  | Commit Git           | Hash del commit con la corrección aplicada         |
+  +----------------------+----------------------------------------------------+
+
+	registro real:
+
+  +----------------------+----------------------------------------------------+
+  | ID Incidencia        | INC-001                                            |
+  | Fecha                | 12/03/2026 | 12/03/2026                            |
+  | Prioridad            | Alta                                               |
+  | Módulo afectado      | Log in / Sign in                                   |
+  | Descripción          | El formulario de inicio de sesión no autenticaba   |
+  |                      | correctamente al usuario ni redirigía tras login.  |
+  | Causa raíz           | Lógica de comprobación de credenciales incorrecta  |
+  |                      | en el controlador de autenticación.                |
+  | Solución aplicada    | Corrección de la validación en el controlador y    |
+  |                      | ajuste de la gestión de $_SESSION.                 |
+  +----------------------+----------------------------------------------------+
+
+  +----------------------+----------------------------------------------------+
+  | ID Incidencia        | INC-002                                            |
+  | Fecha                | 19/02/2026 | 20/02/2026                            |
+  | Prioridad            | Alta                                               |
+  | Módulo afectado      | Base de datos — gestión de stock y reservas        |
+  | Descripción          | Pérdida de integridad de datos: el stock de        |
+  |                      | productos en la aplicación no coincidía con el     |
+  |                      | stock real del supermercado. Al crear o cancelar   |
+  |                      | una reserva, el valor de stock en la BD no se      |
+  |                      | actualizaba automáticamente, provocando que los    |
+  |                      | clientes vieran disponibilidad incorrecta.         |
+  |                      | Además, reservas y pedidos antiguos permanecían    |
+  |                      | en la BD indefinidamente, acumulando datos         |
+  |                      | obsoletos que distorsionaban el estado real.       |
+  | Causa raíz           | Ausencia de mecanismos automáticos en la BD que    |
+  |                      | sincronizaran el stock al operar sobre reservas,   |
+  |                      | y falta de limpieza periódica de registros         |
+  |                      | caducados.                                         |
+  | Solución aplicada    | 1. Creación del trigger trg_reserva_insert:        |
+  |                      |    al insertar una reserva descuenta la cantidad   |
+  |                      |    del stock del producto automáticamente.         |
+  |                      | 2. Creación del trigger trg_reserva_delete:        |
+  |                      |    al eliminar una reserva devuelve la cantidad    |
+  |                      |    al stock del producto automáticamente.          |
+  |                      | 3. Creación del evento evt_borrar_reservas:        |
+  |                      |    elimina reservas con más de 7 días cada día.    |
+  |                      | 4. Creación del evento evt_borrar_pedidos:         |
+  |                      |    elimina pedidos con más de 30 días cada día.    |
+  |                      | Todos los cambios aplicados en supermercado.sql.   |
+  +----------------------+----------------------------------------------------+
+
+  +----------------------+----------------------------------------------------+
+  | ID Incidencia        | INC-003                                            |
+  | Fecha                | 15/03/2026 | 16/03/2026                            |
+  | Prioridad            | Alta                                               |
+  | Módulo afectado      | Log in / Sign in / Gestión de sesiones             |
+  | Descripción          | Retraso en la implementación del sistema de        |
+  |                      | autenticación. El formulario de Log in no          |
+  |                      | validaba correctamente las credenciales ni         |
+  |                      | redirigía al usuario tras el inicio de sesión.     |
+  |                      | Bloqueó todas las funcionalidades dependientes     |
+  |                      | del rol (perfil, reservas, administración).        |
+  | Causa raíz           | Lógica incorrecta en el controlador de             |
+  |                      | autenticación y session_start() ausente en         |
+  |                      | algunos puntos de entrada Index*.php.              |
+  | Solución aplicada    | Corrección del controlador de autenticación y      |
+  |                      | revisión de session_start() en todos los           |
+  |                      | Index*.php del proyecto.                           |
+  +----------------------+----------------------------------------------------+
+
+  +----------------------+----------------------------------------------------+
+  | ID Incidencia        | INC-004                                            |
+  | Fecha                | 21/03/2026 | 21/03/2026                            |
+  | Prioridad            | Media                                              |
+  | Módulo afectado      | Catálogo de productos — categorías y breadcrumbs   |
+  | Descripción          | Retraso por estructura de categorías y             |
+  |                      | subcategorías no definida desde el inicio.         |
+  |                      | Obligó a rediseñar la navegación y el sistema      |
+  |                      | de breadcrumbs a mitad de implementación,          |
+  |                      | refactorizando también las consultas SQL de        |
+  |                      | filtrado.                                          |
+  | Causa raíz           | Falta de definición completa del modelo de datos   |
+  |                      | en la fase de diseño previa.                       |
+  | Solución aplicada    | Implementación de buscar_por_categoria() y         |
+  |                      | buscar_por_subcategoria() en model_productos.php   |
+  |                      | y rediseño del breadcrumb dinámico en              |
+  |                      | catalogo.php.                                      |
+  +----------------------+----------------------------------------------------+
+
+  +----------------------+----------------------------------------------------+
+  | ID Incidencia        | INC-005                                            |
+  | Fecha                | 24/03/2026 | 24/03/2026                            |
+  | Prioridad            | Alta                                               |
+  | Módulo afectado      | Model productos — update_producto()                |
+  | Descripción          | Al actualizar un producto desde el panel de        |
+  |                      | administración, el campo subcategoría              |
+  |                      | sobreescribía el campo categoría en lugar de       |
+  |                      | actualizarse correctamente, corrompiendo los       |
+  |                      | datos de productos existentes y haciéndolos        |
+  |                      | desaparecer del filtro de catálogo correspondiente.|
+  | Causa raíz           | Error tipográfico en model_productos.php línea     |
+  |                      | 141: se escribió "categoria=?" en lugar de         |
+  |                      | "subcategoria=?" en la query de UPDATE.            |
+  | Solución aplicada    | Corrección del nombre del campo en la              |
+  |                      | construcción dinámica de la query SQL dentro       |
+  |                      | de update_producto().                              |
+  +----------------------+----------------------------------------------------+
+
+  +----------------------+----------------------------------------------------+
+  | ID Incidencia        | INC-006                                            |
+  | Fecha                | 24/03/2026 | se arreglo en marzo                   |
+  | Prioridad            | Media                                              |
+  | Módulo afectado      | Arquitectura global del proyecto                   |
+  | Descripción          | Retraso causado por la indecisión sobre el stack   |
+  |                      | tecnológico. Se contemplaron frameworks como       |
+  |                      | Laravel, React.js y Vue.js. La decisión de         |
+  |                      | implementar en PHP puro con MVC propio se tomó     |
+  |                      | tarde, obligando a construir desde cero las        |
+  |                      | sesiones y validación.                             |
+  | Causa raíz           | Falta de decisión tecnológica firme en la fase     |
+  |                      | de análisis inicial del proyecto.                  |
+  | Solución aplicada    | Adopción de arquitectura MVC manual con            |
+  |                      | Index*.php como front controllers y separación     |
+  |                      | estricta model / controller / vista.               |
+  +----------------------+----------------------------------------------------+
+
+  +----------------------+----------------------------------------------------+
+  | ID Incidencia        | INC-007                                            |
+  | Fecha                | 24/03/2026 | 24/03/2026(se tuvo que arreglar de nuevo)/
+  | Prioridad            | Alta                                               |
+  | Módulo afectado      | model_reservas.php — eliminar_reserva()            |
+  | Descripción          | La cancelación de reservas fallaba con error       |
+  |                      | fatal de PHP. El método eliminar_reserva()         |
+  |                      | llamaba a agregar_stock(), función que nunca       |
+  |                      | fue implementada en la clase, bloqueando           |
+  |                      | completamente la funcionalidad de cancelación      |
+  |                      | y la recuperación del stock asociado.              |
+  | Causa raíz           | Método agregar_stock() referenciado en el          |
+  |                      | controlador pero nunca definido. La lógica de      |
+  |                      | stock se delegó al trigger trg_reserva_delete      |
+  |                      | de MySQL sin eliminar la llamada PHP.              |
+  | Solución aplicada    | Eliminación de la llamada a agregar_stock()        |
+  |                      | en eliminar_reserva(), delegando la                |
+  |                      | actualización de stock íntegramente al trigger     |
+  |                      | trg_reserva_delete de la base de datos.            |
+  +----------------------+----------------------------------------------------+
+
+  +----------------------+----------------------------------------------------+
+  | ID Incidencia        | INC-008                                            |
+  | Fecha                | 24/03/2026 |                                       |
+  | Prioridad            | Alta                                               |
+  | Módulo afectado      | Log in — controlador de autenticación              |
+  | Descripción          | La aplicación no limita el número de intentos      |
+  |                      | fallidos de inicio de sesión. Un atacante puede    |
+  |                      | realizar un ataque de fuerza bruta contra          |
+  |                      | cualquier cuenta sin ninguna restricción,          |
+  |                      | probando contraseñas de forma ilimitada.           |
+  |                      | Se establece como requisito de seguridad que       |
+  |                      | tras 8 intentos fallidos consecutivos la cuenta    |
+  |                      | quede bloqueada y no permita nuevos intentos.      |
+  | Causa raíz           | El controlador de autenticación no lleva           |
+  |                      | seguimiento del número de intentos fallidos        |
+  |                      | por usuario ni implementa ningún mecanismo         |
+  |                      | de bloqueo temporal o permanente.                  |
+  | Solución aplicada    | Añadir columna intentos_fallidos INT DEFAULT 0     |
+  |                      | y columna bloqueado TINYINT DEFAULT 0 a la         |
+  |                      | tabla usuarios en la BD.                           |
+  |                      | En el controlador de autenticación:                |
+  |                      | - Si las credenciales son incorrectas,             |
+  |                      |   incrementar intentos_fallidos en 1.              |
+  |                      | - Si intentos_fallidos >= 8, activar               |
+  |                      |   bloqueado = 1 e impedir el acceso.               |
+  |                      | - Si el login es correcto, resetear                |
+  |                      |   intentos_fallidos a 0.                           |
+  |                      | - El dueño/administrador puede desbloquear         |
+  |                      |   la cuenta desde el panel de gestión.             |
+  +----------------------+----------------------------------------------------+
+
+================================================================================

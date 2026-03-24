@@ -138,7 +138,7 @@ class model_productos{
             $valores[] = $categoria;
         }
         if($subcategoria !=null){
-            $sql.="categoria=?, ";
+            $sql.="subcategoria=?, ";
             $tipos.="s";
             $valores[]=$subcategoria;
         }

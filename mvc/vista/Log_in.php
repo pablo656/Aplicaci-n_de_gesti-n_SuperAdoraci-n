@@ -3,21 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Log in</title>
     <link rel="stylesheet" href="css/log_in.css">
 </head>
 <body>
 
-<form method="post" id="log"action="?action=comprobar">
-    <h1>Log in</h1>
-    <label>Usuario</label><br>
-    <input type="text" name="user"><br>
-    <label>Contraseña</label><br>
-    <input type="password" name="pass"><br><br>
-    <input type="submit" name="log" value="Log in">
-    <div class="enlaces">
-        <a href="?action=sing">Sign in</a>
-        <a href="?action=Home">Volver atrás</a>
+<form method="post" id="log" action="?action=comprobar">
+    <div class="form-header">
+        <h1>Log in</h1>
+    </div>
+    <div class="form-body">
+        <div class="field">
+            <label for="user">Usuario</label>
+            <input type="text" id="user" name="user" placeholder="Tu nombre de usuario">
+        </div>
+        <div class="field">
+            <label for="pass">Contraseña</label>
+            <input type="password" id="pass" name="pass" placeholder="Tu contraseña">
+        </div>
+        <input type="submit" name="log" value="Entrar">
+        <div class="enlaces">
+            <a href="?action=sing">Sign in</a>
+            <a href="?action=Home">Volver atrás</a>
+        </div>
     </div>
 </form>
 <script src="js/verificacion_log_in.js"></script>

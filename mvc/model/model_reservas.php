@@ -53,9 +53,6 @@ class model_reservas{
         if (!$this->conn) {
             return false;
         }
-        if (!$this->agregar_stock($id_reserva)) {
-            return false;
-        }
         $sql = "DELETE FROM reservas WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
         if ($stmt === false) {

@@ -53,6 +53,9 @@ CREATE EVENT IF NOT EXISTS evt_borrar_pedidos
 CREATE TABLE pedidos (
     id          INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario  INT NOT NULL,
+    cantidad  INT NOT NULL,
+    nombre     VARCHAR(100) DEFAULT NULL,
+    descripción     VARCHAR(100) DEFAULT NULL,
     mensaje     VARCHAR(100) DEFAULT NULL,
     realizado   INT DEFAULT 0,
     fecha       DATETIME DEFAULT CURRENT_TIMESTAMP,

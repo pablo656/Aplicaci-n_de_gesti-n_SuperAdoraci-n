@@ -10,7 +10,7 @@
 
 <form method="post" id="sing" action="?action=crear">
     <div class="form-header">
-        <h1>Sign in</h1>
+        <h1>Registrarse</h1>
         <p>Crea tu cuenta nueva</p>
     </div>
     <div class="form-body">
@@ -28,7 +28,7 @@
         </div>
         <input type="submit" name="sign" value="Crear cuenta">
         <div class="enlaces">
-            <a href="?action=log">Log in</a>
+            <a href="?action=log">Iniciar sesión</a>
             <a href="?action=Home">Volver atrás</a>
         </div>
     </div>

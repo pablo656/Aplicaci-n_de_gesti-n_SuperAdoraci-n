@@ -32,8 +32,8 @@
             <a href="IndexHome.php?action=log_out">Log out</i></a>
             <?php
         }else{?>
-        <a href="IndexHome.php?action=log">Log in</a>
-        <a href="IndexHome.php?action=sing">Sing in</a>
+        <a href="IndexHome.php?action=log">Iniciar session</a>
+        <a href="IndexHome.php?action=sing">Registrarse</a>
         <?php
         }?>
     </div>

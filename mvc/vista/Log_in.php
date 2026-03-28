@@ -10,7 +10,7 @@
 
 <form method="post" id="log" action="?action=comprobar">
     <div class="form-header">
-        <h1>Log in</h1>
+        <h1>Iniciar sessión</h1>
     </div>
     <div class="form-body">
         <div class="field">
@@ -23,7 +23,7 @@
         </div>
         <input type="submit" name="log" value="Entrar">
         <div class="enlaces">
-            <a href="?action=sing">Sign in</a>
+            <a href="?action=sing">Registrarse</a>
             <a href="?action=Home">Volver atrás</a>
         </div>
     </div>

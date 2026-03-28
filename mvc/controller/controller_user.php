@@ -1,11 +1,17 @@
 <?php
 require_once __DIR__ . "/../model/model_user.php";
+
+// Controlador que gestiona el registro, login y navegación del usuario
 class Controller_user{
     private $model_user;
+
+    // Instancia el modelo de usuario
     public function __construct(){
         $this->model_user = new model_user();
     }
-    //IMPORTANTE: Para la actialización del log in intentar usar una estructura parecida a la de Sing in
+
+    //IMPORTANTE: Para la actualización del log in intentar usar una estructura parecida a la de Sing in
+    // Verifica credenciales; si son correctas inicia sesión, si no redirige al formulario con error
     public function loginar($username, $password){
         $user= $this->model_user->iniciousuario($username, $password);
         if($user == false){
@@ -20,6 +26,8 @@ class Controller_user{
             header("Location:indexHome.php?action=home");
         }
     }
+
+    // Crea el usuario; si tiene éxito inicia sesión directamente, si ya existe redirige con error
     public function register($username,$password,$email){
         $user = $this->model_user->crearusuario($username, $password,$email);
         if ($user != false) {
@@ -34,6 +42,7 @@ class Controller_user{
             header("Location: indexHome.php?action=sing_fallido");
         }
     }
+
     //Funciones para moverse entre Home, Log in,Sign in y Perfil
     public function home(){
         require("../vista/Inicio.php");
@@ -44,6 +53,7 @@ class Controller_user{
     public function sing(){
         require("../vista/Sign_in.php");
     }
+    // Pendiente de implementar: carga la vista del perfil del usuario
     public function perfil(){
         //require();
     }

@@ -19,12 +19,15 @@
     require("../vista/layerHeader.php");
     if($action=="add"){
     
-    }else if(in_array($action,$categorias)){
-        if($subcategoria!=null){
-            $controller=$controller->buscar_por_subcategoria($subcategoria);
-        }else{
-             $controller->buscar_por_categorias($action);
-        }  
+    }else if($action=="reservar"){
+         // Obtener la cookie actual o array vacío si no existe
+        $reservas = isset($_COOKIE["reservas"]) ? json_decode($_COOKIE["reservas"], true) : [];
+        // Añadir el nuevo producto
+        $reservas[] = $_POST["id_producto"];
+        // Guardar la cookie actualizada
+        setcookie("reservas", json_encode($reservas), time() + (60 * 60 * 24), "/");
+        header("Location: IndexProducto.php");
+        exit();
     }else{
         $controller->mostrar_productos();
     }

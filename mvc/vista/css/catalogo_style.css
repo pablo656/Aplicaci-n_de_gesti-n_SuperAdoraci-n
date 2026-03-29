@@ -175,6 +175,7 @@ hr {
 }
 
 .producto .reservar {
+    text-decoration: none;
     width: 100%;
     padding: 11px;
     background: var(--color-rojo);

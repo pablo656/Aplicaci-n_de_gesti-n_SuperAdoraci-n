@@ -73,8 +73,20 @@
                                 <p class="precio">
                                     <?php echo $producto['precio'] ?>&euro;<?php echo $producto['precio_por_peso'] ? '/Kg' : '' ?>
                                 </p>
-                            <?php endif; ?>
-                            <button class="reservar">Reservar</button>
+                            <?php endif; 
+                            if(isset($_SESSION["id"]))://El input de tipo hiden sirve para guardar el valor del id del producto para que cuando se haga el submit se pueda mandar tambien el id 
+                                 $reservas = isset($_COOKIE["reservas"]) ? json_decode($_COOKIE["reservas"], true) : [];
+                                if(in_array($producto["id"], $reservas)):?>
+                                    <!-- PONER opción para aumentar la cantidad del producto -->
+                                <?php else: ?>
+                                    <form method="post" action="?action=reservar">
+                                        <input type="hidden" name="id_producto" value="<?php echo $producto["id"] ?>"> <!-- ← echo -->
+                                        <button type="submit" class="reservar" name="reservar">Reservar</button>
+                                    </form>
+                                <?php endif; ?>
+                            <?php else: ?>
+                                <a class="reservar" href="IndexHome.php?action=log">Reservar</a>
+                            <?php endif;?>
                         </div>
                     </div>
                 <?php endforeach; ?>

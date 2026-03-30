@@ -25,7 +25,7 @@
         <a href="IndexProducto.php">Catalogo</a>
         <a href="#">Pedidos</a>
         <?php if(isset($_SESSION["id"]) && isset($_SESSION["nombre"])&&isset($_SESSION["email"])&&isset($_SESSION["rol"])):?>
-        <a href="#"><i class="fi fi-sr-shopping-cart"></i></a>
+        <a href="IndexCarrito.php"><i class="fi fi-sr-shopping-cart"></i></a>
         <?php endif;?>
     </div>
     <div>

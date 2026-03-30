@@ -1,0 +1,242 @@
+:root {
+    --color-texto:      #1a1c2c;
+    --color-rojo:       #e31b23;
+    --color-rojo-hover: #b3141a;
+    --color-verde:      #3b6d11;
+    --gap-lateral:      clamp(1rem, 3vw, 2.5rem);
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    background: #f7f7f8;
+    color: var(--color-texto);
+}
+
+h1 {
+    font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+    font-weight: 700;
+    margin: var(--gap-lateral) var(--gap-lateral) 4px;
+}
+
+h2 {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #888;
+    margin: 0 var(--gap-lateral) 12px;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 0 var(--gap-lateral) 24px;
+}
+
+.carrito-layout {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    padding: 0 var(--gap-lateral) var(--gap-lateral);
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+main {
+    flex: 1;
+    min-width: 0;
+}
+
+.lista-reservas {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.item-reserva {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #fff;
+    border: 0.5px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 12px;
+    transition: background .15s;
+}
+
+.item-reserva:hover {
+    background: #fafafa;
+}
+
+.item-reserva img {
+    width: 72px;
+    height: 72px;
+    object-fit: cover;
+    border-radius: 10px;
+    background: #ebebeb;
+    flex-shrink: 0;
+}
+
+.item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.item-info .nombre {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-texto);
+    margin: 0 0 3px;
+}
+
+.item-info .descripcion {
+    font-size: 12px;
+    color: #888;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.item-accion {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.item-accion .precio {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-texto);
+    margin: 0;
+    white-space: nowrap;
+}
+
+.contador {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-eliminar {
+    background: var(--color-rojo);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 14px 24px;
+    transition: background .2s;
+    margin-right: 16px; 
+}
+
+.btn-eliminar:hover {
+    background: var(--color-rojo-hover);
+}
+
+.btn-grupo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-cantidad {
+    width: 32px;
+    height: 32px;
+    background: #1a1c2c;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.btn-cantidad:hover {
+    background: var(--color-rojo);
+}
+
+.cantidad {
+    font-size: 1.1rem;
+    font-weight: bold;
+    min-width: 20px;
+    text-align: center;
+    color: var(--color-texto);
+}
+
+.resumen {
+    width: 220px;
+    flex-shrink: 0;
+    background: #fff;
+    border: 0.5px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 1.25rem;
+}
+
+.resumen-label {
+    font-size: 13px;
+    color: #888;
+    margin: 0 0 12px;
+}
+
+.resumen-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.resumen-total span:first-child {
+    font-size: 14px;
+    color: #888;
+}
+
+.resumen-total span:last-child {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--color-texto);
+}
+
+.btn-confirmar {
+    width: 100%;
+    background: var(--color-rojo);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 11px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background .2s;
+}
+
+.btn-confirmar:hover {
+    background: var(--color-rojo-hover);
+}
+
+.vacio {
+    font-size: 1rem;
+    color: #bbb;
+    text-align: center;
+    padding: 40px 0;
+}
+
+@media (max-width: 700px) {
+    .carrito-layout {
+        flex-direction: column;
+    }
+    .resumen {
+        width: 100%;
+    }
+}

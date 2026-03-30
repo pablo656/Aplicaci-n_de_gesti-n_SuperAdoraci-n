@@ -37,10 +37,27 @@ class model_productos{
             }
         }
     }	
+    //Esta función sirve para mostrar todos los productos reservados de los cuales aun no se confirmado la reservas
+    public function buscar_reservas_incompletas($reservas_cookie){
+        $reservas=[];
 
+        foreach($reservas_cookie as $reserva_cookie){
+            
+            $stmt=$this->conn->prepare("SELECT * FROM productos WHERE id=? ORDER BY nombre");
+            $stmt->bind_param("i",$reserva_cookie["id"]);
+            if(!$stmt->execute()){
+                return false;
+            }
+            $resutado=$stmt->get_result();
+            while($row=$resutado->fetch_assoc()){
+                $reservas[]=$row;
+            }
+        }
+        return $reservas;
+    }
     //Buscar producto por nombre
     //IMPORTANTE!!!:Esta función se aplicara para un buscador el cual en el caso de escribir "pa" te devolvera pan,patata y todas las productos que empiecen por "pa"
-    function buscar_producto($nombre){
+    public function buscar_producto($nombre){
         $stmt=$this->conn->prepare("SELECT * FROM productos WHERE nombre LIKE ? ORDER BY nombre");
         $stmt->bind_param("s",$nombre);
         if(!$stmt->execute()){
@@ -53,7 +70,7 @@ class model_productos{
         }
         return $productos;
     }
-    function buscar_por_categoria($categoria){
+    public function buscar_por_categoria($categoria){
         $stmt=$this->conn->prepare("SELECT * FROM productos WHERE categoria=? ORDER BY nombre");
         $stmt->bind_param("s",$categoria);
         if(!$stmt->execute()){
@@ -66,7 +83,7 @@ class model_productos{
         }
         return $productos;
     }
-    function buscar_por_subcategoria($subcategoria){
+    public function buscar_por_subcategoria($subcategoria){
         $stmt=$this->conn->prepare("SELECT * FROM productos WHERE subcategoria=? ORDER BY nombre");
         $stmt->bind_param("s",$subcategoria);
         if(!$stmt->execute()){

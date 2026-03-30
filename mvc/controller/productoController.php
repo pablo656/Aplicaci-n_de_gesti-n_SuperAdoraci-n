@@ -15,6 +15,10 @@
             $productos=$this->model->mostrar_productos();
             require("../vista/catalogo.php");
         }
+        public function buscar_reservas_incompletas($ids){
+            $reservas=$this->model->buscar_reservas_incompletas($ids);
+            require("../vista/carrito.php");
+        }
 
         // Busca productos por nombre y carga el catálogo con los resultados
         function buscar_producto($nombre){

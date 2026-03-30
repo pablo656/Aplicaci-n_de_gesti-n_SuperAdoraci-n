@@ -49,17 +49,27 @@ CREATE EVENT IF NOT EXISTS evt_borrar_pedidos
     DO
         DELETE FROM pedidos WHERE fecha < DATE_SUB(NOW(), INTERVAL 30 DAY);
 
+-- COMIDAS (catálogo de comidas que se pueden pedir)
+CREATE TABLE comidas (
+    id          INT AUTO_INCREMENT PRIMARY KEY,
+    nombre      VARCHAR(150) NOT NULL,
+    descripcion VARCHAR(255) DEFAULT NULL,
+    precio      DECIMAL(10,2) NOT NULL,
+    disponible  BIT DEFAULT 1,
+    url_imagen  VARCHAR(500) DEFAULT NULL
+);
+
 -- PEDIDOS (se borran a los 30 días)
 CREATE TABLE pedidos (
     id          INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario  INT NOT NULL,
-    cantidad  INT NOT NULL,
-    nombre     VARCHAR(100) DEFAULT NULL,
-    descripción     VARCHAR(100) DEFAULT NULL,
+    id_comida   INT NOT NULL,
+    cantidad    INT NOT NULL,
     mensaje     VARCHAR(100) DEFAULT NULL,
     realizado   INT DEFAULT 0,
     fecha       DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
+    FOREIGN KEY (id_comida)  REFERENCES comidas(id)
 );
 
 CREATE TRIGGER trg_reserva_insert

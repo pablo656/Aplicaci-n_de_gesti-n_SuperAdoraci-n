@@ -35,6 +35,7 @@
 
         // Filtra productos por subcategoría y carga el catálogo
         function buscar_por_subcategoria($subcategoria){
+           
             $productos=$this->model->buscar_por_subcategoria($subcategoria);
             require("../vista/catalogo.php");
         }

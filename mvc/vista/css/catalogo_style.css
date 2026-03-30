@@ -200,6 +200,36 @@ hr {
     padding: 60px 20px;
     grid-column: 1 / -1;
 }
+.contador {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn-cantidad {
+    width: 32px;
+    height: 32px;
+    background: #1a1c2c;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-cantidad:hover {
+    background: #e31b23;
+}
+
+.cantidad {
+    font-size: 1.1rem;
+    font-weight: bold;
+    min-width: 20px;
+    text-align: center;
+}
 /*Subcategoias*/
 .subcategorias {
     margin-top: 0;

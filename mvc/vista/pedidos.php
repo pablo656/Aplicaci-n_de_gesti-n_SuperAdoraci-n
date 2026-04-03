@@ -2,8 +2,28 @@
     <h1>Nuestro menú</h1>
     <h2>Elige lo que quieres pedir</h2>
 
-    <?php if (isset($pedido_ok) && $pedido_ok): ?>
+    <?php
+        $mostrar_ok = (!empty($pedido_ok)) || (!empty($_SESSION['pedido_ok']));
+        if (!empty($_SESSION['pedido_ok'])) unset($_SESSION['pedido_ok']);
+
+        $pedidos_cookie = isset($_COOKIE['pedidos']) ? json_decode($_COOKIE['pedidos'], true) : [];
+        $cantidades_cookie = [];
+        foreach ($pedidos_cookie as $p) {
+            $cantidades_cookie[(int)$p['id']] = (int)$p['cantidad'];
+        }
+    ?>
+    <?php if ($mostrar_ok): ?>
         <p class="aviso-ok">¡Pedido realizado correctamente!</p>
+    <?php endif; ?>
+
+    <?php
+        $errores_mostrar = !empty($errores) ? $errores : (!empty($_SESSION['pedido_errores']) ? $_SESSION['pedido_errores'] : []);
+        if (!empty($_SESSION['pedido_errores'])) unset($_SESSION['pedido_errores']);
+    ?>
+    <?php if (!empty($errores_mostrar)): ?>
+        <?php foreach ($errores_mostrar as $error): ?>
+            <p class="aviso-error"><?= htmlspecialchars($error) ?></p>
+        <?php endforeach; ?>
     <?php endif; ?>
 
     <div class="lista-comidas">
@@ -61,31 +81,5 @@
     </div>
 </div>
 
-<script>
-function abrirModal(idComida, nombre) {
-    document.getElementById('modalIdComida').value = idComida;
-    document.getElementById('modalTitulo').textContent = 'Pedir: ' + nombre;
-    document.getElementById('cantidad').value = 1;
-    document.getElementById('cantidadDisplay').textContent = 1;
-    document.getElementById('mensaje').value = '';
-    document.querySelector('.btn-menos').style.visibility = 'hidden';
-    document.getElementById('modalPedir').classList.add('activo');
-}
-
-function cambiarCantidad(delta) {
-    const input = document.getElementById('cantidad');
-    const display = document.getElementById('cantidadDisplay');
-    const nuevo = Math.max(1, parseInt(input.value) + delta);
-    input.value = nuevo;
-    display.textContent = nuevo;
-    document.querySelector('.btn-menos').style.visibility = nuevo <= 1 ? 'hidden' : 'visible';
-}
-
-function cerrarModal() {
-    document.getElementById('modalPedir').classList.remove('activo');
-}
-
-document.getElementById('modalPedir').addEventListener('click', function(e) {
-    if (e.target === this) cerrarModal();
-});
+<script src="js/pedidos.js">
 </script>

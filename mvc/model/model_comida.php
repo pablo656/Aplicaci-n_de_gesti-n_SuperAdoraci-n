@@ -25,6 +25,23 @@ class model_comida {
         return $comidas;
     }
 
+    // Devuelve las comidas cuyos IDs están en el cookie de pedidos
+    public function buscar_pedidos_cookie($pedidos_cookie) {
+        $pedidos = [];
+        foreach ($pedidos_cookie as $item) {
+            $stmt = $this->conn->prepare("SELECT * FROM comidas WHERE id=?");
+            $stmt->bind_param("i", $item["id"]);
+            if (!$stmt->execute()) return false;
+            $resultado = $stmt->get_result();
+            while ($row = $resultado->fetch_assoc()) {
+                $row['_uid']      = $item['uid'] ?? $item['id'];
+                $row['_cantidad'] = $item['cantidad'] ?? 1;
+                $pedidos[] = $row;
+            }
+        }
+        return $pedidos;
+    }
+
     // Añadir una comida
     public function añadir_comida($nombre, $descripcion, $precio, $disponible, $imagen) {
         $carpeta = "../imagenes/";

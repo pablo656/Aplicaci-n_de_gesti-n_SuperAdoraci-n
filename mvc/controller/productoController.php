@@ -15,7 +15,7 @@
             $productos=$this->model->mostrar_productos();
             require("../vista/catalogo.php");
         }
-        public function buscar_reservas_incompletas($ids){
+        public function buscar_reservas_incompletas($ids, $pedidos_carrito=[]){
             $reservas=$this->model->buscar_reservas_incompletas($ids);
             require("../vista/carrito.php");
         }
@@ -69,7 +69,7 @@
                 $errores[]="La categoria es obligatoria";
             }
             // Si no se indica subcategoría se guarda como null
-            if(emty($subcategoria)){
+            if(empty($subcategoria)){
                 $subcategoria=null;
             }
             $tiposPermitidos = ['image/jpeg', 'image/jpg', 'image/png'];

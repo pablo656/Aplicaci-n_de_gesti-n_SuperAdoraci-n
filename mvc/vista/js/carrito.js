@@ -28,6 +28,33 @@ function cambiarCantidad(id, cambio,precio){
     }
     contenedor_precio.textContent = (total).toFixed(2) + " €";
 }
+function borrarPedido(id){
+    fetch("?action=borrar_pedido", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "id_comida=" + id
+    }).then(() => {
+        window.location.reload();
+    });
+}
+
+function cambiarCantidadPedido(id, cambio, precio){
+    const span = document.getElementById("cantidad-p-" + id);
+    const nuevo = Math.max(1, parseInt(span.textContent) + cambio);
+    span.textContent = nuevo;
+    document.getElementById("restar-p-" + id).style.display = nuevo <= 1 ? "none" : "block";
+
+    fetch("?action=actualizar_cantidad_pedido", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "id_comida=" + id + "&cantidad=" + nuevo
+    });
+
+    const contenedor = document.getElementById("contenedor_precio");
+    let total = parseFloat(contenedor.textContent);
+    contenedor.textContent = (total + cambio * precio).toFixed(2) + " €";
+}
+
 function borrarReserva(id){
     fetch("?action=borrar_reserva", {
         method: "POST",

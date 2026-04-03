@@ -15,6 +15,9 @@
             $productos=$this->model->mostrar_productos();
             require("../vista/catalogo.php");
         }
+        public function comprobar_stock($id,$cantidad){
+            return $this->model->comprobar_stock($id,$cantidad);
+        }
         public function buscar_reservas_incompletas($ids, $pedidos_carrito=[]){
             $reservas=$this->model->buscar_reservas_incompletas($ids);
             require("../vista/carrito.php");

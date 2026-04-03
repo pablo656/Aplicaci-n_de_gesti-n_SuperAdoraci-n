@@ -36,7 +36,25 @@ class model_productos{
                 return false;
             }
         }
-    }	
+    }
+    public function comprobar_stock($id,$cantidad){
+        $stmt=$this->conn->prepare("SELECT * FROM productos WHERE id=?");
+        $stmt->bind_param("i",$id);
+         if(!$stmt->execute()){
+                return false;
+         }
+         $producto=null;
+         $result=$stmt->get_result();
+         while($row=$result->fetch_assoc()){
+            $producto=$row;
+         }
+         if($producto["stock"]<$cantidad){
+            return false;
+         }else{
+            return true;
+         }
+
+    }
     //Esta función sirve para mostrar todos los productos reservados de los cuales aun no se confirmado la reservas
     public function buscar_reservas_incompletas($reservas_cookie){
         $reservas=[];

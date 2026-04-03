@@ -2,62 +2,79 @@
     session_start();
     require_once("../controller/productoController.php");
     require_once("../controller/Controller_pedidos.php");
-    $titulo="Carrito";
-    $css="<link rel='stylesheet' href='css/carrito.css'>";
-    $controller=new ProductoController();
-    $controller_pedidos=new Controller_pedidos();
-    $action=$_GET["action"] ?? "list";
-    require("../vista/layerHeader.php");
-    if($action=="reservar"){
+    $controller = new ProductoController();
+    $controller_pedidos = new Controller_pedidos();
+    $action = $_GET["action"] ?? "list";
 
-      }else if($action == "actualizar_cantidad"){
+    // ← Acciones AJAX antes del header
+    if($action == "actualizar_cantidad"){
         $id_producto = $_POST["id_producto"];
         $cantidad = (int)$_POST["cantidad"];
-
         $reservas = isset($_COOKIE["reservas"]) ? json_decode($_COOKIE["reservas"], true) : [];
-
         foreach($reservas as &$reserva){
             if($reserva["id"] == $id_producto){
                 $reserva["cantidad"] = $cantidad;
                 break;
             }
         }
-
         setcookie("reservas", json_encode($reservas), time() + (60 * 60 * 24), "/");
         exit();
-    }else if($action=="borrar_reserva"){
-         $reservas = isset($_COOKIE["reservas"]) ? json_decode($_COOKIE["reservas"], true) : [];
-          $id_producto = $_POST["id_producto"];
-         foreach($reservas as $indice=>$reserva){
-            if($reserva["id"]==$id_producto){
+
+    }else if($action == "borrar_reserva"){
+        $reservas = isset($_COOKIE["reservas"]) ? json_decode($_COOKIE["reservas"], true) : [];
+        $id_producto = $_POST["id_producto"];
+        foreach($reservas as $indice => $reserva){
+            if($reserva["id"] == $id_producto){
                 unset($reservas[$indice]);
-                $valor_cookie = json_encode($reservas);
-                setcookie("reservas", $valor_cookie, time() + (60 * 60 * 24), "/");
+                setcookie("reservas", json_encode(array_values($reservas)), time() + (60 * 60 * 24), "/");
                 exit();
             }
-         }
-    }else if($action=="borrar_pedido"){
+        }
+        exit();
+
+    }else if($action == "borrar_pedido"){
         $pedidos = isset($_COOKIE["pedidos"]) ? json_decode($_COOKIE["pedidos"], true) : [];
         $id_comida = $_POST["id_comida"];
-        foreach($pedidos as $indice=>$pedido){
-            if($pedido["id"]==$id_comida){
+        foreach($pedidos as $indice => $pedido){
+            if($pedido["id"] == $id_comida){
                 unset($pedidos[$indice]);
                 setcookie("pedidos", json_encode(array_values($pedidos)), time() + (60 * 60 * 24), "/");
                 exit();
             }
         }
-    }else if($action=="actualizar_cantidad_pedido"){
+        exit();
+
+    }else if($action == "actualizar_cantidad_pedido"){
         $pedidos = isset($_COOKIE["pedidos"]) ? json_decode($_COOKIE["pedidos"], true) : [];
         $id_comida = $_POST["id_comida"];
         $cantidad = (int)$_POST["cantidad"];
         foreach($pedidos as &$pedido){
-            if($pedido["id"]==$id_comida){
+            if($pedido["id"] == $id_comida){
                 $pedido["cantidad"] = $cantidad;
                 break;
             }
         }
         setcookie("pedidos", json_encode($pedidos), time() + (60 * 60 * 24), "/");
         exit();
+
+    }else if($action == "comprobar_stock"){
+        $id_producto = (int)$_POST["id_producto"];
+        $cantidad = (int)$_POST["cantidad"];
+        if($controller->comprobar_stock($id_producto, $cantidad)){
+            echo json_encode(["ok" => true]);
+        }else{
+            echo json_encode(["ok" => false]);
+        }
+        exit();
+    }
+
+    // ← Header después de las acciones AJAX
+    $titulo = "Carrito";
+    $css = "<link rel='stylesheet' href='css/carrito.css'>";
+    require("../vista/layerHeader.php");
+
+    if($action == "reservar"){
+
     }else{
         $reservas_cookie = isset($_COOKIE["reservas"]) ? json_decode($_COOKIE["reservas"], true) : [];
         $pedidos_cookie  = isset($_COOKIE["pedidos"])  ? json_decode($_COOKIE["pedidos"],  true) : [];

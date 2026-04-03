@@ -48,6 +48,11 @@ class Controller_pedidos {
         require __DIR__ . "/../vista/pedidos.php";
     }
 
+    // Devuelve las comidas del cookie de pedidos (para mostrar en el carrito)
+    public function buscar_pedidos_cookie($pedidos_cookie) {
+        return $this->model_comida->buscar_pedidos_cookie($pedidos_cookie);
+    }
+
     // Valida los datos y crea un nuevo pedido
     public function crear_pedido($id_usuario, $id_comida, $cantidad, $mensaje) {
         $errores = [];
@@ -62,13 +67,16 @@ class Controller_pedidos {
             $errores[] = "La cantidad debe ser un número mayor que 0";
         }
 
-        $pedido_ok = false;
-        if (empty($errores)) {
-            $this->model_pedidos->crear_pedido($id_usuario, $id_comida, $cantidad, $mensaje);
-            $pedido_ok = true;
+        if (!empty($errores)) {
+            $_SESSION['pedido_errores'] = $errores;
+            return false;
         }
 
-        $comidas = $this->model_comida->mostrar_comidas();
-        require __DIR__ . "/../vista/pedidos.php";
+        $ok = $this->model_pedidos->crear_pedido($id_usuario, $id_comida, $cantidad, $mensaje);
+        if (!$ok) {
+            $_SESSION['pedido_errores'] = ["No se pudo guardar el pedido en la base de datos."];
+            return false;
+        }
+        return true;
     }
 }

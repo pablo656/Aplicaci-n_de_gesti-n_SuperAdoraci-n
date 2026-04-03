@@ -3,10 +3,23 @@
     --color-rojo:       #e31b23;
     --color-rojo-hover: #b3141a;
     --color-verde:      #3b6d11;
-    --gap-lateral:      clamp(1rem, 3vw, 2.5rem);
+    --gris-fondo:       #f6f8fb;
+    --gris-card:        #ffffff;
+    --gap-lateral:      clamp(1rem, 3vw, 2rem);
 }
 
 body {
+    background: linear-gradient(180deg, #f6f8fb 0%, #e9ecf2 100%);
+    color: var(--color-texto);
+}
+
+main {
+    background: var(--gris-fondo);
+    border: 0;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(15, 24, 48, 0.09);
+    padding: 1.35rem;
+
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -18,36 +31,127 @@ body {
 h1 {
     font-size: clamp(1.4rem, 2.5vw, 1.9rem);
     font-weight: 700;
-    margin: var(--gap-lateral) var(--gap-lateral) 4px;
+    margin: 0 0 4px;
+    padding-left: var(--gap-lateral);
+}
+
+.carrito-layout {
+    padding-left: var(--gap-lateral);
+}
+
+main h2 {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #888;
+    margin: 0 0 12px;
+    padding-left: 0;
+}
+
+.carrito-sidenav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 130px;
+    flex-shrink: 0;
+    padding-top: 2px;
+}
+
+.carrito-sidenav a,
+.carrito-sidenav .sidenav-activo {
+    font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+    font-weight: 700;
+    text-decoration: none;
+    color: #ccc;
+    transition: color .15s;
+}
+
+.carrito-sidenav a:hover {
+    color: #888;
+}
+
+.carrito-sidenav .sidenav-activo {
+    color: var(--color-texto);
 }
 
 h2 {
     font-size: 0.95rem;
     font-weight: 400;
     color: #888;
-    margin: 0 var(--gap-lateral) 12px;
+    margin: 0 0 12px;
 }
 
 hr {
     border: none;
     border-top: 1px solid #e0e0e0;
-    margin: 0 var(--gap-lateral) 24px;
+    margin: 0 0 24px;
+}
+
+.carrito-outer {
+    display: flex;
+    gap: 32px;
+    padding: var(--gap-lateral);
+    box-sizing: border-box;
+    align-items: flex-start;
+}
+
+.carrito-side {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex-shrink: 0;
+    width: 120px;
+    padding-top: 2px;
+}
+
+.carrito-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.tab {
+    font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+    font-weight: 700;
+    color: #ccc;
+    text-decoration: none;
+    transition: color .15s;
+}
+
+.tab:hover {
+    color: #888;
+}
+
+.tab-activo {
+    color: var(--color-texto);
 }
 
 .carrito-layout {
     display: flex;
     gap: 24px;
-    align-items: flex-start;
-    padding: 0 var(--gap-lateral) var(--gap-lateral);
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
+    align-items: stretch;
+    flex: 1;
+    min-width: 0;
     box-sizing: border-box;
 }
 
 main {
     flex: 1;
     min-width: 0;
+}
+
+main h2 {
+    margin-top: 24px;
+    padding-left: 0.7rem;
+    color: #57606a;
+    letter-spacing: 0.03em;
+}
+
+main h2:first-child {
+    margin-top: 0;
+}
+
+main hr {
+    margin-left: 0;
 }
 
 .lista-reservas {
@@ -176,12 +280,47 @@ main {
 }
 
 .resumen {
-    width: 220px;
+    width: 260px;
     flex-shrink: 0;
     background: #fff;
-    border: 0.5px solid #e0e0e0;
-    border-radius: 12px;
-    padding: 1.25rem;
+    border: 1px solid rgba(70, 95, 150, 0.15);
+    border-radius: 16px;
+    padding: 1.4rem;
+    position: sticky;
+    top: 1.1rem;
+    align-self: flex-start;
+    box-shadow: 0 5px 22px rgba(16, 28, 62, 0.12);
+}
+
+.sin-items {
+    color: #7a84a4;
+    font-size: 0.9rem;
+    margin: .5rem 0 0;
+}
+
+.btn-confirmar {
+    width: 100%;
+    background: linear-gradient(90deg, #e0202e, #d91b40);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    transition: background .2s, transform .2s;
+}
+
+.btn-confirmar:hover {
+    background: linear-gradient(90deg, #bf1b23, #b21435);
+    transform: translateY(-1px);
+}
+
+.btn-confirmar:disabled {
+    background: #bbb;
+    cursor: not-allowed;
 }
 
 .resumen-label {

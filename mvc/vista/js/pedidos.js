@@ -34,9 +34,14 @@ function ajustarPedido(idComida, cambio) {
     .then(response => response.json())
     .then(() => {
         const elemento = document.getElementById('cantidad-pedido-' + idComida);
-        if (elemento) {
-            let valor = parseInt(elemento.textContent) || 0;
-            valor = Math.max(0, valor + cambio);
+        if (!elemento) return;
+        const valor = Math.max(0, (parseInt(elemento.textContent) || 0) + cambio);
+        if (valor <= 0) {
+            const accion = document.getElementById('accion-' + idComida);
+            const nombre = accion.dataset.nombre;
+            const precioHTML = accion.querySelector('.precio').outerHTML;
+            accion.innerHTML = precioHTML + `<button class="btn-pedir" onclick='abrirModal(${idComida}, ${JSON.stringify(nombre)})'>&#43;</button>`;
+        } else {
             elemento.textContent = valor;
         }
     });

@@ -41,12 +41,21 @@
                             <p class="descripcion"><?= htmlspecialchars($comida['descripcion']) ?></p>
                         <?php endif; ?>
                     </div>
-                    <div class="item-accion">
+                    <div class="item-accion" id="accion-<?= (int)$comida['id'] ?>" data-nombre="<?= htmlspecialchars($comida['nombre'], ENT_QUOTES) ?>">
                         <p class="precio"><?= number_format($comida['precio'], 2) ?> €</p>
-                        <button
-                            class="btn-pedir"
-                            onclick="abrirModal(<?= (int)$comida['id'] ?>, <?= htmlspecialchars(json_encode($comida['nombre'])) ?>)"
-                        >&#43;</button>
+                        <?php $qty = $cantidades_cookie[(int)$comida['id']] ?? 0; ?>
+                        <?php if ($qty > 0): ?>
+                            <div class="contador-inline">
+                                <button type="button" class="btn-menos-inline" onclick="ajustarPedido(<?= (int)$comida['id'] ?>, -1)">&#8722;</button>
+                                <span id="cantidad-pedido-<?= (int)$comida['id'] ?>"><?= $qty ?></span>
+                                <button type="button" class="btn-mas-inline" onclick="ajustarPedido(<?= (int)$comida['id'] ?>, 1)">&#43;</button>
+                            </div>
+                        <?php else: ?>
+                            <button
+                                class="btn-pedir"
+                                onclick="abrirModal(<?= (int)$comida['id'] ?>, <?= htmlspecialchars(json_encode($comida['nombre'])) ?>)"
+                            >&#43;</button>
+                        <?php endif; ?>
                     </div>
                 </div>
             <?php endforeach; ?>

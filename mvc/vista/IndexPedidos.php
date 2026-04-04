@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Redirigir al login si no hay sesión iniciada
 if (!isset($_SESSION["id"])) {
     header("Location: IndexHome.php?action=log");
     exit();
@@ -10,12 +9,12 @@ require_once("../controller/Controller_pedidos.php");
 $controller = new Controller_pedidos();
 $action = $_GET["action"] ?? "list";
 
-$titulo = "Pedidos";
-$css = "<link rel='stylesheet' href='css/pedidos.css'>";
-require("../vista/layerHeader.php");
-
 if ($action === "list") {
+    $titulo = "Pedidos";
+    $css = "<link rel='stylesheet' href='css/pedidos.css'>";
+    require("../vista/layerHeader.php");
     $controller->mostrar_catalogo();
+    require("../vista/footer.html");
 
 } else if ($action === "crear") {
     $id_comida = $_POST["id_comida"] ?? null;
@@ -38,7 +37,7 @@ if ($action === "list") {
             break;
         }
     }
-    unset($pedido); // cleanup reference
+    unset($pedido);
 
     if (!$encontrado) {
         $pedidos[] = ["id" => $id_comida, "cantidad" => (int)$cantidad];
@@ -81,6 +80,4 @@ if ($action === "list") {
     header("Location: IndexPedidos.php?action=list");
     exit();
 }
-
-require("../vista/footer.html");
 ?>

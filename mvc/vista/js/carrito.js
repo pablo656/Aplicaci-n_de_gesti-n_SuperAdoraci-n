@@ -1,9 +1,20 @@
+let formulario_reservas = document.getElementById("confirmar_reservas");
+formulario_reservas.addEventListener("submit", confirmar,true);
+
+function confirmar(event){
+    event.preventDefault();
+    if(confirm("¿Deseas realizar esta reserva?")){
+        event.target.submit();
+    }
+}
 async function cambiarCantidad(id, cambio, precio){
     const span = document.getElementById("cantidad-" + id);
     let cantidad = parseInt(span.textContent) + cambio;
     let boton_restar = document.getElementById("restar-" + id);
-    let boton_borar = document.getElementById("borrar-" + id);
-    let contenedor_precio = document.getElementById("contenedor_precio");
+    let precio_item = document.getElementById("precio-" + id);
+    let precio_reserva_aside = document.getElementById("precio-reserva-" + id);
+    let subtotal_reservas = document.getElementById("subtotal_reservas");
+    let contenedor_total = document.getElementById("contenedor_precio");
 
     if(cambio == 1){
         const ok = await comprobarStock(id, cantidad);
@@ -18,19 +29,22 @@ async function cambiarCantidad(id, cambio, precio){
 
     span.textContent = cantidad;
 
+    precio_item.textContent = (cantidad * precio).toFixed(2) + " €";
+    precio_reserva_aside.textContent = (cantidad * precio).toFixed(2) + " €";
+
+    let subtotal = parseFloat(subtotal_reservas.textContent);
+    subtotal += cambio * precio;
+    subtotal_reservas.textContent = subtotal.toFixed(2) + " €";
+
+    let total = parseFloat(contenedor_total.textContent);
+    total += cambio * precio;
+    contenedor_total.textContent = total.toFixed(2) + " €";
+
     fetch("?action=actualizar_cantidad", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: "id_producto=" + id + "&cantidad=" + cantidad
     });
-
-    let total = parseInt(contenedor_precio.textContent);
-    if(cambio == 1){
-        total += precio;
-    }else{
-        total -= precio;
-    }
-    contenedor_precio.textContent = total.toFixed(2) + " €";
 }
 
 async function comprobarStock(id, cantidad){
@@ -61,18 +75,32 @@ function borrarPedido(id){
 function cambiarCantidadPedido(id, cambio, precio){
     const span = document.getElementById("cantidad-p-" + id);
     const nuevo = Math.max(1, parseInt(span.textContent) + cambio);
+    let precio_item = document.getElementById("precio-p-" + id);
+    let precio_pedido_aside = document.getElementById("precio-pedido-" + id);
+    let subtotal_pedidos = document.getElementById("subtotal_pedidos");
+    let contenedor_total = document.getElementById("contenedor_precio");
+
+    if(nuevo === parseInt(span.textContent)) return;
+
     span.textContent = nuevo;
     document.getElementById("restar-p-" + id).style.display = nuevo <= 1 ? "none" : "block";
+
+    precio_item.textContent = (nuevo * precio).toFixed(2) + " €";
+    precio_pedido_aside.textContent = (nuevo * precio).toFixed(2) + " €";
+
+    let subtotal = parseFloat(subtotal_pedidos.textContent);
+    subtotal += cambio * precio;
+    subtotal_pedidos.textContent = subtotal.toFixed(2) + " €";
+
+    let total = parseFloat(contenedor_total.textContent);
+    total += cambio * precio;
+    contenedor_total.textContent = total.toFixed(2) + " €";
 
     fetch("?action=actualizar_cantidad_pedido", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: "id_comida=" + id + "&cantidad=" + nuevo
     });
-
-    const contenedor = document.getElementById("contenedor_precio");
-    let total = parseFloat(contenedor.textContent);
-    contenedor.textContent = (total + cambio * precio).toFixed(2) + " €";
 }
 
 function borrarReserva(id){

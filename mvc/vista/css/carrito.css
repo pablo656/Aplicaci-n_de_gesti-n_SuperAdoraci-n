@@ -4,73 +4,22 @@
     --color-rojo-hover: #b3141a;
     --color-verde:      #3b6d11;
     --gris-fondo:       #f6f8fb;
-    --gris-card:        #ffffff;
     --gap-lateral:      clamp(1rem, 3vw, 2rem);
 }
 
 body {
-    background: linear-gradient(180deg, #f6f8fb 0%, #e9ecf2 100%);
+    background: #f6f8fb;
     color: var(--color-texto);
-}
-
-main {
-    background: var(--gris-fondo);
-    border: 0;
-    border-radius: 14px;
-    box-shadow: 0 8px 24px rgba(15, 24, 48, 0.09);
-    padding: 1.35rem;
-
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
-    background: #f7f7f8;
-    color: var(--color-texto);
 }
 
 h1 {
     font-size: clamp(1.4rem, 2.5vw, 1.9rem);
     font-weight: 700;
-    margin: 0 0 4px;
-    padding-left: var(--gap-lateral);
-}
-
-.carrito-layout {
-    padding-left: var(--gap-lateral);
-}
-
-main h2 {
-    font-size: 0.95rem;
-    font-weight: 400;
-    color: #888;
-    margin: 0 0 12px;
-    padding-left: 0;
-}
-
-.carrito-sidenav {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    width: 130px;
-    flex-shrink: 0;
-    padding-top: 2px;
-}
-
-.carrito-sidenav a,
-.carrito-sidenav .sidenav-activo {
-    font-size: clamp(1.4rem, 2.5vw, 1.9rem);
-    font-weight: 700;
-    text-decoration: none;
-    color: #ccc;
-    transition: color .15s;
-}
-
-.carrito-sidenav a:hover {
-    color: #888;
-}
-
-.carrito-sidenav .sidenav-activo {
-    color: var(--color-texto);
+    margin: var(--gap-lateral) var(--gap-lateral) 4px;
 }
 
 h2 {
@@ -86,51 +35,14 @@ hr {
     margin: 0 0 24px;
 }
 
-.carrito-outer {
-    display: flex;
-    gap: 32px;
-    padding: var(--gap-lateral);
-    box-sizing: border-box;
-    align-items: flex-start;
-}
-
-.carrito-side {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    flex-shrink: 0;
-    width: 120px;
-    padding-top: 2px;
-}
-
-.carrito-tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 24px;
-}
-
-.tab {
-    font-size: clamp(1.4rem, 2.5vw, 1.9rem);
-    font-weight: 700;
-    color: #ccc;
-    text-decoration: none;
-    transition: color .15s;
-}
-
-.tab:hover {
-    color: #888;
-}
-
-.tab-activo {
-    color: var(--color-texto);
-}
-
 .carrito-layout {
     display: flex;
     gap: 24px;
-    align-items: stretch;
-    flex: 1;
-    min-width: 0;
+    align-items: flex-start;
+    padding: 0 var(--gap-lateral) var(--gap-lateral);
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
     box-sizing: border-box;
 }
 
@@ -141,7 +53,6 @@ main {
 
 main h2 {
     margin-top: 24px;
-    padding-left: 0.7rem;
     color: #57606a;
     letter-spacing: 0.03em;
 }
@@ -149,15 +60,20 @@ main h2 {
 main h2:first-child {
     margin-top: 0;
 }
-
-main hr {
-    margin-left: 0;
+.aviso-ok-reservas{
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
 }
-
 .lista-reservas {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    margin-bottom: 24px;
 }
 
 .item-reserva {
@@ -237,9 +153,9 @@ main hr {
     display: flex;
     align-items: center;
     gap: 4px;
-    padding: 14px 24px;
+    padding: 7px 12px;
     transition: background .2s;
-    margin-right: 16px; 
+    margin-right: 16px;
 }
 
 .btn-eliminar:hover {
@@ -279,6 +195,7 @@ main hr {
     color: var(--color-texto);
 }
 
+/* Resumen */
 .resumen {
     width: 260px;
     flex-shrink: 0;
@@ -292,48 +209,72 @@ main hr {
     box-shadow: 0 5px 22px rgba(16, 28, 62, 0.12);
 }
 
-.sin-items {
-    color: #7a84a4;
-    font-size: 0.9rem;
-    margin: .5rem 0 0;
-}
-
-.btn-confirmar {
-    width: 100%;
-    background: linear-gradient(90deg, #e0202e, #d91b40);
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    padding: 12px;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    transition: background .2s, transform .2s;
-}
-
-.btn-confirmar:hover {
-    background: linear-gradient(90deg, #bf1b23, #b21435);
-    transform: translateY(-1px);
-}
-
-.btn-confirmar:disabled {
-    background: #bbb;
-    cursor: not-allowed;
-}
-
 .resumen-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--color-texto);
+    margin: 0 0 16px;
+}
+
+.resumen-seccion {
+    font-size: 12px;
+    font-weight: 500;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 8px;
+}
+
+.resumen-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.resumen-nombre {
+    font-size: 13px;
+    color: var(--color-texto);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    flex: 1;
+}
+
+.resumen-precio {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-texto);
+    white-space: nowrap;
+}
+
+.resumen-hr {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 10px 0;
+}
+
+.resumen-subtotal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-size: 13px;
     color: #888;
-    margin: 0 0 12px;
+    margin-bottom: 10px;
+}
+
+.resumen-separador {
+    height: 1px;
+    background: #e0e0e0;
+    margin: 20px 0;
 }
 
 .resumen-total {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    margin-top: 4px;
 }
 
 .resumen-total span:first-child {
@@ -358,10 +299,33 @@ main hr {
     font-weight: 500;
     cursor: pointer;
     transition: background .2s;
+    margin-bottom: 0;
 }
 
 .btn-confirmar:hover {
     background: var(--color-rojo-hover);
+}
+.aviso-ok-pedidos{
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+.btn-confirmar-pedidos {
+   background: var(--color-rojo);
+}
+
+.btn-confirmar-pedidos:hover {
+     background: var(--color-rojo-hover);
+}
+
+.sin-items {
+    color: #7a84a4;
+    font-size: 0.9rem;
+    margin: 0 0 8px;
 }
 
 .vacio {
@@ -377,5 +341,6 @@ main hr {
     }
     .resumen {
         width: 100%;
+        position: static;
     }
 }

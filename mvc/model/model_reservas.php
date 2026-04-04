@@ -37,12 +37,47 @@ class model_reservas{
         if (!$this->consultar_reserva($id_producto, $cantidad)) {
             return false;
         }
-        $sql = "INSERT INTO reservas (id_usuario, id_producto,cantidad) VALUES (?, ?, ?)";
+        //Comprobar que haya alguna reserva del mismo producto y usuario, para en vez de crear una nueva, actualizar la anterior
+        //IMPORTANTE CAMBIAR en cado de añadir campo, de completado en reservas
+        $sql="SELECT * FROM reservas WHERE id_usuario=? AND id_producto=?";
         $stmt = $this->conn->prepare($sql);
         if ($stmt === false) {
             return false;
         }
-        $stmt->bind_param("iii", $id_usuario, $id_producto, $cantidad);
+        $stmt->bind_param("ii",$id_usuario,$id_producto);
+        $stmt->execute();
+        $result=$stmt->get_result();
+        $reservas=[];
+        while($row=$result->fetch_assoc()){
+            $reservas[]=$row;
+        }
+        
+        $stmt->close();
+        if(empty($reservas)){
+            $sql = "INSERT INTO reservas (id_usuario, id_producto,cantidad) VALUES (?, ?, ?)";
+            $stmt = $this->conn->prepare($sql);
+            if ($stmt === false) {
+                return false;
+            }
+            $stmt->bind_param("iii", $id_usuario, $id_producto, $cantidad);
+            $result = $stmt->execute();
+            $stmt->close();
+        }else{
+            $sql="UPDATE reservas SET cantidad=cantidad+? WHERE id_usuario=? AND id_producto=?";
+             $stmt = $this->conn->prepare($sql);
+            if ($stmt === false) {
+                return false;
+            }
+            $stmt->bind_param("iii",$cantidad,$id_usuario,$id_producto);
+            $result = $stmt->execute();
+            $stmt->close();
+        }
+        $sql="UPDATE productos SET stock=stock-? WHERE id=?";
+        $stmt = $this->conn->prepare($sql);
+        if ($stmt === false) {
+            return false;
+        }
+        $stmt->bind_param("ii", $cantidad, $id_producto);
         $result = $stmt->execute();
         $stmt->close();
         return $result;

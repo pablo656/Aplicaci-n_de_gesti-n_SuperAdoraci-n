@@ -1,33 +1,53 @@
-function cambiarCantidad(id, cambio,precio){
+async function cambiarCantidad(id, cambio, precio){
     const span = document.getElementById("cantidad-" + id);
     let cantidad = parseInt(span.textContent) + cambio;
-    let boton_restar=document.getElementById("restar-"+id);
-    let boton_borar=document.getElementById("borrar-"+id);
-    let contenedor_precio=document.getElementById("contenedor_precio");
+    let boton_restar = document.getElementById("restar-" + id);
+    let boton_borar = document.getElementById("borrar-" + id);
+    let contenedor_precio = document.getElementById("contenedor_precio");
+
+    if(cambio == 1){
+        const ok = await comprobarStock(id, cantidad);
+        if(!ok) return false;
+    }
+
     if(cantidad == 1){
-       boton_restar.style.display="none";
-       
+        boton_restar.style.display = "none";
     }else{
-        boton_restar.style.display="block";
-        
+        boton_restar.style.display = "block";
     }
 
     span.textContent = cantidad;
 
-    // Enviar al servidor via fetch
     fetch("?action=actualizar_cantidad", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: "id_producto=" + id + "&cantidad=" + cantidad
     });
-    let total=parseInt(contenedor_precio.textContent);
-    if(cambio==1){
-        total+=precio;
+
+    let total = parseInt(contenedor_precio.textContent);
+    if(cambio == 1){
+        total += precio;
     }else{
-        total-=precio;
+        total -= precio;
     }
-    contenedor_precio.textContent = (total).toFixed(2) + " €";
+    contenedor_precio.textContent = total.toFixed(2) + " €";
 }
+
+async function comprobarStock(id, cantidad){
+    const r = await fetch("?action=comprobar_stock", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "id_producto=" + id + "&cantidad=" + cantidad
+    });
+    const data = await r.json();
+    if(data.ok){
+        return true;
+    }else{
+        alert("No queda más stock de este producto");
+        return false;
+    }
+}
+
 function borrarPedido(id){
     fetch("?action=borrar_pedido", {
         method: "POST",
@@ -61,10 +81,10 @@ function borrarReserva(id){
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: "id_producto=" + id
     }).then(() => {
-        window.location.reload(); // ← recargar la página tras borrar
+        window.location.reload();
     });
-
 }
+
 function inicializar(){
     let contadores = document.getElementsByClassName("contador");
     for(let i = 0; i < contadores.length; i++){
@@ -77,4 +97,4 @@ function inicializar(){
         }
     }
 }
-window.onload = inicializar;  
+window.onload = inicializar;

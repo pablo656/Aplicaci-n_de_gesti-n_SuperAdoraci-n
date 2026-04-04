@@ -54,8 +54,19 @@
         ?>
         <hr>
         <div class="cuadricula-productos">
-            <?php if (!empty($productos)): ?>
-                <?php foreach ($productos as $producto): ?>
+
+            <?php 
+            $productos_disponibles=[];
+            if (!empty($productos)){
+                foreach($productos as $producto){
+                    if($producto["stock"]>0){
+                        $productos_disponibles[]=$producto;
+                    }
+                }
+            }
+            if (!empty($productos_disponibles)): 
+                foreach ($productos_disponibles as $producto): ?>
+                   
                     <div class="producto" id="<?php echo htmlspecialchars($producto["id"])?>">
                         <img src="<?= htmlspecialchars($producto['url_imagen']) ?>" alt="<?= htmlspecialchars($producto['nombre']) ?>" loading="lazy">
                         <div class="info-producto">

@@ -55,7 +55,7 @@ class Controller_user{
     }
     // Pendiente de implementar: carga la vista del perfil del usuario
     public function perfil(){
-        //require();
+        require("../vista/perfil.php");
     }
 }
 ?>

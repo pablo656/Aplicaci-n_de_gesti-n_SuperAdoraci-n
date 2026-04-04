@@ -13,14 +13,15 @@ class Controller_reservas{
     // Obtiene todas las reservas y carga la vista
     public function consultar_reservas(){
         $reservas = $this->model_reservas->consultar_reservas();
-        require_once __DIR__ . "/../vista/reservas.php";
+        require_once __DIR__ . "/../vista/perfil.php";
 
     }
 
     // Crea una nueva reserva para un usuario y producto concretos con la cantidad indicada
     public function crear_reserva($id_usuario, $id_producto, $cantidad){
         $reservas_crear =$this->model_reservas->crear_reserva($id_usuario, $id_producto, $cantidad);
-        require_once __DIR__ . "/../vista/reservas.php";
+        $_SESSION["reserva_ok"]=true;
+        //require_once __DIR__ . "/../vista/reservas.php";
 
     }
 

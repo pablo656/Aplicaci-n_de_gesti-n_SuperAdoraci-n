@@ -2,8 +2,10 @@
     session_start();
     require_once("../controller/productoController.php");
     require_once("../controller/Controller_pedidos.php");
+    require_once("../controller/controller_reservas.php");
     $controller = new ProductoController();
     $controller_pedidos = new Controller_pedidos();
+    $controller_reservas=new Controller_reservas();
     $action = $_GET["action"] ?? "list";
 
     // ← Acciones AJAX antes del header
@@ -73,13 +75,22 @@
     $css = "<link rel='stylesheet' href='css/carrito.css'>";
     require("../vista/layerHeader.php");
 
-    if($action == "reservar"){
-
+    if($action == "confirmar_reservas"){
+        $reservas = isset($_COOKIE["reservas"]) ? json_decode($_COOKIE["reservas"], true) : [];
+        $usuario=$_SESSION["id"];
+        foreach($reservas as $reserva){
+            $id_producto=$reserva["id"];
+            $cantidad=$reserva["cantidad"];
+            $controller_reservas->crear_reserva($usuario,$id_producto,$cantidad);
+        }
+        $reservas=[];
+        setcookie("reservas", json_encode($reservas), time() + (60 * 60 * 24), "/");
+        header("Location: " . $_SERVER['HTTP_REFERER']);
     }else{
         $reservas_cookie = isset($_COOKIE["reservas"]) ? json_decode($_COOKIE["reservas"], true) : [];
         $pedidos_cookie  = isset($_COOKIE["pedidos"])  ? json_decode($_COOKIE["pedidos"],  true) : [];
         $pedidos_carrito = $controller_pedidos->buscar_pedidos_cookie($pedidos_cookie) ?: [];
         $controller->buscar_reservas_incompletas($reservas_cookie, $pedidos_carrito);
-        require("../vista/footer.html");
     }
+    require("../vista/footer.html");
 ?>

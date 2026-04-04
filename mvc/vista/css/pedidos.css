@@ -150,6 +150,52 @@ main h2 {
 }
 
 
+/* ── Contador inline en la tarjeta (ítem ya pedido) ─────── */
+
+/* Píldora oscura: – N + */
+.contador-inline {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #1a1c2c;
+    border-radius: 50px;
+    padding: 4px 6px;
+}
+
+/* Botones circulares blancos dentro de la píldora */
+.btn-menos-inline,
+.btn-mas-inline {
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    background: #fff;
+    color: #1a1c2c;
+    font-weight: 700;
+    transition: opacity .2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-menos-inline:hover,
+.btn-mas-inline:hover {
+    opacity: .75;
+}
+
+/* Número de unidades en la píldora */
+.contador-inline span {
+    font-size: 0.97rem;
+    font-weight: 700;
+    min-width: 18px;
+    text-align: center;
+    color: #fff;
+}
+
+
 /* ── Modal de pedido ─────────────────────────────────────── */
 
 /* Capa oscura de fondo; oculta por defecto */

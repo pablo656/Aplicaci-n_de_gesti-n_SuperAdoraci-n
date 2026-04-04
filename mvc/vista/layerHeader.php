@@ -24,11 +24,11 @@
         <a href="IndexHome.php">Inicio</a>
         <a href="IndexProducto.php">Catalogo</a>
         <a href="IndexPedidos.php">Pedidos</a>
+    </div>
+    <div>
         <?php if(isset($_SESSION["id"]) && isset($_SESSION["nombre"])&&isset($_SESSION["email"])&&isset($_SESSION["rol"])):?>
         <a href="IndexCarrito.php"><i class="fi fi-sr-shopping-cart"></i></a>
         <?php endif;?>
-    </div>
-    <div>
         <?php
         if(isset($_SESSION["id"]) && isset($_SESSION["nombre"])&&isset($_SESSION["email"])&&isset($_SESSION["rol"])){?>
             <a href="IndexPerfil.php">Perfil <i class="fi fi-sr-user" style="color: white; font-size: 1.2em;"></i></a>

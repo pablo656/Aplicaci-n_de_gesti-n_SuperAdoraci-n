@@ -1,0 +1,228 @@
+/* --- LAYOUT GENERAL --- */
+.layout-perfil {
+    display: flex;
+    flex-direction: row; /* Asegura que se pongan en fila */
+    gap: 40px;
+    max-width: 1100px;
+    margin: 30px auto;
+    font-family: Arial, sans-serif;
+    align-items: flex-start;
+}
+
+/* --- ASIDE (IZQUIERDA) --- */
+.sidebar-perfil {
+    flex: 0 0 250px; /* Ancho fijo para el menú lateral */
+    position: sticky;
+    top: 20px;
+}
+
+.perfil-container {
+    text-align: center;
+}
+
+.avatar-circulo {
+    width: 100px;
+    height: 100px;
+    background-color: #1a1e29;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: bold;
+    margin: 0 auto 20px;
+}
+
+.usuario-nombre {
+    margin: 10px 0 5px;
+    font-size: 20px;
+    color: #000;
+    font-weight: bold;
+}
+
+.usuario-email {
+    color: #7f8c8d;
+    font-size: 14px;
+    margin: 0;
+}
+
+/* --- MAIN (DERECHA - RESERVAS) --- */
+.contenido-principal {
+    flex: 1; /* Ocupa el resto del espacio */
+}
+
+.seccion {
+    background: white;
+    border: 1px solid #eeeeee;
+    border-radius: 10px;
+    padding: 15px 25px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.seccion-titulo {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+/* Ítem de Reserva */
+.item-pedido {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.item-pedido:last-child {
+    border-bottom: none;
+}
+
+.item-info-izquierda {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.item-img {
+    width: 65px;
+    height: 65px;
+    background-color: #f2f2f2;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item-img img {
+    max-width: 100%;
+    border-radius: 4px;
+}
+
+.item-nombre {
+    font-weight: bold;
+    font-size: 16px;
+    margin: 0;
+    color: #333;
+}
+
+.badge-gris {
+    background: #f0f0f0;
+    color: #888;
+    padding: 2px 8px;
+    border-radius: 15px;
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+.item-sub {
+    color: #999;
+    font-size: 13px;
+    margin: 4px 0 0;
+}
+
+/* Precios y Eliminar */
+.item-info-derecha {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.item-precio {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.item-sindescuento {
+    text-decoration: line-through;
+    color: #bbb;
+    font-size: 13px;
+    margin-right: 8px;
+}
+
+/* --- BOTÓN ELIMINAR ESTILO CÁPSULA --- */
+.btn-eliminar {
+    /* Colores y Fondo */
+    background-color: #ef1d23;  /* El rojo exacto de tu imagen */
+    color: #ffffff;             /* Texto e icono en blanco */
+    border: none;               /* Sin bordes extraños */
+    
+    /* Forma y Tamaño */
+    border-radius: 50px;        /* Crea el efecto redondeado de cápsula */
+    padding: 8px 20px;          /* Espaciado interno para que respire */
+    
+    /* Tipografía */
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 600;           /* Semi-negrita */
+    
+    /* Alineación de Icono y Texto */
+    display: inline-flex;       /* Para que el icono y el texto se alineen */
+    align-items: center;        /* Centrado vertical */
+    justify-content: center;    /* Centrado horizontal */
+    gap: 8px;                   /* Espacio entre el icono de papelera y la palabra */
+    
+    /* Interactividad */
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* --- BOTÓN ELIMINAR ARREGLADO Y ESTILIZADO --- */
+.btn-eliminar {
+    /* 1. Resetear estilos por defecto del navegador */
+    border: none;               /* ¡Importante! Quita ese borde feo y grueso de tu imagen */
+    background: none;           /* Quita el fondo gris por defecto */
+    padding: 0;                 /* Resetea el espaciado interno */
+    margin: 0;                  /* Resetea los márgenes */
+    
+    /* 2. Aplicar el nuevo diseño (Cápsula Roja) */
+    background-color: #ef1d23;  /* El rojo exacto de tu diseño */
+    color: #ffffff;             /* Texto e icono en blanco puro */
+    border-radius: 50px;        /* Crea las curvas laterales perfectas */
+    padding: 10px 24px;         /* Espaciado interno generoso para que respire */
+    
+    /* 3. ARREGLAR LA ALINEACIÓN (¡Lo más importante!) */
+    display: flex;              /* Activa Flexbox para alinear el icono y el texto */
+    align-items: center;        /* Centra verticalmente el icono y el texto */
+    justify-content: center;    /* Centra horizontalmente todo el contenido */
+    gap: 10px;                  /* Espacio exacto entre el icono de Flaticon y el texto */
+    
+    /* 4. Tipografía y Estilo */
+    font-family: Arial, sans-serif;
+    font-size: 15px;            /* Tamaño de lectura cómodo */
+    font-weight: 600;           /* Semi-negrita para que resalte */
+    text-transform: none;       /* Asegura que no se ponga todo en mayúsculas */
+    
+    /* 5. Interactividad */
+    cursor: pointer;            /* Cambia el cursor a la mano */
+    transition: all 0.2s ease;  /* Animación suave para los cambios de color */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave para dar profundidad */
+}
+
+/* --- ESTADOS DEL BOTÓN --- */
+
+/* Cuando el usuario pasa el ratón por encima */
+.btn-eliminar:hover {
+    background-color: #d11218;  /* Un rojo más oscuro */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* La sombra crece */
+    transform: translateY(-1px); /* Sube un píxel (efecto flotante) */
+}
+
+/* Cuando el usuario hace clic */
+.btn-eliminar:active {
+    background-color: #b00f13;  /* Rojo aún más oscuro */
+    transform: translateY(1px);  /* Baja un píxel (efecto pulsación) */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Ajuste específico para asegurar que el icono de Flaticon se alinee bien */
+.btn-eliminar i {
+    font-size: 18px;            /* El icono suele verse mejor un poco más grande que el texto */
+    line-height: 0;             /* Evita que el icono descuadre la altura del botón */
+    display: flex;              /* Asegura que el icono en sí también esté centrado */
+    align-items: center;
+}

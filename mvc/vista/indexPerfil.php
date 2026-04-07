@@ -3,7 +3,7 @@
     require_once("../controller/controller_reservas.php");
     $controller=new Controller_reservas();
     $titulo="Perfil";
-    $css = "<link rel='stylesheet' href='css/catalogo_style.css'>";
+    $css = "<link rel='stylesheet' href='css/perfil.css'>";
     $action = $_GET["action"] ?? "list";
     require("../vista/layerHeader.php");
     if($action=="sadas"){

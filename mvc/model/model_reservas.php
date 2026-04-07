@@ -10,7 +10,7 @@ class model_reservas{
         if (!$this->conn) {
             return null;
         }
-        $sql = "SELECT * FROM reservas";
+        $sql = "SELECT r.id AS id_reserva,r.cantidad,r.fecha,p.nombre AS nombre_producto,p.precio,p.categoria,p.url_imagen,p.porcentaje_descuento,p.subcategoria FROM reservas r INNER JOIN productos p ON r.id_producto = p.id;";
         $stmt = $this->conn->prepare($sql);
         $reservas = [];
         if ($stmt === false) {

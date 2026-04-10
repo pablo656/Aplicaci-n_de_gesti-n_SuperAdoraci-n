@@ -15,7 +15,43 @@
     </aside>
 
     <main class="contenido-principal">
+        
         <h1>Perfil</h1>
+        <div class="seccion">
+            <p class="seccion-titulo">Resumen</p>
+            <div class="stats">
+                <?php 
+                   
+                ?>
+                <div class="stat"><div class="stat-num"><?php if(!empty($reservas)){
+                    echo count($reservas);
+                    }else{echo "0";
+                    }?></div><div class="stat-label">Reservas activas</div></div>
+                    <div class="stat"><div class="stat-num"><?php if(!empty($pedidos)){
+                    echo count($pedidos);
+                    }else{echo "0";
+                    }?></div><div class="stat-label">Pedidos activos</div></div>
+                    <?php 
+                    $total_pendiente=0;
+                    if(!empty($reservas)){
+                        foreach($reservas as $reserva){
+                            if($reserva["porcentaje_descuento"]==0){
+                                $total_pendiente+=$reserva["precio"]*$reserva["cantidad"];
+                            }else{ 
+                                $total_pendiente += ($reserva["precio"] * (1 - ($reserva["porcentaje_descuento"] / 100))) * $reserva["cantidad"];
+                            }
+                           
+                        }
+                    }
+                    if(!empty($pedidos)){
+                        foreach($pedidos as $pedido){
+                            $total_pendiente+=$pedido["precio"]*$pedido["cantidad"];
+                        }
+                    }
+                    ?>
+                <div class="stat"><div class="stat-num"><?=$total_pendiente?> €</div><div class="stat-label">Total pendiente</div></div>
+            </div>
+        </div>
         <div class="seccion">
             <p class="seccion-titulo">Mis reservas</p>
             
@@ -53,8 +89,10 @@
                                     </span>
                                 </div>
                             <?php endif; ?>
-                            
-                            <button class="btn-eliminar" title="Eliminar reserva"><i class="fi fi-sr-trash"></i> Eliminar</button>
+                            <form method="post" action="?action=borrar_reserva">
+                            <input type="hidden" name="id_reserva" value="<?=$reserva['id_reserva']?>">
+                            <button type="submit" class="btn-eliminar" title="Eliminar reserva"><i class="fi fi-sr-trash"></i> Eliminar</button>
+                            </form>
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -62,6 +100,39 @@
                 <p class="vacio">No hay reservas</p>
             <?php endif; ?>
         </div>
-        <h2>Pedidos</h2>
+        <div class="seccion">
+            <p class="seccion-titulo">Mis pedidos</p>
+            <?php if(!empty($pedidos)): 
+                foreach($pedidos as $pedido): ?>
+                <div class="item-pedido">
+                    <div class="item-info-izquierda">
+                        <div class="item-img"> 
+                            <img src="<?= htmlspecialchars($pedido["url_imagen"]) ?>" alt="producto">
+                        </div>
+                        
+                        <div class="item-detalles">
+                            <p class="item-nombre">
+                                <?= htmlspecialchars($pedido["nombre_comida"]) ?> 
+                                <span class="badge-gris">x<?=$pedido["cantidad"]?></span>
+                            </p>
+                            
+                            <p class="item-sub">
+                                <?= !empty($pedido["mensaje"]) ? "Nota: " . htmlspecialchars($pedido["mensaje"]) : "Sin observaciones" ?>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="item-info-derecha">
+                        <span class="item-precio">
+                            <?= number_format($pedido["precio"] * $pedido["cantidad"], 2) ?> €
+                        </span>
+                    </div>
+                </div>
+                <?php endforeach; 
+            else: ?>
+                <p class="vacio">No hay pedidos</p>
+            <?php endif; ?>
+
+        </div>
     </main>
 </div>

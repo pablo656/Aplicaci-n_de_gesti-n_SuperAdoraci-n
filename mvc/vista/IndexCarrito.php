@@ -86,6 +86,17 @@
         $reservas=[];
         setcookie("reservas", json_encode($reservas), time() + (60 * 60 * 24), "/");
         header("Location: " . $_SERVER['HTTP_REFERER']);
+    }else if($action == "confirmar_pedidos"){
+        $pedidos_cookie = isset($_COOKIE["pedidos"]) ? json_decode($_COOKIE["pedidos"], true) : [];
+        $usuario = $_SESSION["id"];
+        foreach($pedidos_cookie as $pedido){
+            $id_comida = $pedido["id"];
+            $cantidad  = $pedido["cantidad"];
+            $controller_pedidos->crear_pedido($usuario, $id_comida, $cantidad, "");
+        }
+        setcookie("pedidos", json_encode([]), time() + (60 * 60 * 24), "/");
+        $_SESSION["pedidos_ok"] = true;
+        header("Location: " . $_SERVER['HTTP_REFERER']);
     }else{
         $reservas_cookie = isset($_COOKIE["reservas"]) ? json_decode($_COOKIE["reservas"], true) : [];
         $pedidos_cookie  = isset($_COOKIE["pedidos"])  ? json_decode($_COOKIE["pedidos"],  true) : [];

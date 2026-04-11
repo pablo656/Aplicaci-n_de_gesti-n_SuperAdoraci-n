@@ -19,31 +19,13 @@ if ($action === "list") {
 } else if ($action === "crear") {
     $id_comida = $_POST["id_comida"] ?? null;
     $cantidad  = $_POST["cantidad"]  ?? null;
-    $mensaje   = $_POST["mensaje"]   ?? null;
-    $resultado = $controller->crear_pedido($_SESSION["id"], $id_comida, $cantidad, $mensaje);
 
-    if (!$resultado) {
-        $_SESSION['pedido_errores'] = ["No se pudo realizar el pedido. Comprueba los datos."];
+    if (empty($id_comida) || !is_numeric($id_comida) || empty($cantidad) || $cantidad < 1) {
         header("Location: IndexPedidos.php?action=list");
         exit();
     }
 
-    $pedidos = isset($_COOKIE["pedidos"]) ? json_decode($_COOKIE["pedidos"], true) : [];
-    $encontrado = false;
-    foreach ($pedidos as &$pedido) {
-        if ($pedido["id"] == $id_comida) {
-            $pedido["cantidad"] = max(1, (int)$pedido["cantidad"] + (int)$cantidad);
-            $encontrado = true;
-            break;
-        }
-    }
-    unset($pedido);
-
-    if (!$encontrado) {
-        $pedidos[] = ["id" => $id_comida, "cantidad" => (int)$cantidad];
-    }
-
-    setcookie("pedidos", json_encode($pedidos), time() + (60 * 60 * 24), "/");
+    $controller->guardar_en_cookie($id_comida, $cantidad);
     $_SESSION['pedido_ok'] = true;
     header("Location: IndexPedidos.php?action=list");
     exit();

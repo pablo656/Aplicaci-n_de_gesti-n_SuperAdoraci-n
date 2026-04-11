@@ -177,7 +177,7 @@
                 <span>Subtotal</span>
                 <span id="subtotal_pedidos"><?= number_format($subtotal_pedidos, 2) ?> €</span>
             </div>
-            <form method="post" action="?action=confirmar_pedidos">
+            <form method="post" action="?action=confirmar_pedidos" id="confirmar_pedidos">
                 <button class="btn-confirmar btn-confirmar-pedidos" type="submit">Confirmar pedidos</button>
             </form>
         <?php else: ?>

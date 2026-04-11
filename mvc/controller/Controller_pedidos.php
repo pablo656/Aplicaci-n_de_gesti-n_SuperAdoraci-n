@@ -53,6 +53,24 @@ class Controller_pedidos {
         return $this->model_comida->buscar_pedidos_cookie($pedidos_cookie);
     }
 
+    // Guarda o suma cantidad de una comida en la cookie del carrito
+    public function guardar_en_cookie($id_comida, $cantidad) {
+        $pedidos = isset($_COOKIE["pedidos"]) ? json_decode($_COOKIE["pedidos"], true) : [];
+        $encontrado = false;
+        foreach ($pedidos as &$pedido) {
+            if ($pedido["id"] == $id_comida) {
+                $pedido["cantidad"] = max(1, (int)$pedido["cantidad"] + (int)$cantidad);
+                $encontrado = true;
+                break;
+            }
+        }
+        unset($pedido);
+        if (!$encontrado) {
+            $pedidos[] = ["id" => $id_comida, "cantidad" => (int)$cantidad];
+        }
+        setcookie("pedidos", json_encode($pedidos), time() + (60 * 60 * 24), "/");
+    }
+
     // Valida los datos y crea un nuevo pedido
     public function crear_pedido($id_usuario, $id_comida, $cantidad, $mensaje) {
         $errores = [];

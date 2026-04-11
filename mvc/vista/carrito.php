@@ -33,10 +33,11 @@
     <main>
         <h2>Reservas</h2>
         <hr>
-        <?php if(isset($_SESSION["reserva_ok"])&& $_SESSION["reserva_ok"]):
-            unset($_SESSION['reserva_ok']);?>
-            <p class="aviso-ok-reservas">¡Reservas comfirmadas correctamente!</p>
-        <?php endif?>
+        <?php if(isset($_SESSION["reserva_ok"]) && $_SESSION["reserva_ok"]):
+            unset($_SESSION['reserva_ok']); ?>
+            <p class="aviso-ok-reservas">¡Reservas confirmadas correctamente!</p>
+        <?php endif; ?>
+
         <div id="contenedor-reservas" class="lista-reservas">
         <?php if(!empty($reservas)): ?>
             <?php foreach($reservas as $reserva):
@@ -62,11 +63,31 @@
                             <button id="borrar-<?= $id ?>" class="btn-eliminar" onclick="borrarReserva(<?= $id ?>)">
                                 <i class="fi fi-sr-trash"></i> Eliminar
                             </button>
-                            <div class="btn-grupo">
-                                <button id="restar-<?= $id ?>" class="btn-cantidad btn-restar" onclick="cambiarCantidad(<?= $id ?>, -1, <?= $precio_final ?>)">−</button>
-                                <span class="cantidad" id="cantidad-<?= $id ?>"><?= $cantidadActual ?></span>
-                                <button class="btn-cantidad btn-sumar" onclick="cambiarCantidad(<?= $id ?>, 1, <?= $precio_final ?>)">+</button>
-                            </div>
+
+                            <?php if($reserva['precio_por_peso'] == 1): ?>
+                                <!-- Contador por peso -->
+                                <div class="contador-peso">
+                                    <input
+                                        type="number"
+                                        id="cantidad-<?= $id ?>"
+                                        class="input-peso"
+                                        value="<?= $cantidadActual ?>"
+                                        min="0.1"
+                                        step="0.1"
+                                        data-precio="<?= $precio_final ?>"
+                                        oninput="cambiarCantidadPeso(<?= $id ?>, this.value, <?= $precio_final ?>)"
+                                        onblur="validarPeso(this)"
+                                    >
+                                    <span class="unidad-peso">Kg</span>
+                                </div>
+                            <?php else: ?>
+                                <!-- Contador por unidad -->
+                                <div class="btn-grupo">
+                                    <button id="restar-<?= $id ?>" class="btn-cantidad btn-restar" onclick="cambiarCantidad(<?= $id ?>, -1, <?= $precio_final ?>)">−</button>
+                                    <span class="cantidad" id="cantidad-<?= $id ?>"><?= $cantidadActual ?></span>
+                                    <button class="btn-cantidad btn-sumar" onclick="cambiarCantidad(<?= $id ?>, 1, <?= $precio_final ?>)">+</button>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -78,10 +99,11 @@
 
         <h2>Pedidos</h2>
         <hr>
-       <?php if(isset($_SESSION["pedidos_ok"])&& $_SESSION["pedidos_ok"]):
-            unset($_SESSION['pedidos_ok']);?>
-            <p class="aviso-ok-pedidos">¡Pedidos comfirmados correctamente!</p>
-        <?php endif?>
+        <?php if(isset($_SESSION["pedidos_ok"]) && $_SESSION["pedidos_ok"]):
+            unset($_SESSION['pedidos_ok']); ?>
+            <p class="aviso-ok-pedidos">¡Pedidos confirmados correctamente!</p>
+        <?php endif; ?>
+
         <div class="lista-reservas">
             <?php if (!empty($pedidos_carrito)): ?>
                 <?php foreach ($pedidos_carrito as $pedido):
@@ -98,7 +120,6 @@
                             <?php endif; ?>
                         </div>
                         <div class="item-accion">
-                            <!-- ← id añadido -->
                             <p class="precio" id="precio-p-<?= $pid ?>"><?= number_format($pedido['precio'] * $pcantidad, 2) ?> €</p>
                             <div class="contador">
                                 <button class="btn-eliminar" onclick="borrarPedido(<?= $pid ?>)">
@@ -138,7 +159,6 @@
             ?>
                 <div class="resumen-item">
                     <span class="resumen-nombre"><?= htmlspecialchars($reserva['nombre']) ?></span>
-                    <!-- ← id añadido -->
                     <span id="precio-reserva-<?= $id ?>" class="resumen-precio"><?= number_format($precio_final * $cantidadActual, 2) ?> €</span>
                 </div>
             <?php endforeach; ?>
@@ -168,7 +188,6 @@
             ?>
                 <div class="resumen-item">
                     <span class="resumen-nombre"><?= htmlspecialchars($pedido['nombre']) ?></span>
-                    <!-- ← id añadido -->
                     <span id="precio-pedido-<?= $pid ?>" class="resumen-precio"><?= number_format($pedido['precio'] * $pcantidad, 2) ?> €</span>
                 </div>
             <?php endforeach; ?>

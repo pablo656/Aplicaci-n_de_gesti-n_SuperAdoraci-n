@@ -19,13 +19,14 @@ if ($action === "list") {
 } else if ($action === "crear") {
     $id_comida = $_POST["id_comida"] ?? null;
     $cantidad  = $_POST["cantidad"]  ?? null;
+    $mensaje   = $_POST["mensaje"]   ?? "";
 
     if (empty($id_comida) || !is_numeric($id_comida) || empty($cantidad) || $cantidad < 1) {
         header("Location: IndexPedidos.php?action=list");
         exit();
     }
 
-    $controller->guardar_en_cookie($id_comida, $cantidad);
+    $controller->guardar_en_cookie($id_comida, $cantidad, $mensaje);
     $_SESSION['pedido_ok'] = true;
     header("Location: IndexPedidos.php?action=list");
     exit();

@@ -230,6 +230,56 @@ hr {
     min-width: 20px;
     text-align: center;
 }
+/* ── Precio por peso ─────────────────────────────────────── */
+.contador-peso {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.input-peso {
+    width: 70px;
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    color: #1a1c2c;
+    background: #fafafa;
+    transition: border-color .2s;
+}
+
+.input-peso:focus {
+    outline: none;
+    border-color: #1a1c2c;
+    background: #fff;
+}
+
+/* Quitar flechas del input number */
+.input-peso::-webkit-outer-spin-button,
+.input-peso::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.input-peso[type=number] {
+    -moz-appearance: textfield;
+}
+
+.unidad-peso {
+    font-size: 13px;
+    color: #888;
+}
+
+.form-peso-reservar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
 /*Subcategoias*/
 .subcategorias {
     margin-top: 0;

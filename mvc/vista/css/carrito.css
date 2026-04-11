@@ -37,6 +37,7 @@ hr {
 
 .carrito-layout {
     display: flex;
+    flex: 1;
     gap: 24px;
     align-items: flex-start;
     padding: 0 var(--gap-lateral) var(--gap-lateral);

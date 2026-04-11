@@ -1,9 +1,19 @@
 let formulario_reservas = document.getElementById("confirmar_reservas");
-formulario_reservas.addEventListener("submit", confirmar,true);
+if(formulario_reservas) formulario_reservas.addEventListener("submit", confirmar, true);
+
+let formulario_pedidos = document.getElementById("confirmar_pedidos");
+if(formulario_pedidos) formulario_pedidos.addEventListener("submit", confirmarPedidos, true);
 
 function confirmar(event){
     event.preventDefault();
     if(confirm("¿Deseas realizar esta reserva?")){
+        event.target.submit();
+    }
+}
+
+function confirmarPedidos(event){
+    event.preventDefault();
+    if(confirm("¿Deseas confirmar los pedidos?")){
         event.target.submit();
     }
 }

@@ -92,7 +92,8 @@
         foreach($pedidos_cookie as $pedido){
             $id_comida = $pedido["id"];
             $cantidad  = $pedido["cantidad"];
-            $controller_pedidos->crear_pedido($usuario, $id_comida, $cantidad, "");
+            $mensaje   = $pedido["mensaje"] ?? "";
+            $controller_pedidos->crear_pedido($usuario, $id_comida, $cantidad, $mensaje);
         }
         setcookie("pedidos", json_encode([]), time() + (60 * 60 * 24), "/");
         $_SESSION["pedidos_ok"] = true;

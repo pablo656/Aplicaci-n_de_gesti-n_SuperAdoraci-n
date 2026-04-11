@@ -13,7 +13,19 @@ class model_pedidos{
         if (!$this->conn) {
             return null;
         }
-        $sql = "SELECT * FROM pedidos WHERE id_usuario = ?";
+        $sql = "SELECT 
+            p.id AS id_pedido,
+            p.cantidad,
+            p.mensaje,
+            p.fecha,
+            c.nombre AS nombre_comida,
+            c.descripcion,
+            c.precio,
+            c.url_imagen
+        FROM pedidos p
+        INNER JOIN comidas c ON p.id_comida = c.id
+        WHERE p.id_usuario = ?";
+        /*$sql="SELECT * FROM pedidos WHERE id_usuario = ?";*/
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i", $id_usuario);
         $pedidos = [];

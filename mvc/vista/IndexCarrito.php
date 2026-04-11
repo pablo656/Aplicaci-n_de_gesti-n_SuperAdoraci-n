@@ -11,7 +11,7 @@
     // ← Acciones AJAX antes del header
     if($action == "actualizar_cantidad"){
         $id_producto = $_POST["id_producto"];
-        $cantidad = (int)$_POST["cantidad"];
+        $cantidad = (float)$_POST["cantidad"];
         $reservas = isset($_COOKIE["reservas"]) ? json_decode($_COOKIE["reservas"], true) : [];
         foreach($reservas as &$reserva){
             if($reserva["id"] == $id_producto){
@@ -49,7 +49,7 @@
     }else if($action == "actualizar_cantidad_pedido"){
         $pedidos = isset($_COOKIE["pedidos"]) ? json_decode($_COOKIE["pedidos"], true) : [];
         $id_comida = $_POST["id_comida"];
-        $cantidad = (int)$_POST["cantidad"];
+        $cantidad = (float)$_POST["cantidad"];
         foreach($pedidos as &$pedido){
             if($pedido["id"] == $id_comida){
                 $pedido["cantidad"] = $cantidad;
@@ -61,7 +61,7 @@
 
     }else if($action == "comprobar_stock"){
         $id_producto = (int)$_POST["id_producto"];
-        $cantidad = (int)$_POST["cantidad"];
+        $cantidad = (float)$_POST["cantidad"];
         if($controller->comprobar_stock($id_producto, $cantidad)){
             echo json_encode(["ok" => true]);
         }else{

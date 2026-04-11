@@ -17,6 +17,7 @@ function confirmarPedidos(event){
         event.target.submit();
     }
 }
+
 async function cambiarCantidad(id, cambio, precio){
     const span = document.getElementById("cantidad-" + id);
     let cantidad = parseInt(span.textContent) + cambio;
@@ -57,6 +58,47 @@ async function cambiarCantidad(id, cambio, precio){
     });
 }
 
+function validarPeso(input){
+    let cantidad = parseFloat(input.value);
+    if(isNaN(cantidad) || cantidad <= 0){
+        input.value = 0.1;
+    }
+}
+
+function cambiarCantidadPeso(id, valor, precio){
+    let cantidad = parseFloat(valor);
+    if(isNaN(cantidad) || cantidad <= 0) return;
+    cantidad = Math.round(cantidad * 10) / 10;
+
+    let precio_item = document.getElementById("precio-" + id);
+    let precio_reserva_aside = document.getElementById("precio-reserva-" + id);
+    let subtotal_reservas = document.getElementById("subtotal_reservas");
+    let contenedor_total = document.getElementById("contenedor_precio");
+    let input = document.getElementById("cantidad-" + id);
+
+    let cantidadAnterior = parseFloat(input.getAttribute("data-anterior") || valor);
+    let diff = cantidad - cantidadAnterior;
+
+    precio_item.textContent = (cantidad * precio).toFixed(2) + " €";
+    precio_reserva_aside.textContent = (cantidad * precio).toFixed(2) + " €";
+
+    let subtotal = parseFloat(subtotal_reservas.textContent);
+    subtotal += diff * precio;
+    subtotal_reservas.textContent = subtotal.toFixed(2) + " €";
+
+    let total = parseFloat(contenedor_total.textContent);
+    total += diff * precio;
+    contenedor_total.textContent = total.toFixed(2) + " €";
+
+    input.setAttribute("data-anterior", cantidad);
+
+    fetch("?action=actualizar_cantidad", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "id_producto=" + id + "&cantidad=" + cantidad
+    });
+}
+
 async function comprobarStock(id, cantidad){
     const r = await fetch("?action=comprobar_stock", {
         method: "POST",
@@ -83,6 +125,7 @@ function borrarPedido(id){
 }
 
 function cambiarCantidadPedido(id, cambio, precio){
+    alert("sda");
     const span = document.getElementById("cantidad-p-" + id);
     const nuevo = Math.max(1, parseInt(span.textContent) + cambio);
     let precio_item = document.getElementById("precio-p-" + id);
@@ -133,6 +176,12 @@ function inicializar(){
         if(cantidad == 1){
             boton_restar.style.display = "none";
         }
+    }
+
+    // Inicializar data-anterior en inputs de peso
+    let inputs = document.getElementsByClassName("input-peso");
+    for(let i = 0; i < inputs.length; i++){
+        inputs[i].setAttribute("data-anterior", inputs[i].value);
     }
 }
 window.onload = inicializar;

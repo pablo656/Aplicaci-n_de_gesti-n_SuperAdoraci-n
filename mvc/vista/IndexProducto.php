@@ -17,7 +17,7 @@
         exit();
     }else if($action == "actualizar_cantidad"){
         $id_producto = $_POST["id_producto"];
-        $cantidad = (int)$_POST["cantidad"];
+        $cantidad = (float)$_POST["cantidad"];
         $reservas = isset($_COOKIE["reservas"]) ? json_decode($_COOKIE["reservas"], true) : [];
         foreach($reservas as &$reserva){
             if($reserva["id"] == $id_producto){
@@ -56,21 +56,22 @@
     if($action == "add"){
 
     }else if($action == "reservar"){
-        $reservas = isset($_COOKIE["reservas"]) ? json_decode($_COOKIE["reservas"], true) : [];
-        $id_producto = $_POST["id_producto"];
-        $existe = false;
-        foreach($reservas as $reserva){
-            if($reserva["id"] == $id_producto){
-                $existe = true;
-                break;
-            }
+      $reservas = isset($_COOKIE["reservas"]) ? json_decode($_COOKIE["reservas"], true) : [];
+    $id_producto = $_POST["id_producto"];
+    $cantidad = isset($_POST["cantidad"]) ? (float)$_POST["cantidad"] : 1; 
+    $existe = false;
+    foreach($reservas as $reserva){
+        if($reserva["id"] == $id_producto){
+            $existe = true;
+            break;
         }
-        if(!$existe){
-            $reservas[] = ["id" => $id_producto, "cantidad" => 1];
-        }
-        setcookie("reservas", json_encode($reservas), time() + (60 * 60 * 24), "/");
-        header("Location: " . $_SERVER['HTTP_REFERER'] . "#$id_producto");
-        exit();
+    }
+    if(!$existe){
+        $reservas[] = ["id" => $id_producto, "cantidad" => $cantidad]; // ← guarda la cantidad
+    }
+    setcookie("reservas", json_encode($reservas), time() + (60 * 60 * 24), "/");
+    header("Location: " . $_SERVER['HTTP_REFERER'] . "#$id_producto");
+    exit();
 
     }else if(in_array($action, $categorias)){
         if($subcategoria != null){

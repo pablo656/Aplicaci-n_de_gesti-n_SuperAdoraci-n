@@ -195,6 +195,45 @@ main h2:first-child {
     text-align: center;
     color: var(--color-texto);
 }
+.contador-peso {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.input-peso {
+    width: 65px;
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    color: #1a1c2c;
+    background: #fafafa;
+    transition: border-color .2s;
+}
+
+.input-peso:focus {
+    outline: none;
+    border-color: #1a1c2c;
+    background: #fff;
+}
+
+.input-peso::-webkit-outer-spin-button,
+.input-peso::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.input-peso[type=number] {
+    -moz-appearance: textfield;
+}
+
+.unidad-peso {
+    font-size: 13px;
+    color: #888;
+}
 
 /* Resumen */
 .resumen {

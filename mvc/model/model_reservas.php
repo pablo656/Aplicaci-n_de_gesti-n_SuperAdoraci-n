@@ -93,30 +93,25 @@ class model_reservas{
         
         $stmt->close();
         if(empty($reservas)){
-            $sql = "INSERT INTO reservas (id_usuario, id_producto,cantidad) VALUES (?, ?, ?)";
+            $sql = "INSERT INTO reservas (id_usuario, id_producto, cantidad) VALUES (?, ?, ?)";
             $stmt = $this->conn->prepare($sql);
-            if ($stmt === false) {
-                return false;
-            }
-            $stmt->bind_param("iii", $id_usuario, $id_producto, $cantidad);
+            if($stmt === false) return false;
+            $stmt->bind_param("iid", $id_usuario, $id_producto, $cantidad); // ← ya estaba bien
             $result = $stmt->execute();
             $stmt->close();
         }else{
-            $sql="UPDATE reservas SET cantidad=cantidad+? WHERE id_usuario=? AND id_producto=?";
-             $stmt = $this->conn->prepare($sql);
-            if ($stmt === false) {
-                return false;
-            }
-            $stmt->bind_param("iii",$cantidad,$id_usuario,$id_producto);
+            $sql = "UPDATE reservas SET cantidad=cantidad+? WHERE id_usuario=? AND id_producto=?";
+            $stmt = $this->conn->prepare($sql);
+            if($stmt === false) return false;
+            $stmt->bind_param("dii", $cantidad, $id_usuario, $id_producto); // ← "d" en lugar de "i"
             $result = $stmt->execute();
             $stmt->close();
         }
-        $sql="UPDATE productos SET stock=stock-? WHERE id=?";
+
+        $sql = "UPDATE productos SET stock=stock-? WHERE id=?";
         $stmt = $this->conn->prepare($sql);
-        if ($stmt === false) {
-            return false;
-        }
-        $stmt->bind_param("ii", $cantidad, $id_producto);
+        if($stmt === false) return false;
+        $stmt->bind_param("di", $cantidad, $id_producto); // ← "d" en lugar de "i"
         $result = $stmt->execute();
         $stmt->close();
         return $result;

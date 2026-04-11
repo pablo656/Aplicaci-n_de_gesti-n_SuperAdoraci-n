@@ -49,7 +49,7 @@
                         }
                     }
                     ?>
-                <div class="stat"><div class="stat-num"><?=$total_pendiente?> €</div><div class="stat-label">Total pendiente</div></div>
+                <div class="stat"><div class="stat-num"><?= number_format($total_pendiente, 2) ?> €</div><div class="stat-label">Total pendiente</div></div>
             </div>
         </div>
         <div class="seccion">

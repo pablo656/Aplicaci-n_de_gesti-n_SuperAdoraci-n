@@ -29,6 +29,45 @@ class model_reservas{
             return null;
         }
     }
+    public function consultar_reservas_user($id){
+        if (!$this->conn) {
+            return null;
+        }
+        $sql = "SELECT 
+                r.id AS id_reserva, 
+                r.cantidad, 
+                r.fecha, 
+                p.nombre AS nombre_producto, 
+                p.precio, 
+                p.categoria, 
+                p.url_imagen, 
+                p.porcentaje_descuento, 
+                p.subcategoria 
+            FROM reservas r 
+            INNER JOIN productos p ON r.id_producto = p.id 
+            WHERE r.id_usuario = ?;";
+        $stmt = $this->conn->prepare($sql);
+        $reservas = [];
+        if ($stmt === false) {
+            echo "0";
+            return null;
+        }
+        $stmt->bind_param("i",$id);
+        if (!$stmt->execute()) {
+            echo "1";
+            return null;
+        }
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $reservas[] = $row;
+            }
+            return $reservas;
+        } else {
+            echo "3";
+            return null;
+        }
+    }
     public function crear_reserva($id_usuario, $id_producto, $cantidad){
         if (!$this->conn) {
             return false;

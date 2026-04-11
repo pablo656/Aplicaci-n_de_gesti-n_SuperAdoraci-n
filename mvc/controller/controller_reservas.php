@@ -16,6 +16,12 @@ class Controller_reservas{
         require_once __DIR__ . "/../vista/perfil.php";
 
     }
+    public function consultar_reservas_user($id){
+        $reservas = $this->model_reservas->consultar_reservas_user($id);
+        return $reservas;
+        //require_once __DIR__ . "/../vista/perfil.php";
+
+    }
 
     // Crea una nueva reserva para un usuario y producto concretos con la cantidad indicada
     public function crear_reserva($id_usuario, $id_producto, $cantidad){
@@ -28,7 +34,7 @@ class Controller_reservas{
     // Elimina una reserva concreta por su ID
     public function eliminar_reserva($id_reserva){
         $eliminar_reserva =$this->model_reservas->eliminar_reserva($id_reserva);
-        require_once __DIR__ . "/../vista/reservas.php";
+        //require_once __DIR__ . "/../vista/reservas.php";
 
     }
 

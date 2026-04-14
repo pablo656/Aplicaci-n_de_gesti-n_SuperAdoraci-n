@@ -42,6 +42,9 @@ if($action=="log"){
     $controller->register($nombre,$pass,$email);
 }else if($action=="perfil"){
     $controller->perfil();
+}else if($action=="confirmar_email"){
+    $token=$_GET["token"] ?? "";
+    $controller->confirmar_email($token);
 }else if($action=="log_out"){
     session_destroy();
     header("Location:indexHome.php?action=home");

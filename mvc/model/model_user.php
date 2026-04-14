@@ -75,6 +75,67 @@
 
         }
 
+        // Guarda un registro pendiente de confirmar por email
+        public function guardar_verificacion($nombre, $email, $hash) {
+            $token    = bin2hex(random_bytes(32));
+            $expira   = date("Y-m-d H:i:s", strtotime("+24 hours"));
+            $sql      = "INSERT INTO verificaciones_email (token, nombre, email, contrasena, expira_en)
+                         VALUES (?, ?, ?, ?, ?)";
+            $stmt = $this->conn->prepare($sql);
+            if (!$stmt) return false;
+            $stmt->bind_param("sssss", $token, $nombre, $email, $hash, $expira);
+            if (!$stmt->execute()) return false;
+            $stmt->close();
+            return $token;
+        }
+
+        // Busca la verificación por token; la borra si ha expirado
+        public function confirmar_verificacion($token) {
+            $stmt = $this->conn->prepare(
+                "SELECT * FROM verificaciones_email WHERE token = ?"
+            );
+            if (!$stmt) return false;
+            $stmt->bind_param("s", $token);
+            $stmt->execute();
+            $fila = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+
+            if (!$fila) return false;
+
+            if (strtotime($fila["expira_en"]) < time()) {
+                $this->conn->prepare("DELETE FROM verificaciones_email WHERE token = ?")
+                    ->bind_param("s", $token);
+                return false;
+            }
+
+            // Crear el usuario real
+            $sql  = "INSERT INTO usuarios (nombre, email, contrasena) VALUES (?, ?, ?)";
+            $stmt = $this->conn->prepare($sql);
+            if (!$stmt) return false;
+            $stmt->bind_param("sss", $fila["nombre"], $fila["email"], $fila["contrasena"]);
+            if (!$stmt->execute()) return false;
+            $id = $this->conn->insert_id;
+            $stmt->close();
+
+            // Borrar el token usado
+            $del = $this->conn->prepare("DELETE FROM verificaciones_email WHERE token = ?");
+            $del->bind_param("s", $token);
+            $del->execute();
+            $del->close();
+
+            // Devolver datos del usuario para iniciar sesión
+            $stmt = $this->conn->prepare("SELECT * FROM usuarios WHERE id = ?");
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $usuario = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+            return $usuario;
+        }
+
+        public function crearusuario_existe($user, $email){
+            return $this->comprobarusuario_crear($user, $email);
+        }
+
         private function comprobarusuario_crear($user, $email){
             if (!$this->conn) {
                 return null;

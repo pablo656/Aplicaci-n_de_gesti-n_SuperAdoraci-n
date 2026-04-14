@@ -14,6 +14,13 @@
         <p>Crea tu cuenta nueva</p>
     </div>
     <div class="form-body">
+<<<<<<< HEAD
+=======
+        <?php if (!empty($_SESSION["confirm_error"])): ?>
+            <p class="error"><?= htmlspecialchars($_SESSION["confirm_error"]) ?></p>
+            <?php unset($_SESSION["confirm_error"]); ?>
+        <?php endif; ?>
+>>>>>>> 79220663df93dbe286a9ef08d7ed2817a02f44a9
         <div class="field">
             <label for="user">Usuario</label>
             <input type="text" id="user" name="user" placeholder="Elige un nombre de usuario">

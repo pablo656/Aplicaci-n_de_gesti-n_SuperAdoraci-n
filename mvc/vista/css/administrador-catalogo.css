@@ -1,0 +1,118 @@
+/* ── Contenedor General ─────────────────────────────────── */
+/* Asegúrate de añadir la clase 'cuadricula-productos' al div que envuelve el PHP */
+.cuadricula-productos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 10px 0;
+}
+
+/* ── Tarjeta de Producto ────────────────────────────────── */
+.producto {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .07);
+    display: flex;
+    flex-direction: column;
+    transition: transform .2s, box-shadow .2s;
+}
+
+.producto:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, .13);
+}
+
+.producto > img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    background: #ebebeb;
+    display: block;
+}
+
+/* ── Información del Producto ───────────────────────────── */
+.info-producto {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    text-align: center;
+}
+
+.producto .nombre {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-texto);
+    margin-bottom: 4px;
+}
+
+.producto .stock {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 10px;
+}
+
+/* ── Precios y Descuentos ───────────────────────────────── */
+.descuento {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.producto .sin_descuento {
+    font-size: 0.85rem;
+    color: #aaa;
+    text-decoration: line-through;
+}
+
+.producto .precio {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-rojo);
+    margin: 5px 0;
+}
+
+/* ── Botón Eliminar ─────────────────────────────────────── */
+/* Estilo para el botón dentro del formulario */
+.info-producto form {
+    margin-top: auto; /* Empuja el botón al final de la tarjeta */
+    width: 100%;
+}
+
+.info-producto button[name="eliminar"] {
+    width: 100%;
+    padding: 10px;
+    background: #fff;
+    color: var(--color-rojo);
+    border: 1.5px solid var(--color-rojo);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Espacio entre el icono y el texto */
+    transition: all .2s;
+}
+
+.info-producto button[name="eliminar"]:hover {
+    background: var(--color-rojo);
+    color: #fff;
+}
+
+.info-producto button[name="eliminar"] i {
+    font-size: 1rem;
+}
+
+/* ── Mensaje de Vacío ───────────────────────────────────── */
+.vacio {
+    font-size: 1.2rem;
+    color: #bbb;
+    text-align: center;
+    padding: 60px 20px;
+    grid-column: 1 / -1;
+}

@@ -1,5 +1,9 @@
 <?php
 require_once __DIR__ . "/../model/model_user.php";
+<<<<<<< HEAD
+=======
+require_once __DIR__ . "/../helpers/Mailer.php";
+>>>>>>> 79220663df93dbe286a9ef08d7ed2817a02f44a9
 
 // Controlador que gestiona el registro, login y navegación del usuario
 class Controller_user{
@@ -27,6 +31,7 @@ class Controller_user{
         }
     }
 
+<<<<<<< HEAD
     // Crea el usuario; si tiene éxito inicia sesión directamente, si ya existe redirige con error
     public function register($username,$password,$email){
         $user = $this->model_user->crearusuario($username, $password,$email);
@@ -41,6 +46,50 @@ class Controller_user{
             echo "Registro fallido, el usuario ya existe.";
             header("Location: indexHome.php?action=sing_fallido");
         }
+=======
+    // Envía email de verificación; no crea el usuario hasta que confirme
+    public function register($username, $password, $email) {
+        if (empty($username) || empty($password) || empty($email)) {
+            header("Location: indexHome.php?action=sing");
+            return;
+        }
+        if ($this->model_user->crearusuario_existe($username, $email)) {
+            header("Location: indexHome.php?action=sing_fallido");
+            return;
+        }
+        $hash  = password_hash($password, PASSWORD_DEFAULT);
+        $token = $this->model_user->guardar_verificacion($username, $email, $hash);
+        if (!$token) {
+            header("Location: indexHome.php?action=sing_fallido");
+            return;
+        }
+        $link   = APP_URL . "/IndexHome.php?action=confirmar_email&token=" . $token;
+        $asunto = "Confirma tu cuenta en SuperAdoracion";
+        $cuerpo = "
+            <p>Hola <strong>" . htmlspecialchars($username) . "</strong>,</p>
+            <p>Haz clic en el siguiente enlace para activar tu cuenta:</p>
+            <p><a href=\"$link\">$link</a></p>
+            <p>El enlace caduca en 24 horas.</p>
+        ";
+        $mailer = new Mailer();
+        $mailer->enviar($email, $asunto, $cuerpo);
+        require("../vista/email_enviado.php");
+    }
+
+    // Confirma el token del email y crea el usuario real
+    public function confirmar_email($token) {
+        $user = $this->model_user->confirmar_verificacion($token);
+        if (!$user) {
+            $_SESSION["confirm_error"] = "El enlace no es válido o ha caducado.";
+            header("Location: indexHome.php?action=sing");
+            return;
+        }
+        $_SESSION["id"]     = $user["id"];
+        $_SESSION["nombre"] = $user["nombre"];
+        $_SESSION["email"]  = $user["email"];
+        $_SESSION["rol"]    = $user["rol"];
+        header("Location: indexHome.php?action=home");
+>>>>>>> 79220663df93dbe286a9ef08d7ed2817a02f44a9
     }
 
     //Funciones para moverse entre Home, Log in,Sign in y Perfil

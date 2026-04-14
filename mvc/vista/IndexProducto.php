@@ -53,9 +53,8 @@
     ];
     require("../vista/layerHeader.php");
 
-    if($action == "add"){
 
-    }else if($action == "reservar"){
+    if($action == "reservar"){
       $reservas = isset($_COOKIE["reservas"]) ? json_decode($_COOKIE["reservas"], true) : [];
     $id_producto = $_POST["id_producto"];
     $cantidad = isset($_POST["cantidad"]) ? (float)$_POST["cantidad"] : 1; 

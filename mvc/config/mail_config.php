@@ -8,8 +8,8 @@
 
 define("MAIL_HOST",      "smtp-relay.brevo.com");
 define("MAIL_PORT",      587);
-define("MAIL_USER",      "a7ffc4001@smtp-brevo.com");    // Login que aparece en la sección SMTP
-define("MAIL_PASS",      "TU_CLAVE_SMTP_DE_BREVO");   // clave SMTP generada en Brevo
+define("MAIL_USER",      "");    // Login que aparece en la sección SMTP
+define("MAIL_PASS",      "");   // clave SMTP generada en Brevo
 define("MAIL_FROM_NAME", "SuperAdoracion");
 
 // URL base de la aplicación (sin barra final)

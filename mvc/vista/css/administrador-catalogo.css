@@ -1,13 +1,60 @@
-/* ── Contenedor General ─────────────────────────────────── */
-/* Asegúrate de añadir la clase 'cuadricula-productos' al div que envuelve el PHP */
-.cuadricula-productos {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-    padding: 10px 0;
+/* ── Variables ──────────────────────────────────────────── */
+:root {
+    --color-texto:      #1a1c2c;
+    --color-rojo:       #e31b23;
+    --color-rojo-hover: #b3141a;
+    --gap-lateral:      clamp(1rem, 3vw, 2.5rem);
 }
 
-/* ── Tarjeta de Producto ────────────────────────────────── */
+/* ── Base ───────────────────────────────────────────────── */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    background: #f7f7f8;
+    color: var(--color-texto);
+}
+
+/* ── Área principal ─────────────────────────────────────── */
+.main-admin {
+    flex: 1;
+    padding: var(--gap-lateral);
+    max-width: 1300px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.main-admin h1 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+    font-weight: 700;
+    color: var(--color-texto);
+    margin-bottom: 4px;
+}
+
+.subtitulo {
+    font-size: 1rem;
+    color: #888;
+    margin-bottom: 20px;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin-bottom: 28px;
+}
+
+/* ── Grid de productos ──────────────────────────────────── */
+.cuadricula-productos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    /* ESTO EVITA EL ESTIRAMIENTO VERTICAL DE LAS IMÁGENES */
+    align-items: start; 
+}
+
+/* ── Tarjeta de producto ────────────────────────────────── */
 .producto {
     background: #fff;
     border-radius: 12px;
@@ -16,6 +63,7 @@
     display: flex;
     flex-direction: column;
     transition: transform .2s, box-shadow .2s;
+    border: 1px solid #eee;
 }
 
 .producto:hover {
@@ -23,17 +71,24 @@
     box-shadow: 0 10px 28px rgba(0, 0, 0, .13);
 }
 
-.producto > img {
+.contenedor-img {
     width: 100%;
-    height: 160px;
-    object-fit: cover;
-    background: #ebebeb;
-    display: block;
+    height: 180px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
 }
 
-/* ── Información del Producto ───────────────────────────── */
+.contenedor-img img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Mantiene la proporción como en la imagen de SOS */
+}
+
 .info-producto {
-    padding: 16px;
+    padding: 14px;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -41,25 +96,30 @@
 }
 
 .producto .nombre {
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 600;
     color: var(--color-texto);
-    margin-bottom: 4px;
+    margin-bottom: 8px;
+    min-height: 2.4em; /* Alinea los nombres */
 }
 
 .producto .stock {
-    font-size: 0.85rem;
-    color: #888;
+    font-size: 0.8rem;
+    color: #666;
+    background: #f0f0f2;
+    padding: 3px 10px;
+    border-radius: 20px;
+    align-self: center;
     margin-bottom: 10px;
 }
 
-/* ── Precios y Descuentos ───────────────────────────────── */
+/* ── Precios Alineados (Horizontal) ────────────────────── */
 .descuento {
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 10px;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 15px;
 }
 
 .producto .sin_descuento {
@@ -69,46 +129,35 @@
 }
 
 .producto .precio {
-    font-size: 1.25rem;
+    font-size: 1.4rem;
     font-weight: 700;
     color: var(--color-rojo);
-    margin: 5px 0;
+    margin: 0;
 }
 
-/* ── Botón Eliminar ─────────────────────────────────────── */
-/* Estilo para el botón dentro del formulario */
-.info-producto form {
-    margin-top: auto; /* Empuja el botón al final de la tarjeta */
+/* ── Botón Eliminar (Fondo Rojo #e31b23) ────────────────── */
+.btn-eliminar {
     width: 100%;
-}
-
-.info-producto button[name="eliminar"] {
-    width: 100%;
-    padding: 10px;
-    background: #fff;
-    color: var(--color-rojo);
-    border: 1.5px solid var(--color-rojo);
+    padding: 11px;
+    background: var(--color-rojo);
+    color: #fff;
+    border: none;
     cursor: pointer;
     font-size: 0.9rem;
     font-weight: 600;
     border-radius: 8px;
+    transition: background .2s;
+    margin-top: auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px; /* Espacio entre el icono y el texto */
-    transition: all .2s;
+    gap: 8px;
 }
 
-.info-producto button[name="eliminar"]:hover {
-    background: var(--color-rojo);
-    color: #fff;
+.btn-eliminar:hover {
+    background: var(--color-rojo-hover);
 }
 
-.info-producto button[name="eliminar"] i {
-    font-size: 1rem;
-}
-
-/* ── Mensaje de Vacío ───────────────────────────────────── */
 .vacio {
     font-size: 1.2rem;
     color: #bbb;

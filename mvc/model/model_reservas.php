@@ -49,12 +49,10 @@ class model_reservas{
         $stmt = $this->conn->prepare($sql);
         $reservas = [];
         if ($stmt === false) {
-            echo "0";
             return null;
         }
         $stmt->bind_param("i",$id);
         if (!$stmt->execute()) {
-            echo "1";
             return null;
         }
         $result = $stmt->get_result();

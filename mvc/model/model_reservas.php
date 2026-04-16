@@ -64,7 +64,6 @@ class model_reservas{
             }
             return $reservas;
         } else {
-            echo "3";
             return null;
         }
     }

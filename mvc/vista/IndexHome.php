@@ -42,11 +42,26 @@ if($action=="log"){
     $controller->register($nombre,$pass,$email);
 }else if($action=="perfil"){
     $controller->perfil();
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+/*<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> 73bb754a64fd1744539a416dfd64484b4214e571
+=======
+=======
+>>>>>>> e5f15d2be9d8ee5b12fabfd67018f2c1186b08ed
 }else if($action=="actualizar_nombre"){
     $controller->actualizar_nombre();
 }else if($action=="confirmar_email"){
     $token=$_GET["token"] ?? "";
     $controller->confirmar_email($token);
+<<<<<<< HEAD
+=======
+>>>>>>> 79220663df93dbe286a9ef08d7ed2817a02f44a9*/
+>>>>>>> e5f15d2be9d8ee5b12fabfd67018f2c1186b08ed
 }else if($action=="log_out"){
     session_destroy();
     header("Location:indexHome.php?action=home");

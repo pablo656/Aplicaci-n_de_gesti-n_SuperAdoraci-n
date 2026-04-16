@@ -102,9 +102,31 @@ class Controller_user{
     public function sing(){
         require("../vista/Sign_in.php");
     }
-    // Pendiente de implementar: carga la vista del perfil del usuario
     public function perfil(){
         require("../vista/perfil.php");
+    }
+
+    public function actualizar_nombre() {
+        if (!isset($_SESSION["id"])) {
+            header("Location: indexHome.php?action=log");
+            return;
+        }
+        $nuevo_nombre = trim($_POST["nombre"] ?? "");
+        if (empty($nuevo_nombre)) {
+            header("Location: indexHome.php?action=perfil&error=nombre_vacio");
+            return;
+        }
+        $resultado = $this->model_user->actualizar_nombre($_SESSION["id"], $nuevo_nombre);
+        if ($resultado === "nombre_duplicado") {
+            header("Location: indexHome.php?action=perfil&error=nombre_duplicado");
+            return;
+        }
+        if ($resultado === false) {
+            header("Location: indexHome.php?action=perfil&error=error_guardado");
+            return;
+        }
+        $_SESSION["nombre"] = $nuevo_nombre;
+        header("Location: indexHome.php?action=perfil&ok=1");
     }
 }
 ?>

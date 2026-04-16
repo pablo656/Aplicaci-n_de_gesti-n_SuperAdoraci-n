@@ -366,8 +366,79 @@
 
 /* Ajuste específico para asegurar que el icono de Flaticon se alinee bien */
 .btn-eliminar i {
-    font-size: 18px;            /* El icono suele verse mejor un poco más grande que el texto */
-    line-height: 0;             /* Evita que el icono descuadre la altura del botón */
-    display: flex;              /* Asegura que el icono en sí también esté centrado */
+    font-size: 18px;
+    line-height: 0;
+    display: flex;
     align-items: center;
+}
+
+/* --- EDITAR PERFIL --- */
+.seccion-editar { margin-top: 20px; }
+
+.form-editar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-grupo label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1a1c2c;
+}
+
+.form-grupo input[type="text"] {
+    padding: 9px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    max-width: 320px;
+    transition: border-color 0.2s;
+}
+
+.form-grupo input[type="text"]:focus { border-color: #1a1e29; }
+
+.btn-guardar {
+    align-self: flex-start;
+    background-color: #1a1e29;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 28px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-guardar:hover {
+    background-color: #2e3550;
+    transform: translateY(-1px);
+}
+
+.btn-guardar:active { transform: translateY(1px); }
+
+.editar-ok {
+    font-size: 13px;
+    color: #3b6d11;
+    background: #eaf3de;
+    border-radius: 8px;
+    padding: 8px 14px;
+    margin-bottom: 8px;
+}
+
+.editar-error {
+    font-size: 13px;
+    color: #a32d2d;
+    background: #fcebeb;
+    border-radius: 8px;
+    padding: 8px 14px;
+    margin-bottom: 8px;
 }

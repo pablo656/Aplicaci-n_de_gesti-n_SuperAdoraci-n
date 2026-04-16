@@ -13,7 +13,7 @@ if($action=="log"||$action=="comprobar"||$action=="log_fallido"){
     $css="<link rel='stylesheet' href='css/log_in.css'>";
 }elseif($action=="perfil"){
     $titulo="Perfil";
-    $css=null;
+    $css="<link rel='stylesheet' href='css/perfil.css'>";
 }else{
     $titulo="Home";
     $css="<link rel='stylesheet' href='css/inicio.css'>";
@@ -43,7 +43,12 @@ if($action=="log"){
 }else if($action=="perfil"){
     $controller->perfil();
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+}else if($action=="actualizar_nombre"){
+    $controller->actualizar_nombre();
+>>>>>>> 3967443 (email)
 }else if($action=="confirmar_email"){
     $token=$_GET["token"] ?? "";
     $controller->confirmar_email($token);

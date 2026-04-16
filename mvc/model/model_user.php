@@ -134,6 +134,25 @@
             return $usuario;
         }
 
+        public function actualizar_nombre($id, $nuevo_nombre) {
+            $stmt = $this->conn->prepare("SELECT id FROM usuarios WHERE nombre = ? AND id != ?");
+            $stmt->bind_param("si", $nuevo_nombre, $id);
+            $stmt->execute();
+            if ($stmt->get_result()->num_rows > 0) {
+                $stmt->close();
+                return "nombre_duplicado";
+            }
+            $stmt->close();
+            $stmt = $this->conn->prepare("UPDATE usuarios SET nombre = ? WHERE id = ?");
+            $stmt->bind_param("si", $nuevo_nombre, $id);
+            if (!$stmt->execute()) {
+                $stmt->close();
+                return false;
+            }
+            $stmt->close();
+            return true;
+        }
+
         public function crearusuario_existe($user, $email){
             return $this->comprobarusuario_crear($user, $email);
         }

@@ -75,7 +75,7 @@
 
         }
 
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 =======
         // Guarda un registro pendiente de confirmar por email
         public function guardar_verificacion($nombre, $email, $hash) {
@@ -138,7 +138,7 @@
             return $this->comprobarusuario_crear($user, $email);
         }
 
->>>>>>> 79220663df93dbe286a9ef08d7ed2817a02f44a9
+>>>>>>> 79220663df93dbe286a9ef08d7ed2817a02f44a9*/
         private function comprobarusuario_crear($user, $email){
             if (!$this->conn) {
                 return null;

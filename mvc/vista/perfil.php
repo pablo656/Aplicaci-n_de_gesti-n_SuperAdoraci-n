@@ -134,5 +134,29 @@
             <?php endif; ?>
 
         </div>
+        <div class="seccion seccion-editar">
+            <p class="seccion-titulo">Editar perfil</p>
+
+            <?php if (isset($_GET["ok"])): ?>
+                <p class="editar-ok">Nombre actualizado correctamente.</p>
+            <?php elseif (isset($_GET["error"])): ?>
+                <?php $msgs = [
+                    "nombre_vacio"     => "El nombre no puede estar vacío.",
+                    "nombre_duplicado" => "Ese nombre de usuario ya está en uso.",
+                    "error_guardado"   => "Error al guardar los cambios.",
+                ]; ?>
+                <p class="editar-error"><?= htmlspecialchars($msgs[$_GET["error"]] ?? "Error desconocido.") ?></p>
+            <?php endif; ?>
+
+            <form method="post" action="IndexHome.php?action=actualizar_nombre" class="form-editar">
+                <div class="form-grupo">
+                    <label for="nombre">Nombre de usuario</label>
+                    <input type="text" id="nombre" name="nombre"
+                           value="<?= htmlspecialchars($_SESSION["nombre"]) ?>"
+                           maxlength="100" required>
+                </div>
+                <button type="submit" class="btn-guardar">Guardar cambios</button>
+            </form>
+        </div>
     </main>
 </div>

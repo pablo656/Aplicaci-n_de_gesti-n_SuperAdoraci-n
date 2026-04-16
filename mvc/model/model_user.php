@@ -75,11 +75,6 @@
 
         }
 
-<<<<<<< HEAD
-=======
-/*<<<<<<< HEAD
-=======
->>>>>>> e5f15d2be9d8ee5b12fabfd67018f2c1186b08ed
         // Guarda un registro pendiente de confirmar por email
         public function guardar_verificacion($nombre, $email, $hash) {
             $token    = bin2hex(random_bytes(32));
@@ -160,10 +155,6 @@
             return $this->comprobarusuario_crear($user, $email);
         }
 
-<<<<<<< HEAD
-=======
->>>>>>> 79220663df93dbe286a9ef08d7ed2817a02f44a9*/
->>>>>>> e5f15d2be9d8ee5b12fabfd67018f2c1186b08ed
         private function comprobarusuario_crear($user, $email){
             if (!$this->conn) {
                 return null;

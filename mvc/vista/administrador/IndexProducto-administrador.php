@@ -4,7 +4,7 @@
     $controller=new ProductoController();
     $action = $_GET["action"] ?? "list";
     $titulo = "Administración de catalogo";
-    $css = "<link rel='stylesheet' href='../../css/administrador-catalogo.css'>";
+    $css = "<link rel='stylesheet' href='css/administrador-catalogo.css'>";
     $categorias = ["Comida","Bebidas","Mascotas","Papeleria_oficina","Salud_bienestar"];
     $subcategorias = [
         "Comida"            => ["Carne", "Panadería", "Pescados", "Snacks", "Pasta", "Conservas", "Salsas", "Arroz y legumbres", "Condimentos y salsas", "Despensa", "Congelados"],
@@ -14,6 +14,7 @@
         "Papeleria_oficina" => ["Material escolar", "Material de oficina", "Escritura y dibujo", "Archivadores y carpetas", "Folios"],
         "Salud_bienestar"   => []
     ];
+    require("../layerHeader.php");
     //require __DIR__ . "/../layerHeader.php";
     if($action=="add"){
 

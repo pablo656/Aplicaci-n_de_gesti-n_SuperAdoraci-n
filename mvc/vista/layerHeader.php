@@ -6,6 +6,8 @@
     <title><?php echo $titulo?></title>
     <link rel="stylesheet" href="css/header_style.css">
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+
+    <!--<link rel='stylesheet' href='css/administrador-catalogo.css'>-->
     <!--Poner el campo link del CSS en el INDEX para que sea distinto dependiendo de la página--> 
     <?php echo $css ?>
 
@@ -18,7 +20,6 @@
     </picture>
     
 </header>
-
 <nav>
     <div>
         <a href="IndexHome.php">Inicio</a>

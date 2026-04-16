@@ -1,9 +1,9 @@
 <?php
 require_once __DIR__ . "/../model/model_user.php";
-<<<<<<< HEAD
+/*<<<<<<< HEAD
 =======
 require_once __DIR__ . "/../helpers/Mailer.php";
->>>>>>> 79220663df93dbe286a9ef08d7ed2817a02f44a9
+>>>>>>> 79220663df93dbe286a9ef08d7ed2817a02f44a9*/
 
 // Controlador que gestiona el registro, login y navegación del usuario
 class Controller_user{
@@ -31,7 +31,7 @@ class Controller_user{
         }
     }
 
-<<<<<<< HEAD
+/*<<<<<<< HEAD
     // Crea el usuario; si tiene éxito inicia sesión directamente, si ya existe redirige con error
     public function register($username,$password,$email){
         $user = $this->model_user->crearusuario($username, $password,$email);
@@ -90,7 +90,7 @@ class Controller_user{
         $_SESSION["rol"]    = $user["rol"];
         header("Location: indexHome.php?action=home");
 >>>>>>> 79220663df93dbe286a9ef08d7ed2817a02f44a9
-    }
+    }*/
 
     //Funciones para moverse entre Home, Log in,Sign in y Perfil
     public function home(){

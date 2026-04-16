@@ -1,13 +1,6 @@
 <?php
 require_once __DIR__ . "/../model/model_user.php";
-<<<<<<< HEAD
 require_once __DIR__ . "/../helpers/Mailer.php";
-=======
-/*<<<<<<< HEAD
-=======
-require_once __DIR__ . "/../helpers/Mailer.php";
->>>>>>> 79220663df93dbe286a9ef08d7ed2817a02f44a9*/
->>>>>>> e5f15d2be9d8ee5b12fabfd67018f2c1186b08ed
 
 // Controlador que gestiona el registro, login y navegación del usuario
 class Controller_user{
@@ -35,25 +28,6 @@ class Controller_user{
         }
     }
 
-<<<<<<< HEAD
-=======
-/*<<<<<<< HEAD
-    // Crea el usuario; si tiene éxito inicia sesión directamente, si ya existe redirige con error
-    public function register($username,$password,$email){
-        $user = $this->model_user->crearusuario($username, $password,$email);
-        if ($user != false) {
-            //INICIO DE SESSIÓN (No añadir contraseña al inicion de sesión, por que no es seguro)
-            $_SESSION["id"]=$user["id"];
-            $_SESSION["nombre"]=$user["nombre"];
-            $_SESSION["email"]=$user["email"];
-            $_SESSION["rol"]=$user["rol"];
-            header("Location:indexHome.php?action=home");
-        }else{
-            echo "Registro fallido, el usuario ya existe.";
-            header("Location: indexHome.php?action=sing_fallido");
-        }
-=======
->>>>>>> e5f15d2be9d8ee5b12fabfd67018f2c1186b08ed
     // Envía email de verificación; no crea el usuario hasta que confirme
     public function register($username, $password, $email) {
         if (empty($username) || empty($password) || empty($email)) {
@@ -96,12 +70,7 @@ class Controller_user{
         $_SESSION["email"]  = $user["email"];
         $_SESSION["rol"]    = $user["rol"];
         header("Location: indexHome.php?action=home");
-<<<<<<< HEAD
     }
-=======
->>>>>>> 79220663df93dbe286a9ef08d7ed2817a02f44a9
-    }*/
->>>>>>> e5f15d2be9d8ee5b12fabfd67018f2c1186b08ed
 
     //Funciones para moverse entre Home, Log in,Sign in y Perfil
     public function home(){

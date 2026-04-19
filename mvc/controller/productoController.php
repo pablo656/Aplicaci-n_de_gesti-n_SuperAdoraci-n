@@ -89,9 +89,9 @@
             return $this->model->del_producto($id);
         }
 
-        public function update_producto($id, $nombre=null, $stock=null, $precio=null, $precio_por_peso=null, $categoria=null, $subcategoria=null, $imagen=null, $porcentaje_descuento=null){
-            // Nota: Aquí corregí para que use las variables pasadas y no solo nulls
-            return $this->model->update_producto($id, $nombre, $stock, $precio, $precio_por_peso, $categoria, $imagen, $porcentaje_descuento);
+        public function update_producto($id, $nombre, $stock, $precio, $precio_por_peso, $categoria, $subcategoria, $imagen, $descuento) {
+            // LLAMADA AL MODELO: El orden debe ser id, nombre, stock, precio, peso, cat, sub, img, desc
+            return $this->model->update_producto($id, $nombre, $stock, $precio, $precio_por_peso, $categoria, $subcategoria, $imagen, $descuento);
         }
     }
 ?>

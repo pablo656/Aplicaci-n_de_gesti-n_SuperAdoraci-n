@@ -134,6 +134,35 @@ hr {
     color: var(--color-rojo);
     margin: 0;
 }
+/* Usamos el nombre exacto de tu clase HTML */
+.boton_modificar {
+    background-color: #1a3a5c; /* Azul oscuro */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px; /* Bordes redondeados como el botón eliminar */
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%; /* Para que ocupe el mismo ancho que el botón eliminar */
+    margin-bottom: 8px; /* Separación con el botón de abajo */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Efecto al pasar el ratón */
+.boton_modificar:hover {
+    background-color: #254e7a; /* Azul más claro */
+    transform: translateY(-1px);
+}
+
+/* Efecto al hacer clic */
+.boton_modificar:active {
+    transform: translateY(0);
+}
 
 /* ── Botón Eliminar (Fondo Rojo #e31b23) ────────────────── */
 .btn-eliminar {
@@ -164,4 +193,194 @@ hr {
     text-align: center;
     padding: 60px 20px;
     grid-column: 1 / -1;
+}
+
+/* ==========================================================================
+   1. ESTRUCTURA DEL MODAL (OVERLAY Y CAJA)
+   ========================================================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-cerrar {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+}
+
+.modal-cerrar:hover {
+    color: #000;
+}
+
+/* ==========================================================================
+   2. ESTILOS DEL FORMULARIO E INPUTS
+   ========================================================================== */
+#form-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#form-modal label {
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #333;
+    margin-bottom: -5px;
+}
+
+#form-modal input[type="text"],
+#form-modal input[type="number"],
+#form-modal select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+/* Contenedor del porcentaje (%) */
+.input-porcentaje {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-porcentaje input {
+    width: 100%;
+    padding-right: 30px !important;
+}
+
+.input-porcentaje .simbolo {
+    position: absolute;
+    right: 10px;
+    color: #888;
+    font-weight: bold;
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   3. CHECKBOX Y PRECIO FINAL (ALINEACIÓN IZQUIERDA)
+   ========================================================================== */
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 5px;
+    justify-content: flex-start;
+}
+
+/* Reset de márgenes para el label del checkbox */
+.checkbox-container label {
+    margin-bottom: 0 !important;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+#precio_por_peso {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    margin: 0;
+}
+
+/* Resultado del precio final */
+#precio_descontado_container {
+    color: #28a745; /* Color verde éxito */
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin: 5px 0;
+}
+
+/* ==========================================================================
+   4. IMAGEN Y VISTA PREVIA (CENTRADOS)
+   ========================================================================== */
+.contenedor-preview {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 10px 0;
+}
+
+#preview {
+    border: 2px dashed #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    object-fit: cover;
+    max-width: 200px;
+    display: block;
+}
+
+/* ==========================================================================
+   5. BOTONES (COLORES AZULES SOLICITADOS)
+   ========================================================================== */
+
+/* Botón Actualizar (Dentro del Modal) */
+input[type="submit"][name="modificar"] {
+    background-color: #1a3a5c; /* Tu azul oscuro */
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.1s;
+    margin-top: 10px;
+}
+
+input[type="submit"][name="modificar"]:hover {
+    background-color: #254e7a; /* Tu azul claro */
+}
+
+input[type="submit"][name="modificar"]:active {
+    transform: scale(0.98);
+}
+
+/* Botón Modificar (En la Tarjeta de Producto) */
+.boton_modificar {
+    background-color: #1a3a5c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-bottom: 8px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.boton_modificar:hover {
+    background-color: #254e7a;
+    transform: translateY(-1px);
 }

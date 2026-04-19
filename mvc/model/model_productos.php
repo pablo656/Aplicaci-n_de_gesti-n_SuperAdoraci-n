@@ -142,84 +142,71 @@ class model_productos{
     /*IMPORTANTE!!!: Para llamar ha esta función se debe de hacer de esta manera
         $this->update_producto(id: 1,nombre:patata ,porcentaje_descuento: 50); 
         Se debe hacer asi para que la función sepa que datos en especifico estas mandando*/
-    public function update_producto($id, $nombre=null, $stock=null, $precio=null, $precio_por_peso=null, $categoria=null,$subcategoria=null, $imagen=null, $porcentaje_descuento=null){
+   public function update_producto($id, $nombre=null, $stock=null, $precio=null, $precio_por_peso=null, $categoria=null, $subcategoria=null, $imagen=null, $porcentaje_descuento=null) {
         $sql = "UPDATE productos SET ";
         $tipos = "";       
         $valores = [];    
 
-        if($nombre != null){
-            $sql .= "nombre=?, ";
-            $tipos .= "s";
-            $valores[] = $nombre;
-        }
-        if($stock != null){
-            $sql .= "stock=?, ";
-            $tipos .= "i";
-            $valores[] = $stock;
-        }
-        if($precio != null){
-            $sql .= "precio=?, ";
-            $tipos .= "d";
-            $valores[] = $precio;
-        }
-        if($precio_por_peso != null){
-            $sql .= "precio_por_peso=?, ";
-            $tipos .= "d";
-            $valores[] = $precio_por_peso;
-        }
-        if($categoria != null){
-            $sql .= "categoria=?, ";
-            $tipos .= "s";
-            $valores[] = $categoria;
-        }
-        if($subcategoria !=null){
-            $sql.="subcategoria=?, ";
-            $tipos.="s";
-            $valores[]=$subcategoria;
-        }
-        if($imagen != null){
-            // Obtener imagen antigua y reemplazarla
-            $stmt = $this->conn->prepare("SELECT url_imagen FROM productos WHERE id=?");
-            $stmt->bind_param("i", $id);
-            if(!$stmt->execute()){
-                return false;
-            }
-            $producto = $stmt->get_result()->fetch_assoc();
+        if($nombre !== null) { $sql .= "nombre=?, "; $tipos .= "s"; $valores[] = $nombre; }
+        if($stock !== null) { $sql .= "stock=?, "; $tipos .= "d"; $valores[] = $stock; }
+        if($precio !== null) { $sql .= "precio=?, "; $tipos .= "d"; $valores[] = $precio; }
+        if($precio_por_peso !== null) { $sql .= "precio_por_peso=?, "; $tipos .= "i"; $valores[] = $precio_por_peso; }
+        if($categoria !== null) { $sql .= "categoria=?, "; $tipos .= "s"; $valores[] = $categoria; }
+        if($subcategoria !== null) { $sql .= "subcategoria=?, "; $tipos .= "s"; $valores[] = $subcategoria; }
+        
+        // GESTIÓN DE IMAGEN
+        if(is_array($imagen) && isset($imagen['tmp_name']) && $imagen['tmp_name'] != "") {
             
-            if(file_exists($producto['url_imagen'])){
-                unlink($producto['url_imagen']);
+            // 1. Obtener la imagen antigua para borrarla
+            $stmt_old = $this->conn->prepare("SELECT url_imagen FROM productos WHERE id=?");
+            $stmt_old->bind_param("i", $id);
+            $stmt_old->execute();
+            $res = $stmt_old->get_result()->fetch_assoc();
+            
+            if($res && !empty($res['url_imagen'])){
+                // Si la URL guardada es "../imagenes/foto.jpg", desde el administrador
+                // el archivo físico real está en "../../imagenes/foto.jpg"
+                $ruta_fisica_vieja = "../" . $res['url_imagen']; 
+                if(file_exists($ruta_fisica_vieja)){
+                    unlink($ruta_fisica_vieja);
+                }
             }
 
-            $carpeta = "../imagenes/";
+            // 2. Definir las rutas
+            // Esta es la ruta para PHP (moverse por las carpetas del servidor)
+            $carpeta_fisica = "../../imagenes/"; 
+            // Esta es la ruta para la BASE DE DATOS (lo que entenderá el navegador)
+            $ruta_base_datos = "../imagenes/";
+
+            if (!file_exists($carpeta_fisica)) {
+                mkdir($carpeta_fisica, 0777, true);
+            }
+
             $nombre_archivo = uniqid() . "_" . basename($imagen['name']);
-            $ruta = $carpeta . $nombre_archivo;
-            move_uploaded_file($imagen['tmp_name'], $ruta);
-
-            $sql .= "url_imagen=?, ";
-            $tipos .= "s";
-            $valores[] = $ruta;
-        }
-        if($porcentaje_descuento != null){
-            $sql .= "porcentaje_descuento=?, ";
-            $tipos .= "d";
-            $valores[] = $porcentaje_descuento;
+            
+            // 3. Mover el archivo usando la ruta física (sube 2 niveles)
+            if(move_uploaded_file($imagen['tmp_name'], $carpeta_fisica . $nombre_archivo)) {
+                $sql .= "url_imagen=?, ";
+                $tipos .= "s";
+                // Guardamos la ruta que te funciona visualmente (sube 1 nivel)
+                $valores[] = $ruta_base_datos . $nombre_archivo; 
+            }
         }
 
-    //Quitar la ultima coma 
+        if($porcentaje_descuento !== null) { $sql .= "porcentaje_descuento=?, "; $tipos .= "d"; $valores[] = $porcentaje_descuento; }
+
+        if(empty($valores)) return false;
+
         $sql = rtrim($sql, ", ") . " WHERE id=?";
         $tipos .= "i";
         $valores[] = $id;
 
-        
         $stmt = $this->conn->prepare($sql);
-        //Hacer bind_param con todos los valores necesarios
-        $stmt->bind_param($tipos, ...$valores);
-        if($stmt->execute()){
-            return true;
-        }else{
-            return false;
+        if ($stmt) {
+            $stmt->bind_param($tipos, ...$valores);
+            return $stmt->execute();
         }
-       
+        return false;
     }
     
 

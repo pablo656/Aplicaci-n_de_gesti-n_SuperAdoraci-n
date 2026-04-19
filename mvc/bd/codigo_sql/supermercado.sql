@@ -33,7 +33,7 @@ CREATE TABLE productos (
     categoria            VARCHAR(80),
     subcategoria         VARCHAR(80) NULL,
     url_imagen           VARCHAR(500) NOT NULL,
-    porcentaje_descuento DECIMAL(5,2) DEFAULT 0.00
+    porcentaje_descuento INT(2) DEFAULT 0
 );
 
 -- RESERVAS (se borran a los 7 días)

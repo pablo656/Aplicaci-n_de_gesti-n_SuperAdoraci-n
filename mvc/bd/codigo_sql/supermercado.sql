@@ -11,8 +11,6 @@ CREATE TABLE usuarios (
     ultimo_inicio_sesion DATETIME DEFAULT NULL
 );
 
-<<<<<<< HEAD
-=======
 -- VERIFICACIONES DE EMAIL (registros pendientes de confirmar)
 CREATE TABLE verificaciones_email (
     token      VARCHAR(64)  PRIMARY KEY,
@@ -22,7 +20,7 @@ CREATE TABLE verificaciones_email (
     expira_en  DATETIME     NOT NULL
 );
 
->>>>>>> 79220663df93dbe286a9ef08d7ed2817a02f44a9
+
 -- PRODUCTOS
 CREATE TABLE productos (
     id                   INT AUTO_INCREMENT PRIMARY KEY,

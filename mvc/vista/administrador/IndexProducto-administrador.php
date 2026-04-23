@@ -62,5 +62,4 @@
     }
 
     
-    require __DIR__ ."/../footer.html";
 ?>

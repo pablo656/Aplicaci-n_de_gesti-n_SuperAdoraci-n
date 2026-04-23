@@ -139,7 +139,7 @@ class model_reservas{
         if ($stmt === false) {
             return false;
         }
-        $stmt->bind_param("ii", $id_usuario);
+        $stmt->bind_param("i", $id_usuario);
         $result = $stmt->execute();
         $stmt->close();
         return $result;

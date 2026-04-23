@@ -28,7 +28,6 @@
                 if(!$stmt->execute()){
                     return null;
                 }
-                $stmt->execute();
                 return $user;
             } else {
                 return null;

@@ -20,23 +20,15 @@
 </header>
 <nav>
     <div>
-        <a href="IndexHome.php">Inicio</a>
-        <a href="IndexProducto-administrador.php">Catalogo</a>
+        <a href="IndexProducto-administrador.php">Productos</a>
+        <a href="#">Comidas</a>
         <a href="IndexPedidos.php">Pedidos</a>
+
     </div>
     <div>
-        <?php if(isset($_SESSION["id"]) && isset($_SESSION["nombre"])&&isset($_SESSION["email"])&&isset($_SESSION["rol"])):?>
-        <a href="IndexCarrito.php"><i class="fi fi-sr-shopping-cart"></i></a>
-        <?php endif;?>
-        <?php
-        if(isset($_SESSION["id"]) && isset($_SESSION["nombre"])&&isset($_SESSION["email"])&&isset($_SESSION["rol"])){?>
-            <a href="IndexPerfil.php">Perfil <i class="fi fi-sr-user" style="color: white; font-size: 1.2em;"></i></a>
-            <a href="IndexHome.php?action=log_out">Log out</i></a>
-            <?php
-        }else{?>
-        <a href="IndexHome.php?action=log">Iniciar session</a>
-        <a href="IndexHome.php?action=sing">Registrarse</a>
-        <?php
-        }?>
+        <a href="#">Usuarios</a>
+        <a href="IndexPerfil.php">Perfil <i class="fi fi-sr-user" style="color: white; font-size: 1.2em;"></i></a>
+        <a href="IndexHome.php?action=log_out">Log out</i></a>
+
     </div>
 </nav>

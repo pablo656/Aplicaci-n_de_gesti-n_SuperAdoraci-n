@@ -54,5 +54,4 @@
         $controller->mostrar_productos_admin();
     }
     
-    require __DIR__ ."/../footer.html";
 ?>

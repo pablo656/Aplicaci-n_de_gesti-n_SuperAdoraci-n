@@ -1,0 +1,59 @@
+BASE DE DATOS IMPLEMENTADA
+==========================
+
+La base de datos, denominada "supermercado", está gestionada por MySQL (XAMPP) con charset utf8mb4
+y contiene las siguientes tablas principales:
+
+TABLAS
+------
+
+usuarios (id, email, nombre, contrasena, rol, ultimo_inicio_sesion):
+  Las contraseñas se almacenan como hash bcrypt generado con password_hash().
+  El rol puede ser "dueno", "administrador" o "cliente" (valor por defecto).
+
+verificaciones_email (token, nombre, email, contrasena, expira_en):
+  Registros pendientes de confirmar durante el proceso de registro.
+  El token es la clave primaria y el registro caduca en la fecha indicada por expira_en.
+
+productos (id, nombre, stock, precio, precio_por_peso, categoria, subcategoria, url_imagen, porcentaje_descuento):
+  Artículos de estantería del supermercado.
+  El campo precio_por_peso indica si el precio es por kilogramo.
+  El stock se gestiona automáticamente mediante triggers.
+
+reservas (id, id_usuario, id_producto, cantidad, fecha):
+  Reservas de productos realizadas por los clientes.
+  Se eliminan automáticamente pasados 7 días mediante un evento programado.
+
+comidas (id, nombre, descripcion, precio, disponible, url_imagen):
+  Platos preparados disponibles para encargar.
+  El campo "disponible" indica si el plato está activo en el catálogo.
+
+pedidos (id, id_usuario, id_comida, cantidad, mensaje, realizado, fecha):
+  Pedidos de comidas preparadas realizados por los clientes.
+  Se eliminan automáticamente pasados 30 días mediante un evento programado.
+
+
+TRIGGERS
+--------
+
+Para garantizar la integridad del stock se han implementado dos triggers en supermercado.sql:
+
+  trg_reserva_insert: descuenta automáticamente la cantidad reservada del stock de la tabla
+    productos al insertar una nueva reserva.
+
+  trg_reserva_delete: restaura la cantidad al stock cuando se cancela o elimina una reserva.
+
+
+EVENTOS PROGRAMADOS (requieren event_scheduler = ON en MySQL)
+-------------------------------------------------------------
+
+  evt_borrar_reservas: elimina reservas con más de 7 días de antigüedad (se ejecuta cada día).
+  evt_borrar_pedidos:  elimina pedidos con más de 30 días de antigüedad (se ejecuta cada día).
+
+
+INTEGRIDAD REFERENCIAL
+----------------------
+
+Todas las claves foráneas se han definido con la política ON DELETE RESTRICT, de forma que no es
+posible eliminar un producto o un usuario que tenga reservas o pedidos asociados, preservando la
+integridad referencial.

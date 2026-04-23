@@ -93,20 +93,32 @@ function actualizarPrecioFinal() {
  */
 
 document.addEventListener("change", function(e) {
-    // Preview de imagen
+    // --- Lógica del Checkbox "Precio por peso" ---
+    if (e.target && e.target.id === "precio_por_peso") {
+        const inputStock = document.getElementById("stock");
+        if (!inputStock) return;
+
+        if (e.target.checked) {
+            // Permitir decimales
+            inputStock.step = "0.1";
+        } else {
+            // Solo enteros
+            inputStock.step = "1";
+            // Redondear hacia abajo el valor actual si tuviera decimales
+            if (inputStock.value) {
+                inputStock.value = Math.floor(parseFloat(inputStock.value));
+            }
+        }
+    }
+
+    // --- Lógica de Preview de imagen (Tu código anterior) ---
     if (e.target && e.target.id === "input_imagen") {
         const reader = new FileReader();
         reader.onload = function(event) {
             document.getElementById("preview").src = event.target.result;
         };
-        reader.readAsDataURL(e.target.files[0]);
-    }
-
-    // Resetear stock a entero si se desmarca "precio por peso"
-    if (e.target && e.target.id === "precio_por_peso") {
-        const inputStock = document.getElementById("stock");
-        if (!e.target.checked && inputStock) {
-            inputStock.value = Math.floor(parseFloat(inputStock.value || 0));
+        if (e.target.files[0]) {
+            reader.readAsDataURL(e.target.files[0]);
         }
     }
 });

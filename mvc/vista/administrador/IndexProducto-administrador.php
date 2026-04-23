@@ -6,6 +6,7 @@
     $titulo = "Administración de catalogo";
     $css = "<link rel='stylesheet' href='../css/administrador-catalogo.css'>";
     $categorias = ["Comida","Bebidas","Mascotas","Papeleria_oficina","Salud_bienestar"];
+    $subcategoria = $_GET["subcategoria"] ?? null;
     $subcategorias = [
         "Comida"            => ["Carne", "Panadería", "Pescados", "Snacks", "Pasta", "Conservas", "Salsas", "Arroz y legumbres", "Condimentos y salsas", "Despensa", "Congelados"],
         "Bebidas"           => ["Agua", "Refrescos", "Zumos", "Bebidas alcohólicas"],
@@ -50,9 +51,16 @@
 
     header("Location: IndexProducto-administrador.php");
     exit();
+    }else if(in_array($action, $categorias)){
+        if($subcategoria != null){
+            $controller->buscar_por_subcategoria_admin($subcategoria);
+        }else{
+            $controller->buscar_por_categorias_admin($action);
+        }
     }else{
         $controller->mostrar_productos_admin();
     }
+
     
     require __DIR__ ."/../footer.html";
 ?>

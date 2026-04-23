@@ -3,6 +3,8 @@
     --color-texto:      #1a1c2c;
     --color-rojo:       #e31b23;
     --color-rojo-hover: #b3141a;
+    --color-azul:       #1a3a5c;
+    --color-azul-hover: #254e7a;
     --gap-lateral:      clamp(1rem, 3vw, 2.5rem);
 }
 
@@ -14,15 +16,84 @@ body {
     font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
     background: #f7f7f8;
     color: var(--color-texto);
+    margin: 0;
+}
+
+/* ── Layout principal ───────────────────────────────────── */
+.contenido {
+    display: flex;
+    flex: 1;
+}
+
+/* ── Barra lateral (Aside) ────────────────────────────── */
+aside {
+    width: 200px;
+    flex-shrink: 0;
+    background: #1a1a2e; /* Color oscuro como el nav */
+    border-right: 1px solid #333;
+    padding: 24px 0;
+}
+
+aside ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+aside ul li a {
+    display: block;
+    padding: 12px 20px;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #444;
+    transition: background .2s, padding-left .2s;
+}
+
+aside ul li a:hover {
+    background: var(--color-rojo);
+    padding-left: 28px;
+}
+
+/* ── Subcategorías (Estilo lista blanca con borde rojo) ── */
+.subcategorias {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.subcategorias li a {
+    background-color: #ffffff;
+    display: block;
+    padding: 10px 20px 10px 25px;
+    font-size: 0.85rem;
+    color: #000;
+    border-left: 3px solid var(--color-rojo);
+    border-bottom: 1px solid #eee;
+    transition: background 0.2s, color 0.2s;
+}
+
+.subcategorias li a:hover {
+    background: var(--color-rojo);
+    color: #ffffff;
 }
 
 /* ── Área principal ─────────────────────────────────────── */
 .main-admin {
     flex: 1;
     padding: var(--gap-lateral);
-    max-width: 1300px;
-    margin: 0 auto;
+    min-width: 0; /* Evita desbordamiento en flex */
+}
+
+/* Contenedor del Título y el Botón Añadir */
+.header-admin {
+    display: flex;
+    justify-content: space-between; /* Título a la izquierda, Botón a la derecha */
+    align-items: center;
     width: 100%;
+    margin-bottom: 20px;
+    gap: 20px;
 }
 
 .main-admin h1 {
@@ -30,13 +101,68 @@ body {
     font-size: clamp(1.4rem, 2.5vw, 1.8rem);
     font-weight: 700;
     color: var(--color-texto);
-    margin-bottom: 4px;
+    margin: 0 0 4px 0;
 }
 
 .subtitulo {
     font-size: 1rem;
     color: #888;
-    margin-bottom: 20px;
+    margin: 0;
+}
+
+/* ── Botón Añadir Producto (A la derecha) ──────────────── */
+.btn-añadir {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #28a745; /* Verde éxito */
+    color: white !important;
+    padding: 10px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    transition: background 0.2s, transform 0.1s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-añadir:hover {
+    background-color: #218838;
+    transform: translateY(-1px);
+}
+
+/* ── Breadcrumbs ───────────────────────────────────────── */
+.breadcrumb-wrapper {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.breadcrumb-enlace {
+    font-weight: bolder;
+    color: #888;
+    font-size: 16px;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+}
+
+.breadcrumb-enlace:hover {
+    color: #555;
+}
+
+.breadcrumb-texto {
+    color: #888;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.breadcrumb-separador {
+    color: #888;
+    font-size: 16px;
+    user-select: none;
 }
 
 hr {
@@ -50,7 +176,6 @@ hr {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     gap: 20px;
-    /* ESTO EVITA EL ESTIRAMIENTO VERTICAL DE LAS IMÁGENES */
     align-items: start; 
 }
 
@@ -84,7 +209,7 @@ hr {
 .contenedor-img img {
     max-width: 100%;
     max-height: 100%;
-    object-fit: contain; /* Mantiene la proporción como en la imagen de SOS */
+    object-fit: contain;
 }
 
 .info-producto {
@@ -100,7 +225,7 @@ hr {
     font-weight: 600;
     color: var(--color-texto);
     margin-bottom: 8px;
-    min-height: 2.4em; /* Alinea los nombres */
+    min-height: 2.4em;
 }
 
 .producto .stock {
@@ -113,7 +238,6 @@ hr {
     margin-bottom: 10px;
 }
 
-/* ── Precios Alineados (Horizontal) ────────────────────── */
 .descuento {
     display: flex;
     justify-content: center;
@@ -134,13 +258,14 @@ hr {
     color: var(--color-rojo);
     margin: 0;
 }
-/* Usamos el nombre exacto de tu clase HTML */
+
+/* ── Botones de la Tarjeta ─────────────────────────────── */
 .boton_modificar {
-    background-color: #1a3a5c; /* Azul oscuro */
+    background-color: var(--color-azul);
     color: white;
     border: none;
     padding: 10px 20px;
-    border-radius: 8px; /* Bordes redondeados como el botón eliminar */
+    border-radius: 8px;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
@@ -148,23 +273,16 @@ hr {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    width: 100%; /* Para que ocupe el mismo ancho que el botón eliminar */
-    margin-bottom: 8px; /* Separación con el botón de abajo */
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%;
+    margin-bottom: 8px;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
-/* Efecto al pasar el ratón */
 .boton_modificar:hover {
-    background-color: #254e7a; /* Azul más claro */
+    background-color: var(--color-azul-hover);
     transform: translateY(-1px);
 }
 
-/* Efecto al hacer clic */
-.boton_modificar:active {
-    transform: translateY(0);
-}
-
-/* ── Botón Eliminar (Fondo Rojo #e31b23) ────────────────── */
 .btn-eliminar {
     width: 100%;
     padding: 11px;
@@ -187,17 +305,7 @@ hr {
     background: var(--color-rojo-hover);
 }
 
-.vacio {
-    font-size: 1.2rem;
-    color: #bbb;
-    text-align: center;
-    padding: 60px 20px;
-    grid-column: 1 / -1;
-}
-
-/* ==========================================================================
-   1. ESTRUCTURA DEL MODAL (OVERLAY Y CAJA)
-   ========================================================================== */
+/* ── Estilos del Modal ──────────────────────────────────── */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -234,13 +342,6 @@ hr {
     color: #666;
 }
 
-.modal-cerrar:hover {
-    color: #000;
-}
-
-/* ==========================================================================
-   2. ESTILOS DEL FORMULARIO E INPUTS
-   ========================================================================== */
 #form-modal {
     display: flex;
     flex-direction: column;
@@ -263,7 +364,6 @@ hr {
     font-size: 1rem;
 }
 
-/* Contenedor del porcentaje (%) */
 .input-porcentaje {
     position: relative;
     display: flex;
@@ -280,45 +380,21 @@ hr {
     right: 10px;
     color: #888;
     font-weight: bold;
-    pointer-events: none;
 }
 
-/* ==========================================================================
-   3. CHECKBOX Y PRECIO FINAL (ALINEACIÓN IZQUIERDA)
-   ========================================================================== */
 .checkbox-container {
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-top: 5px;
     justify-content: flex-start;
 }
 
-/* Reset de márgenes para el label del checkbox */
-.checkbox-container label {
-    margin-bottom: 0 !important;
-    cursor: pointer;
-    font-size: 0.95rem;
-}
-
-#precio_por_peso {
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-    margin: 0;
-}
-
-/* Resultado del precio final */
 #precio_descontado_container {
-    color: #28a745; /* Color verde éxito */
+    color: #28a745;
     font-weight: bold;
     font-size: 1.1rem;
-    margin: 5px 0;
 }
 
-/* ==========================================================================
-   4. IMAGEN Y VISTA PREVIA (CENTRADOS)
-   ========================================================================== */
 .contenedor-preview {
     display: flex;
     justify-content: center;
@@ -329,20 +405,27 @@ hr {
 #preview {
     border: 2px dashed #ddd;
     border-radius: 4px;
-    background-color: #f9f9f9;
-    object-fit: cover;
     max-width: 200px;
-    display: block;
 }
 
-/* ==========================================================================
-   5. BOTONES (COLORES AZULES SOLICITADOS)
-   ========================================================================== */
-
-/* Botón Actualizar (Dentro del Modal) */
 input[type="submit"][name="modificar"] {
-    background-color: #1a3a5c; /* Tu azul oscuro */
+    background-color: var(--color-azul);
     color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+input[type="submit"][name="modificar"]:hover {
+    background-color: var(--color-azul-hover);
+}
+/* Botón de envío dentro del Modal (Guardar / Actualizar) */
+.btn-actualizar {
+    background-color: var(--color-azul); /* El azul oscuro #1a3a5c */
+    color: white !important;
     border: none;
     padding: 12px;
     border-radius: 6px;
@@ -351,36 +434,49 @@ input[type="submit"][name="modificar"] {
     cursor: pointer;
     transition: background 0.3s, transform 0.1s;
     margin-top: 10px;
+    width: 100%; /* Para que ocupe todo el ancho del formulario */
+    display: block;
 }
 
-input[type="submit"][name="modificar"]:hover {
-    background-color: #254e7a; /* Tu azul claro */
+.btn-actualizar:hover {
+    background-color: var(--color-azul-hover); /* El azul claro #254e7a */
 }
 
-input[type="submit"][name="modificar"]:active {
+.btn-actualizar:active {
     transform: scale(0.98);
 }
 
-/* Botón Modificar (En la Tarjeta de Producto) */
-.boton_modificar {
-    background-color: #1a3a5c;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: 100%;
-    margin-bottom: 8px;
-    transition: background-color 0.3s, transform 0.2s;
-}
+/* ── Responsive ────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .contenido {
+        flex-direction: column;
+    }
 
-.boton_modificar:hover {
-    background-color: #254e7a;
-    transform: translateY(-1px);
+    aside {
+        width: 100%;
+        padding: 0;
+        border-right: none;
+        border-bottom: 1px solid #333;
+    }
+
+    aside ul {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    aside ul li a {
+        border-bottom: none;
+        border-right: 1px solid #444;
+        padding: 10px 16px;
+    }
+
+    .header-admin {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .btn-añadir {
+        width: 100%;
+        justify-content: center;
+    }
 }

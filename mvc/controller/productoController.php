@@ -41,11 +41,18 @@
             $productos = $this->model->buscar_por_categoria($categoria);
             require __DIR__ . "/../vista/catalogo.php";
         }
-
+        public function buscar_por_categorias_admin($categoria){
+            $productos = $this->model->buscar_por_categoria($categoria);
+            require __DIR__ . "/../vista/administrador/productos-administrador.php";
+        }
         // Filtra productos por subcategoría
         public function buscar_por_subcategoria($subcategoria){
             $productos = $this->model->buscar_por_subcategoria($subcategoria);
             require __DIR__ . "/../vista/catalogo.php";
+        }
+        public function buscar_por_subcategoria_admin($subcategoria){
+            $productos = $this->model->buscar_por_subcategoria($subcategoria);
+            require __DIR__ . "/../vista/administrador/productos-administrador.php";
         }
 
         // Valida campos y añade producto

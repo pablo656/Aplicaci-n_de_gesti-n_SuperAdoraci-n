@@ -30,7 +30,7 @@
     $precio = $_POST["precio"];
     $descuento = $_POST["descuento"];
     $categoria = $_POST["categoria"];
-    $subcategoria = $_POST["subcategoria"];
+    $subcategoria = isset($_POST["subcategoria"])? $_POST["subcategoria"]: null;
     $precio_por_peso = isset($_POST["precio_por_peso"]) ? 1 : 0;
 
     // Obtener el array de la imagen desde $_FILES
@@ -51,6 +51,38 @@
 
     header("Location: IndexProducto-administrador.php");
     exit();
+    }else if ($action == "insertar") {
+        // Es buena práctica verificar que la petición sea POST antes de procesar
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $nombre = $_POST["nombre"];
+            $stock = $_POST["stock"];
+            $precio = $_POST["precio"];
+            $descuento = $_POST["descuento"];
+            $categoria = $_POST["categoria"];
+            $subcategoria = isset($_POST["subcategoria"]) ? $_POST["subcategoria"] : null;
+            $precio_por_peso = isset($_POST["precio_por_peso"]) ? 1 : 0;
+
+            /**
+             * Mandamos el array completo de $_FILES. 
+             * Si no hay archivo, mandamos un array vacío o null, 
+             * pero el controlador ya está preparado para manejarlo.
+             */
+            $imagen = (isset($_FILES["nueva_imagen"]) && $_FILES["nueva_imagen"]["error"] == 0) 
+                    ? $_FILES["nueva_imagen"] 
+                    : null;
+
+            // Llamada al controlador
+            $controller->add_productos(
+                $nombre,
+                $stock,
+                $precio,
+                $precio_por_peso,
+                $categoria,
+                $subcategoria,
+                $imagen,
+                $descuento
+            );
+        }
     }else if(in_array($action, $categorias)){
         if($subcategoria != null){
             $controller->buscar_por_subcategoria_admin($subcategoria);

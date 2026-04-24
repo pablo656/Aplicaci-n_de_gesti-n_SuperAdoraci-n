@@ -56,40 +56,98 @@
         }
 
         // Valida campos y añade producto
-        public function add_productos($nombre, $stock, $precio, $precio_por_peso, $categoria, $subcategoria, $imagen, $porcentaje_descuento){
+        public function add_productos($nombre, $stock, $precio, $precio_por_peso, $categoria, $subcategoria, $imagen, $porcentaje_descuento) {
             $tiposPermitidos = ['image/jpeg', 'image/jpg', 'image/png'];
             $errores = [];
-
-            if(empty($nombre)) $errores[] = "El campo nombre es obligatorio";
             
-            if(empty($stock)){
+            // Ruta por defecto si el usuario no sube ninguna imagen
+            $nombreImagenFinal = "imagenes/foto_defecto.jpg"; 
+
+            // 1. Validaciones de campos de texto
+            if (empty($nombre)) {
+                $errores[] = "El campo nombre es obligatorio";
+            }
+            
+            if ($stock === "" || $stock === null) {
                 $errores[] = "El campo stock es obligatorio";
-            } else if($stock < 0){
+            } else if ($stock < 0) {
                 $errores[] = "El stock no puede ser negativo";
             }
 
-            if(empty($precio)){
+            if (empty($precio)) {
                 $errores[] = "El precio es obligatorio";
-            } else if($precio < 0){
+            } else if ($precio < 0) {
                 $errores[] = "El precio no puede ser negativo";
             }
 
-            if(empty($categoria)) $errores[] = "La categoria es obligatoria";
+            if (empty($categoria)) {
+                $errores[] = "La categoría es obligatoria";
+            }
             
-            if(empty($subcategoria)) $subcategoria = null;
+            if (empty($subcategoria)) {
+                $subcategoria = null;
+            }
 
-            if(!empty($imagen)){
-                $mime = mime_content_type($imagen);
-                if(!in_array($mime, $tiposPermitidos)){
+            // 2. Validación y Procesamiento de la Imagen
+            // Verificamos si existe el archivo en el array $_FILES y si no tiene errores
+            if (isset($imagen['tmp_name']) && $imagen['error'] === UPLOAD_ERR_OK) {
+                
+                // Obtenemos el tipo MIME real del archivo temporal
+                $mime = mime_content_type($imagen['tmp_name']);
+                
+                if (!in_array($mime, $tiposPermitidos)) {
                     $errores[] = "Solo se permiten archivos jpeg, png y jpg";
+                } else {
+                    // --- CONFIGURACIÓN DE RUTA ---
+                    // dirname(__DIR__) nos sitúa en la carpeta "mvc" (sube un nivel desde "controller")
+                    $directorioMVC = dirname(__DIR__) . DIRECTORY_SEPARATOR; 
+                    $carpetaDestino = "imagenes" . DIRECTORY_SEPARATOR;
+                    $rutaAbsolutaServidor = $directorioMVC . $carpetaDestino;
+
+                    // Creamos la carpeta si no existe por algún motivo
+                    if (!is_dir($rutaAbsolutaServidor)) {
+                        mkdir($rutaAbsolutaServidor, 0777, true);
+                    }
+
+                    // Generamos un nombre único para la imagen
+                    $extension = pathinfo($imagen['name'], PATHINFO_EXTENSION);
+                    $nombreArchivoUnico = time() . "_" . bin2hex(random_bytes(4)) . "." . $extension;
+                    
+                    // Ruta completa donde se escribirá el archivo en el disco
+                    $destinoFinal = $rutaAbsolutaServidor . $nombreArchivoUnico;
+                    
+                    // Ruta relativa que guardaremos en la base de datos
+                    $nombreImagenFinal = "../imagenes/" . $nombreArchivoUnico;
+
+                    // Intentamos mover el archivo de la carpeta temporal a la carpeta mvc/imagenes/
+                    if (!move_uploaded_file($imagen['tmp_name'], $destinoFinal)) {
+                        $errores[] = "Error al guardar la imagen en el servidor. Revisa los permisos de la carpeta imagenes.";
+                    }
                 }
             }
 
-            if(empty($errores)){
-                $this->model->add_productos($nombre, $stock, $precio, $precio_por_peso, $categoria, $imagen, $porcentaje_descuento);
+            // 3. Ejecución final
+            if (empty($errores)) {
+                // Llamamos al modelo pasando la ruta (string) de la imagen
+                $resultado = $this->model->add_productos(
+                    $nombre, 
+                    $stock, 
+                    $precio, 
+                    $precio_por_peso, 
+                    $categoria, 
+                    $subcategoria, 
+                    $nombreImagenFinal, 
+                    $porcentaje_descuento
+                );
+                
+                // Redirigimos al índice para confirmar el éxito y evitar reenvíos de formulario
+                header("Location: IndexProducto-administrador.php?success=1");
+                exit();
+            } else {
+                // Si hubo errores, cargamos la vista del catálogo para mostrarlos
+                // Asegúrate de que en tu vista recorres e imprimes el array $errores
+                require __DIR__ . "/../vista/catalogo.php";
             }
-
-            require __DIR__ . "/../vista/catalogo.php";
         }
 
         public function del_producto($id){

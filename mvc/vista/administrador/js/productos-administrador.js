@@ -14,25 +14,22 @@ const subcategorias = {
  * 2. FUNCIONES DEL MODAL
  */
 
-// Función principal para abrir y setear datos
 function abrirModal(id, categoria, subcategoriaSeleccionada) {
     const modal = document.getElementById("modal");
     if (!modal) return;
     
     modal.style.display = "flex";
 
-    // Rellenar subcategorías inmediatamente al abrir
     const selectSub = document.getElementById("subcategorias");
     if (selectSub) {
-        selectSub.innerHTML = ""; // Limpiar
-        const lista = subcategorias[categoria]; // Obtener lista de la categoría actual
+        selectSub.innerHTML = ""; 
+        const lista = subcategorias[categoria]; 
         
         if (lista) {
             lista.forEach(nombreSub => {
                 const option = document.createElement("option");
                 option.value = nombreSub;
                 option.textContent = nombreSub;
-                // Marcar como seleccionada la que tiene el producto actualmente
                 if (nombreSub === subcategoriaSeleccionada) {
                     option.selected = true;
                 }
@@ -41,7 +38,6 @@ function abrirModal(id, categoria, subcategoriaSeleccionada) {
         }
     }
 
-    // Actualizar el precio final con descuento al abrir
     actualizarPrecioFinal();
 
     const form = document.getElementById("form-modal");
@@ -53,7 +49,6 @@ function cerrarModal() {
     if (modal) modal.style.display = "none";
 }
 
-// Función para cuando el usuario cambia la categoría manualmente en el select
 function selectSubcategotia() {
     const categoria = document.getElementById("categoria").value;
     const selectSub = document.getElementById("subcategorias");
@@ -93,25 +88,20 @@ function actualizarPrecioFinal() {
  */
 
 document.addEventListener("change", function(e) {
-    // --- Lógica del Checkbox "Precio por peso" ---
     if (e.target && e.target.id === "precio_por_peso") {
         const inputStock = document.getElementById("stock");
         if (!inputStock) return;
 
         if (e.target.checked) {
-            // Permitir decimales
             inputStock.step = "0.1";
         } else {
-            // Solo enteros
             inputStock.step = "1";
-            // Redondear hacia abajo el valor actual si tuviera decimales
             if (inputStock.value) {
                 inputStock.value = Math.floor(parseFloat(inputStock.value));
             }
         }
     }
 
-    // --- Lógica de Preview de imagen (Tu código anterior) ---
     if (e.target && e.target.id === "input_imagen") {
         const reader = new FileReader();
         reader.onload = function(event) {
@@ -126,18 +116,18 @@ document.addEventListener("change", function(e) {
 document.addEventListener("input", function(e) {
     const target = e.target;
 
-    // Recalcular precio final
     if (target.id === "precio" || target.id === "descuento") {
         actualizarPrecioFinal();
     }
 
-    // Convertir comas a puntos y limitar decimales en stock
     if (target.id === "stock" || target.id === "precio") {
+        // Permitir que el usuario escriba el punto o la coma sin transformarlo a 0
         if (target.value.includes(",")) {
             target.value = target.value.replace(",", ".");
         }
         
-        if (target.id === "stock") {
+        // Solo limitamos decimales si el valor es un número válido y no termina en punto
+        if (target.id === "stock" && !target.value.endsWith(".")) {
             const checkPeso = document.getElementById("precio_por_peso");
             if (checkPeso && checkPeso.checked) {
                 let valor = target.value;
@@ -148,28 +138,31 @@ document.addEventListener("input", function(e) {
         }
     }
 
-    // Cambiar subcategorías al cambiar categoría
     if (target.id === "categoria") {
         selectSubcategotia();
     }
 
-    // Evitar campos vacíos
-    if (["stock", "descuento", "precio"].includes(target.id)) {
-        if (target.value === "") target.value = 0;
-    }
+    // ELIMINADO: Ya no forzamos el 0 aquí para permitir borrar caracteres
 });
 
 document.addEventListener("focusout", function(e) {
     const target = e.target;
-    if (target.id === "precio") {
-        target.value = parseFloat(target.value || 0).toFixed(2);
+    
+    // Si el campo queda vacío al salir, le ponemos 0
+    if (["stock", "descuento", "precio"].includes(target.id)) {
+        if (target.value === "" || target.value === ".") target.value = 0;
     }
+
+    if (target.id === "precio") {
+        target.value = parseFloat(target.value).toFixed(2);
+    }
+    
     if (target.id === "stock") {
         const checkPeso = document.getElementById("precio_por_peso");
         if (checkPeso && checkPeso.checked) {
-            target.value = parseFloat(target.value || 0).toFixed(1);
+            target.value = parseFloat(target.value).toFixed(1);
         } else {
-            target.value = parseInt(target.value || 0);
+            target.value = parseInt(target.value);
         }
     }
 });

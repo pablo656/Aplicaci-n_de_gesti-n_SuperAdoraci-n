@@ -209,8 +209,14 @@ if ($mostrar_modal && $producto_modal): ?>
                 <div class="contenedor-preview">
                     <img id="preview" src="../<?= $producto_modal['url_imagen'] ?>" alt="Vista previa">
                 </div>
+                <?php if($action_form=="?action=insertar"):?>
+                    <input type="file" name="nueva_imagen" id="input_imagen" accept="image/*" required>
+                <?php else:?>
+                    <input type="file" name="nueva_imagen" id="input_imagen" accept="image/*">
+                <?php endif;?>
                 
-                <input type="file" name="nueva_imagen" id="input_imagen" accept="image/*">
+                    
+                
                 
                 <input type="submit" name="enviar" value="<?= $texto_boton ?>" class="btn-actualizar">
             </form>

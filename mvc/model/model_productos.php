@@ -21,20 +21,30 @@ class model_productos{
         return $productos; 
     }
     //Añadir un producto 
-    public function add_productos($nombre,$stock,$precio,$precio_por_peso,$categoria,$subcategoria,$imagen,$porcentaje_descuento){
-        //Crear imagen he indicar ruta
-        $carpeta = "../imagenes";
-        $nombre_archivo = uniqid() . "_" . basename($imagen['name']);
-        $ruta = $carpeta . $nombre_archivo;
-        //Enviar la imagen a el archivo de imagenes
-        if(move_uploaded_file($imagen['tmp_name'], $ruta)){
-            $stmt=$this->conn->prepare("INSERT INTO productos (nombre,stock,precio,precio_por_peso,categoria,subcategoria,url_imagen,porcentaje_descuento) VALUES (?,?,?,?,?,?,?,?)");
-            $stmt->bind_param("siiissi",$nombre,$stock,$precio,$precio_por_peso,$categoria,$subcategoria,$ruta,$porcentaje_descuento);
-            if($stmt->execute()){
-                return true;
-            }else{
-                return false;
-            }
+    public function add_productos($nombre, $stock, $precio, $precio_por_peso, $categoria, $subcategoria, $imagen, $porcentaje_descuento) {
+        // La variable $imagen ya contiene la ruta final (ej: "imagenes/12345.jpg")
+        // enviada desde el controlador, así que no hace falta usar move_uploaded_file aquí.
+        
+        $stmt = $this->conn->prepare("INSERT INTO productos (nombre, stock, precio, precio_por_peso, categoria, subcategoria, url_imagen, porcentaje_descuento) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        
+        // Ajustamos los tipos de bind_param:
+        // s = string, i = integer, d = double/decimal
+        // nombre(s), stock(d/i), precio(d), peso(i), cat(s), subcat(s), img(s), desc(i)
+        $stmt->bind_param("sddisssi", 
+            $nombre, 
+            $stock, 
+            $precio, 
+            $precio_por_peso, 
+            $categoria, 
+            $subcategoria, 
+            $imagen, 
+            $porcentaje_descuento
+        );
+        
+        if($stmt->execute()){
+            return true;
+        } else {
+            return false;
         }
     }
     public function comprobar_stock($id,$cantidad){
@@ -115,28 +125,45 @@ class model_productos{
         return $productos;
     }
     //Eliminar producto
-    public function del_producto($id){
-        $stmt=$this->conn->prepare("SELECT * FROM productos WHERE id=?");
-        $stmt->bind_param("i",$id);
-        if($stmt->execute()){
-            $result=$stmt->get_result();
-            while($row=$result->fetch_assoc()){
-                $producto=$row;
-            }
-            //Eliminar imagen del directorio
-            unlink($producto["url_imagen"]);
-            $stmt=$this->conn->prepare("DELETE FROM productos WHERE id=?");
-            $stmt->bind_param("i",$id);
-            if($stmt->execute()){
-                return true;
-            }else{
-                return false;
-            }
-        }else{
-            return false;
-        }
-       
+    public function del_producto($id) {
+        // 1. Obtener la ruta de la imagen
+        $stmt = $this->conn->prepare("SELECT url_imagen FROM productos WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        
+        if ($stmt->execute()) {
+            $result = $stmt->get_result();
+            $producto = $result->fetch_assoc();
 
+            if ($producto) {
+                $rutaBD = $producto["url_imagen"]; // Ejemplo: "../imagenes/imagen_prueba2.png"
+                
+                /**
+                 * 2. CONSTRUIR RUTA FÍSICA
+                 * Si la BD tiene "../imagenes/...", significa que la ruta ya intenta subir un nivel.
+                 * Como el modelo está en mvc/model/, "../imagenes" apunta correctamente a mvc/imagenes.
+                 */
+                $rutaFisica = __DIR__ . DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, $rutaBD);
+
+                // 3. Borrar el archivo (Protegiendo la imagen por defecto)
+                // Comparamos con las dos variantes posibles de la imagen por defecto
+                if (!empty($rutaBD) && 
+                    $rutaBD !== "imagenes/foto_defecto.jpg" && 
+                    $rutaBD !== "../imagenes/foto_defecto.jpg") {
+                    
+                    if (file_exists($rutaFisica)) {
+                        unlink($rutaFisica);
+                    }
+                }
+
+                // 4. Eliminar de la base de datos
+                $stmtDel = $this->conn->prepare("DELETE FROM productos WHERE id = ?");
+                $stmtDel->bind_param("i", $id);
+                
+                return $stmtDel->execute();
+            }
+        }
+        
+        return false;
     }
     //Actualizar un producto
     /*IMPORTANTE!!!: Para llamar ha esta función se debe de hacer de esta manera

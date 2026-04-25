@@ -10,7 +10,23 @@ class model_reservas{
         if (!$this->conn) {
             return null;
         }
-        $sql = "SELECT r.id AS id_reserva,r.cantidad,r.fecha,p.nombre AS nombre_producto,p.precio,p.categoria,p.url_imagen,p.porcentaje_descuento,p.subcategoria FROM reservas r INNER JOIN productos p ON r.id_producto = p.id;";
+        $sql = "SELECT 
+            r.id AS id_reserva,
+            r.cantidad,
+            r.fecha,
+            p.nombre AS nombre_producto,
+            p.precio,
+            p.precio_por_peso,
+            p.categoria,
+            p.url_imagen,
+            p.porcentaje_descuento,
+            p.subcategoria,
+            u.id AS id_usuario,
+            u.nombre AS nombre_usuario, 
+            u.email AS email_usuario
+        FROM reservas r
+        INNER JOIN productos p ON r.id_producto = p.id
+        INNER JOIN usuarios u ON r.id_usuario = u.id;";
         $stmt = $this->conn->prepare($sql);
         $reservas = [];
         if ($stmt === false) {

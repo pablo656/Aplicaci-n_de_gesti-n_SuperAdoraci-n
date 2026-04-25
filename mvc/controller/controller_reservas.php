@@ -13,7 +13,7 @@ class Controller_reservas{
     // Obtiene todas las reservas y carga la vista
     public function consultar_reservas(){
         $reservas = $this->model_reservas->consultar_reservas();
-        require_once __DIR__ . "/../vista/perfil.php";
+       require __DIR__ . "/../vista/administrador/reservas-administrador.php";
 
     }
     public function consultar_reservas_user($id){

@@ -124,6 +124,9 @@
                                 >
                                 <span class="unidad-peso">Kg</span>
                             </div>
+                             <button  id="borrar-<?= $producto["id"] ?>" class="btn-eliminar" onclick="borrarReserva(<?= $producto['id'] ?>)">
+                                Eliminar <i class="fi fi-sr-trash"></i>
+                            </button>
 
                         <?php else: ?>
                             <!-- Contador para productos por unidad -->

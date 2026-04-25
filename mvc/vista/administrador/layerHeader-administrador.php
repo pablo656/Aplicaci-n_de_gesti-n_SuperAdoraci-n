@@ -21,6 +21,7 @@
 <nav>
     <div>
         <a href="IndexProducto-administrador.php">Productos</a>
+        <a href="IndexReservas-administrador.php">Reservas</a>
         <a href="#">Comidas</a>
         <a href="IndexPedidos.php">Pedidos</a>
 

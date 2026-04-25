@@ -257,7 +257,27 @@ hr {
     border-color: #1a1c2c;
     background: #fff;
 }
+.btn-eliminar {
+    width: 100%;
+    padding: 11px;
+    background: var(--color-rojo);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: background .2s;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
 
+.btn-eliminar:hover {
+    background: var(--color-rojo-hover);
+}
 /* Quitar flechas del input number */
 .input-peso::-webkit-outer-spin-button,
 .input-peso::-webkit-inner-spin-button {

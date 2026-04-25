@@ -1,0 +1,119 @@
+:root {
+    --color-texto:      #1a1c2c;
+    --color-rojo:       #e31b23;
+    --color-rojo-hover: #b3141a;
+    --color-verde:      #3b6d11;
+    --gris-fondo:       #f6f8fb;
+    --gap-lateral:      clamp(1rem, 3vw, 2rem);
+}
+/* 1. Contenedor principal de la lista */
+.lista-reservas {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+/* 2. Tarjeta individual de cada reserva */
+.item-reserva {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #fff;
+    border: 0.5px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 12px;
+    transition: background .15s;
+}
+
+.item-reserva:hover {
+    background: #fafafa;
+}
+
+/* 3. Imagen del producto reservado */
+.item-reserva img {
+    width: 72px;
+    height: 72px;
+    object-fit: cover;
+    border-radius: 10px;
+    background: #ebebeb;
+    flex-shrink: 0;
+}
+
+/* 4. Bloque de información (Nombre, Categoría, Cantidad) */
+.item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.item-info .nombre {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-texto);
+    margin: 0 0 3px;
+}
+
+.item-info .descripcion {
+    font-size: 12px;
+    color: #888;
+    margin: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.unidad-peso {
+    font-size: 13px;
+    color: #888;
+    margin-top: 4px;
+}
+
+/* 5. Bloque de acción (Precio y Botón) */
+.item-accion {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.item-accion .precio {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color-texto);
+    margin: 0;
+    white-space: nowrap;
+}
+
+/* 6. Botón Eliminar y Contenedor */
+.contador {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-eliminar {
+    background: var(--color-rojo);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 7px 12px;
+    transition: background .2s;
+}
+
+.btn-eliminar:hover {
+    background: var(--color-rojo-hover);
+}
+
+/* 7. Estado vacío */
+.vacio {
+    font-size: 1rem;
+    color: #bbb;
+    text-align: center;
+    padding: 40px 0;
+}

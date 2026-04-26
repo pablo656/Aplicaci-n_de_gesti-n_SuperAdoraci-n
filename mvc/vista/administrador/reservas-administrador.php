@@ -51,7 +51,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueño") { ?>
                                 <p class="descripcion">
                                     <?= !empty($reserva['subcategoria']) ? htmlspecialchars($reserva['subcategoria']) : htmlspecialchars($reserva['categoria']) ?>
                                 </p>
-                                <p class="unidad-peso">Cantidad: <?= $reserva["cantidad"] ?> Kg/Ud</p>
+                                <p class="unidad-peso">Cantidad: <?= $reserva["cantidad"] ?> <?php if($reserva["precio_por_peso"]){echo "Kg";}else{echo "Unidades";} ?></p>
                             </div>
 
                             <div class="item-accion">
@@ -64,7 +64,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueño") { ?>
                                 <p class="precio"><?= number_format($precioFinal, 2) ?> €</p>
                                 
                                 <div class="contador">
-                                    <button class="btn-eliminar" onclick="eliminarReserva(<?= $reserva['id_reserva'] ?>)">
+                                    <button  name="modal_eliminar" class="btn-eliminar" onclick="mostrarModalEliminar(<?= $reserva['id_reserva'] ?>)">
                                         <i class="fi fi-sr-trash"></i> Eliminar
                                     </button>
                                 </div>
@@ -81,5 +81,39 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueño") { ?>
                 </div>
             <?php endif; ?>
         </div>
-
+<script src="js/reservas-administrador.js"></script>
 <?php }?>
+ <div id="modal-eliminar" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <i class="fi fi-sr-exclamation"></i>
+            <h2>¿Eliminar reserva?</h2>
+        </div>
+        
+        <p class="modal-descripcion">
+            Esta acción eliminará la reserva del sistema. El producto volverá a estar disponible en el catálogo general.
+        </p>
+
+        <form action="?action=delete" method="POST">
+            <input type="hidden" name="id_reserva" id="input-id-reserva-modal">
+            
+            <div class="campo-nota">
+                <label for="motivo_nota">Notas de cancelación (opcional):</label>
+                <textarea 
+                    id="motivo_nota" 
+                    name="nota_administrador" 
+                    placeholder="Escribe aquí el motivo para que el cliente lo sepa..."
+                ></textarea>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-cancelar" onclick="cerrarModalEliminar()">
+                    Volver atrás
+                </button>
+                <button type="submit" name="confirmar_borrado" class="btn-confirmar-borrar">
+                    Confirmar eliminación
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

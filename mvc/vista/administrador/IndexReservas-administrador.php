@@ -6,8 +6,12 @@
     $titulo="Reservas" ;
     $css="<link rel='stylesheet' href='../css/reservas-administrador.css'>" ;
     require("layerHeader-administrador.php");
-    if($action=="eliminar"){
-
+    if($action=="delete"){
+        $id=$_POST["id_reserva"];
+        //Cuando tengamos un dominio
+        $mensaje=$_POST["nota_administrador"];
+        $controller->eliminar_reserva($id);
+        header("Location:IndexReservas-administrador.php");
     }else{
         $controller->consultar_reservas();
     }

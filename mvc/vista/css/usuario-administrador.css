@@ -1,0 +1,189 @@
+/* ── Contenedor General ── */
+.seccion-admin {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* ── Cabecera (Header) ── */
+.header-admin {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 32px;
+    background: #fff;
+    border-radius: 12px 12px 0 0;
+}
+
+.header-textos h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a1c2c;
+    margin: 0 0 5px 0;
+}
+
+.header-textos .subtitulo {
+    font-size: 0.9rem;
+    color: #888;
+    margin: 0;
+}
+
+/* ── Botón Añadir (Verde Derecha) ── */
+.btn-añadir {
+    background: #2e7d32; /* Verde bosque de la imagen */
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-añadir:hover {
+    background: #1b5e20;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.divisor-admin {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 0 0 20px 0;
+}
+
+/* ── Lista de Usuarios ── */
+.usuarios {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* ── Fila de Usuario ── */
+.usuario {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 16px 24px;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 14px;
+    transition: all 0.2s ease;
+}
+
+.usuario:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    border-color: #dcdcdc;
+    transform: translateX(4px);
+}
+
+/* Icono redondo a la izquierda */
+.usuario-avatar {
+    width: 48px;
+    height: 48px;
+    background: #f0f2f5;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #1a3a5c;
+    flex-shrink: 0;
+}
+
+.usuario-cuerpo {
+    flex: 1;
+}
+
+.usuario-nombre {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 4px;
+}
+
+.usuario-nombre p {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #1a1c2c;
+    margin: 0;
+}
+
+/* Badge para el ROL */
+.badge-rol {
+    background: #e8f5e9;
+    color: #2e7d32;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 2px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+}
+
+.usuario-info p {
+    font-size: 0.85rem;
+    color: #777;
+    margin: 0;
+}
+
+/* ── Botones de Acción ── */
+.botones {
+    display: flex;
+    gap: 10px;
+}
+
+.botones button {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+    color: #fff;
+}
+
+/* Botón Cambiar Rol (Azul de la imagen) */
+.btn-rol {
+    background: #1a3a5c;
+}
+
+.btn-rol:hover {
+    background: #254e7a;
+}
+
+/* Botón Eliminar (Rojo de la imagen) */
+.btn-eliminar {
+    background: #e31b23;
+}
+
+.btn-eliminar:hover {
+    background: #b3141a;
+}
+
+/* ── Estado Vacío ── */
+.vacio-contenedor {
+    text-align: center;
+    padding: 60px;
+    background: #f9f9f9;
+    border-radius: 14px;
+    color: #bbb;
+}
+
+.vacio-contenedor i { font-size: 3rem; margin-bottom: 10px; display: block; }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .header-admin { flex-direction: column; align-items: flex-start; gap: 15px; }
+    .usuario { flex-direction: column; align-items: flex-start; }
+    .botones { width: 100%; justify-content: flex-end; }
+}

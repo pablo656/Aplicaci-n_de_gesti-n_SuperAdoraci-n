@@ -7,10 +7,16 @@ class Controller_user{
     private $model_user;
 
     // Instancia el modelo de usuario
+    public function mostrarUsuarios(){
+        $usuarios=$this->model_user->mostrarUsuarios();
+        require __DIR__ . "/../vista/administrador/usuarios-administrador.php";
+    }
     public function __construct(){
         $this->model_user = new model_user();
     }
-
+    public function borrarUsuarios($id){
+        $this->model_user->borrarUsuarios($id);
+    }
     //IMPORTANTE: Para la actualización del log in intentar usar una estructura parecida a la de Sing in
     // Verifica credenciales; si son correctas inicia sesión, si no redirige al formulario con error
     public function loginar($username, $password){

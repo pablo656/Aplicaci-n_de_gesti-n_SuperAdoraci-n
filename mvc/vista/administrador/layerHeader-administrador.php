@@ -27,7 +27,7 @@
 
     </div>
     <div>
-        <a href="#">Usuarios</a>
+        <a href="IndexUsuarios-administrador.php">Usuarios</a>
         <a href="IndexPerfil.php">Perfil <i class="fi fi-sr-user" style="color: white; font-size: 1.2em;"></i></a>
         <a href="../IndexHome.php?action=log_out">Cerrar sesión</a>
 

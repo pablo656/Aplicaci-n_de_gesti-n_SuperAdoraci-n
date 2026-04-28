@@ -6,6 +6,33 @@
             $base = new bd();
             $this->conn = $base->conectar();
         }
+        public function mostrarUsuarios(){
+            $sql="SELECT * FROM usuarios";
+            $stmt=$this->conn->prepare($sql);
+            if(!$stmt->execute()){
+                return null;
+            }
+            $result=$stmt->get_result();
+            $usuarios=[];
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $usuarios[] = $row;
+                }
+                return $usuarios;
+            } else {
+                return null;
+            }
+
+            
+        }
+        public function borrarUsuarios($id){
+            $sql="DELETE FROM usuarios WHERE id=?";
+            $stmt=$this->conn->prepare($sql);
+            $stmt->bind_param("i",$id);
+            if(!$stmt->execute()){
+                return null;
+            }
+        }
         public function iniciousuario($user, $password){
             if (!$this->conn) {
                 return null;

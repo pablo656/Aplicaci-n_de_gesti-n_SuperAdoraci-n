@@ -10,9 +10,12 @@ class model_comida {
         $this->conn = $base->conectar();
     }
 
-    // Mostrar todas las comidas
-    public function mostrar_comidas() {
-        $stmt = $this->conn->prepare("SELECT * FROM comidas");
+    // Mostrar comidas; $solo_disponibles=true filtra las no disponibles
+    public function mostrar_comidas($solo_disponibles = false) {
+        $sql  = $solo_disponibles
+            ? "SELECT * FROM comidas WHERE disponible = 1"
+            : "SELECT * FROM comidas";
+        $stmt = $this->conn->prepare($sql);
         $comidas = [];
         if ($stmt->execute()) {
             $result = $stmt->get_result();
@@ -44,17 +47,14 @@ class model_comida {
 
     // Añadir una comida
     public function añadir_comida($nombre, $descripcion, $precio, $disponible, $imagen) {
-        $carpeta = "../imagenes/";
+        $carpeta_fs  = __DIR__ . "/../imagenes/";
+        $url_base    = "../imagenes/";
         $nombre_archivo = uniqid() . "_" . basename($imagen['name']);
-        $ruta = $carpeta . $nombre_archivo;
-        if (move_uploaded_file($imagen['tmp_name'], $ruta)) {
+        if (move_uploaded_file($imagen['tmp_name'], $carpeta_fs . $nombre_archivo)) {
+            $ruta = $url_base . $nombre_archivo;
             $stmt = $this->conn->prepare("INSERT INTO comidas (nombre, descripcion, precio, disponible, url_imagen) VALUES (?, ?, ?, ?, ?)");
             $stmt->bind_param("ssdis", $nombre, $descripcion, $precio, $disponible, $ruta);
-            if ($stmt->execute()) {
-                return true;
-            } else {
-                return false;
-            }
+            return $stmt->execute();
         }
         return false;
     }
@@ -114,13 +114,14 @@ class model_comida {
                 return false;
             }
             $comida = $stmt->get_result()->fetch_assoc();
-            if ($comida && file_exists($comida['url_imagen'])) {
-                unlink($comida['url_imagen']);
+            $fs_old = __DIR__ . "/../imagenes/" . basename($comida['url_imagen'] ?? '');
+            if ($comida && file_exists($fs_old)) {
+                unlink($fs_old);
             }
-            $carpeta = "../imagenes/";
+            $carpeta_fs = __DIR__ . "/../imagenes/";
             $nombre_archivo = uniqid() . "_" . basename($imagen['name']);
-            $ruta = $carpeta . $nombre_archivo;
-            move_uploaded_file($imagen['tmp_name'], $ruta);
+            $ruta = "../imagenes/" . $nombre_archivo;
+            move_uploaded_file($imagen['tmp_name'], $carpeta_fs . $nombre_archivo);
             $sql .= "url_imagen=?, ";
             $tipos .= "s";
             $valores[] = $ruta;

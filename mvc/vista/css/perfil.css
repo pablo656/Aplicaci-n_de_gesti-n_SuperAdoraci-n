@@ -5,7 +5,7 @@
     gap: 40px;
     max-width: 1100px;
     margin: 30px auto;
-    font-family: Arial, sans-serif;
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
     align-items: flex-start;
 }
 
@@ -300,7 +300,7 @@
     padding: 8px 20px;          /* Espaciado interno para que respire */
     
     /* Tipografía */
-    font-family: Arial, sans-serif;
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
     font-size: 14px;
     font-weight: 600;           /* Semi-negrita */
     
@@ -337,7 +337,7 @@
     gap: 10px;                  /* Espacio exacto entre el icono de Flaticon y el texto */
     
     /* 4. Tipografía y Estilo */
-    font-family: Arial, sans-serif;
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
     font-size: 15px;            /* Tamaño de lectura cómodo */
     font-weight: 600;           /* Semi-negrita para que resalte */
     text-transform: none;       /* Asegura que no se ponga todo en mayúsculas */

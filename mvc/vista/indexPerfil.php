@@ -17,7 +17,6 @@
         //Debido a que es necesario usar dos funciones de dos controllers distintos, se han tenido que usar metodos drasticos para hacer posible que la visat alcance la información
         $pedidos=$controller_pedidos->mostrar_pedidos_user($id);
         $reservas=$controller_reservas->consultar_reservas_user($id);
-        count($pedidos);
         require __DIR__ . "/../vista/perfil.php";
     }
     require("../vista/footer.html");

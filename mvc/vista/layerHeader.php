@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +21,7 @@
 <nav>
     <div>
         <a href="IndexHome.php">Inicio</a>
-        <a href="IndexProducto.php">Catalogo</a>
+        <a href="IndexProducto.php">Catálogo</a>
         <a href="IndexPedidos.php">Pedidos</a>
     </div>
     <div>
@@ -31,10 +31,10 @@
         <?php
         if(isset($_SESSION["id"]) && isset($_SESSION["nombre"])&&isset($_SESSION["email"])&&isset($_SESSION["rol"])){?>
             <a href="IndexPerfil.php">Perfil <i class="fi fi-sr-user" style="color: white; font-size: 1.2em;"></i></a>
-            <a href="IndexHome.php?action=log_out">Log out</i></a>
+            <a href="IndexHome.php?action=log_out">Cerrar sesión</a>
             <?php
         }else{?>
-        <a href="IndexHome.php?action=log">Iniciar session</a>
+        <a href="IndexHome.php?action=log">Iniciar sesión</a>
         <a href="IndexHome.php?action=sing">Registrarse</a>
         <?php
         }?>

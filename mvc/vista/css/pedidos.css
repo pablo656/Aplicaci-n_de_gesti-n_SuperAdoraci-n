@@ -1,179 +1,194 @@
-/* ============================================================
-   pedidos.css — Carta de comidas y modal de pedido
-   Secciones: variables · layout · lista de platos · modal · misc
-   ============================================================ */
-
-
 /* ── Variables ───────────────────────────────────────────── */
 :root {
     --color-texto:      #1a1c2c;
     --color-rojo:       #e31b23;
     --color-rojo-hover: #b3141a;
+    --color-verde:      #27ae60;
     --gap-lateral:      clamp(1rem, 3vw, 2.5rem);
 }
 
-
 /* ── Layout base ─────────────────────────────────────────── */
-
-/* Columna vertical para anclar el footer al fondo */
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
-    background: #f7f7f8;
+    background: #f6f8fb;
     color: var(--color-texto);
 }
 
-/* Crece para ocupar el espacio entre header y footer */
 main {
     flex: 1;
-    padding: var(--gap-lateral);
-    max-width: 1300px;
+    padding: 28px 32px 48px;
+    max-width: 900px;
     margin: 0 auto;
     width: 100%;
     box-sizing: border-box;
 }
 
-/* Título fluido de la sección */
+/* ── Cabecera de sección ─────────────────────────────────── */
+.seccion-header {
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e8e8e8;
+}
+
 main h1 {
-    font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
     font-weight: 700;
-    margin-bottom: 4px;
+    margin: 0 0 4px;
+    color: var(--color-texto);
 }
 
-/* Subtítulo secundario */
 main h2 {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 400;
-    color: #888;
-    margin-bottom: 28px;
+    color: #999;
+    margin: 0;
 }
 
+/* ── Avisos ──────────────────────────────────────────────── */
+.aviso-error {
+    background: #fdecea;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-size: 0.88rem;
+}
+
+.aviso-ok {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    font-size: 0.88rem;
+}
 
 /* ── Lista de platos ─────────────────────────────────────── */
-
-/* Items apilados verticalmente con separación mínima */
 .lista-comidas {
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    width: 100%;
+    gap: 12px;
 }
 
-/* Tarjeta: foto + info + precio/botón */
+/* ── Tarjeta individual ──────────────────────────────────── */
 .item-comida {
     display: flex;
     align-items: center;
     gap: 16px;
+    padding: 16px 20px;
     background: #fff;
-    border-radius: 12px;
-    padding: 14px;
-    transition: background .15s;
+    border: 1px solid #e8e8e8;
+    border-radius: 14px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.04);
+    transition: box-shadow .2s, transform .15s;
 }
 
 .item-comida:hover {
-    background: #fafafa;
+    box-shadow: 0 6px 18px rgba(0,0,0,.09);
+    transform: translateY(-2px);
 }
 
-/* Foto cuadrada con recorte proporcional */
+/* ── Imagen ──────────────────────────────────────────────── */
 .item-comida img {
-    width: 80px;
-    height: 80px;
+    width: 72px;
+    height: 72px;
     object-fit: cover;
     border-radius: 10px;
     background: #ebebeb;
     flex-shrink: 0;
 }
 
-/* Bloque de texto; min-width:0 permite truncar con overflow */
+/* ── Info del plato ──────────────────────────────────────── */
 .item-info {
     flex: 1;
     min-width: 0;
 }
 
 .item-info .nombre {
-    font-size: 0.97rem;
-    font-weight: 700;
+    font-size: 0.95rem;
+    font-weight: 600;
     color: var(--color-texto);
-    margin-bottom: 5px;
+    margin: 0 0 4px;
 }
 
-/* Descripción recortada a 2 líneas */
 .item-info .descripcion {
-    font-size: 0.83rem;
-    color: #777;
+    font-size: 0.8rem;
+    color: #999;
     line-height: 1.45;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    margin: 0;
 }
 
-/* Columna derecha: precio arriba, botón abajo */
+/* ── Bloque precio + acción ──────────────────────────────── */
 .item-accion {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    justify-content: space-between;
-    gap: 12px;
+    gap: 10px;
     flex-shrink: 0;
 }
 
 .item-accion .precio {
-    font-size: 0.97rem;
+    font-size: 1rem;
     font-weight: 700;
     color: var(--color-texto);
     white-space: nowrap;
 }
 
-/* Botón circular "+" para abrir el modal */
+/* ── Botón "+" para abrir modal ──────────────────────────── */
 .btn-pedir {
     width: 34px;
     height: 34px;
     padding: 0;
     background: #fff;
-    color: #888;
+    color: #aaa;
     border: 1.5px solid #ddd;
     cursor: pointer;
     font-size: 1.3rem;
     line-height: 1;
     font-weight: 400;
     border-radius: 50%;
-    transition: border-color .2s, color .2s, background .2s;
+    transition: border-color .2s, color .2s, background .2s, transform .1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-pedir:hover {
     border-color: var(--color-rojo);
     color: #fff;
     background: var(--color-rojo);
+    transform: scale(1.08);
 }
 
-
-/* ── Contador inline en la tarjeta (ítem ya pedido) ─────── */
-
-/* Píldora oscura: – N + */
+/* ── Contador inline (plato ya en pedido) ────────────────── */
 .contador-inline {
     display: flex;
     align-items: center;
     gap: 8px;
-    background: #1a1c2c;
+    background: var(--color-texto);
     border-radius: 50px;
-    padding: 4px 6px;
+    padding: 4px 8px;
 }
 
-/* Botones circulares blancos dentro de la píldora */
 .btn-menos-inline,
 .btn-mas-inline {
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
     border: none;
     border-radius: 50%;
-    font-size: 1.1rem;
-    line-height: 1;
+    font-size: 1rem;
     cursor: pointer;
     background: #fff;
-    color: #1a1c2c;
+    color: var(--color-texto);
     font-weight: 700;
     transition: opacity .2s;
     display: flex;
@@ -182,237 +197,214 @@ main h2 {
 }
 
 .btn-menos-inline:hover,
-.btn-mas-inline:hover {
-    opacity: .75;
-}
+.btn-mas-inline:hover { opacity: .75; }
 
-/* Número de unidades en la píldora */
 .contador-inline span {
-    font-size: 0.97rem;
+    font-size: 0.9rem;
     font-weight: 700;
-    min-width: 18px;
+    min-width: 16px;
     text-align: center;
     color: #fff;
 }
 
+/* ── Estado vacío ────────────────────────────────────────── */
+.vacio {
+    text-align: center;
+    color: #ccc;
+    font-size: 1rem;
+    padding: 60px 20px;
+}
 
-/* ── Modal de pedido ─────────────────────────────────────── */
-
-/* Capa oscura de fondo; oculta por defecto */
+/* ── Modal overlay ───────────────────────────────────────── */
 .modal-overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,.45);
+    background: rgba(26, 28, 44, 0.55);
+    backdrop-filter: blur(4px);
     z-index: 1000;
     align-items: center;
     justify-content: center;
+    padding: 20px;
 }
 
-/* JS añade .activo para mostrarlo */
-.modal-overlay.activo {
-    display: flex;
-}
+.modal-overlay.activo { display: flex; }
 
-/* Caja centrada con ancho máximo adaptable */
+/* ── Caja del modal ──────────────────────────────────────── */
 .modal {
     background: #fff;
-    border-radius: 16px;
-    padding: 32px 28px 24px;
+    border-radius: 20px;
+    padding: 32px 28px 26px;
     width: min(460px, 92vw);
-    box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    box-shadow: 0 20px 60px rgba(0,0,0,.2);
     position: relative;
-    animation: aparece .2s ease;
+    animation: aparece .22s ease;
 }
 
-/* Entrada suave al abrir */
 @keyframes aparece {
     from { opacity: 0; transform: translateY(20px); }
     to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Nombre del plato; padding-right evita solaparse con el "×" */
 .modal h3 {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 700;
-    margin-bottom: 22px;
+    margin: 0 0 20px;
     padding-right: 28px;
     color: var(--color-texto);
 }
 
 .modal label {
     display: block;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 600;
-    color: #444;
+    color: #555;
     margin-bottom: 6px;
 }
 
-/* Campos de cantidad y notas */
 .modal input[type="number"],
 .modal textarea {
     width: 100%;
-    padding: 10px 14px;
-    border: 1.5px solid #ddd;
-    border-radius: 8px;
-    font-size: 0.93rem;
+    padding: 10px 13px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 0.9rem;
     font-family: inherit;
     color: var(--color-texto);
+    background: #f9f9f9;
     box-sizing: border-box;
-    transition: border-color .2s;
+    transition: border-color .2s, box-shadow .2s;
     margin-bottom: 18px;
 }
 
-/* Resalte de foco con el color de marca */
 .modal input[type="number"]:focus,
 .modal textarea:focus {
     outline: none;
     border-color: var(--color-rojo);
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(227, 27, 35, 0.1);
 }
 
-/* Solo redimensionable en vertical */
 .modal textarea {
     resize: vertical;
     min-height: 80px;
 }
 
-/* Fila inferior: contador + botón confirmar */
+/* ── Pie del modal: contador + confirmar ─────────────────── */
 .modal-pie {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
     margin-top: 4px;
 }
 
-/* contenedor con los botones – / + y el número actual */
 .contador-modal {
     display: flex;
     align-items: center;
-    gap: 10px;
-    background: #dedee7;
+    gap: 8px;
+    background: #eef0f5;
     border-radius: 50px;
-    padding: 6px 14px;
+    padding: 6px 12px;
     flex-shrink: 0;
 }
 
-/* Base compartida de los botones de cantidad */
+.cantidad-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #666;
+}
+
 .btn-menos,
 .btn-mas {
-    width: 44px;
-    height: 44px;
+    width: 32px;
+    height: 32px;
     border: none;
     border-radius: 50%;
-    font-size: 1.4rem;
-    line-height: 1;
+    font-size: 1.1rem;
     cursor: pointer;
     color: #fff;
-    transition: opacity .2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity .2s, transform .1s;
 }
 
-.btn-menos { background: #e53935; }  /* restar → rojo */
-.btn-mas   { background: #27ae60; } /* añadir → verde apagado */
+.btn-menos { background: var(--color-rojo); }
+.btn-mas   { background: var(--color-verde); }
 
 .btn-menos:hover,
-.btn-mas:hover {
-    opacity: .82;
-}
+.btn-mas:hover { opacity: .82; transform: scale(1.08); }
 
-/* Número de unidades seleccionadas */
 .contador-modal span {
-    font-size: 1.15rem;
+    font-size: 1rem;
     font-weight: 700;
-    min-width: 24px;
+    min-width: 20px;
     text-align: center;
     color: var(--color-texto);
 }
 
-/* Etiqueta "Cantidad:" junto al contador */
-.cantidad-label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #555;
-    margin-right: 4px;
-    min-width: auto;
-}
-
-/* Botón principal de confirmación */
+/* ── Botón confirmar ─────────────────────────────────────── */
 .btn-confirmar {
     flex: 1;
     padding: 12px;
-    background: #1a3a5c;
+    background: var(--color-texto);
     color: #fff;
     border: none;
     border-radius: 10px;
     font-size: 0.9rem;
     font-weight: 700;
     cursor: pointer;
-    transition: background .2s;
+    transition: background .2s, transform .1s;
 }
 
 .btn-confirmar:hover {
-    background: #254e7a;
+    background: #2c3060;
+    transform: translateY(-1px);
 }
 
-/* Botón "×" para cerrar el modal */
+/* ── Botón cerrar modal ──────────────────────────────────── */
 .btn-cerrar-modal {
     position: absolute;
     top: 14px;
     right: 16px;
     background: none;
     border: none;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     line-height: 1;
     cursor: pointer;
-    color: #bbb;
+    color: #ccc;
     transition: color .2s;
 }
 
-.btn-cerrar-modal:hover {
-    color: var(--color-texto);
+.btn-cerrar-modal:hover { color: var(--color-texto); }
+
+/* ── Responsive tablet ───────────────────────────────────── */
+@media (max-width: 768px) {
+    main { padding: 20px 20px 36px; }
+    .item-comida { padding: 12px 16px; gap: 12px; }
+    .item-comida img { width: 60px; height: 60px; }
 }
 
-
-/* ── Avisos y estados vacíos ─────────────────────────────── */
-
-/* Banner de error tras un pedido fallido */
-.aviso-error {
-    background: #fdecea;
-    color: #c62828;
-    border: 1px solid #ef9a9a;
-    border-radius: 8px;
-    padding: 12px 16px;
-    margin-bottom: 16px;
-    font-size: 0.9rem;
-}
-
-/* Banner de éxito tras confirmar un pedido */
-.aviso-ok {
-    background: #e8f5e9;
-    color: #2e7d32;
-    border: 1px solid #a5d6a7;
-    border-radius: 8px;
-    padding: 12px 16px;
-    margin-bottom: 20px;
-    font-size: 0.9rem;
-}
-
-/* Mensaje cuando no hay platos disponibles */
-.vacio {
-    grid-column: 1 / -1;
-    text-align: center;
-    color: #bbb;
-    font-size: 1.2rem;
-    padding: 60px 20px;
-}
-
-
-/* ── Responsive (≤ 480px) ────────────────────────────────── */
+/* ── Responsive móvil ────────────────────────────────────── */
 @media (max-width: 480px) {
-    .item-comida img {
-        width: 64px;
-        height: 64px;
+    main { padding: 16px 14px 28px; }
+
+    .item-comida {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 12px 14px;
     }
-    .modal-acciones {
-        flex-direction: column;
+
+    .item-accion {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: calc(56px + 10px);
     }
+
+    .item-comida img { width: 52px; height: 52px; }
+
+    .modal-pie { flex-direction: column; align-items: stretch; }
+    .contador-modal { justify-content: center; }
 }

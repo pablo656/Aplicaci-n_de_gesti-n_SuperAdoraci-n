@@ -15,7 +15,7 @@ class Controller_pedidos {
     // Muestra el catálogo de comidas disponibles (vista de usuario)
     public function mostrar_catalogo() {
         $model_comida = new model_comida();
-        $comidas = $model_comida->mostrar_comidas();
+        $comidas = $model_comida->mostrar_comidas(true);
         require __DIR__ . "/../vista/pedidos.php";
     }
 

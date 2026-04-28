@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,14 +22,14 @@
     <div>
         <a href="IndexProducto-administrador.php">Productos</a>
         <a href="IndexReservas-administrador.php">Reservas</a>
-        <a href="#">Comidas</a>
+        <a href="IndexComidas-administrador.php">Comidas</a>
         <a href="IndexPedidos.php">Pedidos</a>
 
     </div>
     <div>
         <a href="#">Usuarios</a>
         <a href="IndexPerfil.php">Perfil <i class="fi fi-sr-user" style="color: white; font-size: 1.2em;"></i></a>
-        <a href="IndexHome.php?action=log_out">Log out</i></a>
+        <a href="../IndexHome.php?action=log_out">Cerrar sesión</a>
 
     </div>
 </nav>

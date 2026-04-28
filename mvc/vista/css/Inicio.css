@@ -289,7 +289,7 @@ body {
 /* ── Títulos de sección ─────────────────────────────────── */
 h2 {
     text-align: center;
-    font-family: Georgia, 'Times New Roman', serif;
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
     font-size: clamp(1.5rem, 3vw, 2.2rem);
     font-weight: 700;
     letter-spacing: .04em;
@@ -410,7 +410,7 @@ section,
 }
 
 .texto h3 {
-    font-family: Georgia, 'Times New Roman', serif;
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
     font-size: clamp(1.3rem, 2.5vw, 1.8rem);
     font-weight: 700;
     letter-spacing: .03em;

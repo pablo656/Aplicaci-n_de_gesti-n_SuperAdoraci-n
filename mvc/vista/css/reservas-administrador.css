@@ -6,126 +6,250 @@
     --gris-fondo:       #f6f8fb;
     --gap-lateral:      clamp(1rem, 3vw, 2rem);
 }
-/* 1. Contenedor principal de la lista */
+
+/* ── Cabecera de sección ─────────────────────────────────── */
+.header-admin {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 28px 32px 16px;
+}
+
+.header-admin h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--color-texto);
+    margin: 0 0 4px;
+}
+
+.subtitulo {
+    font-size: 0.88rem;
+    color: #888;
+    margin: 0;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #e8e8e8;
+    margin: 0 32px 24px;
+}
+
+/* ── Cuadrícula de reservas ──────────────────────────────── */
+.cuadricula_reservas {
+    padding: 0 32px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+/* ── Bloque por usuario ──────────────────────────────────── */
+.usuario-grupo {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.nombre-cliente {
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #fff;
+    background: var(--color-texto);
+    padding: 12px 20px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.nombre-cliente span {
+    opacity: .65;
+    font-weight: 400;
+    font-size: 0.85rem;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+/* ── Lista de reservas ───────────────────────────────────── */
 .lista-reservas {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-bottom: 24px;
+    gap: 0;
 }
 
-/* 2. Tarjeta individual de cada reserva */
+/* ── Tarjeta individual ──────────────────────────────────── */
 .item-reserva {
     display: flex;
     align-items: center;
-    gap: 14px;
-    background: #fff;
-    border: 0.5px solid #e0e0e0;
-    border-radius: 12px;
-    padding: 12px;
+    gap: 16px;
+    padding: 14px 20px;
+    border-bottom: 1px solid #f0f0f0;
     transition: background .15s;
+}
+
+.item-reserva:last-child {
+    border-bottom: none;
 }
 
 .item-reserva:hover {
     background: #fafafa;
 }
 
-/* 3. Imagen del producto reservado */
+/* ── Imagen ──────────────────────────────────────────────── */
 .item-reserva img {
-    width: 72px;
-    height: 72px;
+    width: 68px;
+    height: 68px;
     object-fit: cover;
     border-radius: 10px;
     background: #ebebeb;
     flex-shrink: 0;
 }
 
-/* 4. Bloque de información (Nombre, Categoría, Cantidad) */
+/* ── Info del producto ───────────────────────────────────── */
 .item-info {
     flex: 1;
     min-width: 0;
 }
 
 .item-info .nombre {
-    font-size: 15px;
-    font-weight: 500;
+    font-size: 1.05rem;
+    font-weight: 600;
     color: var(--color-texto);
     margin: 0 0 3px;
 }
 
 .item-info .descripcion {
-    font-size: 12px;
-    color: #888;
+    font-size: 0.88rem;
+    color: #999;
     margin: 0;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
-.unidad-peso {
-    font-size: 13px;
-    color: #888;
-    margin-top: 4px;
+.item-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    flex-wrap: wrap;
 }
 
-/* 5. Bloque de acción (Precio y Botón) */
+.badge-cantidad {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #444;
+    background: #f0f0f5;
+    border: 1px solid #e0e0e8;
+    border-radius: 20px;
+    padding: 2px 9px;
+}
+
+.badge-descuento {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #fff;
+    background: #e67e22;
+    border-radius: 20px;
+    padding: 2px 8px;
+}
+
+/* ── Bloque precio + botón ───────────────────────────────── */
 .item-accion {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 10px;
+    align-items: center;
+    gap: 20px;
     flex-shrink: 0;
 }
 
-.item-accion .precio {
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--color-texto);
-    margin: 0;
+.precio-unit {
+    font-size: 0.83rem;
+    color: #aaa;
     white-space: nowrap;
+    text-align: right;
+    margin: 0;
 }
 
-/* 6. Botón Eliminar y Contenedor */
+.item-accion .precio {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-texto);
+    white-space: nowrap;
+    min-width: 72px;
+    text-align: right;
+    margin: 0;
+}
+
 .contador {
     display: flex;
     align-items: center;
-    gap: 10px;
 }
 
+/* ── Botón eliminar ──────────────────────────────────────── */
 .btn-eliminar {
     background: var(--color-rojo);
     color: #fff;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 0.88rem;
+    font-weight: 600;
     display: flex;
     align-items: center;
-    gap: 4px;
-    padding: 7px 12px;
-    transition: background .2s;
+    gap: 5px;
+    padding: 8px 14px;
+    transition: background .2s, transform .1s;
+    white-space: nowrap;
 }
 
 .btn-eliminar:hover {
     background: var(--color-rojo-hover);
+    transform: translateY(-1px);
 }
 
-/* 7. Estado vacío */
+.btn-eliminar:active {
+    transform: translateY(0);
+}
+
+/* ── Fila total por usuario ──────────────────────────────── */
+.fila-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background: #f6f8fb;
+    border-top: 1px solid #e8e8e8;
+    font-size: 0.92rem;
+    color: #666;
+}
+
+.total-importe {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-texto);
+}
+
+/* ── Estado vacío ────────────────────────────────────────── */
+.vacio-contenedor {
+    text-align: center;
+    padding: 60px 0;
+}
+
 .vacio {
     font-size: 1rem;
-    color: #bbb;
-    text-align: center;
-    padding: 40px 0;
+    color: #ccc;
 }
-/* 1. Fondo del modal */
+
+/* ── Modal overlay ───────────────────────────────────────── */
 .modal-overlay {
-    display: none; /* Se activa con JS */
+    display: none;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(26, 28, 44, 0.6); /* Color basado en tu --color-texto */
+    inset: 0;
+    background: rgba(26, 28, 44, 0.55);
     backdrop-filter: blur(4px);
     z-index: 9999;
     justify-content: center;
@@ -133,21 +257,20 @@
     padding: 20px;
 }
 
-/* 2. Caja de contenido */
 .modal-content {
     background: #fff;
     width: 100%;
     max-width: 420px;
-    padding: 28px;
+    padding: 32px 28px 28px;
     border-radius: 20px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-    animation: slideUp 0.3s ease-out;
+    box-shadow: 0 20px 50px rgba(0,0,0,.18);
+    animation: slideUp .25s ease-out;
 }
 
 .modal-header i {
-    font-size: 3rem;
+    font-size: 2.8rem;
     color: var(--color-rojo);
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     display: block;
     text-align: center;
 }
@@ -155,56 +278,56 @@
 .modal-content h2 {
     text-align: center;
     color: var(--color-texto);
-    margin: 0 0 10px;
-    font-size: 1.5rem;
+    margin: 0 0 8px;
+    font-size: 1.4rem;
 }
 
 .modal-descripcion {
     text-align: center;
-    color: #666;
-    font-size: 0.95rem;
-    margin-bottom: 24px;
-    line-height: 1.4;
+    color: #777;
+    font-size: 0.88rem;
+    margin-bottom: 22px;
+    line-height: 1.5;
 }
 
-/* 3. Textarea y Label */
+/* ── Textarea ────────────────────────────────────────────── */
 .campo-nota {
-    margin-bottom: 24px;
+    margin-bottom: 22px;
 }
 
 .campo-nota label {
     display: block;
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 600;
-    color: #444;
+    color: #555;
     margin-bottom: 8px;
 }
 
 .campo-nota textarea {
     width: 100%;
-    min-height: 90px;
-    padding: 12px;
-    border: 1px solid #ddd;
+    min-height: 88px;
+    padding: 11px 13px;
+    border: 1px solid #e0e0e0;
     border-radius: 10px;
     background: #f9f9f9;
     font-family: inherit;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     resize: vertical;
     box-sizing: border-box;
-    transition: all 0.2s;
+    transition: border-color .2s, box-shadow .2s;
 }
 
 .campo-nota textarea:focus {
     outline: none;
     border-color: var(--color-rojo);
     background: #fff;
-    box-shadow: 0 0 0 4px rgba(227, 27, 35, 0.1);
+    box-shadow: 0 0 0 3px rgba(227, 27, 35, 0.1);
 }
 
-/* 4. Botones */
+/* ── Botones del modal ───────────────────────────────────── */
 .modal-actions {
     display: flex;
-    gap: 12px;
+    gap: 10px;
 }
 
 .btn-cancelar, .btn-confirmar-borrar {
@@ -212,9 +335,10 @@
     padding: 12px;
     border-radius: 10px;
     font-weight: 600;
+    font-size: 0.9rem;
     cursor: pointer;
     border: none;
-    transition: 0.2s;
+    transition: background .2s, transform .1s;
 }
 
 .btn-cancelar {
@@ -222,21 +346,47 @@
     color: #666;
 }
 
-.btn-cancelar:hover {
-    background: #e5e5e5;
-}
+.btn-cancelar:hover { background: #e5e5e5; }
 
 .btn-confirmar-borrar {
     background: var(--color-rojo);
     color: #fff;
 }
 
-.btn-confirmar-borrar:hover {
-    background: var(--color-rojo-hover);
+.btn-confirmar-borrar:hover { background: var(--color-rojo-hover); }
+
+/* ── Animación modal ─────────────────────────────────────── */
+@keyframes slideUp {
+    from { transform: translateY(24px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
 }
 
-/* Animación */
-@keyframes slideUp {
-    from { transform: translateY(30px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+/* ── Responsive tablet ───────────────────────────────────── */
+@media (max-width: 768px) {
+    .header-admin { padding: 20px 20px 12px; }
+    hr { margin: 0 20px 18px; }
+    .cuadricula_reservas { padding: 0 20px 32px; }
+    .item-reserva { gap: 12px; padding: 12px 16px; }
+    .item-reserva img { width: 56px; height: 56px; }
+}
+
+/* ── Responsive móvil ────────────────────────────────────── */
+@media (max-width: 480px) {
+    .header-admin { padding: 16px 14px 10px; }
+    hr { margin: 0 14px 14px; }
+    .cuadricula_reservas { padding: 0 14px 24px; gap: 20px; }
+
+    .item-reserva {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 12px 14px;
+    }
+
+    .item-accion {
+        width: 100%;
+        justify-content: space-between;
+        padding-left: calc(56px + 10px);
+    }
+
+    .item-reserva img { width: 52px; height: 52px; }
 }

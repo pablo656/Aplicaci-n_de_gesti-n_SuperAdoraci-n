@@ -63,7 +63,7 @@ main {
 }
 
 main h1 {
-    font-family: Georgia, 'Times New Roman', serif;
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
     font-size: clamp(1.4rem, 2.5vw, 1.8rem);
     font-weight: 700;
     color: var(--color-texto);

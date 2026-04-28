@@ -29,18 +29,21 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueño") { ?>
 
 <div class="contenido">
     <aside>
+        <div class="aside-titulo">Categorías</div>
         <ul>
             <?php foreach($categorias as $cat): ?>
                 <li>
-                    <a href="IndexProducto-administrador.php?action=<?= htmlspecialchars($cat) ?>">
+                    <a href="IndexProducto-administrador.php?action=<?= htmlspecialchars($cat) ?>"
+                       class="<?= $action == $cat ? 'cat-activa' : '' ?>">
                         <?= htmlspecialchars(str_replace("_", " ", $cat)) ?>
                     </a>
-                    
+
                     <?php if($action == $cat && isset($subcategorias[$cat]) && !empty($subcategorias[$cat])): ?>
                         <ul class="subcategorias">
                             <?php foreach($subcategorias[$cat] as $sub): ?>
                                 <li>
-                                    <a href="IndexProducto-administrador.php?action=<?= htmlspecialchars($cat) ?>&subcategoria=<?= urlencode($sub) ?>">
+                                    <a href="IndexProducto-administrador.php?action=<?= htmlspecialchars($cat) ?>&subcategoria=<?= urlencode($sub) ?>"
+                                       class="<?= $subcategoria == $sub ? 'sub-activa' : '' ?>">
                                         <?= htmlspecialchars($sub) ?>
                                     </a>
                                 </li>
@@ -182,7 +185,7 @@ if ($mostrar_modal && $producto_modal): ?>
                 
                 <label for="descuento">Descuento: </label>
                 <div class="input-porcentaje">
-                    <input type="number" name="descuento" id="descuento" min="0" max="99" value="<?= $producto_modal["porcentaje_descuento"] ?>">
+                    <input type="number" name="descuento" id="descuento" min="0" max="99" step="1" value="<?= (int)$producto_modal["porcentaje_descuento"] ?>">
                     <span class="simbolo">%</span>
                 </div>
 

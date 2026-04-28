@@ -3,7 +3,7 @@
     require_once("../../controller/controller_reservas.php");
     $controller=new Controller_reservas();
     $action = $_GET["action"] ?? "list";
-    $titulo="Reservas" ;
+    $titulo="Administración de reservas";
     $css="<link rel='stylesheet' href='../css/reservas-administrador.css'>" ;
     require("layerHeader-administrador.php");
     if($action=="delete"){

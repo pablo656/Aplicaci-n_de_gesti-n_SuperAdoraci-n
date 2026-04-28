@@ -14,8 +14,8 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueño") { ?>
 } else { ?>
     <div class="header-admin">
             <div>
-                <h1>Administración de catálogo</h1>
-                <p class="subtitulo">Gestiona el stock, precios y disponibilidad de los productos.</p>
+                <h1>Administración de reservas</h1>
+                <p class="subtitulo">Gestiona las reservas activas de los clientes.</p>
             </div>
         </div>
         <hr>
@@ -39,9 +39,20 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueño") { ?>
                     $email_usuario=$lista_reservas[0]["email_usuario"];
                     ?>
                     <div class="usuario-grupo">
-                        <h2 class="nombre-cliente">Cliente: <?php echo $nombre_usuario; ?> (ID: <?php echo $id_usuario; ?>)Email:<?php echo $email_usuario ?></h2>
+                        <h2 class="nombre-cliente">
+                            <i class="fi fi-sr-user"></i>
+                            <?php echo htmlspecialchars($nombre_usuario); ?>
+                            <span>(ID: <?php echo $id_usuario; ?>) &mdash; <?php echo htmlspecialchars($email_usuario); ?></span>
+                        </h2>
                         
                       <div class="lista-reservas">
+                    <?php
+                        $total_usuario = 0;
+                        foreach($lista_reservas as $r) {
+                            $pu = $r["precio"] - ($r["precio"] * ($r["porcentaje_descuento"] / 100));
+                            $total_usuario += $pu * $r["cantidad"];
+                        }
+                    ?>
                     <?php foreach($lista_reservas as $reserva): ?>
                         <div class="item-reserva">
                             <img src="../<?= htmlspecialchars($reserva["url_imagen"]) ?>" alt="<?= htmlspecialchars($reserva['nombre_producto']) ?>">
@@ -51,16 +62,26 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueño") { ?>
                                 <p class="descripcion">
                                     <?= !empty($reserva['subcategoria']) ? htmlspecialchars($reserva['subcategoria']) : htmlspecialchars($reserva['categoria']) ?>
                                 </p>
-                                <p class="unidad-peso">Cantidad: <?= $reserva["cantidad"] ?> <?php if($reserva["precio_por_peso"]){echo "Kg";}else{echo "Unidades";} ?></p>
+                                <div class="item-meta">
+                                    <span class="badge-cantidad">
+                                        <?= $reserva["cantidad"] ?> <?= $reserva["precio_por_peso"] ? "Kg" : "Uds" ?>
+                                    </span>
+                                    <?php if($reserva["porcentaje_descuento"] > 0): ?>
+                                        <span class="badge-descuento">-<?= $reserva["porcentaje_descuento"] ?>%</span>
+                                    <?php endif; ?>
+                                </div>
                             </div>
 
                             <div class="item-accion">
-                                <?php 
-                                    // Cálculo del total con descuento
-                                    $precioBase = $reserva["precio"];
-                                    $descuento = $reserva["porcentaje_descuento"];
-                                    $precioFinal = ($precioBase - ($precioBase * ($descuento / 100))) * $reserva["cantidad"];
+                                <?php
+                                    $precioBase  = $reserva["precio"];
+                                    $descuento   = $reserva["porcentaje_descuento"];
+                                    $precioUnit  = $precioBase - ($precioBase * ($descuento / 100));
+                                    $precioFinal = $precioUnit * $reserva["cantidad"];
                                 ?>
+                                <?php if($reserva["cantidad"] > 1): ?>
+                                    <p class="precio-unit"><?= number_format($precioUnit, 2) ?> € / ud.</p>
+                                <?php endif; ?>
                                 <p class="precio"><?= number_format($precioFinal, 2) ?> €</p>
                                 
                                 <div class="contador">
@@ -71,6 +92,10 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueño") { ?>
                             </div>
                         </div>
                     <?php endforeach; ?>
+                </div>
+                <div class="fila-total">
+                    <span>Total del cliente</span>
+                    <span class="total-importe"><?= number_format($total_usuario, 2) ?> €</span>
                 </div>
                     </div>
                 <?php endforeach; ?>

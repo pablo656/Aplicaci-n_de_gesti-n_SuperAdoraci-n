@@ -40,7 +40,7 @@
         exit();
     }
 
-    $titulo = "Catalogo";
+    $titulo = "Catálogo";
     $css = "<link rel='stylesheet' href='css/catalogo_style.css'>";
     $categorias = ["Comida","Bebidas","Mascotas","Papeleria_oficina","Salud_bienestar"];
     $subcategorias = [

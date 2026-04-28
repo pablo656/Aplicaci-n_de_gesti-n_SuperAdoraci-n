@@ -6,10 +6,10 @@ require_once("../controller/controller_user.php");
 $controller=new Controller_user();
 $action=$_GET["action"] ?? "home";
 if($action=="log"||$action=="comprobar"||$action=="log_fallido"){
-    $titulo="Log in";
+    $titulo="Iniciar sesión";
     $css="<link rel='stylesheet' href='css/log_in.css'>";
 }else if($action=="sing"||$action=="crear"||$action=="sing_fallido"){
-    $titulo="Sing in";
+    $titulo="Registrarse";
     $css="<link rel='stylesheet' href='css/log_in.css'>";
 }elseif($action=="perfil"){
     $titulo="Perfil";

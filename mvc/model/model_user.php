@@ -201,6 +201,16 @@
                 return false;
             }
         }
+        public function cambiarRol($id,$rol){
+            $sql="UPDATE usuarios SET rol=? WHERE id=?";
+            $stmt=$this->conn->prepare($sql);
+            $stmt->bind_param("si", $rol, $id);
+            if(!$stmt->execute()){
+                return false;
+            }else{
+                return true;
+            }
+        }
 
     }
 

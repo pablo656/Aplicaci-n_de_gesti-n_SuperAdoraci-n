@@ -62,6 +62,9 @@ class Controller_user{
         $mailer->enviar($email, $asunto, $cuerpo);
         require("../vista/email_enviado.php");
     }
+    public function crearUsuario($username, $password, $email){
+        
+    }
 
     // Confirma el token del email y crea el usuario real
     public function confirmar_email($token) {
@@ -113,6 +116,14 @@ class Controller_user{
         }
         $_SESSION["nombre"] = $nuevo_nombre;
         header("Location: indexHome.php?action=perfil&ok=1");
+    }
+    public function cambiarRol($id,$rol){
+       if ($this->model_user->cambiarRol($id, $rol)) {
+        header("Location: IndexUsuarios-administrador.php?res=updated");
+    } else {
+        header("Location: IndexUsuarios-administrador.php?res=error");
+    }
+        exit();
     }
 }
 ?>

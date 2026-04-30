@@ -9,7 +9,11 @@
     if($action=="add"){
 
     }elseif($action=="modificar"){
-
+        $id=$_POST["id_usuario"];
+        $rol=$_POST["rol"];
+        $controller->cambiarRol($id,$rol);
+        header("Location: IndexUsuarios-administrador.php");
+        exit(); 
     }elseif ($action == "delete") {
     if (isset($_POST["id"])) {
         $id = $_POST["id"];

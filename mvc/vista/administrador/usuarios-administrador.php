@@ -47,7 +47,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueño") { ?>
                     </div>
 
                     <div class="botones">
-                        <button class="btn-rol">
+                        <button class="btn-rol" onclick="abrirModal('<?= $usuario['id']?>','<?= $usuario['nombre']?>','<?= $usuario['email']?>','<?= $usuario['rol']?>')">
                             <i class="fi fi-sr-pencil"></i> Cambiar rol
                         </button>
                         
@@ -66,5 +66,66 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueño") { ?>
         <?php endif; ?>
     </div>
 </div>
+<script src="js/usuarios-administrador.js"></script>
+<?php } ?>
+<div id="modal" class="modal-overlay" style="display:none"> 
+    <div class="modal">
+        <button class="modal-cerrar" onclick="cerrarModal()">×</button>
+        
+        <h2 id="titulo_modificar">Cambiar rol</h2>
+        <p class="modal-subtitulo">Selecciona el nuevo nivel de acceso para este usuario.</p>
 
-<?php } // Cierre del else de permisos ?>
+        <form method="post" action="?action=modificar">
+            <!-- Campo oculto para enviar el identificador del usuario -->
+            <input type="hidden" value="id" name="id_usuario" id="id_hidden">
+            
+            <div class="form-group">
+                <label for="rol_select">Rol del sistema:</label>
+                <select name="rol" id="rol_select">
+                    <option value="cliente">Cliente</option>
+                    <option value="dueño">Dueño</option>
+                    <option value="administrador">Administrador</option>
+                </select>
+            </div>
+
+            <div class="modal-botones">
+                <input type="submit" name="modificar" value="Actualizar Rol" class="btn-guardar">
+                <button type="button" class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="modal_aniadir" class="modal-overlay" style="display:none"> 
+    <div class="modal">
+        <button class="modal-cerrar" onclick="cerrarModal()">×</button>
+        
+        <h2 id="titulo_modificar">Añadir Usuarios</h2>
+        <p class="modal-subtitulo">POn los datos del usuario que deseas crear.</p>
+
+        <form method="post" action="?action=add" id="add">
+            <!-- Campo oculto para enviar el identificador del usuario -->
+            <input type="hidden" value="id" name="id_usuario" id="id_hidden">
+            
+            <div class="form-group">
+                <label for="user">Usuario</label>
+                <input type="text" id="user" name="user" placeholder="Elige un nombre de usuario">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="tu@email.com">
+                <label for="pass">Contraseña</label>
+                <input type="password" id="pass" name="pass" placeholder="Crea una contraseña">
+                <label for="rol_select">Rol del sistema:</label>
+                <select name="rol" id="rol_select">
+                    <option value="cliente">Cliente</option>
+                    <option value="dueño">Dueño</option>
+                    <option value="administrador">Administrador</option>
+                </select>
+            </div>
+
+            <div class="modal-botones">
+                <input type="submit" name="add" value="Crear usuario" class="btn-guardar">
+                <button type="button" class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>

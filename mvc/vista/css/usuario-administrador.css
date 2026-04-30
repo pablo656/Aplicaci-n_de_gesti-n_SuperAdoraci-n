@@ -187,3 +187,132 @@
     .usuario { flex-direction: column; align-items: flex-start; }
     .botones { width: 100%; justify-content: flex-end; }
 }
+/* Contenedor oscuro que cubre toda la pantalla */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+    backdrop-filter: blur(4px);    /* Desenfoque de fondo */
+    display: none;                 /* Se cambia a flex desde JS */
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+/* La tarjeta blanca central */
+.modal {
+    background: #fff;
+    padding: 32px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 450px;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    animation: aparecer 0.3s ease-out;
+}
+
+@keyframes aparecer {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Botón de cerrar (X) */
+.modal-cerrar {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #f0f2f5;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 20px;
+    line-height: 32px;
+    cursor: pointer;
+    color: #666;
+    transition: 0.2s;
+}
+
+.modal-cerrar:hover {
+    background: #e31b23;
+    color: #fff;
+}
+
+/* Títulos */
+#titulo_modificar {
+    font-size: 1.3rem;
+    color: #1a1c2c;
+    margin: 0 0 8px 0;
+    font-weight: 700;
+}
+
+.modal-subtitulo {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 24px;
+}
+
+/* Formulario */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.modal select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+    outline: none;
+}
+
+.modal select:focus {
+    border-color: #1a3a5c;
+    box-shadow: 0 0 0 3px rgba(26,58,92,0.1);
+}
+
+/* Botones de acción */
+.modal-botones {
+    display: flex;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.btn-cancelar {
+    flex: 1;
+    padding: 12px;
+    background: #f0f2f5;
+    color: #555;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-guardar {
+    flex: 2;
+    padding: 12px;
+    background: #1a3a5c; /* Azul como el de modificar */
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-guardar:hover {
+    background: #254e7a;
+}

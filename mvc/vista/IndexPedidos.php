@@ -17,16 +17,25 @@ if ($action === "list") {
     require("../vista/footer.html");
 
 } else if ($action === "crear") {
-    $id_comida = $_POST["id_comida"] ?? null;
-    $cantidad  = $_POST["cantidad"]  ?? null;
-    $mensaje   = $_POST["mensaje"]   ?? "";
+    $id_comida     = $_POST["id_comida"]     ?? null;
+    $cantidad      = $_POST["cantidad"]      ?? null;
+    $mensaje       = $_POST["mensaje"]       ?? "";
+    $fecha_entrega = $_POST["fecha_entrega"] ?? "";
 
     if (empty($id_comida) || !is_numeric($id_comida) || empty($cantidad) || $cantidad < 1) {
         header("Location: IndexPedidos.php?action=list");
         exit();
     }
 
-    $controller->guardar_en_cookie($id_comida, $cantidad, $mensaje);
+    $min = date('Y-m-d', strtotime('+3 days'));
+    $max = date('Y-m-d', strtotime('+6 months'));
+    if (empty($fecha_entrega) || $fecha_entrega < $min || $fecha_entrega > $max) {
+        $_SESSION['pedido_errores'] = ["La fecha de entrega debe estar entre 3 días y 6 meses desde hoy."];
+        header("Location: IndexPedidos.php?action=list");
+        exit();
+    }
+
+    $controller->guardar_en_cookie($id_comida, $cantidad, $mensaje, $fecha_entrega);
     $_SESSION['pedido_ok'] = true;
     header("Location: IndexPedidos.php?action=list");
     exit();

@@ -24,7 +24,7 @@
         <a href="IndexProducto-administrador.php">Productos</a>
         <a href="IndexReservas-administrador.php">Reservas</a>
         <a href="IndexComidas-administrador.php">Comidas</a>
-        <a href="IndexPedidos.php">Pedidos</a>
+        <a href="IndexPedidos-administrador.php">Pedidos</a>
 
     </div>
     <div>

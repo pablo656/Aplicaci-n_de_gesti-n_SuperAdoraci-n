@@ -62,8 +62,12 @@ class Controller_user{
         $mailer->enviar($email, $asunto, $cuerpo);
         require("../vista/email_enviado.php");
     }
-    public function crearUsuario($username, $password, $email){
-        
+    public function crearUsuario($username, $password, $email,$rol){
+        if(!$this->model_user->crearusuario_admin($username, $password, $email,$rol)){
+            header("Location: IndexUsuarios-administrador.php?res=error_usuario");
+        }else{
+            header("Location: IndexUsuarios-administrador.php?res=usuario_creado");
+        }
     }
 
     // Confirma el token del email y crea el usuario real

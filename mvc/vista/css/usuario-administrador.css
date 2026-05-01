@@ -316,3 +316,209 @@
 .btn-guardar:hover {
     background: #254e7a;
 }
+/* ── Overlay: Fondo oscurecido y desenfocado ── */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(26, 28, 44, 0.6); /* Azul muy oscuro con transparencia */
+    backdrop-filter: blur(5px);       /* Efecto de desenfoque moderno */
+    display: none;                    /* Cambiar a flex por JS */
+    justify-content: center;
+    align-items: center;
+    z-index: 3000;
+    padding: 20px;
+}
+
+/* ── Tarjeta del Modal ── */
+.modal {
+    background: #ffffff;
+    width: 100%;
+    max-width: 480px;
+    padding: 35px;
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* ── Botón cerrar (X) ── */
+.modal-cerrar {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #f1f3f5;
+    border: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    font-size: 22px;
+    cursor: pointer;
+    color: #adb5bd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+.modal-cerrar:hover {
+    background: #faebee;
+    color: #e31b23;
+    transform: rotate(90deg);
+}
+
+/* ── Textos ── */
+#titulo_modificar {
+    font-size: 1.5rem;
+    color: #1a1c2c;
+    margin: 0 0 8px;
+    font-weight: 700;
+}
+
+.modal-subtitulo {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 25px;
+}
+
+/* ── Formulario y Grupos ── */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: -10px; /* Acercar la etiqueta al input */
+}
+
+/* Inputs y Selects */
+.modal input[type="text"],
+.modal input[type="email"],
+.modal input[type="password"],
+.modal select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid #e9ecef;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    background: #f8f9fa;
+    transition: all 0.2s;
+    outline: none;
+    color: #1a1c2c;
+}
+
+.modal input:focus,
+.modal select:focus {
+    border-color: #2e7d32; /* Verde al enfocar */
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.1);
+}
+
+/* ── Botones de Acción ── */
+.modal-botones {
+    display: flex;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+/* Botón Crear (Verde como el botón de añadir del header) */
+.btn-guardar {
+    flex: 2;
+    background: #2e7d32;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.btn-guardar:hover {
+    background: #1b5e20;
+    transform: translateY(-2px);
+}
+
+.btn-guardar:active {
+    transform: translateY(0);
+}
+
+/* Botón Cancelar */
+.btn-cancelar {
+    flex: 1;
+    background: #f8f9fa;
+    color: #495057;
+    border: 1.5px solid #e9ecef;
+    padding: 14px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-cancelar:hover {
+    background: #e9ecef;
+    color: #212529;
+}
+
+/* Estilo para mensajes de error de JS */
+.error {
+    color: #e31b23;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: -10px;
+    margin-bottom: 5px;
+}
+.alerta-no-js {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    z-index: 9999; /* Por encima de todo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.alerta-contenido {
+    background: #fff;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    max-width: 500px;
+    border: 2px solid #e31b23; /* Color rojo de advertencia */
+}
+
+.alerta-contenido i {
+    font-size: 50px;
+    color: #e31b23;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.alerta-contenido strong {
+    display: block;
+    font-size: 1.2rem;
+    color: #1a1c2c;
+    margin-bottom: 10px;
+}
+
+.alerta-contenido p {
+    color: #6c757d;
+    line-height: 1.5;
+}

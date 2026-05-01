@@ -1,0 +1,105 @@
+/* ── Variables (Reutilizadas de tu referencia) ── */
+:root {
+    --color-texto:      #1a1c2c;
+    --color-azul-oscuro: #1a3a5c; /* El azul de los botones y el borde dashed */
+    --color-azul-pale:   #f0f7ff; /* El fondo azul claro de image_4.png */
+}
+
+/* ... (resto de tu CSS base para .cuadricula-productos y .producto) ... */
+
+/* ── Tarjeta de Producto (Forma Base - Asegurar consistencia) ── */
+.producto {
+    background: #fff;
+    border-radius: 12px; /* Redondeado sutil de image_5.png */
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .07);
+    display: flex;
+    flex-direction: column;
+    padding: 15px; /* Ajustado para parecerse a image_5.png */
+    transition: transform .2s, box-shadow .2s;
+    border: 1px solid #eee;
+    min-height: 420px; /* Altura mínima para que todas las tarjetas midan igual */
+}
+
+/* ── Producto Vacío / Botón Añadir (Integración de Estilos) ── */
+
+/* Quitamos estilos por defecto del botón que envuelve */
+.productos-inicio button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    width: 100%;
+    display: block; /* Para que ocupe todo el ancho del grid */
+}
+
+/* ── Contenedor Grid (Asegúrate de que tenga estas clases) ── */
+.cuadricula-productos {
+    display: grid;
+    /* Esto crea columnas de mínimo 220px. Si hay espacio, pone más en la misma fila */
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
+    gap: 20px;
+    align-items: stretch; /* Obliga a que todos midan lo mismo de alto en la misma fila */
+}
+
+/* ── Ajuste para el botón de hueco vacío ── */
+.btn-hueco-vacio {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    width: 100%; /* Ocupa el ancho de la celda del grid, no de la pantalla */
+    display: flex; /* Para que el div interno se estire */
+}
+
+.producto_vacio {
+    /* MISMA FORMA QUE .producto */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    min-height: 420px; /* Ajusta este valor para que coincida con tus productos reales */
+    
+    /* ESTILO VISUAL DE LA IMAGEN (Fondo azul claro y borde dashed) */
+    background-color: #f0f7ff; 
+    border: 2px dashed #1a3a5c;
+    transition: all 0.2s ease;
+    box-sizing: border-box; /* Importante para que el borde no sume tamaño extra */
+}
+
+.producto_vacio:hover {
+    background-color: #e6f2ff;
+    transform: translateY(-5px);
+}
+
+.contenido_interno {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* Centra el contenido en todo el alto de la tarjeta */
+    flex-grow: 1;
+}
+
+.producto_vacio .simbolo {
+    font-size: 50px;
+    color: #1a3a5c;
+    font-weight: 300;
+    margin-bottom: 10px;
+}
+
+.producto_vacio .titulo {
+    color: #1a3a5c;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Efecto Hover para el producto vacío */
+.producto_vacio:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, .13);
+    background-color: #e6f2ff; /* Un azul ligeramente más oscuro al hover */
+}

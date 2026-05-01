@@ -123,6 +123,9 @@ class Controller_user{
     }
     public function cambiarRol($id,$rol){
        if ($this->model_user->cambiarRol($id, $rol)) {
+        if($id==$_SESSION["id"]){
+            $_SESSION["rol"]=$rol;
+        }
         header("Location: IndexUsuarios-administrador.php?res=updated");
     } else {
         header("Location: IndexUsuarios-administrador.php?res=error");

@@ -1,9 +1,33 @@
+function actualizarBadge() {
+    const badge = document.getElementById('badge-total');
+    if (!badge) return;
+    const contadores = document.querySelectorAll('[id^="cantidad-pedido-"]');
+    let total = 0;
+    contadores.forEach(el => total += parseInt(el.textContent) || 0);
+    if (total > 0) {
+        badge.textContent = total + (total === 1 ? ' plato' : ' platos');
+        badge.classList.add('visible');
+    } else {
+        badge.classList.remove('visible');
+    }
+}
+
 function abrirModal(idComida, nombre) {
     document.getElementById('modalIdComida').value = idComida;
     document.getElementById('modalTitulo').textContent = 'Pedir: ' + nombre;
     document.getElementById('cantidad').value = 1;
     document.getElementById('cantidadDisplay').textContent = 1;
     document.getElementById('mensaje').value = '';
+
+    const inputFecha = document.getElementById('fecha_entrega');
+    const minDate = new Date();
+    minDate.setDate(minDate.getDate() + 3);
+    const maxDate = new Date();
+    maxDate.setMonth(maxDate.getMonth() + 6);
+    inputFecha.min = minDate.toISOString().split('T')[0];
+    inputFecha.max = maxDate.toISOString().split('T')[0];
+    inputFecha.value = '';
+
     document.querySelector('.btn-menos').style.visibility = 'hidden';
     document.getElementById('modalPedir').classList.add('activo');
 }
@@ -44,5 +68,8 @@ function ajustarPedido(idComida, cambio) {
         } else {
             elemento.textContent = valor;
         }
+        actualizarBadge();
     });
 }
+
+actualizarBadge();

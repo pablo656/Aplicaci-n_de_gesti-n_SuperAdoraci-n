@@ -90,10 +90,11 @@
         $pedidos_cookie = isset($_COOKIE["pedidos"]) ? json_decode($_COOKIE["pedidos"], true) : [];
         $usuario = $_SESSION["id"];
         foreach($pedidos_cookie as $pedido){
-            $id_comida = $pedido["id"];
-            $cantidad  = $pedido["cantidad"];
-            $mensaje   = $pedido["mensaje"] ?? "";
-            $controller_pedidos->crear_pedido($usuario, $id_comida, $cantidad, $mensaje);
+            $id_comida     = $pedido["id"];
+            $cantidad      = $pedido["cantidad"];
+            $mensaje       = $pedido["mensaje"]       ?? "";
+            $fecha_entrega = $pedido["fecha_entrega"] ?? null;
+            $controller_pedidos->crear_pedido($usuario, $id_comida, $cantidad, $mensaje, $fecha_entrega);
         }
         setcookie("pedidos", json_encode([]), time() + (60 * 60 * 24), "/");
         $_SESSION["pedidos_ok"] = true;

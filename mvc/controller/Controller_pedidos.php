@@ -55,26 +55,43 @@ class Controller_pedidos {
     }
 
     // Guarda o suma cantidad de una comida en la cookie del carrito
-    public function guardar_en_cookie($id_comida, $cantidad, $mensaje = "") {
+    public function guardar_en_cookie($id_comida, $cantidad, $mensaje = "", $fecha_entrega = "") {
         $pedidos = isset($_COOKIE["pedidos"]) ? json_decode($_COOKIE["pedidos"], true) : [];
         $encontrado = false;
         foreach ($pedidos as &$pedido) {
             if ($pedido["id"] == $id_comida) {
-                $pedido["cantidad"] = max(1, (int)$pedido["cantidad"] + (int)$cantidad);
-                $pedido["mensaje"] = $mensaje;
+                $pedido["cantidad"]      = max(1, (int)$pedido["cantidad"] + (int)$cantidad);
+                $pedido["mensaje"]       = $mensaje;
+                $pedido["fecha_entrega"] = $fecha_entrega;
                 $encontrado = true;
                 break;
             }
         }
         unset($pedido);
         if (!$encontrado) {
-            $pedidos[] = ["id" => $id_comida, "cantidad" => (int)$cantidad, "mensaje" => $mensaje];
+            $pedidos[] = ["id" => $id_comida, "cantidad" => (int)$cantidad, "mensaje" => $mensaje, "fecha_entrega" => $fecha_entrega];
         }
         setcookie("pedidos", json_encode($pedidos), time() + (60 * 60 * 24), "/");
     }
 
+    // Muestra todos los pedidos agrupados por usuario (panel de administración)
+    public function consultar_pedidos_admin() {
+        $pedidos = $this->model_pedidos->consultar_pedidos_admin();
+        require __DIR__ . "/../vista/administrador/pedidos-administrador.php";
+    }
+
+    // Elimina un pedido por su ID
+    public function eliminar_pedido($id) {
+        $this->model_pedidos->eliminar_pedido($id);
+    }
+
+    // Marca un pedido como realizado
+    public function marcar_realizado($id) {
+        $this->model_pedidos->marcar_realizado($id);
+    }
+
     // Valida los datos y crea un nuevo pedido
-    public function crear_pedido($id_usuario, $id_comida, $cantidad, $mensaje) {
+    public function crear_pedido($id_usuario, $id_comida, $cantidad, $mensaje, $fecha_entrega = null) {
         $errores = [];
 
         if (empty($id_usuario) || !is_numeric($id_usuario)) {
@@ -92,7 +109,7 @@ class Controller_pedidos {
             return false;
         }
 
-        $ok = $this->model_pedidos->crear_pedido($id_usuario, $id_comida, $cantidad, $mensaje);
+        $ok = $this->model_pedidos->crear_pedido($id_usuario, $id_comida, $cantidad, $mensaje, $fecha_entrega ?: null);
         if (!$ok) {
             $_SESSION['pedido_errores'] = ["No se pudo guardar el pedido en la base de datos."];
             return false;

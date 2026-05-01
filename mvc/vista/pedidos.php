@@ -1,6 +1,11 @@
 <main>
-    <h1>Nuestro menú</h1>
-    <h2>Elige lo que quieres pedir</h2>
+    <div class="menu-header">
+        <div class="menu-header-texto">
+            <h1>Nuestro menú</h1>
+        </div>
+        <span class="menu-badge-total" id="badge-total"></span>
+    </div>
+    <hr style="border:none; border-top:1px solid #e8e8e8; margin-bottom:24px;">
 
     <?php
         $mostrar_ok = (!empty($pedido_ok)) || (!empty($_SESSION['pedido_ok']));
@@ -40,6 +45,7 @@
                         <?php if (!empty($comida['descripcion'])): ?>
                             <p class="descripcion"><?= htmlspecialchars($comida['descripcion']) ?></p>
                         <?php endif; ?>
+                        <span class="badge-categoria">Disponible</span>
                     </div>
                     <div class="item-accion" id="accion-<?= (int)$comida['id'] ?>" data-nombre="<?= htmlspecialchars($comida['nombre'], ENT_QUOTES) ?>">
                         <p class="precio"><?= number_format($comida['precio'], 2) ?> €</p>
@@ -73,7 +79,14 @@
         <form method="POST" action="IndexPedidos.php?action=crear">
             <input type="hidden" name="id_comida" id="modalIdComida">
 
-            <label for="mensaje">Mensaje (opcional)</label>
+            <label for="fecha_entrega">Fecha de entrega <span class="label-req">*</span></label>
+            <div class="fecha-input-wrap">
+                <i class="fi fi-sr-calendar-day fecha-icono"></i>
+                <input type="date" name="fecha_entrega" id="fecha_entrega" required>
+            </div>
+            <p class="modal-fecha-hint"><i class="fi fi-sr-info"></i> hacer pedidos con 3 días de antelación</p>
+
+            <label for="mensaje">Nota (opcional)</label>
             <textarea name="mensaje" id="mensaje" placeholder="Alergias, preferencias especiales..."></textarea>
 
             <div class="modal-pie">

@@ -111,10 +111,57 @@ class model_pedidos{
         }
         return $pedidos ?: null;
     }
-    public function crear_pedido($id_usuario, $id_comida, $cantidad, $mensaje) {
-        $sql = "INSERT INTO pedidos (id_usuario, id_comida, cantidad, mensaje) VALUES (?, ?, ?, ?)";
+    public function crear_pedido($id_usuario, $id_comida, $cantidad, $mensaje, $fecha_entrega = null) {
+        $sql = "INSERT INTO pedidos (id_usuario, id_comida, cantidad, mensaje, fecha_entrega) VALUES (?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("iiis", $id_usuario, $id_comida, $cantidad, $mensaje);
+        $stmt->bind_param("iiiss", $id_usuario, $id_comida, $cantidad, $mensaje, $fecha_entrega);
+        return $stmt->execute();
+    }
+
+    public function consultar_pedidos_admin() {
+        if (!$this->conn) return null;
+        $sql = "SELECT
+            p.id AS id_pedido,
+            p.cantidad,
+            p.mensaje,
+            p.fecha,
+            p.fecha_entrega,
+            p.realizado,
+            c.nombre AS nombre_comida,
+            c.descripcion,
+            c.precio,
+            c.url_imagen,
+            u.id AS id_usuario,
+            u.nombre AS nombre_usuario,
+            u.email AS email_usuario
+        FROM pedidos p
+        INNER JOIN comidas c ON p.id_comida = c.id
+        INNER JOIN usuarios u ON p.id_usuario = u.id
+        ORDER BY p.realizado ASC, p.fecha DESC";
+        $stmt = $this->conn->prepare($sql);
+        if ($stmt === false) return null;
+        if (!$stmt->execute()) return null;
+        $result = $stmt->get_result();
+        $pedidos = [];
+        while ($row = $result->fetch_assoc()) {
+            $pedidos[] = $row;
+        }
+        return $pedidos ?: null;
+    }
+
+    public function eliminar_pedido($id) {
+        $sql = "DELETE FROM pedidos WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        if ($stmt === false) return false;
+        $stmt->bind_param("i", $id);
+        return $stmt->execute();
+    }
+
+    public function marcar_realizado($id) {
+        $sql = "UPDATE pedidos SET realizado = 1 WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        if ($stmt === false) return false;
+        $stmt->bind_param("i", $id);
         return $stmt->execute();
     }
 

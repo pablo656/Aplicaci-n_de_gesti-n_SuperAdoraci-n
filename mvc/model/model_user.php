@@ -100,6 +100,45 @@
 
 
         }
+        public function crearusuario_admin($user, $password, $email,$rol){
+            if (!$this->conn) {
+                return false;
+            }
+            if ($this->comprobarusuario_crear($user, $email)) {
+                return false;
+            }
+            $hash = password_hash($password, PASSWORD_DEFAULT);
+            $sql = "INSERT INTO usuarios (nombre, contrasena, email,rol) VALUES (?, ?, ?,?)";
+            $stmt = $this->conn->prepare($sql);
+            if ($stmt === false) {
+                return false;
+            }
+            
+            $stmt->bind_param("ssss", $user, $hash, $email,$rol);
+            //Linea posiblemente obsoleta borrar si llega a ser inutil
+            //$result = $stmt->execute();
+            if(!$stmt->execute()){
+                return false;
+            }
+            //Obtener ID del usuario creado
+            $id=$this->conn->insert_id;
+            $stmt->close();
+            $stmt=$this->conn->prepare("SELECT * FROM usuarios WHERE id=?");
+            $stmt->bind_param("i",$id);
+            if(!$stmt->execute()){
+                return false;
+            }
+            $resultado=$stmt->get_result();
+            $usuario=null;
+            while($row=$resultado->fetch_assoc()){
+                $usuario=$row;
+            }
+            $stmt->close();
+            //Se devuelve al usuario para crear una sessión en el controller
+            return $usuario;
+
+
+        }
 
         // Guarda un registro pendiente de confirmar por email
         public function guardar_verificacion($nombre, $email, $hash) {

@@ -1,3 +1,4 @@
+
 function abrirModal(id,nombre,email,rol){
      const modal = document.getElementById("modal");
     if (!modal) return;
@@ -12,8 +13,17 @@ function abrirModal(id,nombre,email,rol){
     }
 
 }
+function abrirModal_Añadir(){
+    const modal = document.getElementById("modal_aniadir");
+    if (!modal) return;
+    modal.style.display = "flex";
+}
 function cerrarModal() {
     const modal = document.getElementById("modal");
+    if (modal) modal.style.display = "none";
+}
+function cerrarModal_Aniadir() {
+    const modal = document.getElementById("modal_aniadir");
     if (modal) modal.style.display = "none";
 }
 document.addEventListener("DOMContentLoaded", function() {
@@ -26,6 +36,15 @@ document.addEventListener("DOMContentLoaded", function() {
     } 
     else if (resultado === 'error') {
         alert("Error: No se pudo actualizar el rol. Inténtalo de nuevo.");
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }else if(resultado==="error_usuario"){
+        const modal = document.getElementById("modal_aniadir");
+        if (!modal) return;
+    modal.style.display = "flex";
+        alert("Error: Ya existe un usuario con ese nombre o correo.");
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }else if(resultado==="usuario_creado"){
+        alert("¡Éxito! El usuario se a creado correctamente.");
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 });

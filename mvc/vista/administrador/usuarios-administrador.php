@@ -5,7 +5,7 @@ if (!isset($_SESSION["nombre"]) || !isset($_SESSION["rol"])) {
     exit();
 } 
 
-if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueño") { ?>
+if ($_SESSION["rol"] != "administrador") { ?>
     <div class="acceso-denegado">
         <h1 class="sin-acceso">Acceso no permitido</h1>
         <p>No tienes privilegios para gestionar la base de usuarios.</p>
@@ -19,11 +19,11 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueño") { ?>
             <h1>Administración de Usuarios</h1>
             <p class="subtitulo">Gestiona los permisos, roles y acceso de los usuarios al sistema.</p>
         </div>
-        <form method="post" action="IndexUsuarios-administrador.php">
-            <button name="add" type="submit" class="btn-añadir">
-                <i class="fi fi-sr-plus"></i> Añadir usuario
-            </button>
-        </form>
+        
+        <button name="add"  class="btn-añadir" onclick="abrirModal_Añadir()">
+            <i class="fi fi-sr-plus"></i> Añadir usuario
+        </button>
+       
     </div>
 
     <hr class="divisor-admin">
@@ -66,7 +66,6 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueño") { ?>
         <?php endif; ?>
     </div>
 </div>
-<script src="js/usuarios-administrador.js"></script>
 <?php } ?>
 <div id="modal" class="modal-overlay" style="display:none"> 
     <div class="modal">
@@ -98,10 +97,10 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueño") { ?>
 
 <div id="modal_aniadir" class="modal-overlay" style="display:none"> 
     <div class="modal">
-        <button class="modal-cerrar" onclick="cerrarModal()">×</button>
+        <button class="modal-cerrar" onclick="cerrarModal_Aniadir()">×</button>
         
         <h2 id="titulo_modificar">Añadir Usuarios</h2>
-        <p class="modal-subtitulo">POn los datos del usuario que deseas crear.</p>
+        <p class="modal-subtitulo">Introduce los datos del nuevo usuario para registrarlo en el sistema.</p>
 
         <form method="post" action="?action=add" id="add">
             <!-- Campo oculto para enviar el identificador del usuario -->
@@ -117,15 +116,25 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueño") { ?>
                 <label for="rol_select">Rol del sistema:</label>
                 <select name="rol" id="rol_select">
                     <option value="cliente">Cliente</option>
-                    <option value="dueño">Dueño</option>
+                    <option value="dueno">Dueño</option>
                     <option value="administrador">Administrador</option>
                 </select>
             </div>
 
             <div class="modal-botones">
                 <input type="submit" name="add" value="Crear usuario" class="btn-guardar">
-                <button type="button" class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
+                <button type="button" class="btn-cancelar" onclick="cerrarModal_Aniadir()">Cancelar</button>
             </div>
         </form>
     </div>
 </div>
+<noscript>
+    <div class="alerta-no-js">
+        <div class="alerta-contenido">
+            <i class="fi fi-sr-exclamation"></i>
+            <strong>¡Atención! JavaScript está desactivado.</strong>
+            <p>Para gestionar usuarios, cambiar roles y usar los formularios de esta página, necesitas activar JavaScript en la configuración de tu navegador.</p>
+        </div>
+    </div>
+</noscript>
+<script src="js/usuarios-administrador.js"></script>

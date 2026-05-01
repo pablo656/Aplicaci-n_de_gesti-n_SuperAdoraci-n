@@ -7,7 +7,13 @@
     $css="<link rel='stylesheet' href='../css/usuario-administrador.css'>" ;
     require("layerHeader-administrador.php");
     if($action=="add"){
-
+        $nombre=$_POST["user"];
+        $pass=$_POST["pass"];
+        $email=$_POST["email"];
+        $rol=$_POST["rol"];
+        $controller->crearUsuario($nombre,$pass,$email,$rol);
+        //header("Location: IndexUsuarios-administrador.php");
+        exit(); 
     }elseif($action=="modificar"){
         $id=$_POST["id_usuario"];
         $rol=$_POST["rol"];

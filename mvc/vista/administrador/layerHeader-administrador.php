@@ -13,13 +13,14 @@
 <body>
 <header>
     <picture>
-        <source media="(max-width: 768px)" srcset="imagenes/banner_M.png">
+        <source media="(max-width: 768px)" srcset="../imagenes/banner_M.png">
         <img src="../imagenes/banner.png" alt="Logo">
     </picture>
     
 </header>
 <nav>
     <div>
+        <a href="IndexInicio-administrador.php">Inicio</a>
         <a href="IndexProducto-administrador.php">Productos</a>
         <a href="IndexReservas-administrador.php">Reservas</a>
         <a href="IndexComidas-administrador.php">Comidas</a>

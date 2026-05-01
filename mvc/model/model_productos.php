@@ -124,6 +124,19 @@ class model_productos{
         }
         return $productos;
     }
+    public function buscar_productos_inicio(){
+        $sql="SELECT * FROM productos WHERE inicio=1";
+        $stmt=$this->conn->prepare($sql);
+        if(!$stmt->execute()){
+            return null;
+        }
+        $result=$stmt->get_result();
+        $productos=[];
+        while($row=$result->fetch_assoc()){
+            $productos[]=$row;
+        }
+        return $productos;
+    }
     //Eliminar producto
     public function del_producto($id) {
         // 1. Obtener la ruta de la imagen

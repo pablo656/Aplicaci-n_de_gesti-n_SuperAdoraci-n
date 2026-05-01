@@ -158,5 +158,13 @@
             // LLAMADA AL MODELO: El orden debe ser id, nombre, stock, precio, peso, cat, sub, img, desc
             return $this->model->update_producto($id, $nombre, $stock, $precio, $precio_por_peso, $categoria, $subcategoria, $imagen, $descuento);
         }
+        public function buscar_productos_inicio_administrador(){
+            $productos=$this->model->buscar_productos_inicio();
+            require __DIR__ . "/../vista/administrador/inicio-administrador.php";
+        }
+        public function buscar_productos_inicio(){
+            $productos=$this->model->buscar_productos_inicio();
+            require __DIR__ . "/../vista/administrador/inicio-administrador.php";
+        }
     }
 ?>

@@ -71,7 +71,7 @@ class Controller_pedidos {
         if (!$encontrado) {
             $pedidos[] = ["id" => $id_comida, "cantidad" => (int)$cantidad, "mensaje" => $mensaje, "fecha_entrega" => $fecha_entrega];
         }
-        setcookie("pedidos", json_encode($pedidos), time() + (60 * 60 * 24), "/");
+        setcookie("pedidos", json_encode($pedidos), time() + 60 * 60 * 24, "/");
     }
 
     // Muestra todos los pedidos agrupados por usuario (panel de administración)
@@ -83,6 +83,11 @@ class Controller_pedidos {
     // Elimina un pedido por su ID
     public function eliminar_pedido($id) {
         $this->model_pedidos->eliminar_pedido($id);
+    }
+
+    // Elimina un pedido del usuario solo si quedan más de 3 días para la entrega
+    public function eliminar_pedido_usuario($id_pedido, $id_usuario) {
+        return $this->model_pedidos->eliminar_pedido_usuario($id_pedido, $id_usuario);
     }
 
     // Marca un pedido como realizado
@@ -100,8 +105,8 @@ class Controller_pedidos {
         if (empty($id_comida) || !is_numeric($id_comida)) {
             $errores[] = "La comida seleccionada no es válida";
         }
-        if (empty($cantidad) || !is_numeric($cantidad) || $cantidad < 1) {
-            $errores[] = "La cantidad debe ser un número mayor que 0";
+        if (empty($cantidad) || !is_numeric($cantidad) || $cantidad < 1 || $cantidad > 30) {
+            $errores[] = "La cantidad debe ser entre 1 y 30 unidades";
         }
 
         if (!empty($errores)) {

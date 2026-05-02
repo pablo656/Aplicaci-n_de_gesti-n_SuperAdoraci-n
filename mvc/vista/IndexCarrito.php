@@ -49,7 +49,7 @@
     }else if($action == "actualizar_cantidad_pedido"){
         $pedidos = isset($_COOKIE["pedidos"]) ? json_decode($_COOKIE["pedidos"], true) : [];
         $id_comida = $_POST["id_comida"];
-        $cantidad = (float)$_POST["cantidad"];
+        $cantidad = min(30, max(1, (int)$_POST["cantidad"]));
         foreach($pedidos as &$pedido){
             if($pedido["id"] == $id_comida){
                 $pedido["cantidad"] = $cantidad;

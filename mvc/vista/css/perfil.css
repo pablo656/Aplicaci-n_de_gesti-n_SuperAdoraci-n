@@ -154,12 +154,93 @@
 }
 
 .item-precio {
-    margin-left: auto; /* Empuja el precio a la derecha */
+    margin-left: auto;
     font-size: 14px;
     font-weight: 500;
     color: #1a1c2c;
     white-space: nowrap;
 }
+
+.btn-cancelar-pedido {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 6px;
+    padding: 5px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #a32d2d;
+    background: #fcebeb;
+    border: 1px solid #f5c6c6;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background .15s;
+}
+
+.btn-cancelar-pedido:hover {
+    background: #f8d7d7;
+}
+
+/* --- Modal cancelar pedido --- */
+.modal-cancelar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(26,28,44,.5);
+    backdrop-filter: blur(3px);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-cancelar-box {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px 24px 22px;
+    max-width: 360px;
+    width: 100%;
+    box-shadow: 0 16px 40px rgba(0,0,0,.15);
+}
+
+.modal-cancelar-titulo {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a1c2c;
+    margin: 0 0 6px;
+}
+
+.modal-cancelar-desc {
+    font-size: 0.88rem;
+    color: #888;
+    margin: 0 0 20px;
+}
+
+.modal-cancelar-acciones {
+    display: flex;
+    gap: 10px;
+}
+
+.modal-cancelar-acciones button {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    cursor: pointer;
+    border: none;
+    background: #f0f0f0;
+    color: #666;
+    transition: background .15s;
+}
+
+.modal-cancelar-acciones button:hover { background: #e5e5e5; }
+
+.modal-cancelar-acciones .btn-confirmar-cancelar {
+    background: #e31b23;
+    color: #fff;
+}
+
+.modal-cancelar-acciones .btn-confirmar-cancelar:hover { background: #b3141a; }
 
 /* --- ESTADOS (BADGES) --- */
 .badge {
@@ -183,6 +264,20 @@
 .badge-gris {
     background: #f1efe8;
     color: #5f5e5a; /* Para la cantidad x1, x2... */
+}
+
+.badge-naranja {
+    background: #fff3e0;
+    color: #b45309;
+}
+
+.item-fecha-entrega {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+    font-size: 12px;
+    color: #888;
 }
 
 /* Mensaje de cuando no hay datos */

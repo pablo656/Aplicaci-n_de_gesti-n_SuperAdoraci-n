@@ -125,9 +125,8 @@ function borrarPedido(id){
 }
 
 function cambiarCantidadPedido(id, cambio, precio){
-    alert("sda");
     const span = document.getElementById("cantidad-p-" + id);
-    const nuevo = Math.max(1, parseInt(span.textContent) + cambio);
+    const nuevo = Math.min(30, Math.max(1, parseInt(span.textContent) + cambio));
     let precio_item = document.getElementById("precio-p-" + id);
     let precio_pedido_aside = document.getElementById("precio-pedido-" + id);
     let subtotal_pedidos = document.getElementById("subtotal_pedidos");
@@ -137,6 +136,7 @@ function cambiarCantidadPedido(id, cambio, precio){
 
     span.textContent = nuevo;
     document.getElementById("restar-p-" + id).style.display = nuevo <= 1 ? "none" : "block";
+    document.querySelector(`[onclick="cambiarCantidadPedido(${id}, 1, ${precio})"]`).style.display = nuevo >= 30 ? "none" : "block";
 
     precio_item.textContent = (nuevo * precio).toFixed(2) + " €";
     precio_pedido_aside.textContent = (nuevo * precio).toFixed(2) + " €";

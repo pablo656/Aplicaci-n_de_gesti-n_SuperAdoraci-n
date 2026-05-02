@@ -12,6 +12,16 @@
         $id_reserva=$_POST["id_reserva"];
         $controller_reservas->eliminar_reserva($id_reserva);
         header("Location: " . $_SERVER['HTTP_REFERER']);
+    }else if($action=="borrar_pedido"){
+        $id_pedido = (int)($_POST["id_pedido"] ?? 0);
+        $id_usuario = $_SESSION["id"];
+        $ok = $controller_pedidos->eliminar_pedido_usuario($id_pedido, $id_usuario);
+        if ($ok) {
+            header("Location: indexPerfil.php?eliminado=1");
+        } else {
+            header("Location: indexPerfil.php?error_eliminar=1");
+        }
+        exit();
     }else{
         $id=$_SESSION["id"];
         //Debido a que es necesario usar dos funciones de dos controllers distintos, se han tenido que usar metodos drasticos para hacer posible que la visat alcance la información

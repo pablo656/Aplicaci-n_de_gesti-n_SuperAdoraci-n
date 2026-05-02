@@ -50,8 +50,19 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueño") { ?>
                             $total_usuario += $p["precio"] * $p["cantidad"];
                         }
                         ?>
-                        <?php foreach ($lista_pedidos as $pedido): ?>
-                            <div class="item-reserva">
+                        <?php foreach ($lista_pedidos as $pedido):
+                            $diasPedido = null;
+                            if (!empty($pedido['fecha_entrega'])) {
+                                $diasPedido = (int)(new DateTime('today'))->diff(new DateTime($pedido['fecha_entrega']))->format('%r%a');
+                            }
+                            $conRetraso = !$pedido['realizado'] && $diasPedido !== null && $diasPedido < 0;
+                        ?>
+                            <div class="item-reserva<?= $conRetraso ? ' item-reserva-retraso' : '' ?>">
+                                <?php if ($conRetraso): ?>
+                                    <div class="banner-retraso">
+                                        <i class="fi fi-sr-exclamation"></i> RETRASO · <?= abs($diasPedido) ?> día<?= abs($diasPedido) !== 1 ? 's' : '' ?> tarde
+                                    </div>
+                                <?php endif; ?>
                                 <img src="../<?= htmlspecialchars($pedido["url_imagen"]) ?>" alt="<?= htmlspecialchars($pedido['nombre_comida']) ?>">
 
                                 <div class="item-info">
@@ -65,6 +76,27 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueño") { ?>
                                             <span class="badge-fecha">
                                                 <i class="fi fi-sr-calendar-day"></i>
                                                 <?= date('d/m/Y', strtotime($pedido['fecha_entrega'])) ?>
+                                            </span>
+                                            <?php
+                                                if ($diasPedido < 0):
+                                                    $cls = 'badge-tiempo badge-tiempo-vencido';
+                                                    $txt = 'Vencido';
+                                                elseif ($diasPedido === 0):
+                                                    $cls = 'badge-tiempo badge-tiempo-hoy';
+                                                    $txt = 'Hoy';
+                                                elseif ($diasPedido === 1):
+                                                    $cls = 'badge-tiempo badge-tiempo-urgente';
+                                                    $txt = 'Mañana';
+                                                elseif ($diasPedido <= 3):
+                                                    $cls = 'badge-tiempo badge-tiempo-urgente';
+                                                    $txt = $diasPedido . ' días';
+                                                else:
+                                                    $cls = 'badge-tiempo badge-tiempo-ok';
+                                                    $txt = $diasPedido . ' días';
+                                                endif;
+                                            ?>
+                                            <span class="<?= $cls ?>">
+                                                <i class="fi fi-sr-clock"></i> <?= $txt ?>
                                             </span>
                                         <?php endif; ?>
                                         <?php if (!empty($pedido['mensaje'])): ?>

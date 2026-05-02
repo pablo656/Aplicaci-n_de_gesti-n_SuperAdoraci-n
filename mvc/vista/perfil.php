@@ -1,3 +1,8 @@
+<?php
+$perfil_url ??= 'indexPerfil.php';
+$home_url   ??= 'IndexHome.php';
+$img_base   ??= '';
+?>
 <div class="layout-perfil">
     <aside class="sidebar-perfil">
         <div class="perfil-container">
@@ -60,7 +65,7 @@
                     <div class="item-pedido">
                         <div class="item-info-izquierda">
                             <div class="item-img">
-                                <img src="<?=$reserva["url_imagen"]?>" alt="producto">
+                                <img src="<?= $img_base . htmlspecialchars($reserva["url_imagen"]) ?>" alt="producto">
                             </div>
                             <div class="item-detalles">
                                 <p class="item-nombre">
@@ -102,23 +107,57 @@
         </div>
         <div class="seccion">
             <p class="seccion-titulo">Mis pedidos</p>
-            <?php if(!empty($pedidos)): 
+            <?php if (isset($_GET['eliminado'])): ?>
+                <p class="editar-ok">Pedido cancelado correctamente.</p>
+            <?php elseif (isset($_GET['error_eliminar'])): ?>
+                <p class="editar-error">No se puede cancelar: quedan 3 días o menos para la entrega.</p>
+            <?php endif; ?>
+            <?php if(!empty($pedidos)):
                 foreach($pedidos as $pedido): ?>
                 <div class="item-pedido">
                     <div class="item-info-izquierda">
                         <div class="item-img"> 
-                            <img src="<?= htmlspecialchars($pedido["url_imagen"]) ?>" alt="producto">
+                            <img src="<?= $img_base . htmlspecialchars($pedido["url_imagen"]) ?>" alt="producto">
                         </div>
                         
                         <div class="item-detalles">
                             <p class="item-nombre">
-                                <?= htmlspecialchars($pedido["nombre_comida"]) ?> 
+                                <?= htmlspecialchars($pedido["nombre_comida"]) ?>
                                 <span class="badge-gris">x<?=$pedido["cantidad"]?></span>
                             </p>
-                            
+
                             <p class="item-sub">
                                 <?= !empty($pedido["mensaje"]) ? "Nota: " . htmlspecialchars($pedido["mensaje"]) : "Sin observaciones" ?>
                             </p>
+
+                            <?php if (!empty($pedido['fecha_entrega'])): ?>
+                                <?php
+                                    $hoy     = new DateTime('today');
+                                    $entrega = new DateTime($pedido['fecha_entrega']);
+                                    $dias    = (int)$hoy->diff($entrega)->format('%r%a');
+                                    if ($dias < 0) {
+                                        $badgeCls = 'badge badge-rojo';
+                                        $badgeTxt = 'Vencido';
+                                    } elseif ($dias === 0) {
+                                        $badgeCls = 'badge badge-rojo';
+                                        $badgeTxt = 'Hoy';
+                                    } elseif ($dias === 1) {
+                                        $badgeCls = 'badge badge-naranja';
+                                        $badgeTxt = 'Mañana';
+                                    } elseif ($dias <= 3) {
+                                        $badgeCls = 'badge badge-naranja';
+                                        $badgeTxt = $dias . ' días';
+                                    } else {
+                                        $badgeCls = 'badge badge-verde';
+                                        $badgeTxt = $dias . ' días';
+                                    }
+                                ?>
+                                <div class="item-fecha-entrega">
+                                    <i class="fi fi-sr-calendar-day"></i>
+                                    Entrega: <?= date('d/m/Y', strtotime($pedido['fecha_entrega'])) ?>
+                                    <span class="<?= $badgeCls ?>"><?= $badgeTxt ?></span>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
 
@@ -126,14 +165,48 @@
                         <span class="item-precio">
                             <?= number_format($pedido["precio"] * $pedido["cantidad"], 2) ?> €
                         </span>
+                        <?php
+                            $puedeCancelar = !empty($pedido['fecha_entrega']) &&
+                                (new DateTime('today'))->diff(new DateTime($pedido['fecha_entrega']))->format('%r%a') > 3;
+                        ?>
+                        <?php if ($puedeCancelar): ?>
+                            <button class="btn-cancelar-pedido" onclick="abrirModalCancelar(<?= (int)$pedido['id_pedido'] ?>)">
+                                <i class="fi fi-sr-trash"></i> Cancelar
+                            </button>
+                        <?php endif; ?>
                     </div>
                 </div>
-                <?php endforeach; 
+                <?php endforeach;
             else: ?>
                 <p class="vacio">No hay pedidos</p>
             <?php endif; ?>
 
         </div>
+
+        <!-- Modal cancelar pedido -->
+        <div id="modal-cancelar-pedido" class="modal-cancelar-overlay">
+            <div class="modal-cancelar-box">
+                <p class="modal-cancelar-titulo">¿Cancelar pedido?</p>
+                <p class="modal-cancelar-desc">Esta acción no se puede deshacer.</p>
+                <form method="POST" action="<?= $perfil_url ?>?action=borrar_pedido">
+                    <input type="hidden" name="id_pedido" id="input-cancelar-id">
+                    <div class="modal-cancelar-acciones">
+                        <button type="button" onclick="cerrarModalCancelar()">Volver</button>
+                        <button type="submit" class="btn-confirmar-cancelar">Confirmar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script>
+            function abrirModalCancelar(id) {
+                document.getElementById('input-cancelar-id').value = id;
+                document.getElementById('modal-cancelar-pedido').style.display = 'flex';
+            }
+            function cerrarModalCancelar() {
+                document.getElementById('modal-cancelar-pedido').style.display = 'none';
+            }
+        </script>
+
         <div class="seccion seccion-editar">
             <p class="seccion-titulo">Editar perfil</p>
 
@@ -148,7 +221,7 @@
                 <p class="editar-error"><?= htmlspecialchars($msgs[$_GET["error"]] ?? "Error desconocido.") ?></p>
             <?php endif; ?>
 
-            <form method="post" action="IndexHome.php?action=actualizar_nombre" class="form-editar">
+            <form method="post" action="<?= $home_url ?>?action=actualizar_nombre" class="form-editar">
                 <div class="form-grupo">
                     <label for="nombre">Nombre de usuario</label>
                     <input type="text" id="nombre" name="nombre"

@@ -192,6 +192,64 @@ hr {
     gap: 4px;
 }
 
+/* ── Fila con retraso ────────────────────────────────────── */
+.item-reserva-retraso {
+    border-left: 4px solid #e31b23;
+    background: #fff8f8;
+    flex-wrap: wrap;
+    padding-left: 16px;
+}
+
+.banner-retraso {
+    width: 100%;
+    background: #e31b23;
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 4px 12px;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ── Badge tiempo restante ───────────────────────────────── */
+.badge-tiempo {
+    font-size: 0.78rem;
+    font-weight: 700;
+    border-radius: 20px;
+    padding: 2px 9px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.badge-tiempo-ok {
+    color: #2e7d32;
+    background: #e8f5e9;
+    border: 1px solid #a5d6a7;
+}
+
+.badge-tiempo-urgente {
+    color: #b45309;
+    background: #fff7ed;
+    border: 1px solid #fcd34d;
+}
+
+.badge-tiempo-hoy {
+    color: #c2410c;
+    background: #fff1ee;
+    border: 1px solid #fca5a5;
+}
+
+.badge-tiempo-vencido {
+    color: #991b1b;
+    background: #fee2e2;
+    border: 1px solid #fca5a5;
+}
+
 .badge-mensaje {
     font-size: 0.78rem;
     font-weight: 600;

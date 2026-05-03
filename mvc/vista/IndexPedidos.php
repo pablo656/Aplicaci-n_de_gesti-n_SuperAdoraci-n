@@ -22,7 +22,7 @@ if ($action === "list") {
     $mensaje       = $_POST["mensaje"]       ?? "";
     $fecha_entrega = $_POST["fecha_entrega"] ?? "";
 
-    if (empty($id_comida) || !is_numeric($id_comida) || empty($cantidad) || $cantidad < 1) {
+    if (empty($id_comida) || !is_numeric($id_comida) || empty($cantidad) || $cantidad < 1 || $cantidad > 30) {
         header("Location: IndexPedidos.php?action=list");
         exit();
     }
@@ -47,7 +47,7 @@ if ($action === "list") {
     $pedidos = isset($_COOKIE["pedidos"]) ? json_decode($_COOKIE["pedidos"], true) : [];
     foreach ($pedidos as $idx => $pedido) {
         if ($pedido["id"] == $id_comida) {
-            $nueva = max(0, (int)$pedido["cantidad"] + $cambio);
+            $nueva = min(30, max(0, (int)$pedido["cantidad"] + $cambio));
             if ($nueva <= 0) {
                 unset($pedidos[$idx]);
             } else {

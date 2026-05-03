@@ -13,18 +13,20 @@ class model_pedidos{
         if (!$this->conn) {
             return null;
         }
-        $sql = "SELECT 
+        $sql = "SELECT
             p.id AS id_pedido,
             p.cantidad,
             p.mensaje,
             p.fecha,
+            p.fecha_entrega,
             c.nombre AS nombre_comida,
             c.descripcion,
             c.precio,
             c.url_imagen
         FROM pedidos p
         INNER JOIN comidas c ON p.id_comida = c.id
-        WHERE p.id_usuario = ?";
+        WHERE p.id_usuario = ?
+        ORDER BY p.realizado ASC, p.fecha DESC";
         /*$sql="SELECT * FROM pedidos WHERE id_usuario = ?";*/
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param("i", $id_usuario);
@@ -137,7 +139,10 @@ class model_pedidos{
         FROM pedidos p
         INNER JOIN comidas c ON p.id_comida = c.id
         INNER JOIN usuarios u ON p.id_usuario = u.id
-        ORDER BY p.realizado ASC, p.fecha DESC";
+        ORDER BY
+            (p.realizado = 0 AND p.fecha_entrega < CURDATE()) DESC,
+            p.realizado ASC,
+            p.fecha DESC";
         $stmt = $this->conn->prepare($sql);
         if ($stmt === false) return null;
         if (!$stmt->execute()) return null;
@@ -155,6 +160,17 @@ class model_pedidos{
         if ($stmt === false) return false;
         $stmt->bind_param("i", $id);
         return $stmt->execute();
+    }
+
+    public function eliminar_pedido_usuario($id_pedido, $id_usuario) {
+        $sql = "DELETE FROM pedidos
+                WHERE id = ? AND id_usuario = ?
+                AND fecha_entrega > DATE_ADD(CURDATE(), INTERVAL 3 DAY)";
+        $stmt = $this->conn->prepare($sql);
+        if ($stmt === false) return false;
+        $stmt->bind_param("ii", $id_pedido, $id_usuario);
+        $stmt->execute();
+        return $stmt->affected_rows > 0;
     }
 
     public function marcar_realizado($id) {

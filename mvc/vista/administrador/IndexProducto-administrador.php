@@ -17,42 +17,41 @@
     ];
     require("layerHeader-administrador.php");
     
-    if($action=="add"){
-    
+    if($action=="inicio"){
+        $id=$_POST["id"];
+        $controller->aniadirInicio($id);
+        header("Location: " . $_SERVER['HTTP_REFERER'] . "#$id");
+    }else if($action=="quitar_inicio"){
+        $id=$_POST["id"];
+        $controller->quitarInicio($id);
+        header("Location: " . $_SERVER['HTTP_REFERER'] . "#$id");
     }else if($action=="delete"){
         $id=$_POST["id_producto"];
         $controller->del_producto($id);
-        header("Location:IndexProducto-administrador.php");
+        header("Location: " . $_SERVER['HTTP_REFERER']);
     }else if($action == "modificar") {
-    $id = $_POST["id"];
-    $nombre = $_POST["nombre"];
-    $stock = $_POST["stock"];
-    $precio = $_POST["precio"];
-    $descuento = $_POST["descuento"];
-    $categoria = $_POST["categoria"];
-    $subcategoria = isset($_POST["subcategoria"])? $_POST["subcategoria"]: null;
-    $precio_por_peso = isset($_POST["precio_por_peso"]) ? 1 : 0;
+        $id = $_POST["id"];
+        $nombre = $_POST["nombre"];
+        $stock = $_POST["stock"];
+        $precio = $_POST["precio"];
+        $descuento = $_POST["descuento"];
+        $categoria = $_POST["categoria"];
+        $subcategoria = isset($_POST["subcategoria"])? $_POST["subcategoria"]: null;
+        $precio_por_peso = isset($_POST["precio_por_peso"]) ? 1 : 0;
 
-    // Obtener el array de la imagen desde $_FILES
-    $imagen = (isset($_FILES["nueva_imagen"]) && $_FILES["nueva_imagen"]["error"] == 0) ? $_FILES["nueva_imagen"] : null;
+        $imagen = (isset($_FILES["nueva_imagen"]) && $_FILES["nueva_imagen"]["error"] == 0) ? $_FILES["nueva_imagen"] : null;
 
-    // ¡ORDEN CRÍTICO! Coincidiendo con el controlador:
-    $controller->update_producto(
-        $id, 
-        $nombre, 
-        $stock, 
-        $precio, 
-        $precio_por_peso, 
-        $categoria, 
-        $subcategoria, 
-        $imagen,   // Imagen es el penúltimo
-        $descuento // Descuento es el último
-    );
-
-    header("Location: IndexProducto-administrador.php");
-    exit();
+        $resultado=$controller->update_producto($id, $nombre, $stock, $precio, $precio_por_peso, $categoria, $subcategoria, $imagen, $descuento);
+        
+        if ($resultado !== true) {
+            echo "<script>
+                    alert('$resultado');
+                    window.history.back();
+                </script>";
+        } else {
+            header("Location: " . $_SERVER['HTTP_REFERER'] . "#$id");
+        }
     }else if ($action == "insertar") {
-        // Es buena práctica verificar que la petición sea POST antes de procesar
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $nombre = $_POST["nombre"];
             $stock = $_POST["stock"];
@@ -62,26 +61,20 @@
             $subcategoria = isset($_POST["subcategoria"]) ? $_POST["subcategoria"] : null;
             $precio_por_peso = isset($_POST["precio_por_peso"]) ? 1 : 0;
 
-            /**
-             * Mandamos el array completo de $_FILES. 
-             * Si no hay archivo, mandamos un array vacío o null, 
-             * pero el controlador ya está preparado para manejarlo.
-             */
-            $imagen = (isset($_FILES["nueva_imagen"]) && $_FILES["nueva_imagen"]["error"] == 0) 
-                    ? $_FILES["nueva_imagen"] 
-                    : null;
+            $imagen = (isset($_FILES["nueva_imagen"]) && $_FILES["nueva_imagen"]["error"] == 0) ? $_FILES["nueva_imagen"] : null;
 
-            // Llamada al controlador
-            $controller->add_productos(
-                $nombre,
-                $stock,
-                $precio,
-                $precio_por_peso,
-                $categoria,
-                $subcategoria,
-                $imagen,
-                $descuento
-            );
+            $resultado=$controller->add_productos($nombre, $stock, $precio, $precio_por_peso, $categoria, $subcategoria, $imagen, $descuento);
+            
+            if (isset($resultado) && is_array($resultado)) {
+                $errorString = implode("\\n- ", $resultado);
+                echo "<script>
+                        alert('No se pudo insertar el producto:\\n- $errorString');
+                        window.history.back(); 
+                    </script>";
+                exit();
+            } else {
+                header("Location: " . $_SERVER['HTTP_REFERER']);
+            }
         }
     }else if(in_array($action, $categorias)){
         if($subcategoria != null){
@@ -92,6 +85,4 @@
     }else{
         $controller->mostrar_productos_admin();
     }
-
-    
 ?>

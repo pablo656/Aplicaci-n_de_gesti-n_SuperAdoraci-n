@@ -1,105 +1,187 @@
-/* ── Variables (Reutilizadas de tu referencia) ── */
+/* ── Variables Globales ── */
 :root {
-    --color-texto:      #1a1c2c;
-    --color-azul-oscuro: #1a3a5c; /* El azul de los botones y el borde dashed */
-    --color-azul-pale:   #f0f7ff; /* El fondo azul claro de image_4.png */
+    --color-texto: #1a1c2c;
+    --color-azul-oscuro: #1a3a5c;
+    --color-azul-pale: #f0f7ff;
+    --color-rojo: #e31b23;
+    --color-gris-fundo: #f4f4f4;
+    --color-borde: #eee;
+    --shadow-suave: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
-/* ... (resto de tu CSS base para .cuadricula-productos y .producto) ... */
-
-/* ── Tarjeta de Producto (Forma Base - Asegurar consistencia) ── */
-.producto {
-    background: #fff;
-    border-radius: 12px; /* Redondeado sutil de image_5.png */
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, .07);
-    display: flex;
-    flex-direction: column;
-    padding: 15px; /* Ajustado para parecerse a image_5.png */
-    transition: transform .2s, box-shadow .2s;
-    border: 1px solid #eee;
-    min-height: 420px; /* Altura mínima para que todas las tarjetas midan igual */
-}
-
-/* ── Producto Vacío / Botón Añadir (Integración de Estilos) ── */
-
-/* Quitamos estilos por defecto del botón que envuelve */
-.productos-inicio button {
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
+/* ── Reset y Estilos Base ── */
+.btn-hueco-vacio {
+    text-decoration: none !important;
+    color: inherit;
+    display: block;
     width: 100%;
-    display: block; /* Para que ocupe todo el ancho del grid */
 }
 
-/* ── Contenedor Grid (Asegúrate de que tenga estas clases) ── */
+/* ── Contenedor Grid ── */
 .cuadricula-productos {
     display: grid;
-    /* Esto crea columnas de mínimo 220px. Si hay espacio, pone más en la misma fila */
+    /* Ajustado minmax para permitir que las tarjetas se vean más estilizadas */
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
     gap: 20px;
-    align-items: stretch; /* Obliga a que todos midan lo mismo de alto en la misma fila */
+    padding: 20px 0;
 }
 
-/* ── Ajuste para el botón de hueco vacío ── */
-.btn-hueco-vacio {
-    background: none;
-    border: none;
-    padding: 0;
-    margin: 0;
-    cursor: pointer;
-    width: 100%; /* Ocupa el ancho de la celda del grid, no de la pantalla */
-    display: flex; /* Para que el div interno se estire */
-}
-
-.producto_vacio {
-    /* MISMA FORMA QUE .producto */
-    flex: 1;
+/* ── Tarjeta de Producto (Compacta) ── */
+.producto {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: var(--shadow-suave);
     display: flex;
     flex-direction: column;
-    border-radius: 12px;
-    min-height: 420px; /* Ajusta este valor para que coincida con tus productos reales */
-    
-    /* ESTILO VISUAL DE LA IMAGEN (Fondo azul claro y borde dashed) */
-    background-color: #f0f7ff; 
-    border: 2px dashed #1a3a5c;
-    transition: all 0.2s ease;
-    box-sizing: border-box; /* Importante para que el borde no sume tamaño extra */
+    padding: 15px; /* Reducido para ahorrar espacio */
+    border: 1px solid var(--color-borde);
+    min-height: 420px; /* Altura reducida de 520px a 420px */
+    box-sizing: border-box;
+    text-align: center;
+    transition: transform 0.2s ease;
 }
 
-.producto_vacio:hover {
-    background-color: #e6f2ff;
+.producto:hover {
     transform: translateY(-5px);
 }
 
-.contenido_interno {
+/* ── Imagen del Producto ── */
+.contenedor-img {
+    width: 100%;
+    height: 140px; /* Reducido de 160px */
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contenedor-img img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* ── Bloque de Información ── */
+.info-producto {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px; /* Espaciado interno muy reducido para compactar datos */
+}
+
+.nombre {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-texto);
+    margin: 5px 0;
+    /* Limitar a 2 líneas si el nombre es muy largo para no romper la altura */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ── Píldora de Stock ── */
+.stock {
+    background-color: #eee;
+    color: #666;
+    padding: 2px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+/* ── Precios y Descuentos ── */
+.descuento {
+    /* Eliminado el margin-top: auto para que el precio suba */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.sin_descuento {
+    color: #bbb;
+    text-decoration: line-through;
+    font-size: 0.85rem;
+    margin-bottom: -2px; /* Acerca el precio tachado al precio final */
+}
+
+.precio {
+    color: var(--color-rojo);
+    font-size: 1.3rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+/* ── Botones de Acción (Quitar / Eliminar) ── */
+.acciones-tarjeta {
+    margin-top: 10px;
+}
+
+.btn-eliminar {
+    background: var(--color-rojo);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    width: 100%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.2s;
+}
+
+.btn-eliminar:hover {
+    background: #c1151b;
+}
+
+/* ── Huecos de Añadir Producto ── */
+.producto_vacio {
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    min-height: 420px; /* Misma altura que la tarjeta de producto */
+    background-color: var(--color-azul-pale); 
+    border: 2px dashed var(--color-azul-oscuro);
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.producto_vacio:hover {
+    background-color: #e6f0ff;
+    border-style: solid;
+}
+
+.producto_vacio .contenido_interno {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%; /* Centra el contenido en todo el alto de la tarjeta */
     flex-grow: 1;
+    padding: 20px;
 }
 
 .producto_vacio .simbolo {
-    font-size: 50px;
-    color: #1a3a5c;
+    font-size: 40px;
+    color: var(--color-azul-oscuro);
     font-weight: 300;
     margin-bottom: 10px;
 }
 
 .producto_vacio .titulo {
-    color: #1a3a5c;
-    font-size: 14px;
+    color: var(--color-azul-oscuro);
+    font-size: 0.85rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-/* Efecto Hover para el producto vacío */
-.producto_vacio:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 28px rgba(0, 0, 0, .13);
-    background-color: #e6f2ff; /* Un azul ligeramente más oscuro al hover */
+    letter-spacing: 0.5px;
+    text-align: center;
 }

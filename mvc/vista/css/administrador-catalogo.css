@@ -519,3 +519,42 @@ input[type="submit"][name="modificar"]:hover {
         justify-content: center;
     }
 }
+/* Estilo general del botón de gestión de inicio */
+.boton_Inicio {
+    width: 100%;
+    background-color: #f0f7ff; /* Fondo azul pálido para diferenciarlo de acciones críticas */
+    color: #1a3a5c; /* Tu azul oscuro corporativo */
+    border: 1px solid #1a3a5c;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Efecto al pasar el ratón */
+.boton_Inicio:hover {
+    background-color: #1a3a5c;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(26, 58, 92, 0.2);
+}
+
+/* Efecto al hacer clic */
+.boton_Inicio:active {
+    transform: translateY(0);
+}
+
+/* Icono dinámico opcional (usando caracteres unicode o podrías usar FontAwesome) */
+.boton_Inicio::before {
+    content: "★"; /* Una estrella para representar el "inicio/destacado" */
+    font-size: 1.1rem;
+}

@@ -21,9 +21,6 @@ if ($_SESSION["rol"] != "administrador") { ?>
             <p class="subtitulo">Gestiona los productos destacados que aparecen en el inicio.</p>
         </div>
         
-        <button name="add" class="btn-añadir" onclick="abrirModal_Añadir()">
-            <i class="fi fi-sr-plus"></i> Añadir producto nuevo
-        </button>
     </div>
 
     <hr class="divisor-admin">
@@ -61,14 +58,10 @@ if ($_SESSION["rol"] != "administrador") { ?>
                     </div>
 
                     <div class="acciones-tarjeta">
-                        <button class="boton_modificar" onclick="abrirModalModificar(<?= htmlspecialchars(json_encode($p)) ?>)">
-                            <i class="fi fi-sr-pencil"></i> Modificar
-                        </button>
-                        
-                        <form method="post" action="?action=delete_prod" onsubmit="return confirm('¿Estás seguro de eliminar este producto?');">
+                        <form method="post" action="?action=quitar" onsubmit="return confirm('¿Estás seguro de eliminar este producto?');">
                             <input type="hidden" name="id" value="<?= $p['id'] ?>">
                             <button type="submit" class="btn-eliminar">
-                                <i class="fi fi-sr-trash"></i> Eliminar
+                                <i class="fi fi-sr-trash"></i> Quitar producto
                             </button>
                         </form>
                     </div>
@@ -79,18 +72,20 @@ if ($_SESSION["rol"] != "administrador") { ?>
 
         // 3. Renderizado de huecos vacíos (Misma forma que el producto, estilo image_30795c.png)
         for($i = 0; $i < $huecos_vacios; $i++): ?>
-            <button type="button" class="btn-hueco-vacio" onclick="abrirModal_Añadir()">
-                <div class="producto_vacio">
-                    <div class="contenido_interno">
-                        <div class="simbolo">+</div>
-                        <div class="titulo">Añadir productos</div>
+                <a  class="btn-hueco-vacio" href="IndexProducto-administrador.php">
+                    <div class="producto_vacio">
+                        <div class="contenido_interno">
+                            <div class="simbolo">+</div>
+                            <div class="titulo">Añadir productos</div>
+                        </div>
                     </div>
-                </div>
-            </button>
+                </a>
         <?php endfor; ?>
     </div>
 </div>
+<div>
 
+</div>
 <!-- Alerta para cuando no hay JS activo -->
 <noscript>
     <div class="alerta-no-js">

@@ -479,3 +479,165 @@ section,
         gap: 12px;
     }
 }
+/* ── Contenedor de la Cuadrícula ── */
+.cuadricula-productos {
+    display: grid;
+    /* Define cuántas columnas caben según el ancho de pantalla */
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 25px;
+    max-width: 1200px; /* Ajusta según el ancho de tu web */
+    margin: 0 auto 60px;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* ── Tarjeta de Producto Individual ── */
+.producto {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid #eee;
+    min-height: 400px; /* Altura compacta */
+    box-sizing: border-box;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.producto:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* ── Imagen del Producto ── */
+.contenedor-img {
+    width: 100%;
+    height: 140px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contenedor-img img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Evita que la imagen se deforme */
+}
+
+/* ── Bloque de Información ── */
+.info-producto {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.nombre {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1a1c2c;
+    margin: 5px 0;
+}
+
+/* Píldora de Stock */
+.stock {
+    background-color: #f4f4f4;
+    color: #666;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* ── Precios y Descuentos ── */
+.descuento {
+    margin-top: auto; /* Empuja el precio al final de la tarjeta */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.sin_descuento {
+    color: #bbb;
+    text-decoration: line-through;
+    font-size: 0.9rem;
+    margin-bottom: -2px;
+}
+
+.precio {
+    color: #e31b23; /* Rojo corporativo */
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+/* ── Responsive para Móviles ── */
+@media (max-width: 480px) {
+    .cuadricula-productos {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 15px;
+        padding: 0 10px;
+    }
+
+    .producto {
+        min-height: 350px;
+        padding: 15px;
+    }
+
+    .precio {
+        font-size: 1.2rem;
+    }
+}
+/* Botón Reservar (El de la imagen roja) */
+.btn-reservar {
+    display: block;
+    width: 100%; /* Ocupa todo el ancho de la tarjeta */
+    background-color: #e31b23; /* Rojo intenso de la imagen */
+    color: #ffffff;
+    text-align: center;
+    padding: 10px 0;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border-radius: 8px; /* Redondeado suave como en la foto */
+    margin-top: 15px;
+    transition: background-color 0.2s ease;
+    border: none;
+}
+
+.btn-reservar:hover {
+    background-color: #b3141a; /* Un rojo un poco más oscuro al pasar el ratón */
+}
+
+/* Ajuste para que el botón de catálogo coincida en estilo */
+.contenedor-boton-catalogo {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
+}
+
+.btn-ir-catalogo {
+    display: inline-block;
+    padding: 12px 35px;
+    background-color: #e31b23;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 8px;
+    transition: transform 0.2s ease;
+}
+
+.btn-ir-catalogo:hover {
+    transform: scale(1.05);
+    background-color: #b3141a;
+}
+
+/* Ajuste extra para la info del producto y que el botón quede abajo */
+.info-producto {
+    flex-grow: 1; /* Empuja el botón hacia abajo si hay poco texto */
+    margin-bottom: 10px;
+}
+

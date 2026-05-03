@@ -4,7 +4,7 @@ if (!isset($_SESSION["nombre"]) || !isset($_SESSION["email"]) || !isset($_SESSIO
     exit();
 }
 
-if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueño"): ?>
+if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno"): ?>
     <div style="text-align:center; padding:50px;">
         <h1 style="color:#e31b23;">Acceso no permitido</h1>
         <p>No tienes privilegios para gestionar las comidas.</p>

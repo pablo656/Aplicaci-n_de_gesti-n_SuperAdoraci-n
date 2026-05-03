@@ -35,10 +35,11 @@ function abrirModal(idComida, nombre) {
 function cambiarCantidad(delta) {
     const input = document.getElementById('cantidad');
     const display = document.getElementById('cantidadDisplay');
-    const nuevo = Math.max(1, parseInt(input.value) + delta);
+    const nuevo = Math.min(30, Math.max(1, parseInt(input.value) + delta));
     input.value = nuevo;
     display.textContent = nuevo;
     document.querySelector('.btn-menos').style.visibility = nuevo <= 1 ? 'hidden' : 'visible';
+    document.querySelector('.btn-mas').style.visibility = nuevo >= 30 ? 'hidden' : 'visible';
 }
 
 function cerrarModal() {
@@ -59,7 +60,8 @@ function ajustarPedido(idComida, cambio) {
     .then(() => {
         const elemento = document.getElementById('cantidad-pedido-' + idComida);
         if (!elemento) return;
-        const valor = Math.max(0, (parseInt(elemento.textContent) || 0) + cambio);
+        const actual = parseInt(elemento.textContent) || 0;
+        const valor = Math.min(30, Math.max(0, actual + cambio));
         if (valor <= 0) {
             const accion = document.getElementById('accion-' + idComida);
             const nombre = accion.dataset.nombre;

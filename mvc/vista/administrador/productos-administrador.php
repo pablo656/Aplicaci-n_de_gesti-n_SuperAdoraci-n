@@ -188,7 +188,23 @@ if ($mostrar_modal && $producto_modal): ?>
                 <input type="text" name="nombre" id="nombre" value="<?= htmlspecialchars($producto_modal["nombre"]) ?>" required>
                 
                 <label for="stock">Stock: </label>
-                <input type="number" step="0.1" name="stock" id="stock" value="<?= $producto_modal["stock"] ?>">
+                <?php 
+                    // Determinamos el step: 0.1 para peso (1), 1 para unidades (0)
+                    $step = ($producto_modal["precio_por_peso"] == 1) ? "0.1" : "1";
+                    
+                    // Formateamos el valor inicial: 1 decimal para peso, 0 para unidades
+                    $stock_valor = ($producto_modal["precio_por_peso"] == 1) 
+                        ? number_format($producto_modal["stock"], 1, '.', '') 
+                        : number_format($producto_modal["stock"], 0, '.', '');
+                ?>
+
+                <input 
+                    type="number" 
+                    step="<?= $step ?>" 
+                    name="stock" 
+                    id="stock" 
+                    value="<?= $stock_valor ?>"
+                >
                 
                 <label for="precio">Precio: </label>
                 <input type="number" step="0.01" min="0" name="precio" id="precio" value="<?= $producto_modal["precio"] ?>">

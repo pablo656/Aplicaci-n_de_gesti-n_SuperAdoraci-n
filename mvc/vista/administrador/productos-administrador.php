@@ -61,7 +61,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
                 <h1>Administración de catálogo</h1>
                 <p class="subtitulo">Gestiona el stock, precios y disponibilidad de los productos.</p>
             </div>
-            <form method="post" action="IndexProducto-administrador.php">
+            <form method="post" >
             <button name="add" type="submit" class="btn-añadir">
                 <i class="fi fi-sr-plus"></i> Añadir producto
             </button>
@@ -105,7 +105,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
                         
                         <div class="info-producto">
                             <p class="nombre"><?= htmlspecialchars($p['nombre']) ?></p>
-                            <p class="stock">Stock: <?= htmlspecialchars($p['stock']) ?><?= $p['precio_por_peso'] == 1 ? ' Kg' : '' ?></p>
+                            <p class="stock">Stock: <?= $p["precio_por_peso"] == 1 ? number_format($p['stock'], 1) . " Kg" : number_format($p['stock'], 0) ?> </p>
 
                             <div class="descuento">
                                 <?php if ($desc): ?>
@@ -113,8 +113,18 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
                                 <?php endif; ?>
                                 <p class="precio"><?= number_format($precio_f, 2) ?>&euro;<?= $p['precio_por_peso'] ? '/Kg' : '' ?></p>
                             </div>
-
-                            <form method="post" action="IndexProducto-administrador.php">
+                            <?php if($p["inicio"]==0):?>
+                            <form method="post" action="?action=inicio">
+                                <input type="hidden" value="<?= $p["id"] ?>" name="id">
+                                <button type="submit" class="boton_Inicio" name="aniadir_inicio">Poner producto en el inicio</button>
+                            </form>
+                            <?php else:?>
+                                <form method="post" action="?action=quitar_inicio">
+                                <input type="hidden" value="<?= $p["id"] ?>" name="id">
+                                <button type="submit" class="boton_Inicio" name="quitar_inicio">Quitar el producto del inicio</button>
+                            </form>
+                            <?php endif;?>
+                            <form method="post">
                                 <input type="hidden" value="<?= $p["id"] ?>" name="id">
                                 <button type="submit" class="boton_modificar" name="abrir_modal">Modificar</button>
                             </form>

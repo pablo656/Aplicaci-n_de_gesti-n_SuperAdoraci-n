@@ -63,42 +63,58 @@
     <button class="boton siguiente" aria-label="Siguiente">&#8250;</button>
     <div class="indicadores"></div>
 </div>
+<?php if (!empty($productos)): ?>
+    <h2 style="text-align: center; margin: 30px 0;">Productos más vendidos</h2>
+    <section class="seccion-destacados">
 
-<h2>Productos más vendidos</h2>
-<div class="productos">
-    <div class="producto">
-        <img src="" alt="">
-        <div class="info-producto">
-            <p class="nombre">xcvxcvcxv</p>
-            <p class="precio">10&euro;</p>
-            <button class="reservar">Reservar</button>
+        <div class="cuadricula-productos">
+            <?php foreach ($productos as $producto):
+                // 1. Cálculo del precio lógico
+                $precio_original = number_format($producto['precio'], 2, '.', '');
+                $precio_final = $precio_original;
+                $tiene_descuento = ($producto['porcentaje_descuento'] > 0);
+
+                if ($tiene_descuento) {
+                    $descuento = $precio_original * ($producto['porcentaje_descuento'] / 100);
+                    $precio_final = number_format($precio_original - $descuento, 2, '.', '');
+                }
+
+                // 2. Formateo de stock (1 decimal para peso, 0 para unidades)
+                $stock_formateado = ($producto['precio_por_peso'] == 1) 
+                    ? number_format($producto['stock'], 1, '.', '') . " Kg" 
+                    : number_format($producto['stock'], 0);
+            ?>
+                
+                <div class="producto" id="prod-<?= htmlspecialchars($producto["id"]) ?>">
+                    <div class="contenedor-img">
+                        <img src="<?= htmlspecialchars($producto['url_imagen']) ?>" 
+                             alt="<?= htmlspecialchars($producto['nombre']) ?>" 
+                             loading="lazy">
+                    </div>
+
+                    <div class="info-producto">
+                        <p class="nombre"><?= htmlspecialchars($producto['nombre']) ?></p>
+                        
+                        <span class="stock">Stock: <?= $stock_formateado ?></span>
+
+                        <div class="descuento">
+                            <?php if ($tiene_descuento): ?>
+                                <p class="sin_descuento"><?= $precio_original ?>&euro;</p>
+                            <?php endif; ?>
+
+                            <p class="precio">
+                                <?= $precio_final ?>&euro;<?= $producto['precio_por_peso'] ? '/Kg' : '' ?>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="">
+                        <a href="IndexProducto.php" class="btn-ir-catalogo">Ir al catálogo</a>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
-    </div>
-    <div class="producto">
-        <img src="" alt="">
-        <div class="info-producto">
-            <p class="nombre">xcvxcvcxv</p>
-            <p class="precio">10&euro;</p>
-            <button class="reservar">Reservar</button>
-        </div>
-    </div>
-    <div class="producto">
-        <img src="" alt="">
-        <div class="info-producto">
-            <p class="nombre">xcvxcvcxv</p>
-            <p class="precio">10&euro;</p>
-            <button class="reservar">Reservar</button>
-        </div>
-    </div>
-    <div class="producto">
-        <img src="" alt="">
-        <div class="info-producto">
-            <p class="nombre">xcvxcvcxv</p>
-            <p class="precio">10&euro;</p>
-            <button class="reservar">Reservar</button>
-        </div>
-    </div>
-</div>
+    </section>
+<?php endif; ?>
 
 <h2>Nuestra historia</h2>
 

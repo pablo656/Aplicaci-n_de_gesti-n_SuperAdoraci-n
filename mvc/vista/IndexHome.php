@@ -3,7 +3,9 @@
 session_start();
 //Este archivo se usara para Home, Log in, Sing in y Perfil
 require_once("../controller/controller_user.php");
+require_once("../controller/productoController.php");
 $controller=new Controller_user();
+$controller_producto=new ProductoController();
 $action=$_GET["action"] ?? "home";
 if($action=="log"||$action=="comprobar"||$action=="log_fallido"){
     $titulo="Iniciar sesión";
@@ -51,7 +53,7 @@ if($action=="log"){
     session_destroy();
     header("Location:indexHome.php?action=home");
 }else{
-    $controller->home();
+    $controller_producto->home();
 }
 if($action=="home"){
     require("../vista/footer.html");

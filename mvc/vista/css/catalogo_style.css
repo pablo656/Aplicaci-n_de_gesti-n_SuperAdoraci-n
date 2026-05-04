@@ -25,34 +25,55 @@ body {
 
 /* ── Barra lateral ──────────────────────────────────────── */
 aside {
-    width: 200px;
+    width: 220px;
     flex-shrink: 0;
-    background: var(--color-nav);
-    border-right: 1px solid #333;
-    padding: 24px 0;
+    background: #121220;
+    border-right: 1px solid #2a2a42;
+    display: flex;
+    flex-direction: column;
+}
+
+.aside-titulo {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #6b6b8a;
+    padding: 20px 20px 10px;
+    border-bottom: 1px solid #2a2a42;
+    margin-bottom: 6px;
 }
 
 aside ul {
     list-style: none;
+    padding: 6px 10px;
+    margin: 0;
 }
 
-aside ul li:first-child a {
-    border-top: 1px solid #444;
+aside ul li {
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 2px;
 }
 
 aside ul li a {
     display: block;
-    padding: 12px 20px;
-    color: #fff;
-    cursor: pointer;
-    font-size: 0.9rem;
-    border-bottom: 1px solid #444;
-    transition: background .2s, padding-left .2s;
+    padding: 11px 14px;
+    color: #c5c5d8;
+    font-size: 0.88rem;
+    border-radius: 8px;
+    transition: background .18s, color .18s;
 }
 
 aside ul li a:hover {
+    background: #1e1e38;
+    color: #fff;
+}
+
+aside ul li a.cat-activa {
     background: var(--color-rojo);
-    padding-left: 28px;
+    color: #fff;
+    font-weight: 600;
 }
 
 /* ── Área principal ─────────────────────────────────────── */
@@ -300,31 +321,35 @@ hr {
     gap: 8px;
     margin-bottom: 8px;
 }
-/*Subcategoias*/
+/*Subcategorias*/
 .subcategorias {
-    margin-top: 0;
-    border-top: none;
-    padding-left: 0;
+    margin: 2px 0 4px;
+    padding: 0;
     list-style: none;
+    background: #0e0e1c;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .subcategorias li a {
-   background-color: white;
     display: block;
-    padding: 10px 20px 10px 25px;
-    font-size: 0.85rem;
-    color: black;
-    border-left: 3px solid #e41b21; 
-    transition: background 0.2s;
+    padding: 9px 14px 9px 28px;
+    font-size: 0.82rem;
+    color: #9090aa;
+    border-left: 2px solid transparent;
+    transition: background .15s, color .15s, border-color .15s;
 }
 
 .subcategorias li a:hover {
-    background: #e31b23;
-    color: #ffffff;
+    background: #1a1a30;
+    color: #fff;
+    border-left-color: var(--color-rojo);
 }
-.subcategorias li a {
-    border-bottom: 1px solid black; /* ← añade esto */
-    border-left: 3px solid #e31b23;
+
+.subcategorias li a.sub-activa {
+    color: #fff;
+    border-left-color: var(--color-rojo);
+    background: #1a1a30;
 }
 
 /* ── Responsive: tablet ─────────────────────────────────── */
@@ -335,30 +360,31 @@ hr {
 
     aside {
         width: 100%;
-        padding: 0;
         border-right: none;
-        border-bottom: 1px solid #333;
+        border-bottom: 1px solid #2a2a42;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
     }
+
+    .aside-titulo { display: none; }
 
     aside ul {
         display: flex;
         flex-wrap: wrap;
+        padding: 6px 8px;
+        gap: 4px;
     }
 
-    aside ul li:first-child a {
-        border-top: none;
-    }
+    aside ul li { border-radius: 6px; margin-bottom: 0; }
 
     aside ul li a {
-        border-bottom: none;
-        border-right: 1px solid #444;
-        padding: 10px 16px;
-        font-size: 0.85rem;
+        padding: 7px 12px;
+        font-size: 0.82rem;
+        white-space: nowrap;
     }
 
-    aside ul li a:hover {
-        padding-left: 16px;
-    }
+    .subcategorias { display: none; }
 }
 
 /* ── Responsive: móvil ──────────────────────────────────── */

@@ -11,15 +11,20 @@
         ];?>
 <div class="contenido">
     <aside>
+        <div class="aside-titulo">Categorías</div>
         <ul>
             <?php foreach($categorias as $cat): ?>
                 <li>
-                    <a href="IndexProducto.php?action=<?= htmlspecialchars($cat) ?>"><?= htmlspecialchars(str_replace("_", " ", $cat)) ?></a>
+                    <a href="IndexProducto.php?action=<?= htmlspecialchars($cat) ?>"
+                       class="<?= $action == $cat ? 'cat-activa' : '' ?>">
+                        <?= htmlspecialchars(str_replace("_", " ", $cat)) ?>
+                    </a>
                     <?php if($action == $cat && isset($subcategorias[$cat]) && !empty($subcategorias[$cat])): ?>
                         <ul class="subcategorias">
                             <?php foreach($subcategorias[$cat] as $sub): ?>
                                 <li>
-                                    <a href="IndexProducto.php?action=<?= htmlspecialchars($cat) ?>&subcategoria=<?= urlencode($sub) ?>">
+                                    <a href="IndexProducto.php?action=<?= htmlspecialchars($cat) ?>&subcategoria=<?= urlencode($sub) ?>"
+                                       class="<?= $subcategoria == $sub ? 'sub-activa' : '' ?>">
                                         <?= htmlspecialchars($sub) ?>
                                     </a>
                                 </li>

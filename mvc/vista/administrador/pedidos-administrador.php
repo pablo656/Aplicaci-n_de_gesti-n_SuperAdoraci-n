@@ -1,6 +1,6 @@
 <?php
 if (!isset($_SESSION["nombre"]) || !isset($_SESSION["email"]) || !isset($_SESSION["rol"])) {
-    header("Location: ../IndexHome.php?action=log");
+    header("Location: IndexLog.php");
     exit();
 }
 

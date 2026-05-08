@@ -1,7 +1,7 @@
 <?php
 // 1. Verificación de seguridad (Sesión y Roles)
 if (!isset($_SESSION["nombre"]) || !isset($_SESSION["rol"])) {
-    header("Location: ../IndexHome.php?action=log");
+    header("Location: IndexLog.php");
     exit();
 } 
 

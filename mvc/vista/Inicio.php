@@ -16,45 +16,45 @@
         <li class="diapositiva">
             <img src="imagenes/carrusel/Carniceria.jpeg" alt="Carnicería">
             <div class="diapositiva-contenido">
-                <span class="etiqueta">OFERTA DE LA SEMANA</span>
-                <p class="diapositiva-titulo">Frescura que inspira tu cocina diaria</p>
-                <p class="diapositiva-subtitulo">Hasta 40% de descuento en frutas y verduras seleccionadas.</p>
+                <span class="etiqueta">CALIDAD SUPERIOR</span>
+                <p class="diapositiva-titulo">Cortes premium con frescura garantizada</p>
+                <p class="diapositiva-subtitulo">Seleccionamos las mejores carnes para tus platos más exigentes.</p>
                 <a href="IndexProducto.php" class="diapositiva-boton">Ver Ofertas</a>
             </div>
         </li>
         <li class="diapositiva">
-            <img src="imagenes/carrusel/black-swan-cygnus-atratus-illustrated-by-elizabeth-gould.jpg" alt="Cisne negro">
+            <img src="imagenes/carrusel/nocilla.jpeg" alt="Cisne negro">
             <div class="diapositiva-contenido">
-                <span class="etiqueta">NUEVOS PRODUCTOS</span>
-                <p class="diapositiva-titulo">Descubre nuestra selección exclusiva</p>
-                <p class="diapositiva-subtitulo">Los mejores productos frescos traídos cada día para ti.</p>
+                <span class="etiqueta">NUEVOS SABORES</span>
+                <p class="diapositiva-titulo">Desayunos irresistibles para empezar el día con energía</p>
+                <p class="diapositiva-subtitulo">Descubre nuestra gama de cremas de cacao y productos de primera calidad.</p>
                 <a href="IndexProducto.php" class="diapositiva-boton">Ver Catálogo</a>
             </div>
         </li>
         <li class="diapositiva">
-            <img src="imagenes/carrusel/closeup-shot-european-cat-with-camera-lens.jpg" alt="Gato europeo">
+            <img src="imagenes/carrusel/legumbres.jpeg" alt="Gato europeo">
             <div class="diapositiva-contenido">
                 <span class="etiqueta">CALIDAD GARANTIZADA</span>
-                <p class="diapositiva-titulo">Productos de primera calidad cada día</p>
+                <p class="diapositiva-titulo">Tu despensa siempre llena al mejor precio</p>
                 <p class="diapositiva-subtitulo">Seleccionamos lo mejor para que tu familia disfrute al máximo.</p>
                 <a href="IndexProducto.php" class="diapositiva-boton">Comprar Ahora</a>
             </div>
         </li>
         <li class="diapositiva">
-            <img src="imagenes/carrusel/black-swan-cygnus-atratus-illustrated-by-elizabeth-gould.jpg" alt="Cisne negro 2" loading="lazy">
+            <img src="imagenes/carrusel/limpieza.jpeg" alt="Cisne negro 2" loading="lazy">
             <div class="diapositiva-contenido">
-                <span class="etiqueta">TEMPORADA</span>
-                <p class="diapositiva-titulo">Lo mejor de cada estación en tu mesa</p>
-                <p class="diapositiva-subtitulo">Productos de temporada con el mejor sabor y frescura.</p>
+                <span class="etiqueta">LIMPIEZA DEL HOGAR</span>
+                <p class="diapositiva-titulo">Eficacia y ahorro en cada lavado</p>
+                <p class="diapositiva-subtitulo">Descubre los detergentes y suavizantes que cuidan tu ropa y tu bolsillo..</p>
                 <a href="IndexProducto.php" class="diapositiva-boton">Ver Más</a>
             </div>
         </li>
         <li class="diapositiva">
-            <img src="imagenes/carrusel/baby-londok-calotes-closeup-dry-leaves.jpg" alt="Lagarto" loading="lazy">
+            <img src="imagenes/carrusel/mascotas.jpeg" alt="Lagarto" loading="lazy">
             <div class="diapositiva-contenido">
-                <span class="etiqueta">ESPECIAL</span>
-                <p class="diapositiva-titulo">Sabores únicos que marcan la diferencia</p>
-                <p class="diapositiva-subtitulo">Explora nuestra gama de productos especiales y exclusivos.</p>
+                <span class="etiqueta">LO MEJOR PARA TUS MASCOTAS</span>
+                <p class="diapositiva-titulo">Ellos se merecen lo mejor todos los días</p>
+                <p class="diapositiva-subtitulo">Nutrición completa para perros, gatos y pájaros. ¡Pruébalo!</p>
                 <a href="IndexProducto.php" class="diapositiva-boton">Explorar</a>
             </div>
         </li>

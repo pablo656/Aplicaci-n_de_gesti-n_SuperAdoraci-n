@@ -33,6 +33,23 @@ class Controller_user{
             header("Location:indexHome.php?action=home");
         }
     }
+    public function loginar_admin($username, $password){
+        $user= $this->model_user->iniciousuario($username, $password);
+        if($user == false){
+            echo "Usuario o contraseña incorrecta";
+            header("Location: indexHome.php?action=log_fallido");
+        }else{
+             //INICIO DE SESSIÓN (No añadir contraseña al inicion de sesión, por que no es seguro)
+            $_SESSION["id"]=$user["id"];
+            $_SESSION["nombre"]=$user["nombre"];
+            $_SESSION["email"]=$user["email"];
+            $_SESSION["rol"]=$user["rol"];
+            header("Location:IndexInicio-administrador.php");
+        }
+    }
+    public function log_admin(){
+        require("../../vista/administrador/IndexLog.php");
+    }
 
     // Envía email de verificación; no crea el usuario hasta que confirme
     public function register($username, $password, $email) {

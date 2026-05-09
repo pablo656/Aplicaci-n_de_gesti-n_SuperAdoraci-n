@@ -37,7 +37,7 @@ class Controller_user{
         $user= $this->model_user->iniciousuario($username, $password);
         if($user == false){
             echo "Usuario o contraseña incorrecta";
-            header("Location: indexHome.php?action=log_fallido");
+            header("Location: indexLog.php?action=log_fallido");
         }else{
              //INICIO DE SESSIÓN (No añadir contraseña al inicion de sesión, por que no es seguro)
             $_SESSION["id"]=$user["id"];
@@ -48,7 +48,7 @@ class Controller_user{
         }
     }
     public function log_admin(){
-        require("../../vista/administrador/IndexLog.php");
+        require("../../vista/administrador/Log_in.php");
     }
 
     // Envía email de verificación; no crea el usuario hasta que confirme

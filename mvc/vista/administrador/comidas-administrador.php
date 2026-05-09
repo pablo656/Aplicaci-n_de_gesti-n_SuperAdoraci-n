@@ -122,7 +122,8 @@ if ($mostrar_modal && $comida_modal): ?>
                 <div class="contenedor-preview">
                     <img id="preview" src="../<?= htmlspecialchars($comida_modal['url_imagen']) ?>" alt="Vista previa">
                 </div>
-                <input type="file" name="nueva_imagen" id="input_imagen" accept="image/*"
+
+                <input type="file" name="nueva_imagen" id="input_imagen" accept="image/*" aria-label="Seleccionar imagen del producto"
                     <?= $action_form === "?action=insertar" ? 'required' : '' ?>>
 
                 <input type="submit" name="enviar" value="<?= $texto_boton ?>" class="btn-actualizar">

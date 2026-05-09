@@ -1,5 +1,9 @@
 <?php
     session_start();
+    if (!isset($_SESSION["id"])) {
+    header("Location: IndexHome.php?action=log");
+    exit();
+}
     require_once("../controller/controller_reservas.php");
     require_once("../controller/Controller_pedidos.php");
     $controller_reservas=new Controller_reservas();

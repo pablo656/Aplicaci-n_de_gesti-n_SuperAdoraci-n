@@ -14,7 +14,7 @@ $img_base   ??= '';
                     : strtoupper(substr($partes[0],0,1));
                 ?>
             </div>
-            <h2 class="usuario-nombre"><?=$_SESSION["nombre"]?></h2>
+            <p class="usuario-nombre"><?=$_SESSION["nombre"]?></p>
             <p class="usuario-email"><?=$_SESSION["email"]?></p>
         </div>
     </aside>
@@ -23,7 +23,7 @@ $img_base   ??= '';
         
         <h1>Perfil</h1>
         <div class="seccion">
-            <p class="seccion-titulo">Resumen</p>
+            <h2 class="seccion-titulo">Resumen</h2>
             <div class="stats">
                 <?php 
                    
@@ -58,7 +58,7 @@ $img_base   ??= '';
             </div>
         </div>
         <div class="seccion">
-            <p class="seccion-titulo">Mis reservas</p>
+            <h2 class="seccion-titulo">Mis reservas</h2>
             
             <?php if(!empty($reservas)): ?>
                 <?php foreach($reservas as $reserva): ?>
@@ -106,7 +106,7 @@ $img_base   ??= '';
             <?php endif; ?>
         </div>
         <div class="seccion">
-            <p class="seccion-titulo">Mis pedidos</p>
+            <h2 class="seccion-titulo">Mis pedidos</h2>
             <?php if (isset($_GET['eliminado'])): ?>
                 <p class="editar-ok">Pedido cancelado correctamente.</p>
             <?php elseif (isset($_GET['error_eliminar'])): ?>
@@ -208,7 +208,7 @@ $img_base   ??= '';
         </script>
 
         <div class="seccion seccion-editar">
-            <p class="seccion-titulo">Editar perfil</p>
+            <h2 class="seccion-titulo">Editar perfil</h2>
 
             <?php if (isset($_GET["ok"])): ?>
                 <p class="editar-ok">Nombre actualizado correctamente.</p>

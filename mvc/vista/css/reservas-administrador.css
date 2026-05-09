@@ -24,7 +24,7 @@
 
 .subtitulo {
     font-size: 0.88rem;
-    color: #888;
+    color: #595959;
     margin: 0;
 }
 
@@ -124,7 +124,7 @@ hr {
 
 .item-info .descripcion {
     font-size: 0.88rem;
-    color: #999;
+    color: #666;
     margin: 0;
     overflow: hidden;
     white-space: nowrap;
@@ -168,7 +168,7 @@ hr {
 
 .precio-unit {
     font-size: 0.83rem;
-    color: #aaa;
+    color: #767676;
     white-space: nowrap;
     text-align: right;
     margin: 0;

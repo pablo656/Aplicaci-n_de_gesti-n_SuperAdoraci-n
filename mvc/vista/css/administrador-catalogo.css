@@ -40,7 +40,7 @@ aside {
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: #6b6b8a;
+    color: #8888aa;
     padding: 20px 20px 10px;
     border-bottom: 1px solid #2a2a42;
     margin-bottom: 6px;
@@ -137,7 +137,7 @@ aside ul li a.cat-activa {
 
 .subtitulo {
     font-size: 1rem;
-    color: #888;
+    color: #595959;
     margin: 0;
 }
 
@@ -174,7 +174,7 @@ aside ul li a.cat-activa {
 
 .breadcrumb-enlace {
     font-weight: bolder;
-    color: #888;
+    color: #595959;
     font-size: 16px;
     text-decoration: underline;
     transition: color 0.2s ease;
@@ -185,13 +185,13 @@ aside ul li a.cat-activa {
 }
 
 .breadcrumb-texto {
-    color: #888;
+    color: #595959;
     font-size: 16px;
     text-decoration: none;
 }
 
 .breadcrumb-separador {
-    color: #888;
+    color: #595959;
     font-size: 16px;
     user-select: none;
 }
@@ -279,7 +279,7 @@ hr {
 
 .producto .sin_descuento {
     font-size: 0.85rem;
-    color: #aaa;
+    color: #767676;
     text-decoration: line-through;
 }
 
@@ -409,7 +409,7 @@ hr {
 .input-porcentaje .simbolo {
     position: absolute;
     right: 10px;
-    color: #888;
+    color: #595959;
     font-weight: bold;
 }
 
@@ -421,7 +421,7 @@ hr {
 }
 
 #precio_descontado_container {
-    color: #28a745;
+    color: #1a7a32;
     font-weight: bold;
     font-size: 1.1rem;
 }

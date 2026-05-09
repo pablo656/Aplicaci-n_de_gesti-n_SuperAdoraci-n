@@ -240,9 +240,9 @@ if ($mostrar_modal && $producto_modal): ?>
                     <img id="preview" src="../<?= $producto_modal['url_imagen'] ?>" alt="Vista previa">
                 </div>
                 <?php if($action_form=="?action=insertar"):?>
-                    <input type="file" name="nueva_imagen" id="input_imagen" accept="image/*" required>
+                    <input type="file" name="nueva_imagen" id="input_imagen" accept="image/*" aria-label="Seleccionar imagen" required>
                 <?php else:?>
-                    <input type="file" name="nueva_imagen" id="input_imagen" accept="image/*">
+                    <input type="file" name="nueva_imagen" id="input_imagen" accept="image/*" aria-label="Seleccionar imagen">
                 <?php endif;?>
                 
                     

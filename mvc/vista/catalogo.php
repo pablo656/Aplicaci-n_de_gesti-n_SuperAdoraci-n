@@ -113,9 +113,15 @@
                         if($producto["precio_por_peso"] == 1): ?>
                             <!-- Contador para productos por peso -->
                             <div class="contador-peso">
-                                <button style="display:none" id="borrar-<?= $producto["id"] ?>" class="btn-cantidad" onclick="borrarReserva(<?= $producto['id'] ?>)">
-                                    <i class="fi fi-sr-trash"></i>
+                                <button 
+                                    style="display: none;" 
+                                    id="borrar-11" 
+                                    class="btn-cantidad" 
+                                    onclick="borrarReserva(11)" 
+                                    aria-label="Eliminar producto">
+                                    <i class="fi fi-sr-trash" aria-hidden="true"></i>
                                 </button>
+                                <label for="cantidad-<?= $producto['id'] ?>" class="sr-only">Cantidad de <?= $producto['nombre'] ?></label>
                                 <input
                                     type="number"
                                     id="cantidad-<?= $producto['id'] ?>"
@@ -136,8 +142,13 @@
                         <?php else: ?>
                             <!-- Contador para productos por unidad -->
                             <div class="contador">
-                                <button style="display:none" id="borrar-<?= $producto["id"] ?>" class="btn-cantidad" onclick="borrarReserva(<?= $producto['id'] ?>)">
-                                    <i class="fi fi-sr-trash"></i>
+                                <button 
+                                    style="display: block;" 
+                                    id="borrar-12" 
+                                    class="btn-cantidad" 
+                                    onclick="borrarReserva(12)" 
+                                    aria-label="Eliminar producto del carrito">
+                                    <i class="fi fi-sr-trash" aria-hidden="true"></i>
                                 </button>
                                 <button id="restar-<?= $producto["id"] ?>" class="btn-cantidad" onclick="cambiarCantidad(<?= $producto['id'] ?>, -1)">-</button>
                                 <span class="cantidad" id="cantidad-<?= $producto["id"] ?>"><?= $cantidadReservada ?></span>

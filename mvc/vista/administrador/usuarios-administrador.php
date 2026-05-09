@@ -113,8 +113,8 @@ if ($_SESSION["rol"] != "administrador") { ?>
                 <input type="email" id="email" name="email" placeholder="tu@email.com">
                 <label for="pass">Contraseña</label>
                 <input type="password" id="pass" name="pass" placeholder="Crea una contraseña">
-                <label for="rol_select">Rol del sistema:</label>
-                <select name="rol" id="rol_select">
+                <!--<label for="rol_select_<?php echo $usuario->id; ?>">Rol del sistema:</label>-->
+                <select name="rol" id="rol_select_<?php echo $usuario->id; ?>">
                     <option value="cliente">Cliente</option>
                     <option value="dueno">Dueño</option>
                     <option value="administrador">Administrador</option>

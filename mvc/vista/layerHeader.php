@@ -26,7 +26,9 @@
     </div>
     <div>
         <?php if(isset($_SESSION["id"]) && isset($_SESSION["nombre"])&&isset($_SESSION["email"])&&isset($_SESSION["rol"])):?>
-        <a href="IndexCarrito.php"><i class="fi fi-sr-shopping-cart"></i></a>
+        <a href="IndexCarrito.php" aria-label="Ir al carrito de compras">
+         <i class="fi fi-sr-shopping-cart"></i>
+        </a>
         <?php endif;?>
         <?php
         if(isset($_SESSION["id"]) && isset($_SESSION["nombre"])&&isset($_SESSION["email"])&&isset($_SESSION["rol"])){?>

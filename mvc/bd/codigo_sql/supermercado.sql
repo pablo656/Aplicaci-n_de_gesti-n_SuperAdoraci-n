@@ -70,9 +70,6 @@ CREATE TABLE pedidos (
     FOREIGN KEY (id_comida)  REFERENCES comidas(id)  ON DELETE CASCADE
 );
 
--- Migración: añadir fecha_entrega si la tabla ya existe
-ALTER TABLE pedidos ADD COLUMN IF NOT EXISTS fecha_entrega DATE DEFAULT NULL AFTER mensaje;
-
 -- EVENTOS DE LIMPIEZA AUTOMÁTICA
 SET GLOBAL event_scheduler = ON;
 

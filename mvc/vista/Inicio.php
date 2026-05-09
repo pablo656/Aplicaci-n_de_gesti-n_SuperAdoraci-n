@@ -64,7 +64,7 @@
     <div class="indicadores"></div>
 </div>
 <?php if (!empty($productos)): ?>
-    <h2 style="text-align: center; margin: 30px 0;">Productos más vendidos</h2>
+    <h1 style="text-align: center; margin: 30px 0;">Productos más vendidos</h1>
     <section class="seccion-destacados">
 
         <div class="cuadricula-productos">

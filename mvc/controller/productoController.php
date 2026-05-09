@@ -61,35 +61,41 @@
     $tiposPermitidos = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
     $errores = [];
     
-    $nombreImagenFinal = "imagenes/foto_defecto.jpg"; 
-
-    // ... (Validaciones de texto se mantienen igual) ...
+    $nombreImagenFinal = "../imagenes/foto_defecto.jpg";
 
     if (isset($imagen['tmp_name']) && $imagen['error'] === UPLOAD_ERR_OK) {
         $mime = mime_content_type($imagen['tmp_name']);
-        
+
         if (!in_array($mime, $tiposPermitidos)) {
-            // Actualizamos el mensaje para el usuario
             $errores[] = "Solo se permiten archivos jpeg, png, jpg y webp";
         } else {
-            $directorioMVC = dirname(__DIR__) . DIRECTORY_SEPARATOR; 
+            $directorioMVC = dirname(__DIR__) . DIRECTORY_SEPARATOR;
             $carpetaDestino = "imagenes" . DIRECTORY_SEPARATOR;
             $rutaAbsolutaServidor = $directorioMVC . $carpetaDestino;
 
-            if (!is_dir($rutaAbsolutaServidor)) {
-                mkdir($rutaAbsolutaServidor, 0777, true);
-            }
+            if (!is_dir($rutaAbsolutaServidor) && !mkdir($rutaAbsolutaServidor, 0755, true)) {
+                $errores[] = "No se pudo crear el directorio de imágenes en el servidor.";
+            } else {
+                $extension = strtolower(pathinfo($imagen['name'], PATHINFO_EXTENSION));
+                $nombreArchivoUnico = time() . "_" . bin2hex(random_bytes(4)) . "." . $extension;
+                $destinoFinal = $rutaAbsolutaServidor . $nombreArchivoUnico;
+                $nombreImagenFinal = "../imagenes/" . $nombreArchivoUnico;
 
-            $extension = pathinfo($imagen['name'], PATHINFO_EXTENSION);
-            $nombreArchivoUnico = time() . "_" . bin2hex(random_bytes(4)) . "." . $extension;
-            
-            $destinoFinal = $rutaAbsolutaServidor . $nombreArchivoUnico;
-            $nombreImagenFinal = "../imagenes/" . $nombreArchivoUnico;
-
-            if (!move_uploaded_file($imagen['tmp_name'], $destinoFinal)) {
-                $errores[] = "Error al guardar la imagen en el servidor.";
+                if (!move_uploaded_file($imagen['tmp_name'], $destinoFinal)) {
+                    $errores[] = "Error al guardar la imagen. Ruta: " . htmlspecialchars($destinoFinal) . " | PHP error: " . $imagen['error'];
+                }
             }
         }
+    } elseif (isset($imagen['error']) && $imagen['error'] !== UPLOAD_ERR_NO_FILE && $imagen['error'] !== UPLOAD_ERR_OK) {
+        $codigosError = [
+            UPLOAD_ERR_INI_SIZE   => "La imagen supera el tamaño máximo permitido por el servidor (upload_max_filesize).",
+            UPLOAD_ERR_FORM_SIZE  => "La imagen supera el tamaño máximo indicado en el formulario.",
+            UPLOAD_ERR_PARTIAL    => "La imagen se subió parcialmente.",
+            UPLOAD_ERR_NO_TMP_DIR => "Falta la carpeta temporal en el servidor.",
+            UPLOAD_ERR_CANT_WRITE => "No se pudo escribir la imagen en el disco.",
+            UPLOAD_ERR_EXTENSION  => "Una extensión de PHP detuvo la subida.",
+        ];
+        $errores[] = $codigosError[$imagen['error']] ?? "Error desconocido al subir la imagen (código: " . $imagen['error'] . ").";
     }
 
     if (empty($errores)) {

@@ -24,7 +24,7 @@
 
 .subtitulo {
     font-size: 0.88rem;
-    color: #888;
+    color: #595959;
     margin: 0;
 }
 
@@ -66,7 +66,7 @@ hr {
     flex-wrap: wrap;
 }
 
-.nombre-cliente span {
+.nombre-cliente span:not(.badge-pendientes-header) {
     opacity: .65;
     font-weight: 400;
     font-size: 0.85rem;
@@ -136,7 +136,7 @@ hr {
 
 .item-info .descripcion {
     font-size: 0.88rem;
-    color: #999;
+    color: #666;
     margin: 0;
     overflow: hidden;
     white-space: nowrap;
@@ -165,7 +165,7 @@ hr {
     font-size: 0.78rem;
     font-weight: 700;
     color: #fff;
-    background: #e67e22;
+    background: #b45309;
     border-radius: 20px;
     padding: 2px 9px;
 }
@@ -276,7 +276,7 @@ hr {
 
 .item-mensaje {
     font-size: 0.82rem;
-    color: #888;
+    color: #595959;
     font-style: italic;
     margin: 6px 0 0;
     overflow: hidden;
@@ -294,7 +294,7 @@ hr {
 
 .precio-unit {
     font-size: 0.83rem;
-    color: #aaa;
+    color: #767676;
     white-space: nowrap;
     text-align: right;
     margin: 0;

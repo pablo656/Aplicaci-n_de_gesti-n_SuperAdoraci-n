@@ -104,7 +104,7 @@
 }
 
 .sin_descuento {
-    color: #bbb;
+    color: #767676;
     text-decoration: line-through;
     font-size: 0.85rem;
     margin-bottom: -2px; /* Acerca el precio tachado al precio final */

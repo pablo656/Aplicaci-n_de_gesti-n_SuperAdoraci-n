@@ -86,7 +86,7 @@ input[type="password"]:focus {
 input[type="text"]::placeholder,
 input[type="email"]::placeholder,
 input[type="password"]::placeholder {
-    color: #bbb;
+    color: #767676;
 }
 
 input[type="submit"] {
@@ -126,7 +126,7 @@ input[type="submit"]:active {
 .enlaces a {
     font-size: 0.85rem;
     text-decoration: none;
-    color: #888;
+    color: #595959;
     transition: color 0.2s;
     font-weight: 500;
 }

@@ -42,7 +42,7 @@
 }
 
 .usuario-email {
-    color: #7f8c8d;
+    color: #5a6e6f;
     font-size: 14px;
     margin: 0;
 }
@@ -60,7 +60,7 @@
     font-size: 15px;
     font-weight: 500;
     color: #1a1c2c;
-    margin-bottom: 16px;
+    margin: 0 0 16px;
     padding-bottom: 10px;
     border-bottom: 0.5px solid #e0e0e0;
 }
@@ -91,7 +91,7 @@
 /* La etiqueta pequeña debajo del número */
 .stat-label {
     font-size: 12px;
-    color: #888;
+    color: #595959;
     margin-top: 2px;
 }
 /*Pedidos*/
@@ -107,7 +107,7 @@
     font-size: 15px;
     font-weight: 500;
     color: #1a1c2c;
-    margin-bottom: 16px;
+    margin: 0 0 16px;
     padding-bottom: 10px;
     border-bottom: 0.5px solid #e0e0e0;
 }
@@ -149,7 +149,7 @@
 
 .item-sub {
     font-size: 12px;
-    color: #888;
+    color: #595959;
     margin-top: 2px;
 }
 
@@ -211,7 +211,7 @@
 
 .modal-cancelar-desc {
     font-size: 0.88rem;
-    color: #888;
+    color: #595959;
     margin: 0 0 20px;
 }
 
@@ -277,13 +277,13 @@
     gap: 6px;
     margin-top: 4px;
     font-size: 12px;
-    color: #888;
+    color: #595959;
 }
 
 /* Mensaje de cuando no hay datos */
 .vacio {
     font-size: 14px;
-    color: #888;
+    color: #595959;
     text-align: center;
     padding: 20px 0;
 }
@@ -351,7 +351,7 @@
 
 .badge-gris {
     background: #f0f0f0;
-    color: #888;
+    color: #595959;
     padding: 2px 8px;
     border-radius: 15px;
     font-size: 12px;
@@ -359,7 +359,7 @@
 }
 
 .item-sub {
-    color: #999;
+    color: #666;
     font-size: 13px;
     margin: 4px 0 0;
 }
@@ -378,7 +378,7 @@
 
 .item-sindescuento {
     text-decoration: line-through;
-    color: #bbb;
+    color: #767676;
     font-size: 13px;
     margin-right: 8px;
 }
@@ -386,25 +386,25 @@
 /* --- BOTÓN ELIMINAR ESTILO CÁPSULA --- */
 .btn-eliminar {
     /* Colores y Fondo */
-    background-color: #ef1d23;  /* El rojo exacto de tu imagen */
+    background-color: #c4121c;  /* Rojo oscuro — contraste 6:1 con blanco (WCAG AA) */
     color: #ffffff;             /* Texto e icono en blanco */
     border: none;               /* Sin bordes extraños */
-    
+
     /* Forma y Tamaño */
     border-radius: 50px;        /* Crea el efecto redondeado de cápsula */
     padding: 8px 20px;          /* Espaciado interno para que respire */
-    
+
     /* Tipografía */
     font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
     font-size: 14px;
     font-weight: 600;           /* Semi-negrita */
-    
+
     /* Alineación de Icono y Texto */
     display: inline-flex;       /* Para que el icono y el texto se alineen */
     align-items: center;        /* Centrado vertical */
     justify-content: center;    /* Centrado horizontal */
     gap: 8px;                   /* Espacio entre el icono de papelera y la palabra */
-    
+
     /* Interactividad */
     cursor: pointer;
     transition: background-color 0.2s ease, transform 0.1s ease;
@@ -414,48 +414,47 @@
 /* --- BOTÓN ELIMINAR ARREGLADO Y ESTILIZADO --- */
 .btn-eliminar {
     /* 1. Resetear estilos por defecto del navegador */
-    border: none;               /* ¡Importante! Quita ese borde feo y grueso de tu imagen */
-    background: none;           /* Quita el fondo gris por defecto */
-    padding: 0;                 /* Resetea el espaciado interno */
-    margin: 0;                  /* Resetea los márgenes */
-    
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+
     /* 2. Aplicar el nuevo diseño (Cápsula Roja) */
-    background-color: #ef1d23;  /* El rojo exacto de tu diseño */
-    color: #ffffff;             /* Texto e icono en blanco puro */
-    border-radius: 50px;        /* Crea las curvas laterales perfectas */
-    padding: 10px 24px;         /* Espaciado interno generoso para que respire */
-    
-    /* 3. ARREGLAR LA ALINEACIÓN (¡Lo más importante!) */
-    display: flex;              /* Activa Flexbox para alinear el icono y el texto */
-    align-items: center;        /* Centra verticalmente el icono y el texto */
-    justify-content: center;    /* Centra horizontalmente todo el contenido */
-    gap: 10px;                  /* Espacio exacto entre el icono de Flaticon y el texto */
-    
-    /* 4. Tipografía y Estilo */
+    background-color: #c4121c;  /* Rojo oscuro — contraste 6:1 con blanco (WCAG AA) */
+    color: #ffffff;
+    border-radius: 50px;
+    padding: 10px 24px;
+
+    /* 3. Alineación */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    /* 4. Tipografía */
     font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
-    font-size: 15px;            /* Tamaño de lectura cómodo */
-    font-weight: 600;           /* Semi-negrita para que resalte */
-    text-transform: none;       /* Asegura que no se ponga todo en mayúsculas */
-    
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: none;
+
     /* 5. Interactividad */
-    cursor: pointer;            /* Cambia el cursor a la mano */
-    transition: all 0.2s ease;  /* Animación suave para los cambios de color */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave para dar profundidad */
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 /* --- ESTADOS DEL BOTÓN --- */
 
 /* Cuando el usuario pasa el ratón por encima */
 .btn-eliminar:hover {
-    background-color: #d11218;  /* Un rojo más oscuro */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* La sombra crece */
-    transform: translateY(-1px); /* Sube un píxel (efecto flotante) */
+    background-color: #ad1018;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-1px);
 }
 
-/* Cuando el usuario hace clic */
 .btn-eliminar:active {
-    background-color: #b00f13;  /* Rojo aún más oscuro */
-    transform: translateY(1px);  /* Baja un píxel (efecto pulsación) */
+    background-color: #960e14;
+    transform: translateY(1px);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 

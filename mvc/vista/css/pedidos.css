@@ -44,7 +44,7 @@ main {
 .menu-header-texto p {
     font-size: 0.9rem;
     font-weight: 400;
-    color: #999;
+    color: #666;
     margin: 0;
 }
 
@@ -142,7 +142,7 @@ main {
 
 .item-info .descripcion {
     font-size: 0.83rem;
-    color: #999;
+    color: #666;
     line-height: 1.4;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -357,7 +357,7 @@ main {
     align-items: center;
     gap: 5px;
     font-size: 0.76rem;
-    color: #aaa;
+    color: #767676;
     margin: 0 0 18px;
 }
 

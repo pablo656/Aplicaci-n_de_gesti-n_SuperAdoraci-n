@@ -28,42 +28,22 @@ class Mailer {
             ]
         ]);
 
+        // Puerto 465 usa SSL directo (smtps), sin STARTTLS
         $socket = stream_socket_client(
-            "tcp://{$this->host}:{$this->port}",
+            "ssl://{$this->host}:{$this->port}",
             $errno, $errstr, 15,
             STREAM_CLIENT_CONNECT,
             $contexto
         );
         if (!$socket) {
-            $this->registrar("ERROR conexión TCP: [$errno] $errstr");
+            $this->registrar("ERROR conexión SSL: [$errno] $errstr");
             $this->guardarLog();
             return false;
         }
-        $this->registrar("Conexión TCP OK");
+        $this->registrar("Conexión SSL OK");
         stream_set_timeout($socket, 15);
 
         $this->registrar("S: " . $this->leer($socket));         // 220
-
-        $this->escribir($socket, "EHLO localhost\r\n");
-        $this->registrar("S: " . $this->leer($socket));
-
-        $this->escribir($socket, "STARTTLS\r\n");
-        $resp = $this->leer($socket);
-        $this->registrar("S STARTTLS: " . $resp);
-        if (strpos($resp, "220") === false) {
-            $this->guardarLog();
-            fclose($socket);
-            return false;
-        }
-
-        $ok = stream_socket_enable_crypto($socket, true, STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT);
-        if (!$ok) {
-            $this->registrar("ERROR: TLS handshake fallido");
-            $this->guardarLog();
-            fclose($socket);
-            return false;
-        }
-        $this->registrar("TLS OK");
 
         $this->escribir($socket, "EHLO localhost\r\n");
         $this->registrar("S: " . $this->leer($socket));

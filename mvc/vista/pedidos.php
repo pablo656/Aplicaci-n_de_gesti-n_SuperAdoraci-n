@@ -75,7 +75,7 @@
 <div class="modal-overlay" id="modalPedir">
     <div class="modal">
         <button class="btn-cerrar-modal" onclick="cerrarModal()" aria-label="Cerrar">&times;</button>
-        <h3 id="modalTitulo">Pedir</h3>
+        <h2 id="modalTitulo">Pedir</h2>
         <form method="POST" action="IndexPedidos.php?action=crear">
             <input type="hidden" name="id_comida" id="modalIdComida">
 

@@ -125,6 +125,7 @@ body {
     font-size: 0.95rem;
     font-weight: 700;
     padding: 14px 36px;
+    min-height: 44px;
     border-radius: 50px;
     text-decoration: none;
     width: fit-content;
@@ -182,26 +183,44 @@ body {
 /* Indicadores: puntos que se expanden */
 .indicadores {
     position: absolute;
-    bottom: 22px;
+    bottom: 0;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 8px;
+    gap: 0;
     z-index: 10;
 }
 
+/* Área táctil 44×44 px (WCAG 2.5.5 AA) */
 .indicador {
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* margen negativo para mantener la separación visual de 8 px entre puntos */
+    margin: 0 -13.5px;
+    transition: none;
+}
+
+/* Punto visual */
+.indicador::before {
+    content: '';
+    display: block;
     width: 9px;
     height: 9px;
     border-radius: 50%;
     background: rgba(255, 255, 255, .45);
-    border: none;
-    padding: 0;
-    cursor: pointer;
+    flex-shrink: 0;
     transition: background .25s, width .35s ease, border-radius .35s ease;
 }
 
-.indicador.activo {
+.indicador.activo::before {
     width: 34px;
     border-radius: 5px;
     background: #fff;
@@ -215,8 +234,8 @@ body {
     }
 
     .boton {
-        width: 42px;
-        height: 42px;
+        width: 44px;
+        height: 44px;
         font-size: 24px;
     }
 
@@ -242,8 +261,8 @@ body {
 
 @media (max-width: 480px) {
     .boton {
-        width: 36px;
-        height: 36px;
+        width: 44px;
+        height: 44px;
         font-size: 20px;
     }
 
@@ -267,26 +286,28 @@ body {
     }
 
     .diapositiva-boton {
-        padding: 10px 22px;
-        font-size: 0.85rem;
+        padding: 14px 22px;
+        font-size: 0.9rem;
+        min-height: 44px;
     }
 
-    .indicadores {
-        bottom: 14px;
-        gap: 6px;
-    }
-
+    /* Puntos más pequeños en móvil pero misma área táctil */
     .indicador {
+        margin: 0 -15.5px; /* mantiene ~6 px de gap visual entre puntos de 7 px */
+    }
+
+    .indicador::before {
         width: 7px;
         height: 7px;
     }
 
-    .indicador.activo {
+    .indicador.activo::before {
         width: 26px;
     }
 }
 
 /* ── Títulos de sección ─────────────────────────────────── */
+h1,
 h2 {
     text-align: center;
     font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -296,6 +317,7 @@ h2 {
     color: #1a1a1a;
     margin-bottom: 6px;
 }
+h1::after,
 h2::after {
     content: '';
     display: block;
@@ -363,7 +385,7 @@ h2::after {
 
 .producto .sin_descuento {
     font-size: 0.9rem;
-    color: #aaa;
+    color: #767676;
     text-decoration: line-through;
 }
 
@@ -391,7 +413,7 @@ h2::after {
 
 .vacio {
     font-size: 1.3rem;
-    color: #bbb;
+    color: #767676;
     text-align: center;
     padding: 60px 20px;
     grid-column: 1 / -1;
@@ -562,7 +584,7 @@ section,
 }
 
 .sin_descuento {
-    color: #bbb;
+    color: #767676;
     text-decoration: line-through;
     font-size: 0.9rem;
     margin-bottom: -2px;

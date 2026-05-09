@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log in</title>
-    <link rel="stylesheet" href="css/log_in.css">
+    <link rel="stylesheet" href="../css/log_in.css">
 </head>
 <body>
 
@@ -23,10 +23,10 @@
         </div>
         <input type="submit" name="log" value="Entrar">
         <div class="enlaces">
-            <a href="?action=Home">Volver atrás</a>
+            <a href="../IndexHome.php?action=Home">Volver atrás</a>
         </div>
     </div>
 </form>
-<script src="js/verificacion_log_in.js"></script>
+<script src="../js/verificacion_log_in.js"></script>
 </body>
 </html>

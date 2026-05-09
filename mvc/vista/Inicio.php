@@ -10,7 +10,7 @@
 .diapositiva-boton:hover{background:linear-gradient(135deg,#ff5c38 0%,#e31b23 100%);color:#fff;transform:translateY(-3px);box-shadow:0 12px 36px rgba(227,27,35,.6)}
 .diapositiva-boton:hover::after{transform:translateX(4px)}
 </style>
-
+<main>
 <div class="envoltura" id="carrusel">
     <ul class="pista">
         <li class="diapositiva">
@@ -149,5 +149,5 @@
         <p>Hoy en día, continúan liderando la empresa con la misma pasión y dedicación que tuvieron desde el primer día, asegurándose de que cada cliente reciba la mejor experiencia posible.</p>
     </div>
 </div>
-
+</main>
 <script src="js/home.js"></script>

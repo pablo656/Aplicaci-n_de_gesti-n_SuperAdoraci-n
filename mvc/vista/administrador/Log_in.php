@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/log_in.css">
 </head>
 <body>
-
+<main>
 <form method="post" id="log" action="?action=comprobar">
     <div class="form-header">
         <h1>Iniciar sessión</h1>
@@ -28,5 +28,6 @@
     </div>
 </form>
 <script src="../js/verificacion_log_in.js"></script>
+</main>
 </body>
 </html>

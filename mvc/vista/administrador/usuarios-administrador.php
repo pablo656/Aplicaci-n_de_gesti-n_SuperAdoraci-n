@@ -12,7 +12,7 @@ if ($_SESSION["rol"] != "administrador") { ?>
     </div>
 <?php
 } else { ?>
-
+</main>
 <div class="seccion-admin">
     <div class="header-admin">
         <div class="header-textos">
@@ -138,3 +138,4 @@ if ($_SESSION["rol"] != "administrador") { ?>
     </div>
 </noscript>
 <script src="js/usuarios-administrador.js"></script>
+</main>

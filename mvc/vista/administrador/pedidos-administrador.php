@@ -11,6 +11,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueño") { ?>
     </div>
 <?php
 } else { ?>
+    <main>
     <div class="header-admin">
         <div>
             <h1>Administración de pedidos</h1>
@@ -151,6 +152,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueño") { ?>
     </div>
 
     <script src="js/pedidos-administrador.js"></script>
+    </main>
 <?php } ?>
 
 <!-- Modal nota -->

@@ -13,7 +13,7 @@ if ($_SESSION["rol"] != "administrador") { ?>
     </div>
 <?php
 } else { ?>
-
+<main>
 <div class="seccion-admin">
     <div class="header-admin">
         <div class="header-textos">
@@ -98,5 +98,5 @@ if ($_SESSION["rol"] != "administrador") { ?>
 </noscript>
 
 <script src="js/usuarios-administrador.js"></script>
-
+</main>
 <?php } // Fin del bloque de administrador ?>

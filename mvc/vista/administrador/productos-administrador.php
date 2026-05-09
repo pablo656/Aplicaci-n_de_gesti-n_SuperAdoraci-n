@@ -17,7 +17,8 @@ $subcategorias = [
 if (!isset($_SESSION["nombre"]) || !isset($_SESSION["email"]) || !isset($_SESSION["rol"])) {
     header("Location: IndexLog.php");
     exit();
-} 
+}
+
 
 if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
     <div style="text-align: center; padding: 50px;">

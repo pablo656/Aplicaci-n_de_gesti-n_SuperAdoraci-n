@@ -12,6 +12,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "duemo") { ?>
     </div>
 <?php
 } else { ?>
+    <main>
     <div class="header-admin">
             <div>
                 <h1>Administración de reservas</h1>
@@ -107,6 +108,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "duemo") { ?>
             <?php endif; ?>
         </div>
 <script src="js/reservas-administrador.js"></script>
+</main>
 <?php }?>
  <div id="modal-eliminar" class="modal-overlay">
     <div class="modal-content">

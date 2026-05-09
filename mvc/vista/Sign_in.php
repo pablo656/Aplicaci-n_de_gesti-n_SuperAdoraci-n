@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/log_in.css">
 </head>
 <body>
-
+<main>
 <form method="post" id="sing" action="?action=crear">
     <div class="form-header">
         <h1>Registrarse</h1>
@@ -38,5 +38,6 @@
     </div>
 </form>
 <script src="js/verificacion_sing_in.js"></script>
+</main>
 </body>
 </html>

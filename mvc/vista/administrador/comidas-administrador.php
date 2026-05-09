@@ -11,7 +11,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno"): ?>
     </div>
 <?php else: ?>
 
-<div class="main-admin">
+<main class="main-admin">
     <div class="header-admin">
         <div>
             <h1>Administración de comidas</h1>
@@ -66,7 +66,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno"): ?>
             <p class="vacio-comidas">No hay comidas registradas.</p>
         <?php endif; ?>
     </div>
-</div>
+</main>
 
 <script src="js/comidas-administrador.js"></script>
 

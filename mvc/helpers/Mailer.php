@@ -65,7 +65,7 @@ class Mailer {
             return false;
         }
 
-        $this->escribir($socket, "MAIL FROM:<{$this->user}>\r\n");
+        $this->escribir($socket, "MAIL FROM:<" . MAIL_FROM . ">\r\n");
         $this->registrar("S: " . $this->leer($socket));
 
         $this->escribir($socket, "RCPT TO:<{$destinatario}>\r\n");
@@ -74,7 +74,7 @@ class Mailer {
         $this->escribir($socket, "DATA\r\n");
         $this->registrar("S: " . $this->leer($socket));
 
-        $cabeceras  = "From: " . MAIL_FROM_NAME . " <{$this->user}>\r\n";
+        $cabeceras  = "From: " . MAIL_FROM_NAME . " <" . MAIL_FROM . ">\r\n";
         $cabeceras .= "To: {$destinatario}\r\n";
         $cabeceras .= "Subject: =?UTF-8?B?" . base64_encode($asunto) . "?=\r\n";
         $cabeceras .= "MIME-Version: 1.0\r\n";

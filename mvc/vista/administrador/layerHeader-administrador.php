@@ -1,3 +1,10 @@
+<?php
+if (!defined('ACCESO_PERMITIDO')) {
+    // Si alguien intenta entrar directo, le mandamos al index
+    header("Location: IndexInicio-administrador.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

@@ -1,4 +1,5 @@
 <?php
+    define('ACCESO_PERMITIDO', true);
     session_start();
     require_once("../../controller/controller_user.php");
     $controller=new Controller_user();

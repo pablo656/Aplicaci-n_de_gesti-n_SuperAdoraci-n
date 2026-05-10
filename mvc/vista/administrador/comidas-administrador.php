@@ -1,4 +1,11 @@
 <?php
+if (!defined('ACCESO_PERMITIDO')) {
+    // Si alguien intenta entrar directo, le mandamos al index
+    header("Location:IndexComidas-administrador.php");
+    exit();
+}
+?>
+<?php
 if (!isset($_SESSION["nombre"]) || !isset($_SESSION["email"]) || !isset($_SESSION["rol"])) {
     header("Location: ../IndexHome.php?action=log");
     exit();

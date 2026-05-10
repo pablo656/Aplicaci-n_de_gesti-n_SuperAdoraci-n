@@ -1,4 +1,6 @@
+
 <?php
+define('ACCESO_PERMITIDO', true);
 //Esta linea se debe poner en todos los Index para que todas las páginas puedan acceder a la sessión
 if (session_status() === PHP_SESSION_NONE) {
     session_start();

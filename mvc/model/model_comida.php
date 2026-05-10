@@ -47,16 +47,20 @@ class model_comida {
 
     // Añadir una comida
     public function añadir_comida($nombre, $descripcion, $precio, $disponible, $imagen) {
-        $carpeta_fs  = __DIR__ . "/../imagenes/";
-        $url_base    = "../imagenes/";
-        $nombre_archivo = uniqid() . "_" . basename($imagen['name']);
-        if (move_uploaded_file($imagen['tmp_name'], $carpeta_fs . $nombre_archivo)) {
-            $ruta = $url_base . $nombre_archivo;
-            $stmt = $this->conn->prepare("INSERT INTO comidas (nombre, descripcion, precio, disponible, url_imagen) VALUES (?, ?, ?, ?, ?)");
-            $stmt->bind_param("ssdis", $nombre, $descripcion, $precio, $disponible, $ruta);
-            return $stmt->execute();
+        $carpeta_fs = __DIR__ . "/../imagenes/";
+        $url_base   = "../imagenes/";
+        $ruta       = "../imagenes/foto_defecto.jpg";
+
+        if (isset($imagen['tmp_name']) && $imagen['error'] === UPLOAD_ERR_OK) {
+            $nombre_archivo = uniqid() . "_" . basename($imagen['name']);
+            if (move_uploaded_file($imagen['tmp_name'], $carpeta_fs . $nombre_archivo)) {
+                $ruta = $url_base . $nombre_archivo;
+            }
         }
-        return false;
+
+        $stmt = $this->conn->prepare("INSERT INTO comidas (nombre, descripcion, precio, disponible, url_imagen) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssdis", $nombre, $descripcion, $precio, $disponible, $ruta);
+        return $stmt->execute();
     }
 
     // Borrar una comida

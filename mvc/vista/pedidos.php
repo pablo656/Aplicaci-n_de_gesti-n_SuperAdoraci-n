@@ -1,3 +1,10 @@
+<?php
+if (!defined('ACCESO_PERMITIDO')) {
+    // Si alguien intenta entrar directo, le mandamos al index
+    header("Location: IndexPedidos.php");
+    exit();
+}
+?>
 <main>
     <div class="menu-header">
         <div class="menu-header-texto">

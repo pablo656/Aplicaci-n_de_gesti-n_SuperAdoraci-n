@@ -1,4 +1,12 @@
 <?php
+if (!defined('ACCESO_PERMITIDO')) {
+    // Si alguien intenta entrar directo, le mandamos al index
+    header("Location: IndexInicio-administrador.php");
+    exit();
+}
+?>
+
+<?php
 // 1. Verificación de seguridad (Sesión y Roles)
 if (!isset($_SESSION["nombre"]) || !isset($_SESSION["rol"])) {
     header("Location: ../IndexHome.php?action=log");

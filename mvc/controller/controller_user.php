@@ -23,21 +23,21 @@ class Controller_user{
         $user= $this->model_user->iniciousuario($username, $password);
         if($user == false){
             echo "Usuario o contraseña incorrecta";
-            header("Location: indexHome.php?action=log_fallido");
+            header("Location: IndexHome.php?action=log_fallido");
         }else{
              //INICIO DE SESSIÓN (No añadir contraseña al inicion de sesión, por que no es seguro)
             $_SESSION["id"]=$user["id"];
             $_SESSION["nombre"]=$user["nombre"];
             $_SESSION["email"]=$user["email"];
             $_SESSION["rol"]=$user["rol"];
-            header("Location:indexHome.php?action=home");
+            header("Location:IndexHome.php?action=home");
         }
     }
     public function loginar_admin($username, $password){
         $user= $this->model_user->iniciousuario($username, $password);
         if($user == false){
             echo "Usuario o contraseña incorrecta";
-            header("Location: indexLog.php?action=log_fallido");
+            header("Location: IndexLog.php?action=log_fallido");
         }else{
              //INICIO DE SESSIÓN (No añadir contraseña al inicion de sesión, por que no es seguro)
             $_SESSION["id"]=$user["id"];
@@ -54,17 +54,17 @@ class Controller_user{
     // Envía email de verificación; no crea el usuario hasta que confirme
     public function register($username, $password, $email) {
         if (empty($username) || empty($password) || empty($email)) {
-            header("Location: indexHome.php?action=sing");
+            header("Location: IndexHome.php?action=sing");
             return;
         }
         if ($this->model_user->crearusuario_existe($username, $email)) {
-            header("Location: indexHome.php?action=sing_fallido");
+            header("Location: IndexHome.php?action=sing_fallido");
             return;
         }
         $hash  = password_hash($password, PASSWORD_DEFAULT);
         $token = $this->model_user->guardar_verificacion($username, $email, $hash);
         if (!$token) {
-            header("Location: indexHome.php?action=sing_fallido");
+            header("Location: IndexHome.php?action=sing_fallido");
             return;
         }
         $link   = APP_URL . "/IndexHome.php?action=confirmar_email&token=" . $token;
@@ -100,14 +100,14 @@ class Controller_user{
         $user = $this->model_user->confirmar_verificacion($token);
         if (!$user) {
             $_SESSION["confirm_error"] = "El enlace no es válido o ha caducado.";
-            header("Location: indexHome.php?action=sing");
+            header("Location: IndexHome.php?action=sing");
             return;
         }
         $_SESSION["id"]     = $user["id"];
         $_SESSION["nombre"] = $user["nombre"];
         $_SESSION["email"]  = $user["email"];
         $_SESSION["rol"]    = $user["rol"];
-        header("Location: indexHome.php?action=home");
+        header("Location: IndexHome.php?action=home");
     }
 
     //Funciones para moverse entre Home, Log in,Sign in y Perfil
@@ -126,25 +126,25 @@ class Controller_user{
 
     public function actualizar_nombre() {
         if (!isset($_SESSION["id"])) {
-            header("Location: indexHome.php?action=log");
+            header("Location: IndexHome.php?action=log");
             return;
         }
         $nuevo_nombre = trim($_POST["nombre"] ?? "");
         if (empty($nuevo_nombre)) {
-            header("Location: indexHome.php?action=perfil&error=nombre_vacio");
+            header("Location: IndexHome.php?action=perfil&error=nombre_vacio");
             return;
         }
         $resultado = $this->model_user->actualizar_nombre($_SESSION["id"], $nuevo_nombre);
         if ($resultado === "nombre_duplicado") {
-            header("Location: indexHome.php?action=perfil&error=nombre_duplicado");
+            header("Location: IndexHome.php?action=perfil&error=nombre_duplicado");
             return;
         }
         if ($resultado === false) {
-            header("Location: indexHome.php?action=perfil&error=error_guardado");
+            header("Location: IndexHome.php?action=perfil&error=error_guardado");
             return;
         }
         $_SESSION["nombre"] = $nuevo_nombre;
-        header("Location: indexHome.php?action=perfil&ok=1");
+        header("Location: IndexHome.php?action=perfil&ok=1");
     }
     public function cambiarRol($id,$rol){
        if ($this->model_user->cambiarRol($id, $rol)) {

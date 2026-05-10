@@ -1,4 +1,5 @@
 <?php
+define('ACCESO_PERMITIDO', true);
     session_start();
     require_once("../../controller/Controller_pedidos.php");
     $controller = new Controller_pedidos();

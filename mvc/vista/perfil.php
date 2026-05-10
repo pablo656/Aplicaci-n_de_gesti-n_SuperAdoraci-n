@@ -1,4 +1,12 @@
 <?php
+if (!defined('ACCESO_PERMITIDO')) {
+    // Si alguien intenta entrar directo, le mandamos al index
+    header("Location: IndexPerfil.php");
+    exit();
+}
+?>
+
+<?php
 $perfil_url ??= 'indexPerfil.php';
 $home_url   ??= 'IndexHome.php';
 $img_base   ??= '';

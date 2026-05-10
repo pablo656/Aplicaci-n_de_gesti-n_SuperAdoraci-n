@@ -1,5 +1,13 @@
+<?php
+if (!defined('ACCESO_PERMITIDO')) {
+    // Si alguien intenta entrar directo, le mandamos al index
+    header("Location: IndexCarrito.php");
+    exit();
+}
+?>
 <?php if (!isset($pedidos_carrito)) $pedidos_carrito = []; ?>
 <?php
+
     $reservas_cookie = isset($_COOKIE["reservas"]) ? json_decode($_COOKIE["reservas"], true) : [];
     $cantidades = [];
     foreach($reservas_cookie as $item) {

@@ -1,4 +1,5 @@
 <?php
+define('ACCESO_PERMITIDO', true);
 //Esta linea se debe poner en todos los Index para que todas las páginas puedan acceder a la sessión
 session_start();
 //Este archivo se usara para Home, Log in, Sing in y Perfil

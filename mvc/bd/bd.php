@@ -2,7 +2,7 @@
     class bd{
         private $servername = "localhost";
         private $username = "root";
-        private $password = "";
+        private $password = "CAmbia_1234a";
         private $dbname = "supermercado";
         public $conn;
         public function conectar(){

@@ -1,3 +1,10 @@
+<?php
+if (!defined('ACCESO_PERMITIDO')) {
+    // Si alguien intenta entrar directo, le mandamos al index
+    header("Location: IndexHome.php?action=log");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

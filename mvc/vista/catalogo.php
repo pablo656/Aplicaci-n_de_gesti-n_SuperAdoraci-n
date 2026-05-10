@@ -1,3 +1,11 @@
+<?php
+if (!defined('ACCESO_PERMITIDO')) {
+    // Si alguien intenta entrar directo, le mandamos al index
+    header("Location: IndexProducto.php");
+    exit();
+}
+?>
+
 <?php  $action=$_GET["action"] ?? "list";
         $subcategoria = $_GET["subcategoria"] ?? null;
          $categorias=["Comida","Bebidas","Mascotas","Papeleria_oficina","Salud_bienestar"];

@@ -1,3 +1,11 @@
+<?php
+if (!defined('ACCESO_PERMITIDO')) {
+    // Si alguien intenta entrar directo, le mandamos al index
+    header("Location: IndexProducto-administrador.php");
+    exit();
+}
+?>
+
 <?php  
 // ── Configuración inicial y variables ──────────────────
 $action = $_GET["action"] ?? "list";

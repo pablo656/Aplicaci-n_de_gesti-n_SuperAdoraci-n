@@ -76,7 +76,15 @@ class Controller_user{
             <p>El enlace caduca en 24 horas.</p>
         ";
         $mailer = new Mailer();
-        $mailer->enviar($email, $asunto, $cuerpo);
+        $ok = $mailer->enviar($email, $asunto, $cuerpo);
+        if (!$ok) {
+            // Muestra el log SMTP para depuración — quitar cuando esté en producción
+            echo "<pre style='background:#111;color:#f55;padding:1em'>";
+            echo "ERROR al enviar email. Log SMTP:\n";
+            foreach ($mailer->getLog() as $linea) echo htmlspecialchars($linea) . "\n";
+            echo "</pre>";
+            exit;
+        }
         require("../vista/email_enviado.php");
     }
     public function crearUsuario($username, $password, $email,$rol){

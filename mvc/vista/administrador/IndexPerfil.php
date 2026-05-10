@@ -1,4 +1,5 @@
 <?php
+define('ACCESO_PERMITIDO', true);
 session_start();
 
 if (!isset($_SESSION["id"])) {

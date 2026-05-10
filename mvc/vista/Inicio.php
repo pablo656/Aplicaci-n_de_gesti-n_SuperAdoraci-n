@@ -1,3 +1,11 @@
+<?php
+if (!defined('ACCESO_PERMITIDO')) {
+    // Si alguien intenta entrar directo, le mandamos al index
+    header("Location: IndexHome.php");
+    exit();
+}
+?>
+
 <style>
 .diapositiva{position:relative!important;flex-shrink:0}
 .diapositiva img{width:100%;height:clamp(220px,36vw,500px);object-fit:cover;display:block}

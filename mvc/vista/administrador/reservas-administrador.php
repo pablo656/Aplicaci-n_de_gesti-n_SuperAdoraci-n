@@ -1,4 +1,12 @@
 <?php
+if (!defined('ACCESO_PERMITIDO')) {
+    // Si alguien intenta entrar directo, le mandamos al index
+    header("Location: IndexReservas-administrador.php");
+    exit();
+}
+?>
+
+<?php
 // 1. Verificación de seguridad y roles
 if (!isset($_SESSION["nombre"]) || !isset($_SESSION["email"]) || !isset($_SESSION["rol"])) {
    header("Location: IndexLog.php");

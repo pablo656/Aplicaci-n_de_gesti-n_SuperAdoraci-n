@@ -1,4 +1,5 @@
 <?php
+define('ACCESO_PERMITIDO', true);
     session_start();
      require_once("../../controller/productoController.php");
     $controller=new ProductoController();

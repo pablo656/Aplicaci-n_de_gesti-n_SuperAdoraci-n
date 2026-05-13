@@ -23,6 +23,7 @@ body {
     overflow: hidden;
     border-radius: 18px;
     box-shadow: 0 16px 56px rgba(0, 0, 0, .24);
+    background-color: black;
 }
 
 /* Vignette lateral + gradiente inferior */

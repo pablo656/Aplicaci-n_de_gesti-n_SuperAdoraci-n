@@ -8,7 +8,7 @@ require_once("../controller/productoController.php");
 $controller=new Controller_user();
 $controller_producto=new ProductoController();
 $action=$_GET["action"] ?? "home";
-if($action=="log"||$action=="comprobar"||$action=="log_fallido"){
+if($action=="log"||$action=="comprobar"||$action=="log_fallido"||$action=="log_bloqueado"){
     $titulo="Iniciar sesión";
     $css="<link rel='stylesheet' href='css/log_in.css'>";
 }else if($action=="sing"||$action=="crear"||$action=="sing_fallido"){
@@ -28,6 +28,10 @@ if($action=="log"){
 }else if($action=="log_fallido"){
     $controller->log();
     echo "<script>alert('Usuario o contraseña incorrecto')</script>";
+}else if($action=="log_bloqueado"){
+    $minutos = (int)($_GET["min"] ?? 15);
+    $controller->log();
+    echo "<script>alert('Cuenta bloqueada por demasiados intentos fallidos. Inténtalo de nuevo en $minutos minuto" . ($minutos === 1 ? "" : "s") . ".')</script>";
 }else if($action=="comprobar"){
     $nombre=$_POST["user"];
     $pass=$_POST["pass"];

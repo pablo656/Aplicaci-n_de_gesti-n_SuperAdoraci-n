@@ -47,17 +47,45 @@
                 return null;
             }
             $result = $stmt->get_result();
-            //Cambiado el código ya que en al versión anterior se hacian dos fetch lo que hace que se mueva el puntero y el segundo fetch acaba devolviendo vacio
-            $user=$result->fetch_assoc();
-            if ($result->num_rows > 0 && password_verify($password,$user["contrasena"] )) {
-                $stmt = $this->conn->prepare("UPDATE usuarios SET ultimo_inicio_sesion = NOW() WHERE id = ?");
-                $stmt->bind_param("i",$user["id"]);
-                if(!$stmt->execute()){
-                    return null;
-                }
-                return $user;
+            $userData = $result->fetch_assoc();
+
+            if (!$userData) {
+                return false;
+            }
+
+            // Comprobar si la cuenta está bloqueada
+            if ($userData["bloqueado_hasta"] !== null && strtotime($userData["bloqueado_hasta"]) > time()) {
+                $segundos_restantes = strtotime($userData["bloqueado_hasta"]) - time();
+                $minutos_restantes  = (int) ceil($segundos_restantes / 60);
+                return ["bloqueado" => true, "minutos" => $minutos_restantes];
+            }
+
+            if (password_verify($password, $userData["contrasena"])) {
+                // Login correcto: resetear contadores y actualizar último acceso
+                $stmt = $this->conn->prepare(
+                    "UPDATE usuarios SET ultimo_inicio_sesion = NOW(), intentos_fallidos = 0, bloqueado_hasta = NULL WHERE id = ?"
+                );
+                $stmt->bind_param("i", $userData["id"]);
+                $stmt->execute();
+                return $userData;
             } else {
-                return null;
+                // Login fallido: incrementar contador y bloquear si llega a 5
+                $nuevos_intentos = $userData["intentos_fallidos"] + 1;
+                if ($nuevos_intentos >= 5) {
+                    $stmt = $this->conn->prepare(
+                        "UPDATE usuarios SET intentos_fallidos = ?, bloqueado_hasta = DATE_ADD(NOW(), INTERVAL 15 MINUTE) WHERE id = ?"
+                    );
+                    $stmt->bind_param("ii", $nuevos_intentos, $userData["id"]);
+                    $stmt->execute();
+                    return ["bloqueado" => true, "minutos" => 15];
+                } else {
+                    $stmt = $this->conn->prepare(
+                        "UPDATE usuarios SET intentos_fallidos = ? WHERE id = ?"
+                    );
+                    $stmt->bind_param("ii", $nuevos_intentos, $userData["id"]);
+                    $stmt->execute();
+                    return false;
+                }
             }
         }
         //Rol predeterminado cliente, para cambiar el rol, se tendra que crear una una función y página para el admin y dueño que permita cambiar el rol.

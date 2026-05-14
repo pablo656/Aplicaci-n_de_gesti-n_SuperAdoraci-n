@@ -17,6 +17,10 @@ $css="<link rel='stylesheet' href='../css/log_in.css'>";
 if($action=="log_fallido"){
     $controller->log_admin();
     echo "<script>alert('Usuario o contraseña incorrecto')</script>";
+}else if($action=="log_bloqueado"){
+    $minutos = (int)($_GET["min"] ?? 15);
+    $controller->log_admin();
+    echo "<script>alert('Cuenta bloqueada por demasiados intentos fallidos. Inténtalo de nuevo en $minutos minuto" . ($minutos === 1 ? "" : "s") . ".')</script>";
 }else if($action=="comprobar"){
     $nombre=$_POST["user"];
     $pass=$_POST["pass"];

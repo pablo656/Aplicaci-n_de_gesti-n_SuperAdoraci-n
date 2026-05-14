@@ -3,7 +3,7 @@
     --color-texto:      #1a1c2c;
     --color-rojo:       #e31b23;
     --color-rojo-hover: #b3141a;
-    --color-verde:      #27ae60;
+    --color-verde:      #218838;
 }
 
 /* ── Layout base ─────────────────────────────────────────── */
@@ -247,7 +247,7 @@ main {
 /* ── Estado vacío ────────────────────────────────────────── */
 .vacio {
     text-align: center;
-    color: #ccc;
+    color: #1a1a1a;
     font-size: 1rem;
     padding: 80px 20px;
 }
@@ -466,7 +466,7 @@ main {
     font-size: 1.4rem;
     line-height: 1;
     cursor: pointer;
-    color: #ccc;
+    color: #666;
     transition: color .2s;
 }
 

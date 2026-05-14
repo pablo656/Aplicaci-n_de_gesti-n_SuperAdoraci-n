@@ -4,6 +4,10 @@ if (!defined('ACCESO_PERMITIDO')) {
     header("Location: IndexCarrito.php");
     exit();
 }
+if (!isset($_SESSION["id"])) {
+    header("Location: IndexHome.php?action=log");
+    exit();
+}
 ?>
 <?php if (!isset($pedidos_carrito)) $pedidos_carrito = []; ?>
 <?php

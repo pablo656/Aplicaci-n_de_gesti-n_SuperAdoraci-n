@@ -20,31 +20,31 @@ class Controller_user{
     //IMPORTANTE: Para la actualización del log in intentar usar una estructura parecida a la de Sing in
     // Verifica credenciales; si son correctas inicia sesión, si no redirige al formulario con error
     public function loginar($username, $password){
-        $user= $this->model_user->iniciousuario($username, $password);
-        if($user == false){
-            echo "Usuario o contraseña incorrecta";
+        $user = $this->model_user->iniciousuario($username, $password);
+        if (is_array($user) && isset($user["bloqueado"])) {
+            header("Location: IndexHome.php?action=log_bloqueado&min=" . $user["minutos"]);
+        } elseif ($user == false) {
             header("Location: IndexHome.php?action=log_fallido");
-        }else{
-             //INICIO DE SESSIÓN (No añadir contraseña al inicion de sesión, por que no es seguro)
-            $_SESSION["id"]=$user["id"];
-            $_SESSION["nombre"]=$user["nombre"];
-            $_SESSION["email"]=$user["email"];
-            $_SESSION["rol"]=$user["rol"];
-            header("Location:IndexHome.php?action=home");
+        } else {
+            $_SESSION["id"]     = $user["id"];
+            $_SESSION["nombre"] = $user["nombre"];
+            $_SESSION["email"]  = $user["email"];
+            $_SESSION["rol"]    = $user["rol"];
+            header("Location: IndexHome.php?action=home");
         }
     }
     public function loginar_admin($username, $password){
-        $user= $this->model_user->iniciousuario($username, $password);
-        if($user == false){
-            echo "Usuario o contraseña incorrecta";
+        $user = $this->model_user->iniciousuario($username, $password);
+        if (is_array($user) && isset($user["bloqueado"])) {
+            header("Location: IndexLog.php?action=log_bloqueado&min=" . $user["minutos"]);
+        } elseif ($user == false) {
             header("Location: IndexLog.php?action=log_fallido");
-        }else{
-             //INICIO DE SESSIÓN (No añadir contraseña al inicion de sesión, por que no es seguro)
-            $_SESSION["id"]=$user["id"];
-            $_SESSION["nombre"]=$user["nombre"];
-            $_SESSION["email"]=$user["email"];
-            $_SESSION["rol"]=$user["rol"];
-            header("Location:IndexInicio-administrador.php");
+        } else {
+            $_SESSION["id"]     = $user["id"];
+            $_SESSION["nombre"] = $user["nombre"];
+            $_SESSION["email"]  = $user["email"];
+            $_SESSION["rol"]    = $user["rol"];
+            header("Location: IndexInicio-administrador.php");
         }
     }
     public function log_admin(){

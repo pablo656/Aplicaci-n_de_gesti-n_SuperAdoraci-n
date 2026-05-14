@@ -8,7 +8,9 @@ CREATE TABLE usuarios (
     nombre               VARCHAR(100) NOT NULL UNIQUE,
     contrasena           VARCHAR(255) NOT NULL,
     rol                  ENUM('dueno', 'administrador', 'cliente') DEFAULT 'cliente',
-    ultimo_inicio_sesion DATETIME DEFAULT NULL
+    ultimo_inicio_sesion DATETIME DEFAULT NULL,
+    intentos_fallidos    INT DEFAULT 0,
+    bloqueado_hasta      DATETIME DEFAULT NULL
 );
 
 -- VERIFICACIONES DE EMAIL (registros pendientes de confirmar)

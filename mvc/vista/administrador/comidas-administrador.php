@@ -53,14 +53,14 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno"): ?>
                         <p class="comida-precio"><?= number_format($c['precio'], 2) ?>&euro;</p>
 
                         <form method="post" action="IndexComidas-administrador.php">
-                            <input type="hidden" name="id" value="<?= $c['id'] ?>">
+                            <input type="hidden" name="id" value="<?= htmlspecialchars($c['id']) ?>">
                             <button type="submit" class="btn-modificar-comida" name="abrir_modal">
                                 <i class="fi fi-sr-pencil"></i> Modificar
                             </button>
                         </form>
 
                         <form method="post" action="?action=delete" onsubmit="return confirm('¿Eliminar esta comida?');">
-                            <input type="hidden" name="id_comida" value="<?= $c['id'] ?>">
+                            <input type="hidden" name="id_comida" value="<?= htmlspecialchars($c['id']) ?>">
                             <button type="submit" class="btn-eliminar-comida">
                                 <i class="fi fi-sr-trash"></i> Eliminar
                             </button>
@@ -117,7 +117,7 @@ if ($mostrar_modal && $comida_modal): ?>
                 ><?= htmlspecialchars($comida_modal['descripcion']) ?></textarea>
 
                 <label for="precio">Precio (€)</label>
-                <input type="number" step="0.01" min="0" name="precio" id="precio" value="<?= $comida_modal['precio'] ?>" required>
+                <input type="number" step="0.01" min="0" name="precio" id="precio" value="<?= htmlspecialchars($comida_modal['precio']) ?>" required>
 
                 <div class="checkbox-container">
                     <input type="checkbox" name="disponible" id="disponible" value="1"

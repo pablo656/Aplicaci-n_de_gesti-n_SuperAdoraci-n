@@ -51,7 +51,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "duemo") { ?>
                         <h2 class="nombre-cliente">
                             <i class="fi fi-sr-user"></i>
                             <?php echo htmlspecialchars($nombre_usuario); ?>
-                            <span>(ID: <?php echo $id_usuario; ?>) &mdash; <?php echo htmlspecialchars($email_usuario); ?></span>
+                            <span>(ID: <?php echo htmlspecialchars($id_usuario, ENT_QUOTES); ?>) &mdash; <?php echo htmlspecialchars($email_usuario); ?></span>
                         </h2>
                         
                       <div class="lista-reservas">
@@ -94,7 +94,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "duemo") { ?>
                                 <p class="precio"><?= number_format($precioFinal, 2) ?> €</p>
                                 
                                 <div class="contador">
-                                    <button  name="modal_eliminar" class="btn-eliminar" onclick="mostrarModalEliminar(<?= $reserva['id_reserva'] ?>)">
+                                    <button  name="modal_eliminar" class="btn-eliminar" onclick="mostrarModalEliminar(<?= (int)$reserva['id_reserva'] ?>)">
                                         <i class="fi fi-sr-trash"></i> Eliminar
                                     </button>
                                 </div>

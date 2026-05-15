@@ -123,9 +123,9 @@ if (!defined('ACCESO_PERMITIDO')) {
                             <div class="contador-peso">
                                 <button 
                                     style="display: none;" 
-                                    id="borrar-11" 
+                                    id="borrar-<?php echo htmlspecialchars($producto['id'])?>" 
                                     class="btn-cantidad" 
-                                    onclick="borrarReserva(11)" 
+                                    onclick="borrarReserva(htmlspecialchars($producto['id']))" 
                                     aria-label="Eliminar producto">
                                     <i class="fi fi-sr-trash" aria-hidden="true"></i>
                                 </button>
@@ -143,7 +143,7 @@ if (!defined('ACCESO_PERMITIDO')) {
                                 >
                                 <span class="unidad-peso">Kg</span>
                             </div>
-                             <button  id="borrar-<?= $producto["id"] ?>" class="btn-eliminar" onclick="borrarReserva(<?= $producto['id'] ?>)">
+                             <button  id="borrar-<?= $producto["id"] ?>" class="btn-eliminar" onclick="borrarReserva(<?= htmlspecialchars($producto['id']) ?>)">
                                 Eliminar <i class="fi fi-sr-trash"></i>
                             </button>
 
@@ -152,15 +152,15 @@ if (!defined('ACCESO_PERMITIDO')) {
                             <div class="contador">
                                 <button 
                                     style="display: block;" 
-                                    id="borrar-12" 
+                                    id="borrar-<?php echo htmlspecialchars($producto['id'])?>" 
                                     class="btn-cantidad" 
-                                    onclick="borrarReserva(12)" 
+                                    onclick="borrarReserva(<?php echo htmlspecialchars(($producto['id']))?>)" 
                                     aria-label="Eliminar producto del carrito">
                                     <i class="fi fi-sr-trash" aria-hidden="true"></i>
                                 </button>
-                                <button id="restar-<?= $producto["id"] ?>" class="btn-cantidad" onclick="cambiarCantidad(<?= $producto['id'] ?>, -1)">-</button>
-                                <span class="cantidad" id="cantidad-<?= $producto["id"] ?>"><?= $cantidadReservada ?></span>
-                                <button class="btn-cantidad" onclick="cambiarCantidad(<?= $producto['id'] ?>, 1)">+</button>
+                                <button id="restar-<?= htmlspecialchars($producto["id"]) ?>" class="btn-cantidad" onclick="cambiarCantidad(<?= $producto['id'] ?>, -1)">-</button>
+                                <span class="cantidad" id="cantidad-<?= htmlspecialchars($producto["id"]) ?>"><?= htmlspecialchars($cantidadReservada) ?></span>
+                                <button class="btn-cantidad" onclick="cambiarCantidad(<?= htmlspecialchars($producto['id']) ?>, 1)">+</button>
                             </div>
                         <?php endif; ?>
 

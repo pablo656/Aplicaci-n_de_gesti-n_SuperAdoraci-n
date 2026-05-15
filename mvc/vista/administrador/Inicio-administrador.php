@@ -14,7 +14,7 @@ if (!isset($_SESSION["nombre"]) || !isset($_SESSION["rol"])) {
 } 
 
 // Verificación de permisos: solo administradores pueden gestionar esta sección
-if ($_SESSION["rol"] != "administrador") { ?>
+if ($_SESSION["rol"] != "administrador"&& $_SESSION["rol"] != "dueno") { ?>
     <div class="acceso-denegado">
         <h1 class="sin-acceso">Acceso no permitido</h1>
         <p>No tienes privilegios para gestionar la base de productos.</p>
@@ -67,7 +67,7 @@ if ($_SESSION["rol"] != "administrador") { ?>
 
                     <div class="acciones-tarjeta">
                         <form method="post" action="?action=quitar" onsubmit="return confirm('¿Estás seguro de eliminar este producto?');">
-                            <input type="hidden" name="id" value="<?= $p['id'] ?>">
+                            <input type="hidden" name="id" value="<?= htmlspecialchars($p['id']) ?>">
                             <button type="submit" class="btn-eliminar">
                                 <i class="fi fi-sr-trash"></i> Quitar producto
                             </button>

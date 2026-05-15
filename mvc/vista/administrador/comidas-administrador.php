@@ -105,11 +105,11 @@ if ($mostrar_modal && $comida_modal): ?>
         <div class="modal">
             <button class="modal-cerrar" onclick="window.location.href='IndexComidas-administrador.php'">&#x2715;</button>
 
-            <form method="post" action="<?= $action_form ?>" id="form-modal" enctype="multipart/form-data">
+            <form method="post" action="<?= htmlspecialchars($action_form) ?>" id="form-modal" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="<?= htmlspecialchars($comida_modal['id']) ?>">
 
                 <label for="nombre">Nombre</label>
-                <input type="text" name="nombre" id="nombre" value="<?= htmlspecialchars($comida_modal['nombre']) ?>" required>
+                <input type="text" name="nombre" id="nombre" value="<?= htmlspecialchars($comida_modal['nombre'],ENT_QUOTES, 'UTF-8') ?>" required>
 
                 <label for="descripcion">Descripción</label>
                 <textarea name="descripcion" id="descripcion" rows="3"
@@ -133,7 +133,7 @@ if ($mostrar_modal && $comida_modal): ?>
                 <input type="file" name="nueva_imagen" id="input_imagen" accept="image/*" aria-label="Seleccionar imagen del producto"
                     <?= $action_form === "?action=insertar" ? 'required' : '' ?>>
 
-                <input type="submit" name="enviar" value="<?= $texto_boton ?>" class="btn-actualizar">
+                <input type="submit" name="enviar" value="<?= htmlspecialchars($texto_boton) ?>" class="btn-actualizar">
             </form>
         </div>
     </div>

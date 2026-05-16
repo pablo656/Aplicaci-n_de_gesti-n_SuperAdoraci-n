@@ -20,6 +20,7 @@ if($action=="log"||$action=="comprobar"||$action=="log_fallido"||$action=="log_b
 }elseif($action=="perfil"){
     $titulo="Perfil";
     $css="<link rel='stylesheet' href='css/perfil.css'>";
+    require("../vista/layerHeader.php");
 }else{
     $titulo="Home";
     $css="<link rel='stylesheet' href='css/inicio.css'>";
@@ -72,7 +73,7 @@ if($action=="log"){
 }else{
     $controller_producto->home();
 }
-if($action=="home"){
+if($action=="home" || $action=="perfil"){
     require("../vista/footer.html");
 }
 

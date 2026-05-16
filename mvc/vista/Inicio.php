@@ -8,8 +8,8 @@ if (!defined('ACCESO_PERMITIDO')) {
 
 <style>
 .diapositiva{position:relative!important;flex-shrink:0}
-.diapositiva img{width:100%;height:clamp(220px,36vw,500px);object-fit:cover;display:block}
-.diapositiva-contenido{position:absolute!important;top:0;left:0;right:0;bottom:0;z-index:6;display:flex!important;flex-direction:column;justify-content:flex-end;padding:clamp(1.5rem,4vw,3.5rem) clamp(1.5rem,5vw,4rem) clamp(1.5rem,4vw,3.5rem) clamp(3rem,7vw,7rem);max-width:620px}
+.diapositiva img{width:100%;height:clamp(300px,46vw,520px);object-fit:cover;display:block}
+.diapositiva-contenido{position:absolute!important;top:0;left:0;right:0;bottom:0;z-index:10;display:flex!important;flex-direction:column;justify-content:flex-end;padding:clamp(1.5rem,4vw,3.5rem) clamp(1.5rem,5vw,4rem) clamp(1.5rem,4vw,3.5rem) clamp(3rem,7vw,7rem);max-width:620px}
 .etiqueta{display:inline-block;background:#e31b23;color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:5px 14px;border-radius:30px;margin-bottom:16px;width:fit-content}
 .diapositiva-titulo{font-size:clamp(1.6rem,4vw,3rem);font-weight:800;color:#fff!important;line-height:1.15;margin:0 0 14px;text-shadow:0 2px 8px rgba(0,0,0,.3)}
 .diapositiva-subtitulo{font-size:clamp(.9rem,1.8vw,1.1rem);color:rgba(255,255,255,.88)!important;margin:0 0 28px;line-height:1.5;text-shadow:0 1px 4px rgba(0,0,0,.25)}

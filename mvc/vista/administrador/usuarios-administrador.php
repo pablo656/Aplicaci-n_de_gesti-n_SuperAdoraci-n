@@ -55,12 +55,12 @@ if ($_SESSION["rol"] != "administrador") { ?>
                     </div>
 
                     <div class="botones">
-                        <button class="btn-rol" onclick="abrirModal('<?= $usuario['id']?>','<?= $usuario['nombre']?>','<?= $usuario['email']?>','<?= $usuario['rol']?>')">
+                        <button class="btn-rol" onclick="abrirModal('<?= htmlspecialchars($usuario['id'], ENT_QUOTES) ?>','<?= htmlspecialchars($usuario['nombre'], ENT_QUOTES) ?>','<?= htmlspecialchars($usuario['email'], ENT_QUOTES) ?>','<?= htmlspecialchars($usuario['rol'], ENT_QUOTES) ?>')">
                             <i class="fi fi-sr-pencil"></i> Cambiar rol
                         </button>
                         
                          <form method="post" action="?action=delete" onsubmit="return confirm('¿Estás seguro?');">
-                            <input type="hidden" name="id" value="<?= $usuario['id'] ?>">
+                            <input type="hidden" name="id" value="<?= htmlspecialchars($usuario['id'], ENT_QUOTES) ?>">
                             <button type="submit" class="btn-eliminar"><i class="fi fi-sr-trash"></i> Eliminar</button>
                         </form>
                     </div>
@@ -84,7 +84,7 @@ if ($_SESSION["rol"] != "administrador") { ?>
 
         <form method="post" action="?action=modificar">
             <!-- Campo oculto para enviar el identificador del usuario -->
-            <input type="hidden" value="id" name="id_usuario" id="id_hidden">
+            <input type="hidden" value="" name="id_usuario" id="id_hidden">
             
             <div class="form-group">
                 <label for="rol_select">Rol del sistema:</label>
@@ -112,7 +112,7 @@ if ($_SESSION["rol"] != "administrador") { ?>
 
         <form method="post" action="?action=add" id="add">
             <!-- Campo oculto para enviar el identificador del usuario -->
-            <input type="hidden" value="id" name="id_usuario" id="id_hidden">
+            <input type="hidden" value="" name="id_usuario" id="id_hidden">
             
             <div class="form-group">
                 <label for="user">Usuario</label>
@@ -122,7 +122,7 @@ if ($_SESSION["rol"] != "administrador") { ?>
                 <label for="pass">Contraseña</label>
                 <input type="password" id="pass" name="pass" placeholder="Crea una contraseña">
                 <!--<label for="rol_select_<?php echo $usuario->id; ?>">Rol del sistema:</label>-->
-                <select name="rol" id="rol_select_<?php echo $usuario->id; ?>">
+                <select name="rol" id="rol_select_nuevo">
                     <option value="cliente">Cliente</option>
                     <option value="dueno">Dueño</option>
                     <option value="administrador">Administrador</option>

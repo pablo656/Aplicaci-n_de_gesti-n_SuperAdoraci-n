@@ -1,11 +1,8 @@
 <?php
 
-define("MAIL_HOST",      "smtp-relay.brevo.com");
-define("MAIL_PORT",      587);
-define("MAIL_USER",      "");    // Login que aparece en la sección SMTP
-define("MAIL_PASS",      "");   // clave SMTP generada en Brevo
-define("MAIL_FROM",      "superadoracionpruebas@gmail.com"); // email verificado en Brevo → Senders & Domains
+define("MAIL_API_KEY",   "TU_API_KEY_DE_BREVO_AQUI");
+define("MAIL_FROM",      "superadoracionpruebas@gmail.com");
 define("MAIL_FROM_NAME", "SuperAdoracion");
 
 // URL base de la aplicación (sin barra final)
-define("APP_URL", "https://superadoracion.site/mvc/vista");
+define("APP_URL", "localhost/git_developer/mvc/vista/IndexHome.php");

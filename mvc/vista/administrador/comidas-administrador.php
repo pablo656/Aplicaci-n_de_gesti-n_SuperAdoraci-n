@@ -53,14 +53,14 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno"): ?>
                         <p class="comida-precio"><?= number_format($c['precio'], 2) ?>&euro;</p>
 
                         <form method="post" action="IndexComidas-administrador.php">
-                            <input type="hidden" name="id" value="<?= $c['id'] ?>">
+                            <input type="hidden" name="id" value="<?= htmlspecialchars($c['id']) ?>">
                             <button type="submit" class="btn-modificar-comida" name="abrir_modal">
                                 <i class="fi fi-sr-pencil"></i> Modificar
                             </button>
                         </form>
 
                         <form method="post" action="?action=delete" onsubmit="return confirm('¿Eliminar esta comida?');">
-                            <input type="hidden" name="id_comida" value="<?= $c['id'] ?>">
+                            <input type="hidden" name="id_comida" value="<?= htmlspecialchars($c['id']) ?>">
                             <button type="submit" class="btn-eliminar-comida">
                                 <i class="fi fi-sr-trash"></i> Eliminar
                             </button>
@@ -105,11 +105,11 @@ if ($mostrar_modal && $comida_modal): ?>
         <div class="modal">
             <button class="modal-cerrar" onclick="window.location.href='IndexComidas-administrador.php'">&#x2715;</button>
 
-            <form method="post" action="<?= $action_form ?>" id="form-modal" enctype="multipart/form-data">
+            <form method="post" action="<?= htmlspecialchars($action_form) ?>" id="form-modal" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="<?= htmlspecialchars($comida_modal['id']) ?>">
 
                 <label for="nombre">Nombre</label>
-                <input type="text" name="nombre" id="nombre" value="<?= htmlspecialchars($comida_modal['nombre']) ?>" required>
+                <input type="text" name="nombre" id="nombre" value="<?= htmlspecialchars($comida_modal['nombre'],ENT_QUOTES, 'UTF-8') ?>" required>
 
                 <label for="descripcion">Descripción</label>
                 <textarea name="descripcion" id="descripcion" rows="3"
@@ -117,7 +117,7 @@ if ($mostrar_modal && $comida_modal): ?>
                 ><?= htmlspecialchars($comida_modal['descripcion']) ?></textarea>
 
                 <label for="precio">Precio (€)</label>
-                <input type="number" step="0.01" min="0" name="precio" id="precio" value="<?= $comida_modal['precio'] ?>" required>
+                <input type="number" step="0.01" min="0" name="precio" id="precio" value="<?= htmlspecialchars($comida_modal['precio']) ?>" required>
 
                 <div class="checkbox-container">
                     <input type="checkbox" name="disponible" id="disponible" value="1"
@@ -133,7 +133,7 @@ if ($mostrar_modal && $comida_modal): ?>
                 <input type="file" name="nueva_imagen" id="input_imagen" accept="image/*" aria-label="Seleccionar imagen del producto"
                     <?= $action_form === "?action=insertar" ? 'required' : '' ?>>
 
-                <input type="submit" name="enviar" value="<?= $texto_boton ?>" class="btn-actualizar">
+                <input type="submit" name="enviar" value="<?= htmlspecialchars($texto_boton) ?>" class="btn-actualizar">
             </form>
         </div>
     </div>

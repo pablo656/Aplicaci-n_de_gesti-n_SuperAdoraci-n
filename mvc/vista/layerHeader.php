@@ -50,3 +50,4 @@ if (!defined('ACCESO_PERMITIDO')) {
         }?>
     </div>
 </nav>
+<input type="hidden" id="csrf_token_global" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">

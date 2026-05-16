@@ -2,6 +2,9 @@
 define('ACCESO_PERMITIDO', true);
 //Esta linea se debe poner en todos los Index para que todas las páginas puedan acceder a la sessión
 session_start();
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 //Este archivo se usara para Home, Log in, Sing in y Perfil
 require_once("../controller/controller_user.php");
 require_once("../controller/productoController.php");
@@ -22,7 +25,18 @@ if($action=="log"||$action=="comprobar"||$action=="log_fallido"||$action=="log_b
     $css="<link rel='stylesheet' href='css/inicio.css'>";
     require("../vista/layerHeader.php");
 }
-
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        // En lugar de un die() con texto, devolvemos un JSON de error
+        header('Content-Type: application/json');
+        echo json_encode([
+            "ok" => false, 
+            "error" => "CSRF_FAIL", 
+            "msg" => "Sesión caducada, recarga la página."
+        ]);
+        exit();
+    }
+}
 if($action=="log"){
     $controller->log();
 }else if($action=="log_fallido"){
@@ -49,8 +63,6 @@ if($action=="log"){
     $controller->register($nombre,$pass,$email);
 }else if($action=="perfil"){
     $controller->perfil();
-}else if($action=="actualizar_nombre"){
-    $controller->actualizar_nombre();
 }else if($action=="confirmar_email"){
     $token=$_GET["token"] ?? "";
     $controller->confirmar_email($token);

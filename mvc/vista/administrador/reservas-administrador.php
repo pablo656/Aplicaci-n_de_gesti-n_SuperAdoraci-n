@@ -130,6 +130,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
         </p>
 
         <form action="?action=delete" method="POST">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
             <input type="hidden" name="id_reserva" id="input-id-reserva-modal">
             
             <div class="campo-nota">

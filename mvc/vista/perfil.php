@@ -103,6 +103,7 @@ $img_base   ??= '';
                                 </div>
                             <?php endif; ?>
                             <form method="post" action="?action=borrar_reserva">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                             <input type="hidden" name="id_reserva" value="<?=$reserva['id_reserva']?>">
                             <button type="submit" class="btn-eliminar" title="Eliminar reserva"><i class="fi fi-sr-trash"></i> Eliminar</button>
                             </form>
@@ -197,6 +198,7 @@ $img_base   ??= '';
                 <p class="modal-cancelar-titulo">¿Cancelar pedido?</p>
                 <p class="modal-cancelar-desc">Esta acción no se puede deshacer.</p>
                 <form method="POST" action="<?= $perfil_url ?>?action=borrar_pedido">
+                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                     <input type="hidden" name="id_pedido" id="input-cancelar-id">
                     <div class="modal-cancelar-acciones">
                         <button type="button" onclick="cerrarModalCancelar()">Volver</button>
@@ -229,7 +231,8 @@ $img_base   ??= '';
                 <p class="editar-error"><?= htmlspecialchars($msgs[$_GET["error"]] ?? "Error desconocido.") ?></p>
             <?php endif; ?>
 
-            <form method="post" action="<?= $home_url ?>?action=actualizar_nombre" class="form-editar">
+            <form method="post" action="indexPerfil.php?action=actualizar_nombre" class="form-editar">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                 <div class="form-grupo">
                     <label for="nombre">Nombre de usuario</label>
                     <input type="text" id="nombre" name="nombre"

@@ -71,9 +71,10 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
                 <p class="subtitulo">Gestiona el stock, precios y disponibilidad de los productos.</p>
             </div>
             <form method="post" >
-            <button name="add" type="submit" class="btn-añadir">
-                <i class="fi fi-sr-plus"></i> Añadir producto
-            </button>
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
+                <button name="add" type="submit" class="btn-añadir">
+                    <i class="fi fi-sr-plus"></i> Añadir producto
+                </button>
             </form>
         </div>
         
@@ -126,21 +127,25 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
                             </div>
                             <?php if($p["inicio"]==0):?>
                             <form method="post" action="?action=inicio">
+                                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                                 <input type="hidden" value="<?= htmlspecialchars($p["id"]) ?>" name="id">
                                 <button type="submit" class="boton_Inicio" name="aniadir_inicio">Poner producto en el inicio</button>
                             </form>
                             <?php else:?>
                                 <form method="post" action="?action=quitar_inicio">
-                                <input type="hidden" value="<?= htmlspecialchars($p["id"]) ?>" name="id">
-                                <button type="submit" class="boton_Inicio" name="quitar_inicio">Quitar el producto del inicio</button>
-                            </form>
+                                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
+                                    <input type="hidden" value="<?= htmlspecialchars($p["id"]) ?>" name="id">
+                                    <button type="submit" class="boton_Inicio" name="quitar_inicio">Quitar el producto del inicio</button>
+                                </form>
                             <?php endif;?>
                             <form method="post">
+                                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                                 <input type="hidden" value="<?= htmlspecialchars($p["id"]) ?>" name="id">
                                 <button type="submit" class="boton_modificar" name="abrir_modal">Modificar</button>
                             </form>
 
                             <form method="post" action="?action=delete" onsubmit="return confirm('¿Estás seguro?');">
+                                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                                 <input type="hidden" name="id_producto" value="<?= htmlspecialchars($p['id']) ?>">
                                 <button type="submit" class="btn-eliminar"><i class="fi fi-sr-trash"></i> Eliminar</button>
                             </form>
@@ -193,6 +198,7 @@ if ($mostrar_modal && $producto_modal): ?>
             <button class="modal-cerrar" onclick="window.location.href='IndexProducto-administrador.php'">x</button>
             
             <form method="post" action="<?= $action_form ?>" id="form-modal" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                 <input type="hidden" value="<?= htmlspecialchars($producto_modal["id"]) ?>" name="id">
                 
                 <label for="nombre">Nombre: </label>

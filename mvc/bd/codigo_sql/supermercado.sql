@@ -94,7 +94,17 @@ FOR EACH ROW
 BEGIN
     UPDATE productos SET stock = stock - NEW.cantidad WHERE id = NEW.id_producto;
 END//
-
+CREATE TRIGGER trg_reserva_update
+AFTER UPDATE ON reservas
+FOR EACH ROW
+BEGIN
+    -- Calculamos la diferencia entre lo nuevo y lo viejo
+    -- Si NEW.cantidad es mayor, la resta será positiva (quita stock)
+    -- Si NEW.cantidad es menor, la resta será negativa (suma stock al restar un negativo)
+    UPDATE productos 
+    SET stock = stock - (NEW.cantidad - OLD.cantidad) 
+    WHERE id = NEW.id_producto;
+END//
 CREATE TRIGGER trg_reserva_delete
 AFTER DELETE ON reservas
 FOR EACH ROW

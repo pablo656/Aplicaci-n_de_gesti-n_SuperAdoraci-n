@@ -25,6 +25,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno"): ?>
             <p class="subtitulo">Gestiona el menú disponible para los pedidos.</p>
         </div>
         <form method="post" action="IndexComidas-administrador.php">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
             <button name="add" type="submit" class="btn-añadir">
                 <i class="fi fi-sr-plus"></i> Añadir comida
             </button>
@@ -53,6 +54,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno"): ?>
                         <p class="comida-precio"><?= number_format($c['precio'], 2) ?>&euro;</p>
 
                         <form method="post" action="IndexComidas-administrador.php">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                             <input type="hidden" name="id" value="<?= htmlspecialchars($c['id']) ?>">
                             <button type="submit" class="btn-modificar-comida" name="abrir_modal">
                                 <i class="fi fi-sr-pencil"></i> Modificar
@@ -60,6 +62,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno"): ?>
                         </form>
 
                         <form method="post" action="?action=delete" onsubmit="return confirm('¿Eliminar esta comida?');">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                             <input type="hidden" name="id_comida" value="<?= htmlspecialchars($c['id']) ?>">
                             <button type="submit" class="btn-eliminar-comida">
                                 <i class="fi fi-sr-trash"></i> Eliminar
@@ -106,6 +109,7 @@ if ($mostrar_modal && $comida_modal): ?>
             <button class="modal-cerrar" onclick="window.location.href='IndexComidas-administrador.php'">&#x2715;</button>
 
             <form method="post" action="<?= htmlspecialchars($action_form) ?>" id="form-modal" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                 <input type="hidden" name="id" value="<?= htmlspecialchars($comida_modal['id']) ?>">
 
                 <label for="nombre">Nombre</label>

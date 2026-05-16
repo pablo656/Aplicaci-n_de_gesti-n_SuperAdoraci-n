@@ -1,6 +1,6 @@
 <?php
 
-define("MAIL_API_KEY",   "");  // Pon aquí tu API key de Brevo
+define("MAIL_API_KEY",   "TU_API_KEY_DE_BREVO_AQUI");
 define("MAIL_FROM",      "superadoracionpruebas@gmail.com");
 define("MAIL_FROM_NAME", "SuperAdoracion");
 

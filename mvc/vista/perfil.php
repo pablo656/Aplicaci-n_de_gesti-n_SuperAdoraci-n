@@ -15,15 +15,53 @@ $img_base   ??= '';
     <aside class="sidebar-perfil">
         <div class="perfil-container">
             <div class="avatar-circulo">
-                <?php 
+                <?php
                 $partes = explode(" ", $_SESSION["nombre"]);
-                echo (count($partes) > 1) 
-                    ? strtoupper(substr($partes[0],0,1) . substr(end($partes),0,1)) 
+                echo (count($partes) > 1)
+                    ? strtoupper(substr($partes[0],0,1) . substr(end($partes),0,1))
                     : strtoupper(substr($partes[0],0,1));
                 ?>
             </div>
             <p class="usuario-nombre"><?=$_SESSION["nombre"]?></p>
             <p class="usuario-email"><?=$_SESSION["email"]?></p>
+        </div>
+
+        <div class="editar-sidebar">
+            <h3 class="editar-sidebar-titulo">Editar usuario</h3>
+
+            <?php if (isset($_GET["ok"])): ?>
+                <p class="editar-ok">Nombre actualizado correctamente.</p>
+            <?php elseif (isset($_GET["error"])): ?>
+                <?php $msgs = [
+                    "nombre_vacio"     => "El nombre no puede estar vacío.",
+                    "nombre_duplicado" => "Ese nombre ya está en uso.",
+                    "error_guardado"   => "Error al guardar.",
+                ]; ?>
+                <p class="editar-error"><?= htmlspecialchars($msgs[$_GET["error"]] ?? "Error desconocido.") ?></p>
+            <?php endif; ?>
+
+            <form method="post" action="<?= $home_url ?>?action=actualizar_nombre" class="form-editar">
+                <div class="form-grupo">
+                    <label for="nombre">Nombre de usuario</label>
+                    <input type="text" id="nombre" name="nombre"
+                           value="<?= htmlspecialchars($_SESSION["nombre"]) ?>"
+                           maxlength="100" required>
+                </div>
+                <button type="submit" class="btn-guardar">Guardar</button>
+            </form>
+        </div>
+
+        <div class="feedback-sidebar">
+            <h3 class="feedback-titulo">Enviar sugerencia</h3>
+            <?php if (isset($_GET['feedback_ok'])): ?>
+                <p class="feedback-ok">¡Mensaje enviado correctamente!</p>
+            <?php elseif (isset($_GET['feedback_error'])): ?>
+                <p class="feedback-error">Error al enviar. Inténtalo de nuevo.</p>
+            <?php endif; ?>
+            <form method="post" action="indexPerfil.php?action=enviar_feedback" class="form-feedback">
+                <textarea name="mensaje" rows="4" placeholder="Tu sugerencia o comentario..." required maxlength="1000" aria-label="Mensaje de sugerencia"></textarea>
+                <button type="submit" class="btn-feedback">Enviar</button>
+            </form>
         </div>
     </aside>
 
@@ -215,29 +253,5 @@ $img_base   ??= '';
             }
         </script>
 
-        <div class="seccion seccion-editar">
-            <h2 class="seccion-titulo">Editar perfil</h2>
-
-            <?php if (isset($_GET["ok"])): ?>
-                <p class="editar-ok">Nombre actualizado correctamente.</p>
-            <?php elseif (isset($_GET["error"])): ?>
-                <?php $msgs = [
-                    "nombre_vacio"     => "El nombre no puede estar vacío.",
-                    "nombre_duplicado" => "Ese nombre de usuario ya está en uso.",
-                    "error_guardado"   => "Error al guardar los cambios.",
-                ]; ?>
-                <p class="editar-error"><?= htmlspecialchars($msgs[$_GET["error"]] ?? "Error desconocido.") ?></p>
-            <?php endif; ?>
-
-            <form method="post" action="<?= $home_url ?>?action=actualizar_nombre" class="form-editar">
-                <div class="form-grupo">
-                    <label for="nombre">Nombre de usuario</label>
-                    <input type="text" id="nombre" name="nombre"
-                           value="<?= htmlspecialchars($_SESSION["nombre"]) ?>"
-                           maxlength="100" required>
-                </div>
-                <button type="submit" class="btn-guardar">Guardar cambios</button>
-            </form>
-        </div>
     </main>
 </div>

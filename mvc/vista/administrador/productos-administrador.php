@@ -86,12 +86,14 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
                 $breadcrums = "<a href='IndexProducto-administrador.php' class='breadcrumb-enlace'>Todos los productos</a>";
                 if($subcategoria != null){
                     $breadcrums .= $separador;
-                    $breadcrums .= "<a href='IndexProducto-administrador.php?action=$action' class='breadcrumb-enlace'>" . str_replace('_', ' ', $action) . "</a>";
+                    // Escapa tanto el atributo como el texto
+                    $breadcrums .= "<a href='IndexProducto-administrador.php?action=" . htmlspecialchars($action, ENT_QUOTES) . "' class='breadcrumb-enlace'>" . htmlspecialchars(str_replace('_', ' ', $action)) . "</a>";
                     $breadcrums .= $separador;
-                    $breadcrums .= "<span class='breadcrumb-texto'>$subcategoria</span>";
+                    $breadcrums .= "<span class='breadcrumb-texto'>" . htmlspecialchars($subcategoria) . "</span>";
+
                 }else{
                     $breadcrums .= $separador;
-                    $breadcrums .= "<span class='breadcrumb-texto'>" . str_replace('_', ' ', $action) . "</span>";
+                    $breadcrums .= "<span class='breadcrumb-texto'>" . htmlspecialchars(str_replace('_', ' ', $action)) . "</span>";
                 }
             }else{
                 $breadcrums = "<span class='breadcrumb-texto'>Todos los productos</span>";
@@ -124,22 +126,22 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
                             </div>
                             <?php if($p["inicio"]==0):?>
                             <form method="post" action="?action=inicio">
-                                <input type="hidden" value="<?= $p["id"] ?>" name="id">
+                                <input type="hidden" value="<?= htmlspecialchars($p["id"]) ?>" name="id">
                                 <button type="submit" class="boton_Inicio" name="aniadir_inicio">Poner producto en el inicio</button>
                             </form>
                             <?php else:?>
                                 <form method="post" action="?action=quitar_inicio">
-                                <input type="hidden" value="<?= $p["id"] ?>" name="id">
+                                <input type="hidden" value="<?= htmlspecialchars($p["id"]) ?>" name="id">
                                 <button type="submit" class="boton_Inicio" name="quitar_inicio">Quitar el producto del inicio</button>
                             </form>
                             <?php endif;?>
                             <form method="post">
-                                <input type="hidden" value="<?= $p["id"] ?>" name="id">
+                                <input type="hidden" value="<?= htmlspecialchars($p["id"]) ?>" name="id">
                                 <button type="submit" class="boton_modificar" name="abrir_modal">Modificar</button>
                             </form>
 
                             <form method="post" action="?action=delete" onsubmit="return confirm('¿Estás seguro?');">
-                                <input type="hidden" name="id_producto" value="<?= $p['id'] ?>">
+                                <input type="hidden" name="id_producto" value="<?= htmlspecialchars($p['id']) ?>">
                                 <button type="submit" class="btn-eliminar"><i class="fi fi-sr-trash"></i> Eliminar</button>
                             </form>
                         </div>
@@ -212,11 +214,11 @@ if ($mostrar_modal && $producto_modal): ?>
                     step="<?= $step ?>" 
                     name="stock" 
                     id="stock" 
-                    value="<?= $stock_valor ?>"
+                    value="<?= htmlspecialchars($stock_valor) ?>"
                 >
                 
                 <label for="precio">Precio: </label>
-                <input type="number" step="0.01" min="0" name="precio" id="precio" value="<?= $producto_modal["precio"] ?>">
+                <input type="number" step="0.01" min="0" name="precio" id="precio" value="<?= htmlspecialchars($producto_modal["precio"]) ?>">
                 
                 <label for="descuento">Descuento: </label>
                 <div class="input-porcentaje">
@@ -236,7 +238,7 @@ if ($mostrar_modal && $producto_modal): ?>
                 <label for="categoria">Categoría: </label>
                 <select name="categoria" id="categoria" onchange="selectSubcategotia()">
                     <?php foreach ($categorias as $cat): ?>
-                        <option value="<?= $cat ?>" <?= ($producto_modal['categoria'] == $cat) ? 'selected' : '' ?>><?= str_replace('_', ' ', $cat) ?></option>
+                        <option value="<?= htmlspecialchars($cat) ?>" <?= ($producto_modal['categoria'] == $cat) ? 'selected' : '' ?>><?= htmlspecialchars(str_replace('_', ' ', $cat)) ?></option>
                     <?php endforeach; ?>
                 </select>
 
@@ -245,7 +247,7 @@ if ($mostrar_modal && $producto_modal): ?>
 
                 <label>Imagen del producto:</label>
                 <div class="contenedor-preview">
-                    <img id="preview" src="../<?= $producto_modal['url_imagen'] ?>" alt="Vista previa">
+                    <img id="preview" src="../<?= htmlspecialchars($producto_modal['url_imagen']) ?>" alt="Vista previa">
                 </div>
                 <?php if($action_form=="?action=insertar"):?>
                     <input type="file" name="nueva_imagen" id="input_imagen" accept="image/*" aria-label="Seleccionar imagen" required>

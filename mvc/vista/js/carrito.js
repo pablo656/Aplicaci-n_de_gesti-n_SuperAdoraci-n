@@ -58,10 +58,14 @@ async function cambiarCantidad(id, cambio, precio){
     });
 }
 
-function validarPeso(input){
+function validarPeso(input) {
     let cantidad = parseFloat(input.value);
-    if(isNaN(cantidad) || cantidad <= 0){
-        input.value = 0.1;
+
+    
+    if (isNaN(cantidad) || cantidad <= 0) {
+        input.value = "0.1";
+    } else {
+        input.value = cantidad.toFixed(1);
     }
 }
 

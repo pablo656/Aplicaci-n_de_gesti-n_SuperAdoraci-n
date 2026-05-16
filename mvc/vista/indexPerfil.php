@@ -13,7 +13,22 @@ define('ACCESO_PERMITIDO', true);
     $css = "<link rel='stylesheet' href='css/perfil.css'>";
     $action = $_GET["action"] ?? "list";
     require("../vista/layerHeader.php");
-    if($action=="borrar_reserva"){
+
+    if($action=="enviar_feedback"){
+        require_once("../helpers/Mailer.php");
+        $mensaje = trim($_POST["mensaje"] ?? "");
+        if (!empty($mensaje)) {
+            $mailer = new Mailer();
+            $nombre = htmlspecialchars($_SESSION["nombre"]);
+            $email  = htmlspecialchars($_SESSION["email"]);
+            $cuerpo = "<p><strong>De:</strong> $nombre ($email)</p><p>" . nl2br(htmlspecialchars($mensaje)) . "</p>";
+            $ok = $mailer->enviar("superadoracionpruebas@gmail.com", "Sugerencia de $nombre", $cuerpo);
+            header("Location: indexPerfil.php?" . ($ok ? "feedback_ok=1" : "feedback_error=1"));
+        } else {
+            header("Location: indexPerfil.php");
+        }
+        exit();
+    } else if($action=="borrar_reserva"){
         $id_reserva=$_POST["id_reserva"];
         $controller_reservas->eliminar_reserva($id_reserva);
         header("Location: " . $_SERVER['HTTP_REFERER']);

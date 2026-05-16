@@ -78,7 +78,6 @@ class Controller_user{
         $mailer = new Mailer();
         $ok = $mailer->enviar($email, $asunto, $cuerpo);
         if (!$ok) {
-            // Muestra el log SMTP para depuración — quitar cuando esté en producción
             echo "<pre style='background:#111;color:#f55;padding:1em'>";
             echo "ERROR al enviar email. Log SMTP:\n";
             foreach ($mailer->getLog() as $linea) echo htmlspecialchars($linea) . "\n";

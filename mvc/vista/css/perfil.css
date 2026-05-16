@@ -536,3 +536,240 @@
     padding: 8px 14px;
     margin-bottom: 8px;
 }
+
+/* --- EDITAR SIDEBAR --- */
+.editar-sidebar {
+    margin-top: 20px;
+    background: #f7f7f8;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    padding: 14px 16px;
+    text-align: left;
+}
+
+.editar-sidebar-titulo {
+    font-size: 12px;
+    font-weight: 600;
+    color: #595959;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 10px;
+}
+
+.editar-sidebar .form-editar {
+    gap: 10px;
+}
+
+.editar-sidebar .form-grupo input[type="text"] {
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.editar-sidebar .btn-guardar {
+    align-self: stretch;
+    text-align: center;
+    border-radius: 8px;
+    padding: 10px 0;
+    font-size: 13px;
+    min-height: 44px;
+}
+
+/* --- FEEDBACK SIDEBAR --- */
+.feedback-sidebar {
+    margin-top: 20px;
+    background: #f7f7f8;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    padding: 14px 16px;
+    text-align: left;
+}
+
+.feedback-titulo {
+    font-size: 12px;
+    font-weight: 600;
+    color: #595959;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 10px;
+}
+
+.form-feedback {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-feedback textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    color: #1a1c2c;
+    background: #fff;
+    resize: none;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    line-height: 1.5;
+}
+
+.form-feedback textarea::placeholder { color: #aaa; }
+
+.form-feedback textarea:focus {
+    border-color: #1a1e29;
+    box-shadow: 0 0 0 3px rgba(26,28,44,.08);
+}
+
+.btn-feedback {
+    align-self: stretch;
+    background-color: #1a1e29;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 0;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    min-height: 44px;
+    letter-spacing: 0.02em;
+}
+
+.btn-feedback:hover { background-color: #2e3550; }
+.btn-feedback:active { transform: translateY(1px); }
+
+.feedback-ok {
+    font-size: 12px;
+    color: #3b6d11;
+    background: #eaf3de;
+    border-radius: 6px;
+    padding: 6px 10px;
+    margin-bottom: 6px;
+}
+
+.feedback-error {
+    font-size: 12px;
+    color: #a32d2d;
+    background: #fcebeb;
+    border-radius: 6px;
+    padding: 6px 10px;
+    margin-bottom: 6px;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+/* --- Tablet (≤ 768px) --- */
+@media (max-width: 768px) {
+    .layout-perfil {
+        flex-direction: column;
+        gap: 20px;
+        margin: 20px 16px;
+        max-width: 100%;
+    }
+
+    /* Sidebar: bloque completo, ya no sticky */
+    .sidebar-perfil {
+        position: static;
+        display: block;
+        flex: none;
+        width: 100%;
+    }
+
+    /* Avatar + nombre/email en fila horizontal */
+    .perfil-container {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        text-align: left;
+    }
+
+    .avatar-circulo {
+        width: 64px;
+        height: 64px;
+        font-size: 22px;
+        margin: 0;
+        flex-shrink: 0;
+    }
+
+    .usuario-nombre { font-size: 17px; margin: 0 0 2px; }
+    .usuario-email  { font-size: 13px; }
+
+    /* Feedback debajo del perfil-container, en fila textarea+botón */
+    .feedback-sidebar { margin-top: 14px; padding-top: 14px; }
+
+    .form-feedback {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .form-feedback textarea { flex: 1; }
+
+    .btn-feedback {
+        align-self: stretch;
+        white-space: nowrap;
+        border-radius: 8px;
+        padding: 0 18px;
+    }
+}
+
+/* --- Móvil (≤ 480px) --- */
+@media (max-width: 480px) {
+    .layout-perfil {
+        margin: 12px 10px;
+        gap: 14px;
+    }
+
+    .stats { gap: 8px; }
+    .stat  { padding: 10px 6px; }
+    .stat-num   { font-size: 18px; }
+    .stat-label { font-size: 10px; }
+
+    .seccion { padding: 14px; }
+
+    /* Items: precio+botón bajan a nueva fila */
+    .item-pedido { flex-wrap: wrap; gap: 10px; }
+
+    .item-info-izquierda { flex: 1 1 100%; }
+
+    .item-info-derecha {
+        flex: 1 1 100%;
+        justify-content: flex-end;
+        margin-left: 0;
+    }
+
+    .item-precio { margin-left: 0; }
+
+    .precios-contenedor {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .form-grupo input[type="text"] { max-width: 100%; }
+
+    /* Feedback: columna en móvil */
+    .form-feedback {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .btn-feedback {
+        align-self: stretch;
+        text-align: center;
+        border-radius: 8px;
+        padding: 10px 0;
+    }
+
+    /* Modal */
+    .modal-cancelar-box {
+        margin: 0 16px;
+        padding: 22px 18px 18px;
+    }
+}

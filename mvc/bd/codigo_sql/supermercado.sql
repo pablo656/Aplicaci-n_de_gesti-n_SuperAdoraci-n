@@ -42,7 +42,7 @@ CREATE TABLE reservas (
     id          INT AUTO_INCREMENT PRIMARY KEY,
     id_producto INT NOT NULL,
     id_usuario  INT NOT NULL,
-    cantidad    DECIMAL NOT NULL,
+    cantidad    DECIMAL (10,1) NOT NULL,
     fecha       DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_producto) REFERENCES productos(id) ON DELETE CASCADE,
     FOREIGN KEY (id_usuario)  REFERENCES usuarios(id)  ON DELETE CASCADE

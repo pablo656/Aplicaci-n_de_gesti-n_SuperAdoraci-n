@@ -25,10 +25,14 @@ async function cambiarCantidad(id, cambio){ // ← async
         body: "id_producto=" + id + "&cantidad=" + cantidad
     });
 }
-function validarPeso(input){
+function validarPeso(input) {
     let cantidad = parseFloat(input.value);
-    if(isNaN(cantidad) || cantidad <= 0){
-        input.value = 0.1;
+
+    
+    if (isNaN(cantidad) || cantidad <= 0) {
+        input.value = "0.1";
+    } else {
+        input.value = cantidad.toFixed(1);
     }
 }
 
@@ -95,4 +99,4 @@ function inicializar(){
         }
     }
 }
-window.onload=inicializar();
+window.onload=inicializar;

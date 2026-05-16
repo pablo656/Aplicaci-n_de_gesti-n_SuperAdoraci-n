@@ -11,7 +11,7 @@ if (!isset($_SESSION["nombre"]) || !isset($_SESSION["email"]) || !isset($_SESSIO
     exit();
 }
 
-if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueño") { ?>
+if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
     <div style="text-align: center; padding: 50px;">
         <h1 class="sin-acceso" style="color: #e31b23;">Acceso no permitido</h1>
         <p>No tienes privilegios para gestionar los pedidos.</p>
@@ -45,7 +45,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueño") { ?>
                     <h2 class="nombre-cliente">
                         <i class="fi fi-sr-user"></i>
                         <?php echo htmlspecialchars($nombre_usuario); ?>
-                        <span>(ID: <?php echo $id_usuario; ?>) &mdash; <?php echo htmlspecialchars($email_usuario); ?></span>
+                        <span>(ID: <?php echo htmlspecialchars($id_usuario); ?>) &mdash; <?php echo htmlspecialchars($email_usuario); ?></span>
                         <?php if (count($pendientes) > 0): ?>
                             <span class="badge-pendientes-header"><?php echo count($pendientes); ?> pendiente<?php echo count($pendientes) > 1 ? 's' : ''; ?></span>
                         <?php endif; ?>
@@ -108,7 +108,9 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueño") { ?>
                                             </span>
                                         <?php endif; ?>
                                         <?php if (!empty($pedido['mensaje'])): ?>
-                                            <span class="badge-mensaje badge-mensaje-btn" onclick="mostrarModalNota(<?= htmlspecialchars(json_encode($pedido['mensaje'])) ?>)">
+                                            <span class="badge-mensaje badge-mensaje-btn" 
+                                                data-nota="<?= htmlspecialchars($pedido['mensaje']) ?>" 
+                                                onclick="mostrarModalNota(this.dataset.nota)">
                                                 <i class="fi fi-sr-comment"></i> Nota
                                             </span>
                                         <?php endif; ?>
@@ -131,11 +133,11 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueño") { ?>
 
                                     <div class="contador">
                                         <?php if (!$pedido["realizado"]): ?>
-                                            <button class="btn-completar" onclick="mostrarModalCompletar(<?= $pedido['id_pedido'] ?>)">
+                                            <button class="btn-completar" onclick="mostrarModalCompletar(<?= (int)$pedido['id_pedido'] ?>)">
                                                 <i class="fi fi-sr-check"></i> Realizado
                                             </button>
                                         <?php endif; ?>
-                                        <button class="btn-eliminar" onclick="mostrarModalEliminar(<?= $pedido['id_pedido'] ?>)">
+                                        <button class="btn-eliminar" onclick="mostrarModalEliminar(<?= (int)$pedido['id_pedido'] ?>)">
                                             <i class="fi fi-sr-trash"></i> Eliminar
                                         </button>
                                     </div>

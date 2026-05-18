@@ -18,9 +18,9 @@ if($action=="log"||$action=="comprobar"||$action=="log_fallido"||$action=="log_b
     $titulo="Registrarse";
     $css="<link rel='stylesheet' href='css/log_in.css'>";
 }elseif($action=="perfil"){
-    $titulo="Perfil";
-    $css="<link rel='stylesheet' href='css/perfil.css'>";
-    require("../vista/layerHeader.php");
+    $params = $_SERVER['QUERY_STRING'] ? '?' . http_build_query(array_diff_key($_GET, ['action' => ''])) : '';
+    header("Location: indexPerfil.php" . $params);
+    exit();
 }else{
     $titulo="Home";
     $css="<link rel='stylesheet' href='css/inicio.css'>";

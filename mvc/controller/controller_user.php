@@ -133,20 +133,20 @@ class Controller_user{
         }
         $nuevo_nombre = trim($_POST["nombre"] ?? "");
         if (empty($nuevo_nombre)) {
-            header("Location: IndexPerfil.php?action=perfil&error=nombre_vacio");
+            header("Location: indexPerfil.php?error=nombre_vacio");
             return;
         }
         $resultado = $this->model_user->actualizar_nombre($_SESSION["id"], $nuevo_nombre);
         if ($resultado === "nombre_duplicado") {
-            header("Location: IndexPerfil.php?action=perfil&error=nombre_duplicado");
+            header("Location: indexPerfil.php?error=nombre_duplicado");
             return;
         }
         if ($resultado === false) {
-            header("Location: IndexPerfil.php?action=perfil&error=error_guardado");
+            header("Location: indexPerfil.php?error=error_guardado");
             return;
         }
         $_SESSION["nombre"] = $nuevo_nombre;
-        header("Location: IndexPerfil.php?action=perfil&ok=1");
+        header("Location: indexPerfil.php?ok=1");
     }
     public function cambiarRol($id,$rol){
        if ($this->model_user->cambiarRol($id, $rol)) {

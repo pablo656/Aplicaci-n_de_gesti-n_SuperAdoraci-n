@@ -84,6 +84,7 @@ if (!defined('ACCESO_PERMITIDO')) {
         <button class="btn-cerrar-modal" onclick="cerrarModal()" aria-label="Cerrar">&times;</button>
         <h2 id="modalTitulo">Pedir</h2>
         <form method="POST" action="IndexPedidos.php?action=crear">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
             <input type="hidden" name="id_comida" id="modalIdComida">
 
             <label for="fecha_entrega">Fecha de entrega <span class="label-req">*</span></label>

@@ -119,14 +119,15 @@ class model_reservas{
             $stmt->bind_param("dii", $cantidad, $id_usuario, $id_producto); // ← "d" en lugar de "i"
             $result = $stmt->execute();
             $stmt->close();
+            
         }
 
-        $sql = "UPDATE productos SET stock=stock-? WHERE id=?";
+        /*$sql = "UPDATE productos SET stock=stock-? WHERE id=?";
         $stmt = $this->conn->prepare($sql);
         if($stmt === false) return false;
         $stmt->bind_param("di", $cantidad, $id_producto); // ← "d" en lugar de "i"
         $result = $stmt->execute();
-        $stmt->close();
+        $stmt->close();*/
         return $result;
 
     }

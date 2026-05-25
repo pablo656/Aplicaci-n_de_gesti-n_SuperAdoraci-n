@@ -1,102 +1,181 @@
-async function cambiarCantidad(id, cambio){ // ← async
+/**
+ * Helper para obtener el token CSRF de forma segura.
+ * Busca primero el input global que añadimos al inicio del body.
+ */
+const getCSRFToken = () => {
+    const globalToken = document.getElementById("csrf_token_global");
+    if (globalToken && globalToken.value) return globalToken.value;
+
+    const genericToken = document.querySelector('input[name="csrf_token"]');
+    return genericToken ? genericToken.value : "";
+};
+
+/**
+ * Función principal para botones + / - (Productos por unidad)
+ */
+async function cambiarCantidad(id, cambio) {
     const span = document.getElementById("cantidad-" + id);
-    let cantidad = parseInt(span.textContent) + cambio;
-    let boton_restar = document.getElementById("restar-" + id);
-    let boton_borar = document.getElementById("borrar-" + id);
-
-    if(cambio == 1){
-        const ok = await comprobarStock(id, cantidad); // ← await
-        if(!ok) return false;
-    }
-
-    if(cantidad == 1){
-        boton_restar.style.display = "none";
-        boton_borar.style.display = "block";
-    }else{
-        boton_restar.style.display = "block";
-        boton_borar.style.display = "none";
-    }
-
-    span.textContent = cantidad;
-
-    fetch("?action=actualizar_cantidad", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: "id_producto=" + id + "&cantidad=" + cantidad
-    });
-}
-function validarPeso(input) {
-    let cantidad = parseFloat(input.value);
-
+    const btnRestar = document.getElementById("restar-" + id);
+    const btnBorrar = document.getElementById("borrar-" + id);
     
-    if (isNaN(cantidad) || cantidad <= 0) {
+    if (!span) return;
+
+    let cantidadActual = parseInt(span.textContent);
+    let nuevaCantidad = cantidadActual + cambio;
+
+    // Validación de stock si sumamos
+    if (cambio === 1) {
+        const tieneStock = await comprobarStock(id, nuevaCantidad);
+        if (!tieneStock) return;
+    }
+
+    // UI: Alternar entre el botón "-" y la papelera si la cantidad es 1
+    if (nuevaCantidad <= 1) {
+        nuevaCantidad = 1;
+        if (btnRestar) btnRestar.style.display = "none";
+        if (btnBorrar) btnBorrar.style.display = "block";
+    } else {
+        if (btnRestar) btnRestar.style.display = "block";
+        if (btnBorrar) btnBorrar.style.display = "none";
+    }
+
+    span.textContent = nuevaCantidad;
+    ejecutarFetch("actualizar_cantidad", `id_producto=${id}&cantidad=${nuevaCantidad}`);
+}
+
+/**
+ * Lógica para productos vendidos por PESO (Kg)
+ */
+function validarPeso(input) {
+    let cant = parseFloat(input.value);
+    if (isNaN(cant) || cant <= 0) {
         input.value = "0.1";
     } else {
-        input.value = cantidad.toFixed(1);
+        input.value = cant.toFixed(1);
     }
 }
 
-function cambiarCantidadPeso(id, valor, precio){
-    let cantidad = parseFloat(valor);
-    cantidad = Math.round(cantidad * 10) / 10;
+async function cambiarCantidadPeso(id, valor) {
+    let cant = parseFloat(valor);
+    if (isNaN(cant) || cant < 0.1) cant = 0.1;
+    
+    const cantidadFormateada = cant.toFixed(1);
 
-    fetch("?action=actualizar_cantidad", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: "id_producto=" + id + "&cantidad=" + cantidad
-    });
-}
-window.addEventListener("beforeunload", function(){
-    let inputs = document.getElementsByClassName("input-peso");
-    for(let i = 0; i < inputs.length; i++){
-        let id = inputs[i].id.replace("cantidad-", "");
-        let cantidad = parseFloat(inputs[i].value);
-        if(isNaN(cantidad) || cantidad <= 0) cantidad = 0.1;
-        cantidad = Math.round(cantidad * 10) / 10;
-
-        // sendBeacon garantiza que la petición se completa aunque la página se cierre
-        let datos = new FormData();
-        datos.append("id_producto", id);
-        datos.append("cantidad", cantidad);
-        navigator.sendBeacon("?action=actualizar_cantidad", datos);
-    }
-});
-//async significa asincrono, se hace de esta manera para no tener que cargar la página y await sirve para esperar a los datos que llegan de manera asincrona
-async function comprobarStock(id, cantidad){
-    const r = await fetch("?action=comprobar_stock", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: "id_producto=" + id + "&cantidad=" + cantidad
-    });
-    const data = await r.json();
-    if(data.ok){
-        return true;
-    }else{
-        alert("No queda más stock de este producto");
-        return false;
-    }
-}
-function borrarReserva(id){
-    fetch("?action=borrar_reserva", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: "id_producto=" + id
-    }).then(() => {
-        window.location.reload(); // ← recargar la página tras borrar
-    });
-
-}
-function inicializar(){
-    let contadores=document.getElementsByClassName("contador");
-    for(let i=0;i<contadores.length;i++){
-        let texto = contadores[i].querySelector("span").textContent.trim();
-        let cantidad = parseInt(texto);
-        if(cantidad==1){
-            let boton_borrar=contadores[i].children[0];
-            let boton_restar=contadores[i].children[1];
-            boton_restar.style.display="none";
-            boton_borrar.style.display="block";
+    // Validamos stock antes de procesar el cambio de peso
+    const tieneStock = await comprobarStock(id, cantidadFormateada);
+    
+    if (tieneStock) {
+        ejecutarFetch("actualizar_cantidad", `id_producto=${id}&cantidad=${cantidadFormateada}`);
+        // Actualizamos el respaldo del valor correcto
+        const input = document.getElementById("cantidad-" + id);
+        if (input) input.setAttribute('data-anterior', cantidadFormateada);
+    } else {
+        // Si no hay stock, revertimos el input al último valor válido
+        const input = document.getElementById("cantidad-" + id);
+        if (input && input.hasAttribute('data-anterior')) {
+            input.value = input.getAttribute('data-anterior');
+        } else {
+            window.location.reload(); 
         }
     }
 }
-window.onload=inicializar;
+
+/**
+ * Función genérica para enviar datos al Index vía POST
+ */
+function ejecutarFetch(action, params) {
+    const token = getCSRFToken();
+    return fetch(`?action=${action}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `${params}&csrf_token=${token}`
+    })
+    .then(async response => {
+        const text = await response.text();
+        try {
+            const data = JSON.parse(text);
+            if (data.error === "CSRF_FAIL") {
+                console.warn("Sesión expirada, recargando...");
+                window.location.reload();
+            }
+            return data;
+        } catch (e) {
+            return text;
+        }
+    });
+}
+
+/**
+ * Comprobar disponibilidad en servidor
+ */
+async function comprobarStock(id, cantidad) {
+    const token = getCSRFToken();
+    try {
+        const response = await fetch("?action=comprobar_stock", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `id_producto=${id}&cantidad=${cantidad}&csrf_token=${token}`
+        });
+
+        const text = await response.text();
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch (e) {
+            alert("Error de sesión. La página se recargará.");
+            window.location.reload();
+            return false;
+        }
+
+        if (data.ok) return true;
+
+        if (data.error === "CSRF_FAIL") {
+            window.location.reload();
+            return false;
+        }
+
+        alert("No queda más stock de este producto");
+        return false;
+    } catch (error) {
+        console.error("Error de conexión:", error);
+        return false;
+    }
+}
+
+/**
+ * Eliminar una reserva por completo
+ */
+function borrarReserva(id) {
+    ejecutarFetch("borrar_reserva", `id_producto=${id}`)
+    .then(() => {
+        window.location.reload();
+    });
+}
+
+/**
+ * Configuración inicial al cargar la página
+ */
+function inicializar() {
+    // 1. Configurar visibilidad inicial de botones +/-
+    document.querySelectorAll(".contador").forEach(cont => {
+        const span = cont.querySelector("span[id^='cantidad-']");
+        if (span) {
+            const id = span.id.replace("cantidad-", "");
+            const cant = parseInt(span.textContent);
+            const btnRestar = document.getElementById("restar-" + id);
+            const btnBorrar = document.getElementById("borrar-" + id);
+            
+            if (cant <= 1) {
+                if (btnRestar) btnRestar.style.display = "none";
+                if (btnBorrar) btnBorrar.style.display = "block";
+            }
+        }
+    });
+
+    // 2. Guardar valores iniciales de inputs de peso para poder revertir si falla el stock
+    document.querySelectorAll(".input-peso").forEach(input => {
+        input.setAttribute('data-anterior', input.value);
+    });
+}
+
+window.onload = inicializar;

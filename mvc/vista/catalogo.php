@@ -150,11 +150,12 @@ if (!defined('ACCESO_PERMITIDO')) {
                         <?php else: ?>
                             <!-- Contador para productos por unidad -->
                             <div class="contador">
+                                
                                 <button 
                                     style="display: block;" 
                                     id="borrar-<?php echo htmlspecialchars($producto['id'])?>" 
                                     class="btn-cantidad" 
-                                    onclick="borrarReserva(<?php echo htmlspecialchars(($producto['id']))?>)" 
+                                    onclick="borrarReserva(<?= htmlspecialchars($producto['id']) ?>)" 
                                     aria-label="Eliminar producto del carrito">
                                     <i class="fi fi-sr-trash" aria-hidden="true"></i>
                                 </button>
@@ -167,6 +168,7 @@ if (!defined('ACCESO_PERMITIDO')) {
                     <?php else: ?>
                         <!-- Sin reservar: solo botón reservar -->
                         <form method="post" action="?action=reservar">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                             <input type="hidden" name="id_producto" value="<?= $producto["id"] ?>">
                             <input type="hidden" name="cantidad" value="1">
                             <button type="submit" class="reservar" name="reservar">Reservar</button>

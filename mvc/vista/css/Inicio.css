@@ -19,24 +19,23 @@ body {
 /* ── Carrusel ───────────────────────────────────────────── */
 .envoltura {
     position: relative;
-    margin: 28px var(--gap-lateral) 64px;
+    margin: 14px var(--gap-lateral) 64px;
     overflow: hidden;
     border-radius: 18px;
     box-shadow: 0 16px 56px rgba(0, 0, 0, .24);
     background-color: black;
 }
 
-/* Vignette lateral + gradiente inferior */
+/* Oscurecimiento solo en el lado derecho e inferior */
 .envoltura::before {
     content: '';
     position: absolute;
     inset: 0;
     background:
-        linear-gradient(to bottom, rgba(0,0,0,.08) 0%, transparent 30%),
-        linear-gradient(to top,    rgba(0,0,0,.55) 0%, transparent 45%);
+        linear-gradient(to left,  rgba(0,0,0,.45) 0%, transparent 60%),
+        linear-gradient(to top,   rgba(0,0,0,.25) 0%, transparent 35%);
     z-index: 4;
     pointer-events: none;
-    border-radius: inherit;
 }
 
 .pista {
@@ -65,7 +64,7 @@ body {
 
 .diapositiva img {
     width: 100%;
-    height: clamp(220px, 36vw, 500px);
+    height: clamp(300px, 46vw, 520px);
     object-fit: cover;
     display: block;
 }
@@ -106,7 +105,7 @@ body {
     color: #fff;
     line-height: 1.15;
     margin: 0 0 14px;
-    text-shadow: 0 2px 8px rgba(0,0,0,.3);
+    text-shadow: 0 2px 12px rgba(0,0,0,.7), 0 1px 3px rgba(0,0,0,.5);
 }
 
 .diapositiva-subtitulo {
@@ -114,7 +113,7 @@ body {
     color: rgba(255,255,255,.88);
     margin: 0 0 28px;
     line-height: 1.5;
-    text-shadow: 0 1px 4px rgba(0,0,0,.25);
+    text-shadow: 0 1px 8px rgba(0,0,0,.6);
 }
 
 .diapositiva-boton {
@@ -230,7 +229,7 @@ body {
 /* ── Carrusel responsive ─────────────────────────────────── */
 @media (max-width: 768px) {
     .envoltura {
-        margin: 16px 0 48px;
+        margin: 0 0 48px;
         border-radius: 0;
     }
 
@@ -244,7 +243,7 @@ body {
     .siguiente { right: 12px; }
 
     .diapositiva {
-        height: clamp(220px, 52vw, 360px);
+        height: clamp(280px, 60vw, 420px);
     }
 
     .diapositiva img {

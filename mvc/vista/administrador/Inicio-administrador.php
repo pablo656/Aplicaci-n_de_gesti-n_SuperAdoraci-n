@@ -81,7 +81,7 @@ if ($_SESSION["rol"] != "administrador"&& $_SESSION["rol"] != "dueno") { ?>
 
         // 3. Renderizado de huecos vacíos (Misma forma que el producto, estilo image_30795c.png)
         for($i = 0; $i < $huecos_vacios; $i++): ?>
-                <a  class="btn-hueco-vacio" href="administrador/productos">
+                <a  class="btn-hueco-vacio" href="/administrador/productos">
                     <div class="producto_vacio">
                         <div class="contenido_interno">
                             <div class="simbolo">+</div>
@@ -106,6 +106,6 @@ if ($_SESSION["rol"] != "administrador"&& $_SESSION["rol"] != "dueno") { ?>
     </div>
 </noscript>
 
-<script src="js/usuarios-administrador.js"></script>
+<script src="/mvc/vista/administrador/js/usuarios-administrador.js"></script>
 </main>
 <?php } // Fin del bloque de administrador ?>

@@ -161,7 +161,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
     </main>
 </div>
 
-<script src="/mvc/vista/js/productos-administrador.js"></script>
+<script src="/mvc/vista/administrador/js/productos-administrador.js"></script>
 
 <?php
 // ── LÓGICA REUTILIZABLE DEL MODAL (AÑADIR / MODIFICAR) ──────────────────

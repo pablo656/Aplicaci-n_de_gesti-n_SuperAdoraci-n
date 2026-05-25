@@ -148,5 +148,5 @@ if ($_SESSION["rol"] != "administrador") { ?>
         </div>
     </div>
 </noscript>
-<script src="/mvc/vista/js/usuarios-administrador.js"></script>
+<script src="/mvc/vista/administrador/js/usuarios-administrador.js"></script>
 </main>

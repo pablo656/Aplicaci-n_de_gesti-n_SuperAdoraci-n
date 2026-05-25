@@ -78,7 +78,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno"): ?>
     </div>
 </main>
 
-<script src="/mvc/vista/js/comidas-administrador.js"></script>
+<script src="/mvc/vista/administrador/js/comidas-administrador.js"></script>
 
 <?php
 // ── Modal añadir / modificar ──────────────────────────────
@@ -106,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["abrir_modal"])) {
 if ($mostrar_modal && $comida_modal): ?>
     <div id="modal" class="modal-overlay" style="display:flex;">
         <div class="modal">
-            <button class="modal-cerrar" onclick="window.location.href='IndexComidas-administrador.php'">&#x2715;</button>
+            <button class="modal-cerrar" onclick="window.location.href='/administrador/comidas'">&#x2715;</button>
 
             <form method="post" action="/administrador/comidas<?= htmlspecialchars($action_form) ?>" id="form-modal" enctype="multipart/form-data">
                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">

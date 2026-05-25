@@ -177,6 +177,11 @@ $img_base   = '/mvc/imagenes/';
                             <p class="item-nombre">
                                 <?= htmlspecialchars($pedido["nombre_comida"]) ?>
                                 <span class="badge-gris">x<?=$pedido["cantidad"]?></span>
+                                <?php if (!empty($pedido['realizado'])): ?>
+                                    <span class="badge badge-verde"><i class="fi fi-sr-check"></i> Realizado</span>
+                                <?php else: ?>
+                                    <span class="badge badge-naranja">Pendiente</span>
+                                <?php endif; ?>
                             </p>
 
                             <p class="item-sub">
@@ -218,11 +223,6 @@ $img_base   = '/mvc/imagenes/';
                         <span class="item-precio">
                             <?= number_format($pedido["precio"] * $pedido["cantidad"], 2) ?> €
                         </span>
-                        <?php if (!empty($pedido['realizado'])): ?>
-                            <span class="badge badge-verde"><i class="fi fi-sr-check"></i> Realizado</span>
-                        <?php else: ?>
-                            <span class="badge badge-naranja">Pendiente</span>
-                        <?php endif; ?>
                         <?php
                             $puedeCancelar = empty($pedido['realizado']) &&
                                 !empty($pedido['fecha_entrega']) &&

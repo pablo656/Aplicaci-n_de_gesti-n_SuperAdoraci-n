@@ -19,6 +19,7 @@ class model_pedidos{
             p.mensaje,
             p.fecha,
             p.fecha_entrega,
+            p.realizado,
             c.nombre AS nombre_comida,
             c.descripcion,
             c.precio,

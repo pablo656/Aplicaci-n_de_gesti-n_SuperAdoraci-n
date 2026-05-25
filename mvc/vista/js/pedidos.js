@@ -67,7 +67,7 @@ document.getElementById('modalPedir').addEventListener('click', function(e) {
 function ajustarPedido(idComida, cambio) {
     const token = getCSRFToken();
 
-    fetch('IndexPedidos.php?action=actualizar_cantidad_cookie', {
+    fetch('/pedidos?action=actualizar_cantidad_cookie', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: `id_comida=${encodeURIComponent(idComida)}&cambio=${encodeURIComponent(cambio)}&csrf_token=${encodeURIComponent(token)}`

@@ -5,6 +5,7 @@ session_start();
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
+$base_url = "/";
 //Este archivo se usara para Home, Log in, Sing in y Perfil
 require_once("../controller/controller_user.php");
 require_once("../controller/productoController.php");
@@ -19,7 +20,7 @@ if($action=="log"||$action=="comprobar"||$action=="log_fallido"||$action=="log_b
     $css="<link rel='stylesheet' href='css/log_in.css'>";
 }elseif($action=="perfil"){
     $params = $_SERVER['QUERY_STRING'] ? '?' . http_build_query(array_diff_key($_GET, ['action' => ''])) : '';
-    header("Location: indexPerfil.php" . $params);
+    header("Location: IndexPerfil.php" . $params);
     exit();
 }else{
     $titulo="Home";

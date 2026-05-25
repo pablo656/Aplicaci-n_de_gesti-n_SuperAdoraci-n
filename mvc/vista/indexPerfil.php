@@ -39,9 +39,9 @@ define('ACCESO_PERMITIDO', true);
             $email  = htmlspecialchars($_SESSION["email"]);
             $cuerpo = "<p><strong>De:</strong> $nombre ($email)</p><p>" . nl2br(htmlspecialchars($mensaje)) . "</p>";
             $ok = $mailer->enviar("superadoracionpruebas@gmail.com", "Sugerencia de $nombre", $cuerpo);
-            header("Location: indexPerfil.php?" . ($ok ? "feedback_ok=1" : "feedback_error=1"));
+            header("Location: IndexPerfil.php?" . ($ok ? "feedback_ok=1" : "feedback_error=1"));
         } else {
-            header("Location: indexPerfil.php");
+            header("Location: IndexPerfil.php");
         }
         exit();
 
@@ -56,9 +56,9 @@ define('ACCESO_PERMITIDO', true);
         $id_usuario = $_SESSION["id"];
         $ok = $controller_pedidos->eliminar_pedido_usuario($id_pedido, $id_usuario);
         if ($ok) {
-            header("Location: indexPerfil.php?eliminado=1");
+            header("Location: IndexPerfil.php?eliminado=1");
         } else {
-            header("Location: indexPerfil.php?error_eliminar=1");
+            header("Location: IndexPerfil.php?error_eliminar=1");
         }
         exit();
 

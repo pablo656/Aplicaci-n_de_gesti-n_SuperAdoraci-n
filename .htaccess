@@ -1,0 +1,24 @@
+Options +FollowSymLinks
+RewriteEngine On
+RewriteBase /
+
+# Si entran limpios a https://superadoracion.site/ carga el Home
+RewriteRule ^$ mvc/vista/IndexHome.php [L,QSA]
+
+# Evitar que interfiera con archivos reales (CSS, JS, imágenes)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# --- RUTAS DE USUARIO ---
+RewriteRule ^catalogo/?$ mvc/vista/IndexProducto.php [L,QSA]
+RewriteRule ^pedidos/?$ mvc/vista/IndexPedidos.php [L,QSA]
+RewriteRule ^perfil/?$ mvc/vista/IndexPerfil.php [L,QSA]
+RewriteRule ^carrito/?$ mvc/vista/IndexCarrito.php [L,QSA]
+
+# --- RUTAS DE ADMINISTRADOR ---
+RewriteRule ^administrador/inicio/?$ mvc/vista/administrador/IndexInicio-administrador.php [L,QSA]
+RewriteRule ^administrador/productos/?$ mvc/vista/administrador/IndexProducto-administrador.php [L,QSA]
+RewriteRule ^administrador/reservas/?$ mvc/vista/administrador/IndexReservas-administrador.php [L,QSA]
+RewriteRule ^administrador/comidas/?$ mvc/vista/administrador/IndexComidas-administrador.php [L,QSA]
+RewriteRule ^administrador/pedidos/?$ mvc/vista/administrador/IndexPedidos-administrador.php [L,QSA]
+RewriteRule ^administrador/usuarios/?$ mvc/vista/administrador/IndexUsuarios-administrador.php [L,QSA]

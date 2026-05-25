@@ -12,6 +12,10 @@ if (!defined('ACCESO_PERMITIDO')) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $titulo?></title>
+    <?php
+    $base_path = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])), '/') . '/';
+    ?>
+    <base href="<?= htmlspecialchars($base_path) ?>">
     <link rel="stylesheet" href="css/header_style.css">
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
     <!--Poner el campo link del CSS en el INDEX para que sea distinto dependiendo de la página--> 

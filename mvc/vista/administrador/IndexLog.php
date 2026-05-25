@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $controller->confirmar_email($token);
     }else if($action=="log_out"){
         session_destroy();
-        header("Location:indexHome.php?action=home");
+        header("Location:IndexHome.php?action=home");
     }else{
         $controller->log_admin();
     }

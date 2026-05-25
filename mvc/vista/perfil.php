@@ -7,7 +7,7 @@ if (!defined('ACCESO_PERMITIDO')) {
 ?>
 
 <?php
-$perfil_url ??= 'indexPerfil.php';
+$perfil_url ??= 'IndexPerfil.php';
 $home_url   ??= 'IndexHome.php';
 $img_base   ??= '';
 ?>
@@ -40,7 +40,8 @@ $img_base   ??= '';
                 <p class="editar-error"><?= htmlspecialchars($msgs[$_GET["error"]] ?? "Error desconocido.") ?></p>
             <?php endif; ?>
 
-            <form method="post" action="<?= $home_url ?>?action=actualizar_nombre" class="form-editar">
+            <form method="post" action="<?= $perfil_url ?>?action=actualizar_nombre" class="form-editar">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                 <div class="form-grupo">
                     <label for="nombre">Nombre de usuario</label>
                     <input type="text" id="nombre" name="nombre"
@@ -58,7 +59,8 @@ $img_base   ??= '';
             <?php elseif (isset($_GET['feedback_error'])): ?>
                 <p class="feedback-error">Error al enviar. Inténtalo de nuevo.</p>
             <?php endif; ?>
-            <form method="post" action="indexPerfil.php?action=enviar_feedback" class="form-feedback">
+            <form method="post" action="IndexPerfil.php?action=enviar_feedback" class="form-feedback">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                 <textarea name="mensaje" rows="4" placeholder="Tu sugerencia o comentario..." required maxlength="1000" aria-label="Mensaje de sugerencia"></textarea>
                 <button type="submit" class="btn-feedback">Enviar</button>
             </form>
@@ -270,7 +272,7 @@ $img_base   ??= '';
                 <p class="editar-error"><?= htmlspecialchars($msgs[$_GET["error"]] ?? "Error desconocido.") ?></p>
             <?php endif; ?>
 
-            <form method="post" action="indexPerfil.php?action=actualizar_nombre" class="form-editar">
+            <form method="post" action="IndexPerfil.php?action=actualizar_nombre" class="form-editar">
                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                 <div class="form-grupo">
                     <label for="nombre">Nombre de usuario</label>

@@ -1,13 +1,13 @@
 <?php
 if (!defined('ACCESO_PERMITIDO')) {
     // Si alguien intenta entrar directo, le mandamos al index
-    header("Location: IndexPedidos-administrador.php");
+    header("Location: /administrador/pedidos");
     exit();
 }
 ?>
 <?php
 if (!isset($_SESSION["nombre"]) || !isset($_SESSION["email"]) || !isset($_SESSION["rol"])) {
-    header("Location: IndexLog.php");
+    header("Location: /administrador/log");
     exit();
 }
 
@@ -71,7 +71,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
                                         <i class="fi fi-sr-exclamation"></i> RETRASO · <?= abs($diasPedido) ?> día<?= abs($diasPedido) !== 1 ? 's' : '' ?> tarde
                                     </div>
                                 <?php endif; ?>
-                                <img src="../<?= htmlspecialchars($pedido["url_imagen"]) ?>" alt="<?= htmlspecialchars($pedido['nombre_comida']) ?>">
+                                <img src="/mvc/imagenes/<?= htmlspecialchars(basename($pedido["url_imagen"])) ?>" alt="<?= htmlspecialchars($pedido['nombre_comida']) ?>">
 
                                 <div class="item-info">
                                     <p class="nombre"><?= htmlspecialchars($pedido['nombre_comida']) ?></p>
@@ -160,7 +160,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
         <?php endif; ?>
     </div>
 
-    <script src="js/pedidos-administrador.js"></script>
+    <script src="/mvc/vista/js/pedidos-administrador.js"></script>
     </main>
 <?php } ?>
 

@@ -1,7 +1,7 @@
 <?php
 if (!defined('ACCESO_PERMITIDO')) {
     // Si alguien intenta entrar directo, le mandamos al index
-    header("Location: IndexHome.php");
+    header("Location: /");
     exit();
 }
 ?>
@@ -22,7 +22,7 @@ if (!defined('ACCESO_PERMITIDO')) {
 <div class="envoltura" id="carrusel">
     <ul class="pista">
         <li class="diapositiva">
-            <img src="imagenes/carrusel/Carniceria.jpeg" alt="Carnicería">
+            <img src="/mvc/vista/imagenes/carrusel/Carniceria.jpeg" alt="Carnicería">
             <div class="diapositiva-contenido">
                 <span class="etiqueta">CALIDAD SUPERIOR</span>
                 <p class="diapositiva-titulo">Cortes premium con frescura garantizada</p>
@@ -31,7 +31,7 @@ if (!defined('ACCESO_PERMITIDO')) {
             </div>
         </li>
         <li class="diapositiva">
-            <img src="imagenes/carrusel/nocilla.jpeg" alt="Cisne negro">
+            <img src="/mvc/vista/imagenes/carrusel/nocilla.jpeg" alt="Cisne negro">
             <div class="diapositiva-contenido">
                 <span class="etiqueta">NUEVOS SABORES</span>
                 <p class="diapositiva-titulo">Desayunos irresistibles para empezar el día con energía</p>
@@ -40,7 +40,7 @@ if (!defined('ACCESO_PERMITIDO')) {
             </div>
         </li>
         <li class="diapositiva">
-            <img src="imagenes/carrusel/legumbres.jpeg" alt="Gato europeo">
+            <img src="/mvc/vista/imagenes/carrusel/legumbres.jpeg" alt="Gato europeo">
             <div class="diapositiva-contenido">
                 <span class="etiqueta">CALIDAD GARANTIZADA</span>
                 <p class="diapositiva-titulo">Tu despensa siempre llena al mejor precio</p>
@@ -49,7 +49,7 @@ if (!defined('ACCESO_PERMITIDO')) {
             </div>
         </li>
         <li class="diapositiva">
-            <img src="imagenes/carrusel/limpieza.jpeg" alt="Cisne negro 2" loading="lazy">
+            <img src="/mvc/vista/imagenes/carrusel/limpieza.jpeg" alt="Cisne negro 2" loading="lazy">
             <div class="diapositiva-contenido">
                 <span class="etiqueta">LIMPIEZA DEL HOGAR</span>
                 <p class="diapositiva-titulo">Eficacia y ahorro en cada lavado</p>
@@ -58,7 +58,7 @@ if (!defined('ACCESO_PERMITIDO')) {
             </div>
         </li>
         <li class="diapositiva">
-            <img src="imagenes/carrusel/mascotas.jpeg" alt="Lagarto" loading="lazy">
+            <img src="/mvc/vista/imagenes/carrusel/mascotas.jpeg" alt="Lagarto" loading="lazy">
             <div class="diapositiva-contenido">
                 <span class="etiqueta">LO MEJOR PARA TUS MASCOTAS</span>
                 <p class="diapositiva-titulo">Ellos se merecen lo mejor todos los días</p>
@@ -95,8 +95,8 @@ if (!defined('ACCESO_PERMITIDO')) {
                 
                 <div class="producto" id="prod-<?= htmlspecialchars($producto["id"]) ?>">
                     <div class="contenedor-img">
-                        <img src="<?= htmlspecialchars($producto['url_imagen']) ?>" 
-                             alt="<?= htmlspecialchars($producto['nombre']) ?>" 
+                        <img src="/mvc/imagenes/<?= htmlspecialchars(basename($producto['url_imagen'])) ?>"
+                             alt="<?= htmlspecialchars($producto['nombre']) ?>"
                              loading="lazy">
                     </div>
 
@@ -134,7 +134,7 @@ if (!defined('ACCESO_PERMITIDO')) {
         <p>Cada producto que ofrecemos es cuidadosamente seleccionado para garantizar que cumpla con nuestros estándares de calidad. Creemos en la importancia de la confianza y la transparencia en cada transacción.</p>
     </div>
     <div class="imagen-contenedor">
-        <img src="imagenes/SuperAdoración.webp" alt="Entrada de la tienda" loading="lazy">
+        <img src="/mvc/vista/imagenes/SuperAdoración.webp" alt="Entrada de la tienda" loading="lazy">
     </div>
 </section>
 
@@ -158,4 +158,4 @@ if (!defined('ACCESO_PERMITIDO')) {
     </div>
 </div>
 </main>
-<script src="js/home.js"></script>
+<script src="/mvc/vista/js/home.js"></script>

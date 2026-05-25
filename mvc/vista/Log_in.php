@@ -1,7 +1,7 @@
 <?php
 if (!defined('ACCESO_PERMITIDO')) {
     // Si alguien intenta entrar directo, le mandamos al index
-    header("Location: IndexHome.php?action=log");
+    header("Location: /?action=log");
     exit();
 }
 ?>
@@ -11,7 +11,7 @@ if (!defined('ACCESO_PERMITIDO')) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log in</title>
-    <link rel="stylesheet" href="css/log_in.css">
+    <link rel="stylesheet" href="/mvc/vista/css/log_in.css">
 </head>
 <body>
 <main>
@@ -36,7 +36,7 @@ if (!defined('ACCESO_PERMITIDO')) {
         </div>
     </div>
 </form>
-<script src="js/verificacion_log_in.js"></script>
+<script src="/mvc/vista/js/verificacion_log_in.js"></script>
 </main>
 </body>
 </html>

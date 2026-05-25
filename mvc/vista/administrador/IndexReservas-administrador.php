@@ -7,7 +7,7 @@ define('ACCESO_PERMITIDO', true);
     require_once("../../controller/controller_reservas.php");
     $controller=new Controller_reservas();
     $titulo="Administración de reservas";
-    $css="<link rel='stylesheet' href='../css/reservas-administrador.css'>" ;
+    $css="<link rel='stylesheet' href='/mvc/vista/css/reservas-administrador.css'>";
      $action = $_GET["action"] ?? "list";
     require("layerHeader-administrador.php");
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -27,7 +27,7 @@ define('ACCESO_PERMITIDO', true);
             //Cuando tengamos un dominio
             $mensaje=$_POST["nota_administrador"];
             $controller->eliminar_reserva($id);
-            header("Location:IndexReservas-administrador.php");
+            header("Location: /administrador/reservas");
         }else{
             $controller->consultar_reservas();
         }

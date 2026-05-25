@@ -112,7 +112,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
                 ?>
                     <div class="producto" id="prod-<?= htmlspecialchars($p['id']) ?>">
                         <div class="contenedor-img">
-                            <img src="/<?= htmlspecialchars($p['url_imagen']) ?>" alt="<?= htmlspecialchars($p['nombre']) ?>" loading="lazy">
+                            <img src="/mvc/imagenes/<?= htmlspecialchars(basename($p['url_imagen'])) ?>" alt="<?= htmlspecialchars($p['nombre']) ?>" loading="lazy">
                         </div>
                         
                         <div class="info-producto">
@@ -161,7 +161,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
     </main>
 </div>
 
-<script src="js/productos-administrador.js"></script>
+<script src="/mvc/vista/js/productos-administrador.js"></script>
 
 <?php
 // ── LÓGICA REUTILIZABLE DEL MODAL (AÑADIR / MODIFICAR) ──────────────────
@@ -255,7 +255,7 @@ if ($mostrar_modal && $producto_modal): ?>
 
                 <label>Imagen del producto:</label>
                 <div class="contenedor-preview">
-                    <img id="preview" src="/<?= htmlspecialchars($producto_modal['url_imagen']) ?>" alt="Vista previa">
+                    <img id="preview" src="/mvc/imagenes/<?= htmlspecialchars(basename($producto_modal['url_imagen'])) ?>" alt="Vista previa">
                 </div>
                 <?php if($action_form=="?action=insertar"):?>
                     <input type="file" name="nueva_imagen" id="input_imagen" accept="image/*" aria-label="Seleccionar imagen" required>

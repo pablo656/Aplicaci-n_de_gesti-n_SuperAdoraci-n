@@ -5,7 +5,7 @@ define('ACCESO_PERMITIDO', true);
         $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     }
     if (!isset($_SESSION["id"])) {
-    header("Location: IndexHome.php?action=log");
+    header("Location: /?action=log");
     exit();
 }
     require_once("../controller/controller_user.php");
@@ -15,7 +15,7 @@ define('ACCESO_PERMITIDO', true);
     $controller_reservas=new Controller_reservas();
     $controller_pedidos=new Controller_pedidos();
     $titulo="Perfil";
-    $css = "<link rel='stylesheet' href='css/perfil.css'>";
+    $css = "<link rel='stylesheet' href='/mvc/vista/css/perfil.css'>";
     $action = $_GET["action"] ?? "list";
     require("../vista/layerHeader.php");
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {

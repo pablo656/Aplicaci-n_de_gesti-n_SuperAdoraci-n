@@ -1,7 +1,7 @@
 <?php
 if (!defined('ACCESO_PERMITIDO')) {
     // Si alguien intenta entrar directo, le mandamos al index
-    header("Location: IndexUsuarios-administrador.php");
+    header("Location: /administrador/usuarios");
     exit();
 }
 ?>
@@ -9,7 +9,7 @@ if (!defined('ACCESO_PERMITIDO')) {
 <?php
 // 1. Verificación de seguridad (Sesión y Roles)
 if (!isset($_SESSION["nombre"]) || !isset($_SESSION["rol"])) {
-    header("Location: IndexLog.php");
+    header("Location: /administrador/log");
     exit();
 } 
 
@@ -148,5 +148,5 @@ if ($_SESSION["rol"] != "administrador") { ?>
         </div>
     </div>
 </noscript>
-<script src="js/usuarios-administrador.js"></script>
+<script src="/mvc/vista/js/usuarios-administrador.js"></script>
 </main>

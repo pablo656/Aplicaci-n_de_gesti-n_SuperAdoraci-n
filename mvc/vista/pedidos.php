@@ -1,7 +1,7 @@
 <?php
 if (!defined('ACCESO_PERMITIDO')) {
     // Si alguien intenta entrar directo, le mandamos al index
-    header("Location: IndexPedidos.php");
+    header("Location: /pedidos");
     exit();
 }
 ?>
@@ -43,9 +43,9 @@ if (!defined('ACCESO_PERMITIDO')) {
             <?php foreach ($comidas as $comida): ?>
                 <div class="item-comida">
                     <?php if (!empty($comida['url_imagen'])): ?>
-                        <img src="<?= htmlspecialchars($comida['url_imagen']) ?>" alt="<?= htmlspecialchars($comida['nombre']) ?>">
+                        <img src="/mvc/imagenes/<?= htmlspecialchars(basename($comida['url_imagen'])) ?>" alt="<?= htmlspecialchars($comida['nombre']) ?>">
                     <?php else: ?>
-                        <img src="imagenes/placeholder.png" alt="<?= htmlspecialchars($comida['nombre']) ?>">
+                        <img src="/mvc/imagenes/placeholder.png" alt="<?= htmlspecialchars($comida['nombre']) ?>">
                     <?php endif; ?>
                     <div class="item-info">
                         <p class="nombre"><?= htmlspecialchars($comida['nombre']) ?></p>
@@ -111,5 +111,5 @@ if (!defined('ACCESO_PERMITIDO')) {
     </div>
 </div>
 
-<script src="js/pedidos.js">
+<script src="/mvc/vista/js/pedidos.js">
 </script>

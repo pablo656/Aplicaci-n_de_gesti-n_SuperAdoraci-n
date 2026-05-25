@@ -8,7 +8,7 @@ define('ACCESO_PERMITIDO', true);
     $controller=new ProductoController();
     $action = $_GET["action"] ?? "list";
     $titulo = "Administración de catálogo";
-    $css = "<link rel='stylesheet' href='../css/administrador-catalogo.css'>";
+    $css = "<link rel='stylesheet' href='/mvc/vista/css/administrador-catalogo.css'>";
     $categorias = ["Comida","Bebidas","Mascotas","Papeleria_oficina","Salud_bienestar"];
     $subcategoria = $_GET["subcategoria"] ?? null;
     $subcategorias = [

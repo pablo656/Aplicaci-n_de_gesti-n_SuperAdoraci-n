@@ -22,9 +22,9 @@ class Controller_user{
     public function loginar($username, $password){
         $user = $this->model_user->iniciousuario($username, $password);
         if (is_array($user) && isset($user["bloqueado"])) {
-            header("Location: IndexHome.php?action=log_bloqueado&min=" . $user["minutos"]);
+            header("Location: /?action=log_bloqueado&min=" . $user["minutos"]);
         } elseif ($user == false) {
-            header("Location: IndexHome.php?action=log_fallido");
+            header("Location: /?action=log_fallido");
         } else {
             $_SESSION["id"]     = $user["id"];
             $_SESSION["nombre"] = $user["nombre"];
@@ -33,21 +33,21 @@ class Controller_user{
             if (empty($_SESSION['csrf_token'])) {
                 $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
             }
-            header("Location: IndexHome.php?action=home");
+            header("Location: /");
         }
     }
     public function loginar_admin($username, $password){
         $user = $this->model_user->iniciousuario($username, $password);
         if (is_array($user) && isset($user["bloqueado"])) {
-            header("Location: IndexLog.php?action=log_bloqueado&min=" . $user["minutos"]);
+            header("Location: /administrador/log?action=log_bloqueado&min=" . $user["minutos"]);
         } elseif ($user == false) {
-            header("Location: IndexLog.php?action=log_fallido");
+            header("Location: /administrador/log?action=log_fallido");
         } else {
             $_SESSION["id"]     = $user["id"];
             $_SESSION["nombre"] = $user["nombre"];
             $_SESSION["email"]  = $user["email"];
             $_SESSION["rol"]    = $user["rol"];
-            header("Location: IndexInicio-administrador.php");
+            header("Location: /administrador/inicio");
         }
     }
     public function log_admin(){
@@ -57,20 +57,20 @@ class Controller_user{
     // Envía email de verificación; no crea el usuario hasta que confirme
     public function register($username, $password, $email) {
         if (empty($username) || empty($password) || empty($email)) {
-            header("Location: IndexHome.php?action=sing");
+            header("Location: /?action=sing");
             return;
         }
         if ($this->model_user->crearusuario_existe($username, $email)) {
-            header("Location: IndexHome.php?action=sing_fallido");
+            header("Location: /?action=sing_fallido");
             return;
         }
         $hash  = password_hash($password, PASSWORD_DEFAULT);
         $token = $this->model_user->guardar_verificacion($username, $email, $hash);
         if (!$token) {
-            header("Location: IndexHome.php?action=sing_fallido");
+            header("Location: /?action=sing_fallido");
             return;
         }
-        $link   = APP_URL . "/IndexHome.php?action=confirmar_email&token=" . $token;
+        $link   = APP_URL . "/?action=confirmar_email&token=" . $token;
         $asunto = "Confirma tu cuenta en SuperAdoracion";
         $cuerpo = "
             <p>Hola <strong>" . htmlspecialchars($username) . "</strong>,</p>
@@ -91,9 +91,9 @@ class Controller_user{
     }
     public function crearUsuario($username, $password, $email,$rol){
         if(!$this->model_user->crearusuario_admin($username, $password, $email,$rol)){
-            header("Location: IndexUsuarios-administrador.php?res=error_usuario");
+            header("Location: /administrador/usuarios?res=error_usuario");
         }else{
-            header("Location: IndexUsuarios-administrador.php?res=usuario_creado");
+            header("Location: /administrador/usuarios?res=usuario_creado");
         }
     }
 
@@ -102,14 +102,14 @@ class Controller_user{
         $user = $this->model_user->confirmar_verificacion($token);
         if (!$user) {
             $_SESSION["confirm_error"] = "El enlace no es válido o ha caducado.";
-            header("Location: IndexHome.php?action=sing");
+            header("Location: /?action=sing");
             return;
         }
         $_SESSION["id"]     = $user["id"];
         $_SESSION["nombre"] = $user["nombre"];
         $_SESSION["email"]  = $user["email"];
         $_SESSION["rol"]    = $user["rol"];
-        header("Location: IndexHome.php?action=home");
+        header("Location: /");
     }
 
     //Funciones para moverse entre Home, Log in,Sign in y Perfil
@@ -128,7 +128,7 @@ class Controller_user{
 
     public function actualizar_nombre() {
         if (!isset($_SESSION["id"])) {
-            header("Location: IndexHome.php?action=log");
+            header("Location: /?action=log");
             return;
         }
         $nuevo_nombre = trim($_POST["nombre"] ?? "");
@@ -153,9 +153,9 @@ class Controller_user{
         if($id==$_SESSION["id"]){
             $_SESSION["rol"]=$rol;
         }
-        header("Location: IndexUsuarios-administrador.php?res=updated");
+        header("Location: /administrador/usuarios?res=updated");
     } else {
-        header("Location: IndexUsuarios-administrador.php?res=error");
+        header("Location: /administrador/usuarios?res=error");
     }
         exit();
     }

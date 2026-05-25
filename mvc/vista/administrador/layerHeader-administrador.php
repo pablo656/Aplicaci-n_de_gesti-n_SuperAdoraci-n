@@ -1,7 +1,7 @@
 <?php
 if (!defined('ACCESO_PERMITIDO')) {
     // Si alguien intenta entrar directo, le mandamos al index
-    header("Location: IndexInicio-administrador.php");
+    header("Location: /administrador/inicio");
     exit();
 }
 ?>
@@ -11,7 +11,7 @@ if (!defined('ACCESO_PERMITIDO')) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $titulo?></title>
-    <link rel="stylesheet" href="../css/header_style.css">
+    <link rel="stylesheet" href="/mvc/vista/css/header_style.css">
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
     <!--Poner el campo link del CSS en el INDEX para que sea distinto dependiendo de la página--> 
     <?php echo $css ?>
@@ -20,8 +20,8 @@ if (!defined('ACCESO_PERMITIDO')) {
 <body>
 <header>
     <picture>
-        <source media="(max-width: 768px)" srcset="../imagenes/banner_M.png">
-        <img src="../imagenes/banner.png" alt="Logo">
+        <source media="(max-width: 768px)" srcset="/mvc/vista/imagenes/banner_M.png">
+        <img src="/mvc/vista/imagenes/banner.png" alt="Logo">
     </picture>
     
 </header>
@@ -35,7 +35,7 @@ if (!defined('ACCESO_PERMITIDO')) {
     </div>
     <div>
         <a href="/administrador/usuarios">Usuarios</a>
-        <a href="/perfil">Perfil <i class="fi fi-sr-user" style="color: white; font-size: 1.2em;"></i></a>
+        <a href="/administrador/perfil">Perfil <i class="fi fi-sr-user" style="color: white; font-size: 1.2em;"></i></a>
         <a href="/?action=log_out">Cerrar sesión</a>
     </div>
 </nav>

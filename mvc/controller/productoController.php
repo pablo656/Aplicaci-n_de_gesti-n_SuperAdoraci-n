@@ -100,7 +100,7 @@
 
     if (empty($errores)) {
         $resultado = $this->model->add_productos($nombre, $stock, $precio, $precio_por_peso, $categoria, $subcategoria, $nombreImagenFinal, $porcentaje_descuento);
-        header("Location: IndexProducto-administrador.php?success=1");
+        header("Location: /administrador/productos?success=1");
         exit();
     } else {
         // IMPORTANTE: Devolvemos los errores para capturarlos en la vista

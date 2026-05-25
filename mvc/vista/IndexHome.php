@@ -19,17 +19,17 @@ $action = $_GET["action"] ?? "home";
 
 if ($action == "log" || $action == "comprobar" || $action == "log_fallido" || $action == "log_bloqueado") {
     $titulo = "Iniciar sesión";
-    $css = "<link rel='stylesheet' href='{$base_url}css/log_in.css'>";
+    $css = "<link rel='stylesheet' href='/mvc/vista/css/log_in.css'>";
 } else if ($action == "sing" || $action == "crear" || $action == "sing_fallido") {
     $titulo = "Registrarse";
-    $css = "<link rel='stylesheet' href='{$base_url}css/log_in.css'>";
+    $css = "<link rel='stylesheet' href='/mvc/vista/css/log_in.css'>";
 } elseif ($action == "perfil") {
     $params = $_SERVER['QUERY_STRING'] ? '?' . http_build_query(array_diff_key($_GET, ['action' => ''])) : '';
     header("Location: {$base_url}perfil" . $params);
     exit();
 } else {
     $titulo = "Home";
-    $css = "<link rel='stylesheet' href='{$base_url}css/inicio.css'>";
+    $css = "<link rel='stylesheet' href='/mvc/vista/css/inicio.css'>";
     require("../vista/layerHeader.php");
 }
 

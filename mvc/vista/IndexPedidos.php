@@ -6,7 +6,7 @@ if (empty($_SESSION['csrf_token'])) {
 }
 
 if (!isset($_SESSION["id"])) {
-    header("Location: IndexHome.php?action=log");
+    header("Location: /?action=log");
     exit();
 }
 require_once("../controller/Controller_pedidos.php");
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
     if ($action === "list") {
         $titulo = "Pedidos";
-        $css = "<link rel='stylesheet' href='css/pedidos.css'>";
+        $css = "<link rel='stylesheet' href='/mvc/vista/css/pedidos.css'>";
         require("../vista/layerHeader.php");
         $controller->mostrar_catalogo();
         require("../vista/footer.html");
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $fecha_entrega = $_POST["fecha_entrega"] ?? "";
 
         if (empty($id_comida) || !is_numeric($id_comida) || empty($cantidad) || $cantidad < 1 || $cantidad > 30) {
-            header("Location: IndexPedidos.php?action=list");
+            header("Location: /pedidos?action=list");
             exit();
         }
 
@@ -46,13 +46,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $max = date('Y-m-d', strtotime('+6 months'));
         if (empty($fecha_entrega) || $fecha_entrega < $min || $fecha_entrega > $max) {
             $_SESSION['pedido_errores'] = ["La fecha de entrega debe estar entre 3 días y 6 meses desde hoy."];
-            header("Location: IndexPedidos.php?action=list");
+            header("Location: /pedidos?action=list");
             exit();
         }
 
         $controller->guardar_en_cookie($id_comida, $cantidad, $mensaje, $fecha_entrega);
         $_SESSION['pedido_ok'] = true;
-        header("Location: IndexPedidos.php?action=list");
+        header("Location: /pedidos?action=list");
         exit();
 
     } else if ($action === "actualizar_cantidad_cookie") {
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
 
     } else {
-        header("Location: IndexPedidos.php?action=list");
+        header("Location: /pedidos?action=list");
         exit();
     }
 

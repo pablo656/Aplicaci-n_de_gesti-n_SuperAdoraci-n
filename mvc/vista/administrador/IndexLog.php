@@ -14,7 +14,7 @@ require_once("../../controller/productoController.php");
 $controller=new Controller_user();
 $controller_producto=new ProductoController();
 $titulo="Iniciar sesión";
-$css="<link rel='stylesheet' href='../css/log_in.css'>";
+$css="<link rel='stylesheet' href='/mvc/vista/css/log_in.css'>";
 $action=$_GET["action"] ?? "home";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {

@@ -58,7 +58,7 @@ define('ACCESO_PERMITIDO', true);
 
 
     $titulo = "Catálogo";
-    $css = "<link rel='stylesheet' href='css/catalogo_style.css'>";
+    $css = "<link rel='stylesheet' href='/mvc/vista/css/catalogo_style.css'>";
     $categorias = ["Comida","Bebidas","Mascotas","Papeleria_oficina","Salud_bienestar"];
     $subcategorias = [
         "Comida"            => ["Carne", "Panadería", "Pescados", "Snacks", "Pasta", "Conservas", "Salsas", "Arroz y legumbres", "Condimentos y salsas", "Despensa", "Congelados"],

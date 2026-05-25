@@ -7,7 +7,7 @@ define('ACCESO_PERMITIDO', true);
      require_once("../../controller/productoController.php");
     $controller=new ProductoController();
     $titulo="Administración-Inicio" ;
-    $css="<link rel='stylesheet' href='../css/inicio-administrador.css'>";
+    $css="<link rel='stylesheet' href='/mvc/vista/css/inicio-administrador.css'>";
      $action= $_GET["action"] ?? "list";
     require("layerHeader-administrador.php");
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -25,7 +25,7 @@ define('ACCESO_PERMITIDO', true);
         if($action=="quitar"){
             $id=$_POST["id"];
             $controller->quitarInicio($id);
-            header("Location: IndexInicio-administrador.php");
+            header("Location: /administrador/inicio");
         }else{
             $controller->buscar_productos_inicio_administrador();
         }

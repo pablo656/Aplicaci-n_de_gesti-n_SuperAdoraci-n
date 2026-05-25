@@ -1,7 +1,7 @@
 <?php
 if (!defined('ACCESO_PERMITIDO')) {
     // Si alguien intenta entrar directo, le mandamos al index
-    header("Location: IndexInicio-administrador.php");
+    header("Location: /administrador/inicio");
     exit();
 }
 ?>
@@ -9,7 +9,7 @@ if (!defined('ACCESO_PERMITIDO')) {
 <?php
 // 1. Verificación de seguridad (Sesión y Roles)
 if (!isset($_SESSION["nombre"]) || !isset($_SESSION["rol"])) {
-    header("Location: ../IndexHome.php?action=log");
+    header("Location: /?action=log");
     exit();
 } 
 
@@ -50,7 +50,7 @@ if ($_SESSION["rol"] != "administrador"&& $_SESSION["rol"] != "dueno") { ?>
                 
                 <div class="producto" id="prod-<?= htmlspecialchars($p['id']) ?>">
                     <div class="contenedor-img">
-                        <img src="../<?= htmlspecialchars($p['url_imagen']) ?>" alt="<?= htmlspecialchars($p['nombre']) ?>" loading="lazy">
+                        <img src="/mvc/imagenes/<?= htmlspecialchars(basename($p['url_imagen'])) ?>" alt="<?= htmlspecialchars($p['nombre']) ?>" loading="lazy">
                     </div>
                     
                     <div class="info-producto">
@@ -106,6 +106,5 @@ if ($_SESSION["rol"] != "administrador"&& $_SESSION["rol"] != "dueno") { ?>
     </div>
 </noscript>
 
-<script src="js/usuarios-administrador.js"></script>
 </main>
 <?php } // Fin del bloque de administrador ?>

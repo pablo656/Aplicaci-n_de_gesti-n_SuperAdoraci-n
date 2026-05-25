@@ -10,7 +10,7 @@ if (!defined('ACCESO_PERMITIDO')) {
 // Configuración inicial limpia para producción
 $perfil_url = '/perfil';
 $home_url   = '/';
-$img_base   = '/';
+$img_base   = '/mvc/imagenes/';
 ?>
 <div class="layout-perfil">
     <aside class="sidebar-perfil">
@@ -112,7 +112,7 @@ $img_base   = '/';
                     <div class="item-pedido">
                         <div class="item-info-izquierda">
                             <div class="item-img">
-                                <img src="<?= $img_base . htmlspecialchars($reserva["url_imagen"]) ?>" alt="producto">
+                                <img src="<?= $img_base . htmlspecialchars(basename($reserva["url_imagen"])) ?>" alt="producto">
                             </div>
                             <div class="item-detalles">
                                 <p class="item-nombre">
@@ -165,7 +165,7 @@ $img_base   = '/';
                 <div class="item-pedido">
                     <div class="item-info-izquierda">
                         <div class="item-img"> 
-                            <img src="<?= $img_base . htmlspecialchars($pedido["url_imagen"]) ?>" alt="producto">
+                            <img src="<?= $img_base . htmlspecialchars(basename($pedido["url_imagen"])) ?>" alt="producto">
                         </div>
                         
                         <div class="item-detalles">

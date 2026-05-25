@@ -7,7 +7,7 @@ define('ACCESO_PERMITIDO', true);
     require_once("../../controller/Controller_pedidos.php");
     $controller = new Controller_pedidos();
     $titulo = "Administración de pedidos";
-    $css = "<link rel='stylesheet' href='../css/pedidos-administrador.css'>";
+    $css = "<link rel='stylesheet' href='/mvc/vista/css/pedidos-administrador.css'>";
      $action = $_GET["action"] ?? "list";
     require("layerHeader-administrador.php");
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -25,12 +25,12 @@ define('ACCESO_PERMITIDO', true);
         if ($action == "delete") {
             $id = $_POST["id_pedido"];
             $controller->eliminar_pedido($id);
-            header("Location: IndexPedidos-administrador.php");
+            header("Location: /administrador/pedidos");
             exit();
         } elseif ($action == "completar") {
             $id = $_POST["id_pedido"];
             $controller->marcar_realizado($id);
-            header("Location: IndexPedidos-administrador.php");
+            header("Location: /administrador/pedidos");
             exit();
         } else {
             $controller->consultar_pedidos_admin();

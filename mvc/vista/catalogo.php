@@ -1,7 +1,7 @@
 <?php
 if (!defined('ACCESO_PERMITIDO')) {
     // Si alguien intenta entrar directo, le mandamos al index
-    header("Location: IndexProducto.php");
+    header("Location: /catalogo");
     exit();
 }
 ?>
@@ -89,7 +89,7 @@ if (!defined('ACCESO_PERMITIDO')) {
             }
     ?>
         <div class="producto" id="<?= htmlspecialchars($producto["id"]) ?>">
-            <img src="<?= htmlspecialchars($producto['url_imagen']) ?>" alt="<?= htmlspecialchars($producto['nombre']) ?>" loading="lazy">
+            <img src="/mvc/imagenes/<?= htmlspecialchars(basename($producto['url_imagen'])) ?>" alt="<?= htmlspecialchars($producto['nombre']) ?>" loading="lazy">
             <div class="info-producto">
                 <p class="nombre"><?= htmlspecialchars($producto['nombre']) ?></p>
                 <?php if ($producto['porcentaje_descuento'] != 0): ?>
@@ -187,6 +187,6 @@ if (!defined('ACCESO_PERMITIDO')) {
     <p class="vacio">No hay productos disponibles</p>
 <?php endif; ?>
 </div>
-        <script src="js/catalogo.js"defer></script>
+        <script src="/mvc/vista/js/catalogo.js" defer></script>
     </main>
 </div>

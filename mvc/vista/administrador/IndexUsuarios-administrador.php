@@ -8,7 +8,7 @@
     $controller=new Controller_user();
      $action = $_GET["action"] ?? "list";
     $titulo="Usuarios" ;
-    $css="<link rel='stylesheet' href='../css/usuario-administrador.css'>" ;
+    $css="<link rel='stylesheet' href='/mvc/vista/css/usuario-administrador.css'>";
     require("layerHeader-administrador.php");
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
@@ -35,14 +35,14 @@
             $id=$_POST["id_usuario"];
             $rol=$_POST["rol"];
             $controller->cambiarRol($id,$rol);
-            header("Location: IndexUsuarios-administrador.php");
+            header("Location: /administrador/usuarios");
             exit(); 
         }elseif ($action == "delete") {
         if (isset($_POST["id"])) {
             $id = $_POST["id"];
             $controller->borrarUsuarios($id);
             // Es vital redireccionar para limpiar el POST y que no se reenvíe al refrescar
-            header("Location: IndexUsuarios-administrador.php");
+            header("Location: /administrador/usuarios");
             exit(); 
         }
         }else{

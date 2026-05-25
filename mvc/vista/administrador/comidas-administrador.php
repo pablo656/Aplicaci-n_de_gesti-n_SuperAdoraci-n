@@ -1,13 +1,13 @@
 <?php
 if (!defined('ACCESO_PERMITIDO')) {
     // Si alguien intenta entrar directo, le mandamos al index
-    header("Location:IndexComidas-administrador.php");
+    header("Location: /administrador/comidas");
     exit();
 }
 ?>
 <?php
 if (!isset($_SESSION["nombre"]) || !isset($_SESSION["email"]) || !isset($_SESSION["rol"])) {
-    header("Location: ../IndexHome.php?action=log");
+    header("Location: /?action=log");
     exit();
 }
 
@@ -38,7 +38,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno"): ?>
         <div class="lista-comidas-admin">
             <?php foreach ($comidas as $c): ?>
                 <div class="item-comida-admin">
-                    <img src="../<?= htmlspecialchars($c['url_imagen']) ?>" alt="<?= htmlspecialchars($c['nombre']) ?>" loading="lazy">
+                    <img src="/mvc/imagenes/<?= htmlspecialchars(basename($c['url_imagen'])) ?>" alt="<?= htmlspecialchars($c['nombre']) ?>" loading="lazy">
 
                     <div class="comida-info">
                         <p class="comida-nombre"><?= htmlspecialchars($c['nombre']) ?></p>
@@ -78,7 +78,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno"): ?>
     </div>
 </main>
 
-<script src="js/comidas-administrador.js"></script>
+<script src="/mvc/vista/js/comidas-administrador.js"></script>
 
 <?php
 // ── Modal añadir / modificar ──────────────────────────────

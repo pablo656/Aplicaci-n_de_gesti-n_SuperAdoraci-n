@@ -86,7 +86,7 @@ define('ACCESO_PERMITIDO', true);
 
     // ← Header después de las acciones AJAX
     $titulo = "Carrito";
-    $css = "<link rel='stylesheet' href='css/carrito.css'>";
+    $css = "<link rel='stylesheet' href='/mvc/vista/css/carrito.css'>";
     require("../vista/layerHeader.php");
        $action = $_GET["action"] ?? "list";
         if($action == "confirmar_reservas"){

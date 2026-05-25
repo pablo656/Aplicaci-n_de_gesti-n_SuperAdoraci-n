@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirma tu cuenta</title>
-    <link rel="stylesheet" href="css/log_in.css">
+    <link rel="stylesheet" href="/mvc/vista/css/log_in.css">
 </head>
 <body>
 <div class="form-header" style="text-align:center; margin-top: 80px;">

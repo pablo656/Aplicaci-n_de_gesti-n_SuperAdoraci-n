@@ -5,7 +5,7 @@ if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 if (!isset($_SESSION["id"])) {
-    header("Location: ../IndexHome.php?action=log");
+    header("Location: /?action=log");
     exit();
 }
 
@@ -19,7 +19,7 @@ $controller_pedidos  = new Controller_pedidos();
 $model_user          = new model_user();
 
 $titulo = "Perfil";
-$css    = "<link rel='stylesheet' href='../css/perfil.css'>";
+$css    = "<link rel='stylesheet' href='/mvc/vista/css/perfil.css'>";
  $action = $_GET["action"] ?? "list";
 
 require __DIR__ . "/layerHeader-administrador.php";
@@ -45,26 +45,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id_pedido  = (int)($_POST["id_pedido"] ?? 0);
         $id_usuario = $_SESSION["id"];
         $ok = $controller_pedidos->eliminar_pedido_usuario($id_pedido, $id_usuario);
-        header("Location: IndexPerfil.php?" . ($ok ? "eliminado=1" : "error_eliminar=1"));
+        header("Location: /perfil?" . ($ok ? "eliminado=1" : "error_eliminar=1"));
         exit();
 
     } else if ($action === "actualizar_nombre") {
         $nuevo_nombre = trim($_POST["nombre"] ?? "");
         if (empty($nuevo_nombre)) {
-            header("Location: IndexPerfil.php?error=nombre_vacio");
+            header("Location: /perfil?error=nombre_vacio");
             exit();
         }
         $resultado = $model_user->actualizar_nombre($_SESSION["id"], $nuevo_nombre);
         if ($resultado === "nombre_duplicado") {
-            header("Location: IndexPerfil.php?error=nombre_duplicado");
+            header("Location: /perfil?error=nombre_duplicado");
             exit();
         }
         if ($resultado === false) {
-            header("Location: IndexPerfil.php?error=error_guardado");
+            header("Location: /perfil?error=error_guardado");
             exit();
         }
         $_SESSION["nombre"] = $nuevo_nombre;
-        header("Location: IndexPerfil.php?ok=1");
+        header("Location: /perfil?ok=1");
         exit();
 
     } else {

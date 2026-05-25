@@ -1,7 +1,7 @@
 <?php
 if (!defined('ACCESO_PERMITIDO')) {
     // Si alguien intenta entrar directo, le mandamos al index
-    header("Location: IndexReservas-administrador.php");
+    header("Location: /administrador/reservas");
     exit();
 }
 ?>
@@ -9,7 +9,7 @@ if (!defined('ACCESO_PERMITIDO')) {
 <?php
 // 1. Verificación de seguridad y roles
 if (!isset($_SESSION["nombre"]) || !isset($_SESSION["email"]) || !isset($_SESSION["rol"])) {
-   header("Location: IndexLog.php");
+   header("Location: /administrador/log");
     exit();
 } 
 
@@ -64,7 +64,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
                     ?>
                     <?php foreach($lista_reservas as $reserva): ?>
                         <div class="item-reserva">
-                            <img src="../<?= htmlspecialchars($reserva["url_imagen"]) ?>" alt="<?= htmlspecialchars($reserva['nombre_producto']) ?>">
+                            <img src="/mvc/imagenes/<?= htmlspecialchars(basename($reserva["url_imagen"])) ?>" alt="<?= htmlspecialchars($reserva['nombre_producto']) ?>">
                             
                             <div class="item-info">
                                 <p class="nombre"><?= htmlspecialchars($reserva['nombre_producto']) ?></p>
@@ -115,7 +115,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
                 </div>
             <?php endif; ?>
         </div>
-<script src="js/reservas-administrador.js"></script>
+<script src="/mvc/vista/js/reservas-administrador.js"></script>
 </main>
 <?php }?>
  <div id="modal-eliminar" class="modal-overlay">

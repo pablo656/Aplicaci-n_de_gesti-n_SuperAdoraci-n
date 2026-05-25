@@ -1,11 +1,11 @@
 <?php
 if (!defined('ACCESO_PERMITIDO')) {
     // Si alguien intenta entrar directo, le mandamos al index
-    header("Location: IndexCarrito.php");
+    header("Location: /carrito");
     exit();
 }
 if (!isset($_SESSION["id"])) {
-    header("Location: IndexHome.php?action=log");
+    header("Location: /?action=log");
     exit();
 }
 ?>
@@ -55,7 +55,7 @@ if (!isset($_SESSION["id"])) {
             <?php foreach($reservas as $reserva):
                 $id = (int)$reserva['id'];
                 $cantidadActual = isset($cantidades[$id]) ? $cantidades[$id] : 1;
-                $imagen = (!empty($reserva['url_imagen'])) ? $reserva['url_imagen'] : 'imagenes/placeholder.png';
+                $imagen = '/mvc/imagenes/' . basename(!empty($reserva['url_imagen']) ? $reserva['url_imagen'] : 'placeholder.png');
                 $precio_final = $reserva['precio'];
                 if (!empty($reserva['porcentaje_descuento']) && $reserva['porcentaje_descuento'] > 0) {
                     $precio_final = $reserva['precio'] * (1 - ($reserva['porcentaje_descuento'] / 100));
@@ -121,7 +121,7 @@ if (!isset($_SESSION["id"])) {
                 <?php foreach ($pedidos_carrito as $pedido):
                     $pid = (int)$pedido['id'];
                     $pcantidad = $cantidades_pedidos[$pid] ?? 1;
-                    $imagen_p = !empty($pedido['url_imagen']) ? $pedido['url_imagen'] : 'imagenes/placeholder.png';
+                    $imagen_p = '/mvc/imagenes/' . basename(!empty($pedido['url_imagen']) ? $pedido['url_imagen'] : 'placeholder.png');
                 ?>
                     <div class="item-reserva" id="pedido-<?= $pid ?>">
                         <img src="<?= htmlspecialchars($imagen_p) ?>" alt="<?= htmlspecialchars($pedido['nombre']) ?>">
@@ -226,4 +226,4 @@ if (!isset($_SESSION["id"])) {
     </aside>
 </div>
 
-<script src="js/carrito.js" defer></script>
+<script src="/mvc/vista/js/carrito.js" defer></script>

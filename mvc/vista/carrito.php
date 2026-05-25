@@ -179,7 +179,7 @@ if (!isset($_SESSION["id"])) {
                 <span>Subtotal</span>
                 <span id="subtotal_reservas"><?= number_format($subtotal_reservas, 2) ?> €</span>
             </div>
-            <form method="post" action="?action=confirmar_reservas" id="confirmar_reservas">
+            <form method="post" action="/carrito?action=confirmar_reservas" id="confirmar_reservas">
                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                 <button class="btn-confirmar" type="submit">Confirmar reservas</button>
             </form>
@@ -209,7 +209,7 @@ if (!isset($_SESSION["id"])) {
                 <span>Subtotal</span>
                 <span id="subtotal_pedidos"><?= number_format($subtotal_pedidos, 2) ?> €</span>
             </div>
-            <form method="post" action="?action=confirmar_pedidos" id="confirmar_pedidos">
+            <form method="post" action="/carrito?action=confirmar_pedidos" id="confirmar_pedidos">
                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                 <button class="btn-confirmar btn-confirmar-pedidos" type="submit">Confirmar pedidos</button>
             </form>

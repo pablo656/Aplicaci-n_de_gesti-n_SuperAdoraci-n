@@ -16,7 +16,7 @@ if (!defined('ACCESO_PERMITIDO')) {
 </head>
 <body>
 <main>
-<form method="post" id="sing" action="?action=crear">
+<form method="post" id="sing" action="/?action=crear">
     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
     <div class="form-header">
         <h1>Registrarse</h1>
@@ -42,7 +42,7 @@ if (!defined('ACCESO_PERMITIDO')) {
         <input type="submit" name="sign" value="Crear cuenta">
         <div class="enlaces">
             <a href="?action=log">Iniciar sesión</a>
-            <a href="?action=Home">Volver atrás</a>
+            <a href="/">Volver atrás</a>
         </div>
     </div>
 </form>

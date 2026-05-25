@@ -1,15 +1,16 @@
 <?php
 if (!defined('ACCESO_PERMITIDO')) {
-    // Si alguien intenta entrar directo, le mandamos al index
-    header("Location: IndexPerfil.php");
+    // Si alguien intenta entrar directo, le mandamos a la URL limpia del perfil
+    header("Location: /perfil");
     exit();
 }
 ?>
 
 <?php
-$perfil_url ??= 'IndexPerfil.php';
-$home_url   ??= 'IndexHome.php';
-$img_base   ??= '';
+// Configuración inicial limpia para producción
+$perfil_url = '/perfil';
+$home_url   = '/';
+$img_base   = '/';
 ?>
 <div class="layout-perfil">
     <aside class="sidebar-perfil">
@@ -40,8 +41,7 @@ $img_base   ??= '';
                 <p class="editar-error"><?= htmlspecialchars($msgs[$_GET["error"]] ?? "Error desconocido.") ?></p>
             <?php endif; ?>
 
-            <form method="post" action="<?= $perfil_url ?>?action=actualizar_nombre" class="form-editar">
-                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
+            <form method="post" action="/?action=actualizar_nombre" class="form-editar">
                 <div class="form-grupo">
                     <label for="nombre">Nombre de usuario</label>
                     <input type="text" id="nombre" name="nombre"
@@ -59,8 +59,7 @@ $img_base   ??= '';
             <?php elseif (isset($_GET['feedback_error'])): ?>
                 <p class="feedback-error">Error al enviar. Inténtalo de nuevo.</p>
             <?php endif; ?>
-            <form method="post" action="IndexPerfil.php?action=enviar_feedback" class="form-feedback">
-                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
+            <form method="post" action="/perfil?action=enviar_feedback" class="form-feedback">
                 <textarea name="mensaje" rows="4" placeholder="Tu sugerencia o comentario..." required maxlength="1000" aria-label="Mensaje de sugerencia"></textarea>
                 <button type="submit" class="btn-feedback">Enviar</button>
             </form>
@@ -142,10 +141,10 @@ $img_base   ??= '';
                                     </span>
                                 </div>
                             <?php endif; ?>
-                            <form method="post" action="?action=borrar_reserva">
-                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
-                            <input type="hidden" name="id_reserva" value="<?=$reserva['id_reserva']?>">
-                            <button type="submit" class="btn-eliminar" title="Eliminar reserva"><i class="fi fi-sr-trash"></i> Eliminar</button>
+                            <form method="post" action="/perfil?action=borrar_reserva">
+                                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
+                                <input type="hidden" name="id_reserva" value="<?=$reserva['id_reserva']?>">
+                                <button type="submit" class="btn-eliminar" title="Eliminar reserva"><i class="fi fi-sr-trash"></i> Eliminar</button>
                             </form>
                         </div>
                     </div>
@@ -232,7 +231,6 @@ $img_base   ??= '';
 
         </div>
 
-        <!-- Modal cancelar pedido -->
         <div id="modal-cancelar-pedido" class="modal-cancelar-overlay">
             <div class="modal-cancelar-box">
                 <p class="modal-cancelar-titulo">¿Cancelar pedido?</p>
@@ -272,7 +270,7 @@ $img_base   ??= '';
                 <p class="editar-error"><?= htmlspecialchars($msgs[$_GET["error"]] ?? "Error desconocido.") ?></p>
             <?php endif; ?>
 
-            <form method="post" action="IndexPerfil.php?action=actualizar_nombre" class="form-editar">
+            <form method="post" action="/perfil?action=actualizar_nombre" class="form-editar">
                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                 <div class="form-grupo">
                     <label for="nombre">Nombre de usuario</label>

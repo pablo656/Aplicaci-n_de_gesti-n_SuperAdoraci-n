@@ -12,7 +12,7 @@
     <p>Te hemos enviado un enlace de confirmación a tu email.</p>
     <p>Haz clic en él para activar tu cuenta. El enlace caduca en 24 horas.</p>
     <br>
-    <a href="?action=log">Ir a iniciar sesión</a>
+    <a href="/?action=log">Ir a iniciar sesión</a>
 </div>
 </body>
 </html>

@@ -24,7 +24,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno"): ?>
             <h1>Administración de comidas</h1>
             <p class="subtitulo">Gestiona el menú disponible para los pedidos.</p>
         </div>
-        <form method="post" action="IndexComidas-administrador.php">
+        <form method="post" action="/administrador/comidas">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
             <button name="add" type="submit" class="btn-añadir">
                 <i class="fi fi-sr-plus"></i> Añadir comida
@@ -53,7 +53,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno"): ?>
                     <div class="comida-accion">
                         <p class="comida-precio"><?= number_format($c['precio'], 2) ?>&euro;</p>
 
-                        <form method="post" action="IndexComidas-administrador.php">
+                        <form method="post" action="/administrador/comidas">
                             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                             <input type="hidden" name="id" value="<?= htmlspecialchars($c['id']) ?>">
                             <button type="submit" class="btn-modificar-comida" name="abrir_modal">
@@ -61,7 +61,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno"): ?>
                             </button>
                         </form>
 
-                        <form method="post" action="?action=delete" onsubmit="return confirm('¿Eliminar esta comida?');">
+                        <form method="post" action="/administrador/comidas?action=delete" onsubmit="return confirm('¿Eliminar esta comida?');">
                             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                             <input type="hidden" name="id_comida" value="<?= htmlspecialchars($c['id']) ?>">
                             <button type="submit" class="btn-eliminar-comida">
@@ -108,7 +108,7 @@ if ($mostrar_modal && $comida_modal): ?>
         <div class="modal">
             <button class="modal-cerrar" onclick="window.location.href='IndexComidas-administrador.php'">&#x2715;</button>
 
-            <form method="post" action="<?= htmlspecialchars($action_form) ?>" id="form-modal" enctype="multipart/form-data">
+            <form method="post" action="/administrador/comidas<?= htmlspecialchars($action_form) ?>" id="form-modal" enctype="multipart/form-data">
                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                 <input type="hidden" name="id" value="<?= htmlspecialchars($comida_modal['id']) ?>">
 
@@ -131,7 +131,7 @@ if ($mostrar_modal && $comida_modal): ?>
 
                 <label>Imagen</label>
                 <div class="contenedor-preview">
-                    <img id="preview" src="../<?= htmlspecialchars($comida_modal['url_imagen']) ?>" alt="Vista previa">
+                    <img id="preview" src="/<?= htmlspecialchars($comida_modal['url_imagen']) ?>" alt="Vista previa">
                 </div>
 
                 <input type="file" name="nueva_imagen" id="input_imagen" accept="image/*" aria-label="Seleccionar imagen del producto"

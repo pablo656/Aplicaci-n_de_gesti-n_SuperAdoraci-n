@@ -11,10 +11,6 @@ if (!defined('ACCESO_PERMITIDO')) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $titulo?></title>
-    <?php
-    $base_path = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])), '/') . '/';
-    ?>
-    <base href="<?= htmlspecialchars($base_path) ?>">
     <link rel="stylesheet" href="../css/header_style.css">
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
     <!--Poner el campo link del CSS en el INDEX para que sea distinto dependiendo de la página--> 
@@ -31,18 +27,16 @@ if (!defined('ACCESO_PERMITIDO')) {
 </header>
 <nav>
     <div>
-        <a href="IndexInicio-administrador.php">Inicio</a>
-        <a href="IndexProducto-administrador.php">Productos</a>
-        <a href="IndexReservas-administrador.php">Reservas</a>
-        <a href="IndexComidas-administrador.php">Comidas</a>
-        <a href="IndexPedidos-administrador.php">Pedidos</a>
-
+        <a href="/administrador/inicio">Inicio</a>
+        <a href="/administrador/productos">Productos</a>
+        <a href="/administrador/reservas">Reservas</a>
+        <a href="/administrador/comidas">Comidas</a>
+        <a href="/administrador/pedidos">Pedidos</a>
     </div>
     <div>
-        <a href="IndexUsuarios-administrador.php">Usuarios</a>
-        <a href="IndexPerfil.php">Perfil <i class="fi fi-sr-user" style="color: white; font-size: 1.2em;"></i></a>
-        <a href="../IndexHome.php?action=log_out">Cerrar sesión</a>
-
+        <a href="/administrador/usuarios">Usuarios</a>
+        <a href="/perfil">Perfil <i class="fi fi-sr-user" style="color: white; font-size: 1.2em;"></i></a>
+        <a href="/?action=log_out">Cerrar sesión</a>
     </div>
 </nav>
 <input type="hidden" id="csrf_token_global" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">

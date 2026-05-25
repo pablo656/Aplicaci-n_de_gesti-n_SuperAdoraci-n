@@ -1,7 +1,7 @@
 <?php
 if (!defined('ACCESO_PERMITIDO')) {
-    // Si alguien intenta entrar directo, le mandamos al index
-    header("Location: IndexProducto-administrador.php");
+    // Si alguien intenta entrar directo, le mandamos a la URL limpia de productos
+    header("Location: /administrador/productos");
     exit();
 }
 ?>
@@ -23,7 +23,7 @@ $subcategorias = [
 
 // 1. Verificación de seguridad y roles
 if (!isset($_SESSION["nombre"]) || !isset($_SESSION["email"]) || !isset($_SESSION["rol"])) {
-    header("Location: IndexLog.php");
+    header("Location: /admin/login");
     exit();
 }
 
@@ -42,8 +42,8 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
         <ul>
             <?php foreach($categorias as $cat): ?>
                 <li>
-                    <a href="IndexProducto-administrador.php?action=<?= htmlspecialchars($cat) ?>"
-                       class="<?= $action == $cat ? 'cat-activa' : '' ?>">
+                    <a href="/administrador/productos?action=<?= htmlspecialchars($cat) ?>"
+                        class="<?= $action == $cat ? 'cat-activa' : '' ?>">
                         <?= htmlspecialchars(str_replace("_", " ", $cat)) ?>
                     </a>
 
@@ -51,8 +51,8 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
                         <ul class="subcategorias">
                             <?php foreach($subcategorias[$cat] as $sub): ?>
                                 <li>
-                                    <a href="IndexProducto-administrador.php?action=<?= htmlspecialchars($cat) ?>&subcategoria=<?= urlencode($sub) ?>"
-                                       class="<?= $subcategoria == $sub ? 'sub-activa' : '' ?>">
+                                    <a href="/administrador/productos?action=<?= htmlspecialchars($cat) ?>&subcategoria=<?= urlencode($sub) ?>"
+                                        class="<?= $subcategoria == $sub ? 'sub-activa' : '' ?>">
                                         <?= htmlspecialchars($sub) ?>
                                     </a>
                                 </li>
@@ -70,7 +70,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
                 <h1>Administración de catálogo</h1>
                 <p class="subtitulo">Gestiona el stock, precios y disponibilidad de los productos.</p>
             </div>
-            <form method="post" >
+            <form method="post" action="/administrador/productos">
                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                 <button name="add" type="submit" class="btn-añadir">
                     <i class="fi fi-sr-plus"></i> Añadir producto
@@ -84,14 +84,14 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
             $separador = "<span class='breadcrumb-separador'> > </span>";
 
             if($action != "list" && $action != "add"){
-                $breadcrums = "<a href='IndexProducto-administrador.php' class='breadcrumb-enlace'>Todos los productos</a>";
+                $breadcrums = "<a href='/administrador/productos' class='breadcrumb-enlace'>Todos los productos</a>";
+                
                 if($subcategoria != null){
                     $breadcrums .= $separador;
-                    // Escapa tanto el atributo como el texto
-                    $breadcrums .= "<a href='IndexProducto-administrador.php?action=" . htmlspecialchars($action, ENT_QUOTES) . "' class='breadcrumb-enlace'>" . htmlspecialchars(str_replace('_', ' ', $action)) . "</a>";
+                    $breadcrums .= "<a href='/administrador/productos?action=" . htmlspecialchars($action, ENT_QUOTES) . "' class='breadcrumb-enlace'>" . htmlspecialchars(str_replace('_', ' ', $action)) . "</a>";
                     $breadcrums .= $separador;
                     $breadcrums .= "<span class='breadcrumb-texto'>" . htmlspecialchars($subcategoria) . "</span>";
-
+            
                 }else{
                     $breadcrums .= $separador;
                     $breadcrums .= "<span class='breadcrumb-texto'>" . htmlspecialchars(str_replace('_', ' ', $action)) . "</span>";
@@ -112,7 +112,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
                 ?>
                     <div class="producto" id="prod-<?= htmlspecialchars($p['id']) ?>">
                         <div class="contenedor-img">
-                            <img src="../<?= htmlspecialchars($p['url_imagen']) ?>" alt="<?= htmlspecialchars($p['nombre']) ?>" loading="lazy">
+                            <img src="/<?= htmlspecialchars($p['url_imagen']) ?>" alt="<?= htmlspecialchars($p['nombre']) ?>" loading="lazy">
                         </div>
                         
                         <div class="info-producto">
@@ -125,26 +125,28 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
                                 <?php endif; ?>
                                 <p class="precio"><?= number_format($precio_f, 2) ?>&euro;<?= $p['precio_por_peso'] ? '/Kg' : '' ?></p>
                             </div>
+                            
                             <?php if($p["inicio"]==0):?>
-                            <form method="post" action="?action=inicio">
+                            <form method="post" action="/administrador/productos?action=inicio">
                                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                                 <input type="hidden" value="<?= htmlspecialchars($p["id"]) ?>" name="id">
                                 <button type="submit" class="boton_Inicio" name="aniadir_inicio">Poner producto en el inicio</button>
                             </form>
                             <?php else:?>
-                                <form method="post" action="?action=quitar_inicio">
-                                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
-                                    <input type="hidden" value="<?= htmlspecialchars($p["id"]) ?>" name="id">
-                                    <button type="submit" class="boton_Inicio" name="quitar_inicio">Quitar el producto del inicio</button>
-                                </form>
+                            <form method="post" action="/administrador/productos?action=quitar_inicio">
+                                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
+                                <input type="hidden" value="<?= htmlspecialchars($p["id"]) ?>" name="id">
+                                <button type="submit" class="boton_Inicio" name="quitar_inicio">Quitar el producto del inicio</button>
+                            </form>
                             <?php endif;?>
-                            <form method="post">
+
+                            <form method="post" action="/administrador/productos">
                                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                                 <input type="hidden" value="<?= htmlspecialchars($p["id"]) ?>" name="id">
                                 <button type="submit" class="boton_modificar" name="abrir_modal">Modificar</button>
                             </form>
 
-                            <form method="post" action="?action=delete" onsubmit="return confirm('¿Estás seguro?');">
+                            <form method="post" action="/administrador/productos?action=delete" onsubmit="return confirm('¿Estás seguro?');">
                                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                                 <input type="hidden" name="id_producto" value="<?= htmlspecialchars($p['id']) ?>">
                                 <button type="submit" class="btn-eliminar"><i class="fi fi-sr-trash"></i> Eliminar</button>
@@ -195,9 +197,9 @@ elseif ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add"])) {
 if ($mostrar_modal && $producto_modal): ?>
     <div id="modal" class="modal-overlay" style="display:flex"> 
         <div class="modal">
-            <button class="modal-cerrar" onclick="window.location.href='IndexProducto-administrador.php'">x</button>
+            <button class="modal-cerrar" onclick="window.location.href='/administrador/productos'">x</button>
             
-            <form method="post" action="<?= $action_form ?>" id="form-modal" enctype="multipart/form-data">
+            <form method="post" action="/administrador/productos<?= $action_form ?>" id="form-modal" enctype="multipart/form-data">
                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                 <input type="hidden" value="<?= htmlspecialchars($producto_modal["id"]) ?>" name="id">
                 
@@ -253,16 +255,13 @@ if ($mostrar_modal && $producto_modal): ?>
 
                 <label>Imagen del producto:</label>
                 <div class="contenedor-preview">
-                    <img id="preview" src="../<?= htmlspecialchars($producto_modal['url_imagen']) ?>" alt="Vista previa">
+                    <img id="preview" src="/<?= htmlspecialchars($producto_modal['url_imagen']) ?>" alt="Vista previa">
                 </div>
                 <?php if($action_form=="?action=insertar"):?>
                     <input type="file" name="nueva_imagen" id="input_imagen" accept="image/*" aria-label="Seleccionar imagen" required>
                 <?php else:?>
                     <input type="file" name="nueva_imagen" id="input_imagen" accept="image/*" aria-label="Seleccionar imagen">
                 <?php endif;?>
-                
-                    
-                
                 
                 <input type="submit" name="enviar" value="<?= $texto_boton ?>" class="btn-actualizar">
             </form>

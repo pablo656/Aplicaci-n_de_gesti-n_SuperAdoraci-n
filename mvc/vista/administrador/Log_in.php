@@ -15,7 +15,7 @@ if (!defined('ACCESO_PERMITIDO')) {
 </head>
 <body>
 <main>
-<form method="post" id="log" action="?action=comprobar">
+<form method="post" id="log" action="/admin/login?action=comprobar">
     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
     <div class="form-header">
         <h1>Iniciar sessión</h1>
@@ -31,7 +31,7 @@ if (!defined('ACCESO_PERMITIDO')) {
         </div>
         <input type="submit" name="log" value="Entrar">
         <div class="enlaces">
-            <a href="../IndexHome.php?action=Home">Volver atrás</a>
+            <a href="/administrador/inicio">Volver atrás</a>
         </div>
     </div>
 </form>

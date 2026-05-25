@@ -27,7 +27,7 @@ if (!defined('ACCESO_PERMITIDO')) {
                 <span class="etiqueta">CALIDAD SUPERIOR</span>
                 <p class="diapositiva-titulo">Cortes premium con frescura garantizada</p>
                 <p class="diapositiva-subtitulo">Seleccionamos las mejores carnes para tus platos más exigentes.</p>
-                <a href="IndexProducto.php" class="diapositiva-boton">Ver Ofertas</a>
+                <a href="/pedidos" class="diapositiva-boton">Ver Ofertas</a>
             </div>
         </li>
         <li class="diapositiva">
@@ -36,7 +36,7 @@ if (!defined('ACCESO_PERMITIDO')) {
                 <span class="etiqueta">NUEVOS SABORES</span>
                 <p class="diapositiva-titulo">Desayunos irresistibles para empezar el día con energía</p>
                 <p class="diapositiva-subtitulo">Descubre nuestra gama de cremas de cacao y productos de primera calidad.</p>
-                <a href="IndexProducto.php" class="diapositiva-boton">Ver Catálogo</a>
+                <a href="/catalogo" class="diapositiva-boton">Ver Catálogo</a>
             </div>
         </li>
         <li class="diapositiva">
@@ -45,7 +45,7 @@ if (!defined('ACCESO_PERMITIDO')) {
                 <span class="etiqueta">CALIDAD GARANTIZADA</span>
                 <p class="diapositiva-titulo">Tu despensa siempre llena al mejor precio</p>
                 <p class="diapositiva-subtitulo">Seleccionamos lo mejor para que tu familia disfrute al máximo.</p>
-                <a href="IndexProducto.php" class="diapositiva-boton">Comprar Ahora</a>
+                <a href="/catalogo" class="diapositiva-boton">Comprar Ahora</a>
             </div>
         </li>
         <li class="diapositiva">
@@ -54,7 +54,7 @@ if (!defined('ACCESO_PERMITIDO')) {
                 <span class="etiqueta">LIMPIEZA DEL HOGAR</span>
                 <p class="diapositiva-titulo">Eficacia y ahorro en cada lavado</p>
                 <p class="diapositiva-subtitulo">Descubre los detergentes y suavizantes que cuidan tu ropa y tu bolsillo..</p>
-                <a href="IndexProducto.php" class="diapositiva-boton">Ver Más</a>
+                <a href="/catalogo" class="diapositiva-boton">Ver Más</a>
             </div>
         </li>
         <li class="diapositiva">
@@ -63,7 +63,7 @@ if (!defined('ACCESO_PERMITIDO')) {
                 <span class="etiqueta">LO MEJOR PARA TUS MASCOTAS</span>
                 <p class="diapositiva-titulo">Ellos se merecen lo mejor todos los días</p>
                 <p class="diapositiva-subtitulo">Nutrición completa para perros, gatos y pájaros. ¡Pruébalo!</p>
-                <a href="IndexProducto.php" class="diapositiva-boton">Explorar</a>
+                <a href="/catalogo" class="diapositiva-boton">Explorar</a>
             </div>
         </li>
     </ul>
@@ -116,7 +116,7 @@ if (!defined('ACCESO_PERMITIDO')) {
                         </div>
                     </div>
                     <div class="">
-                        <a href="IndexProducto.php" class="btn-ir-catalogo">Ir al catálogo</a>
+                        <a href="/catalogo" class="btn-ir-catalogo">Ir al catálogo</a>
                     </div>
                 </div>
             <?php endforeach; ?>

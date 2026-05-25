@@ -23,16 +23,16 @@ if (!defined('ACCESO_PERMITIDO')) {
         <ul>
             <?php foreach($categorias as $cat): ?>
                 <li>
-                    <a href="IndexProducto.php?action=<?= htmlspecialchars($cat) ?>"
-                       class="<?= $action == $cat ? 'cat-activa' : '' ?>">
+                    <a href="/catalogo?action=<?= htmlspecialchars($cat) ?>"
+                        class="<?= $action == $cat ? 'cat-activa' : '' ?>">
                         <?= htmlspecialchars(str_replace("_", " ", $cat)) ?>
                     </a>
                     <?php if($action == $cat && isset($subcategorias[$cat]) && !empty($subcategorias[$cat])): ?>
                         <ul class="subcategorias">
                             <?php foreach($subcategorias[$cat] as $sub): ?>
                                 <li>
-                                    <a href="IndexProducto.php?action=<?= htmlspecialchars($cat) ?>&subcategoria=<?= urlencode($sub) ?>"
-                                       class="<?= $subcategoria == $sub ? 'sub-activa' : '' ?>">
+                                    <a href="/catalogo?action=<?= htmlspecialchars($cat) ?>&subcategoria=<?= urlencode($sub) ?>"
+                                        class="<?= $subcategoria == $sub ? 'sub-activa' : '' ?>">
                                         <?= htmlspecialchars($sub) ?>
                                     </a>
                                 </li>
@@ -50,10 +50,13 @@ if (!defined('ACCESO_PERMITIDO')) {
             $separador = "<span class='breadcrumb-separador'> > </span>";
 
             if($action != "list"){
-                $breadcrums = "<a href='IndexProducto.php' class='breadcrumb-enlace'>Todos los productos</a>";
+                // Cambiado a la ruta limpia de la raíz del catálogo de usuario
+                $breadcrums = "<a href='/catalogo' class='breadcrumb-enlace'>Todos los productos</a>";
+                
                 if($subcategoria != null){
                     $breadcrums .= $separador;
-                    $breadcrums .= "<a href='IndexProducto.php?action=$action' class='breadcrumb-enlace'>" . str_replace('_', ' ', $action) . "</a>";
+                    // Cambiado aquí también manteniendo el parámetro dinámico de la categoría (?action=)
+                    $breadcrums .= "<a href='/catalogo?action=$action' class='breadcrumb-enlace'>" . str_replace('_', ' ', $action) . "</a>";
                     $breadcrums .= $separador;
                     $breadcrums .= "<span class='breadcrumb-texto'>$subcategoria</span>";
                 }else{
@@ -167,7 +170,7 @@ if (!defined('ACCESO_PERMITIDO')) {
 
                     <?php else: ?>
                         <!-- Sin reservar: solo botón reservar -->
-                        <form method="post" action="?action=reservar">
+                        <form method="post" action="catalogo?action=reservar">
                             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                             <input type="hidden" name="id_producto" value="<?= $producto["id"] ?>">
                             <input type="hidden" name="cantidad" value="1">
@@ -175,7 +178,7 @@ if (!defined('ACCESO_PERMITIDO')) {
                         </form>
                     <?php endif; ?>
                 <?php else: ?>
-                    <a class="reservar" href="IndexHome.php?action=log">Reservar</a>
+                    <a class="reservar" href="/?action=log">Reservar</a>
                 <?php endif; ?>
             </div>
         </div>

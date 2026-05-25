@@ -23,7 +23,7 @@ $subcategorias = [
 
 // 1. Verificación de seguridad y roles
 if (!isset($_SESSION["nombre"]) || !isset($_SESSION["email"]) || !isset($_SESSION["rol"])) {
-    header("Location: /admin/login");
+    header("Location: /administrador/log");
     exit();
 }
 

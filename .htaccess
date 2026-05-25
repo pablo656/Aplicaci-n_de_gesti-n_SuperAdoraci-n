@@ -1,13 +1,12 @@
-Options +FollowSymLinks -Indexes
 RewriteEngine On
 RewriteBase /
-
-# Home — va antes de las condiciones para que no la bloqueen
-RewriteRule ^$ mvc/vista/IndexHome.php [L,QSA]
 
 # Evitar que interfiera con archivos reales (CSS, JS, imágenes)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+
+# Si entran limpios a https://superadoracion.site/ carga el Home
+RewriteRule ^$ mvc/vista/IndexHome.php [L,QSA]
 
 # --- RUTAS DE USUARIO ---
 RewriteRule ^catalogo/?$ mvc/vista/IndexProducto.php [L,QSA]
@@ -16,11 +15,10 @@ RewriteRule ^perfil/?$ mvc/vista/IndexPerfil.php [L,QSA]
 RewriteRule ^carrito/?$ mvc/vista/IndexCarrito.php [L,QSA]
 
 # --- RUTAS DE ADMINISTRADOR ---
-RewriteRule ^administrador/log/?$ mvc/vista/administrador/IndexLog.php [L,QSA]
 RewriteRule ^administrador/inicio/?$ mvc/vista/administrador/IndexInicio-administrador.php [L,QSA]
 RewriteRule ^administrador/productos/?$ mvc/vista/administrador/IndexProducto-administrador.php [L,QSA]
 RewriteRule ^administrador/reservas/?$ mvc/vista/administrador/IndexReservas-administrador.php [L,QSA]
 RewriteRule ^administrador/comidas/?$ mvc/vista/administrador/IndexComidas-administrador.php [L,QSA]
 RewriteRule ^administrador/pedidos/?$ mvc/vista/administrador/IndexPedidos-administrador.php [L,QSA]
 RewriteRule ^administrador/usuarios/?$ mvc/vista/administrador/IndexUsuarios-administrador.php [L,QSA]
-RewriteRule ^administrador/perfil/?$ mvc/vista/administrador/IndexPerfil.php [L,QSA]
+RewriteRule ^administrador/log/?$ mvc/vista/administrador/IndexLog.php [L,QSA]

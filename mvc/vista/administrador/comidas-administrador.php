@@ -7,7 +7,7 @@ if (!defined('ACCESO_PERMITIDO')) {
 ?>
 <?php
 if (!isset($_SESSION["nombre"]) || !isset($_SESSION["email"]) || !isset($_SESSION["rol"])) {
-    header("Location: /?action=log");
+    header("Location: /administrador/log?action=log");
     exit();
 }
 

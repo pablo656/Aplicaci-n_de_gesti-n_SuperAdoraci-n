@@ -69,8 +69,11 @@ $img_base   = '/mvc/imagenes/';
     </aside>
 
     <main class="contenido-principal">
-        
+
         <h1>Perfil</h1>
+        <?php if (!empty($_SESSION['pedidos_confirmados'])): unset($_SESSION['pedidos_confirmados']); ?>
+            <p class="editar-ok">¡Tus pedidos han sido confirmados correctamente!</p>
+        <?php endif; ?>
         <div class="seccion">
             <h2 class="seccion-titulo">Resumen</h2>
             <div class="stats">

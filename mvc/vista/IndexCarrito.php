@@ -82,38 +82,40 @@ define('ACCESO_PERMITIDO', true);
                 echo json_encode(["ok" => false]);
             }
             exit();
-        }
 
-    // ← Header después de las acciones AJAX
-    $titulo = "Carrito";
-    $css = "<link rel='stylesheet' href='/mvc/vista/css/carrito.css'>";
-    require("../vista/layerHeader.php");
-       $action = $_GET["action"] ?? "list";
-        if($action == "confirmar_reservas"){
+        }else if($action == "confirmar_reservas"){
             $reservas = isset($_COOKIE["reservas"]) ? json_decode($_COOKIE["reservas"], true) : [];
-            $usuario=$_SESSION["id"];
+            $usuario = $_SESSION["id"];
             foreach($reservas as $reserva){
-                $id_producto=$reserva["id"];
-                $cantidad=$reserva["cantidad"];
-                $controller_reservas->crear_reserva($usuario,$id_producto,$cantidad);
+                $controller_reservas->crear_reserva($usuario, $reserva["id"], $reserva["cantidad"]);
             }
-            $reservas=[];
-            setcookie("reservas", json_encode($reservas), time() + (60 * 60 * 24), "/");
-            header("Location: " . $_SERVER['HTTP_REFERER']);
+            setcookie("reservas", json_encode([]), time() + (60 * 60 * 24), "/");
+            $_SESSION["reserva_ok"] = true;
+            header("Location: /carrito");
+            exit();
+
         }else if($action == "confirmar_pedidos"){
             $pedidos_cookie = isset($_COOKIE["pedidos"]) ? json_decode($_COOKIE["pedidos"], true) : [];
             $usuario = $_SESSION["id"];
             foreach($pedidos_cookie as $pedido){
-                $id_comida     = $pedido["id"];
-                $cantidad      = $pedido["cantidad"];
-                $mensaje       = $pedido["mensaje"]       ?? "";
-                $fecha_entrega = $pedido["fecha_entrega"] ?? null;
-                $controller_pedidos->crear_pedido($usuario, $id_comida, $cantidad, $mensaje, $fecha_entrega);
+                $controller_pedidos->crear_pedido(
+                    $usuario,
+                    $pedido["id"],
+                    $pedido["cantidad"],
+                    $pedido["mensaje"]       ?? "",
+                    $pedido["fecha_entrega"] ?? null
+                );
             }
             setcookie("pedidos", json_encode([]), time() + (60 * 60 * 24), "/");
-            $_SESSION["pedidos_ok"] = true;
-            header("Location: " . $_SERVER['HTTP_REFERER']);
-        }else{
+            $_SESSION["pedidos_confirmados"] = true;
+            header("Location: /perfil");
+            exit();
+        }
+
+    $titulo = "Carrito";
+    $css = "<link rel='stylesheet' href='/mvc/vista/css/carrito.css'>";
+    require("../vista/layerHeader.php");
+        if(true){
             $reservas_cookie = isset($_COOKIE["reservas"]) ? json_decode($_COOKIE["reservas"], true) : [];
             $pedidos_cookie  = isset($_COOKIE["pedidos"])  ? json_decode($_COOKIE["pedidos"],  true) : [];
             $pedidos_carrito = $controller_pedidos->buscar_pedidos_cookie($pedidos_cookie) ?: [];

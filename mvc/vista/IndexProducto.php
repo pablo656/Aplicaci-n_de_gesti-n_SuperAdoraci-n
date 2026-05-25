@@ -1,45 +1,61 @@
 <?php
 define('ACCESO_PERMITIDO', true);
     session_start();
+    if (empty($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
     require_once("../controller/productoController.php");
     $controller = new ProductoController();
     $action = $_GET["action"] ?? "list";
     $subcategoria = $_GET["subcategoria"] ?? null;
 
     // Se debe poner esto aqui ya que la funcion asincrona debe estar antes de cargar el header
-    if($action == "comprobar_stock"){
-        $id_producto = (int)$_POST["id_producto"];
-        $cantidad = (int)$_POST["cantidad"];
-        if($controller->comprobar_stock($id_producto, $cantidad)){
-            echo json_encode(["ok" => true]);
-        }else{
-            echo json_encode(["ok" => false]);
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+            // En lugar de un die() con texto, devolvemos un JSON de error
+            header('Content-Type: application/json');
+            echo json_encode([
+                "ok" => false, 
+                "error" => "CSRF_FAIL", 
+                "msg" => "Sesión caducada, recarga la página."
+            ]);
+            exit();
         }
-        exit();
-    }else if($action == "actualizar_cantidad"){
-        $id_producto = $_POST["id_producto"];
-        $cantidad = (float)$_POST["cantidad"];
-        $reservas = isset($_COOKIE["reservas"]) ? json_decode($_COOKIE["reservas"], true) : [];
-        foreach($reservas as &$reserva){
-            if($reserva["id"] == $id_producto){
-                $reserva["cantidad"] = $cantidad;
-                break;
-            }
-        }
-        setcookie("reservas", json_encode($reservas), time() + (60 * 60 * 24), "/");
-        exit();
-    }else if($action == "borrar_reserva"){
-        $reservas = isset($_COOKIE["reservas"]) ? json_decode($_COOKIE["reservas"], true) : [];
-        $id_producto = $_POST["id_producto"];
-        foreach($reservas as $indice => $reserva){
-            if($reserva["id"] == $id_producto){
-                unset($reservas[$indice]);
-                setcookie("reservas", json_encode($reservas), time() + (60 * 60 * 24), "/");
-                exit();
-            }
-        }
-        exit();
     }
+        if($action == "comprobar_stock"){
+            $id_producto = (int)$_POST["id_producto"];
+            $cantidad = (float)$_POST["cantidad"];
+            if($controller->comprobar_stock($id_producto, $cantidad)){
+                echo json_encode(["ok" => true]);
+            }else{
+                echo json_encode(["ok" => false]);
+            }
+            exit();
+        }else if($action == "actualizar_cantidad"){
+            $id_producto = $_POST["id_producto"];
+            $cantidad = (float)$_POST["cantidad"];
+            $reservas = isset($_COOKIE["reservas"]) ? json_decode($_COOKIE["reservas"], true) : [];
+            foreach($reservas as &$reserva){
+                if($reserva["id"] == $id_producto){
+                    $reserva["cantidad"] = $cantidad;
+                    break;
+                }
+            }
+            setcookie("reservas", json_encode($reservas), time() + (60 * 60 * 24), "/");
+            exit();
+        }else if($action == "borrar_reserva"){
+            $reservas = isset($_COOKIE["reservas"]) ? json_decode($_COOKIE["reservas"], true) : [];
+            $id_producto = $_POST["id_producto"];
+            foreach($reservas as $indice => $reserva){
+                if($reserva["id"] == $id_producto){
+                    unset($reservas[$indice]);
+                    setcookie("reservas", json_encode($reservas), time() + (60 * 60 * 24), "/");
+                    exit();
+                }
+            }
+            exit();
+        }
+
 
     $titulo = "Catálogo";
     $css = "<link rel='stylesheet' href='css/catalogo_style.css'>";

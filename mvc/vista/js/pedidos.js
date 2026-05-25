@@ -1,3 +1,14 @@
+/**
+ * Helper para obtener el token de forma segura
+ */
+const getCSRFToken = () => {
+    const globalToken = document.getElementById("csrf_token_global");
+    if (globalToken) return globalToken.value;
+    
+    const formToken = document.querySelector('input[name="csrf_token"]');
+    return formToken ? formToken.value : "";
+};
+
 function actualizarBadge() {
     const badge = document.getElementById('badge-total');
     if (!badge) return;
@@ -50,28 +61,45 @@ document.getElementById('modalPedir').addEventListener('click', function(e) {
     if (e.target === this) cerrarModal();
 });
 
+/**
+ * Función corregida con Token CSRF
+ */
 function ajustarPedido(idComida, cambio) {
+    const token = getCSRFToken();
+
     fetch('IndexPedidos.php?action=actualizar_cantidad_cookie', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: 'id_comida=' + encodeURIComponent(idComida) + '&cambio=' + encodeURIComponent(cambio)
+        body: `id_comida=${encodeURIComponent(idComida)}&cambio=${encodeURIComponent(cambio)}&csrf_token=${encodeURIComponent(token)}`
     })
     .then(response => response.json())
-    .then(() => {
+    .then(data => {
+        // Si el servidor detecta fallo de CSRF, recargamos
+        if (data && data.error === "CSRF_FAIL") {
+            window.location.reload();
+            return;
+        }
+
         const elemento = document.getElementById('cantidad-pedido-' + idComida);
         if (!elemento) return;
         const actual = parseInt(elemento.textContent) || 0;
         const valor = Math.min(30, Math.max(0, actual + cambio));
+        
         if (valor <= 0) {
             const accion = document.getElementById('accion-' + idComida);
             const nombre = accion.dataset.nombre;
             const precioHTML = accion.querySelector('.precio').outerHTML;
+            // Al reconstruir el botón, nos aseguramos de que mantenga la funcionalidad de abrirModal
             accion.innerHTML = precioHTML + `<button class="btn-pedir" onclick='abrirModal(${idComida}, ${JSON.stringify(nombre)})'>&#43;</button>`;
         } else {
             elemento.textContent = valor;
         }
         actualizarBadge();
+    })
+    .catch(error => {
+        console.error("Error en la petición:", error);
     });
 }
 
+// Inicialización
 actualizarBadge();

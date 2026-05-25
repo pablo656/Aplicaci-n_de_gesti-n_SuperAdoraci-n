@@ -60,6 +60,7 @@ if ($_SESSION["rol"] != "administrador") { ?>
                         </button>
                         
                          <form method="post" action="?action=delete" onsubmit="return confirm('¿Estás seguro?');">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                             <input type="hidden" name="id" value="<?= htmlspecialchars($usuario['id'], ENT_QUOTES) ?>">
                             <button type="submit" class="btn-eliminar"><i class="fi fi-sr-trash"></i> Eliminar</button>
                         </form>
@@ -83,6 +84,7 @@ if ($_SESSION["rol"] != "administrador") { ?>
         <p class="modal-subtitulo">Selecciona el nuevo nivel de acceso para este usuario.</p>
 
         <form method="post" action="?action=modificar">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
             <!-- Campo oculto para enviar el identificador del usuario -->
             <input type="hidden" value="" name="id_usuario" id="id_hidden">
             
@@ -111,6 +113,7 @@ if ($_SESSION["rol"] != "administrador") { ?>
         <p class="modal-subtitulo">Introduce los datos del nuevo usuario para registrarlo en el sistema.</p>
 
         <form method="post" action="?action=add" id="add">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
             <!-- Campo oculto para enviar el identificador del usuario -->
             <input type="hidden" value="" name="id_usuario" id="id_hidden">
             

@@ -7,7 +7,7 @@ if (!defined('ACCESO_PERMITIDO')) {
 ?>
 
 <?php
-$perfil_url ??= 'indexPerfil.php';
+$perfil_url ??= 'IndexPerfil.php';
 $home_url   ??= 'IndexHome.php';
 $img_base   ??= '';
 ?>
@@ -40,7 +40,8 @@ $img_base   ??= '';
                 <p class="editar-error"><?= htmlspecialchars($msgs[$_GET["error"]] ?? "Error desconocido.") ?></p>
             <?php endif; ?>
 
-            <form method="post" action="<?= $home_url ?>?action=actualizar_nombre" class="form-editar">
+            <form method="post" action="<?= $perfil_url ?>?action=actualizar_nombre" class="form-editar">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                 <div class="form-grupo">
                     <label for="nombre">Nombre de usuario</label>
                     <input type="text" id="nombre" name="nombre"
@@ -58,7 +59,8 @@ $img_base   ??= '';
             <?php elseif (isset($_GET['feedback_error'])): ?>
                 <p class="feedback-error">Error al enviar. Inténtalo de nuevo.</p>
             <?php endif; ?>
-            <form method="post" action="indexPerfil.php?action=enviar_feedback" class="form-feedback">
+            <form method="post" action="IndexPerfil.php?action=enviar_feedback" class="form-feedback">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                 <textarea name="mensaje" rows="4" placeholder="Tu sugerencia o comentario..." required maxlength="1000" aria-label="Mensaje de sugerencia"></textarea>
                 <button type="submit" class="btn-feedback">Enviar</button>
             </form>
@@ -141,6 +143,7 @@ $img_base   ??= '';
                                 </div>
                             <?php endif; ?>
                             <form method="post" action="?action=borrar_reserva">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                             <input type="hidden" name="id_reserva" value="<?=$reserva['id_reserva']?>">
                             <button type="submit" class="btn-eliminar" title="Eliminar reserva"><i class="fi fi-sr-trash"></i> Eliminar</button>
                             </form>
@@ -235,6 +238,7 @@ $img_base   ??= '';
                 <p class="modal-cancelar-titulo">¿Cancelar pedido?</p>
                 <p class="modal-cancelar-desc">Esta acción no se puede deshacer.</p>
                 <form method="POST" action="<?= $perfil_url ?>?action=borrar_pedido">
+                    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                     <input type="hidden" name="id_pedido" id="input-cancelar-id">
                     <div class="modal-cancelar-acciones">
                         <button type="button" onclick="cerrarModalCancelar()">Volver</button>
@@ -253,5 +257,31 @@ $img_base   ??= '';
             }
         </script>
 
+
+        <div class="seccion seccion-editar">
+            <h2 class="seccion-titulo">Editar perfil</h2>
+
+            <?php if (isset($_GET["ok"])): ?>
+                <p class="editar-ok">Nombre actualizado correctamente.</p>
+            <?php elseif (isset($_GET["error"])): ?>
+                <?php $msgs = [
+                    "nombre_vacio"     => "El nombre no puede estar vacío.",
+                    "nombre_duplicado" => "Ese nombre de usuario ya está en uso.",
+                    "error_guardado"   => "Error al guardar los cambios.",
+                ]; ?>
+                <p class="editar-error"><?= htmlspecialchars($msgs[$_GET["error"]] ?? "Error desconocido.") ?></p>
+            <?php endif; ?>
+
+            <form method="post" action="IndexPerfil.php?action=actualizar_nombre" class="form-editar">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
+                <div class="form-grupo">
+                    <label for="nombre">Nombre de usuario</label>
+                    <input type="text" id="nombre" name="nombre"
+                           value="<?= htmlspecialchars($_SESSION["nombre"]) ?>"
+                           maxlength="100" required>
+                </div>
+                <button type="submit" class="btn-guardar">Guardar cambios</button>
+            </form>
+        </div>
     </main>
 </div>

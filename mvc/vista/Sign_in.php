@@ -17,6 +17,7 @@ if (!defined('ACCESO_PERMITIDO')) {
 <body>
 <main>
 <form method="post" id="sing" action="?action=crear">
+    <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
     <div class="form-header">
         <h1>Registrarse</h1>
         <p>Crea tu cuenta nueva</p>

@@ -68,6 +68,7 @@ if ($_SESSION["rol"] != "administrador"&& $_SESSION["rol"] != "dueno") { ?>
                     <div class="acciones-tarjeta">
                         <form method="post" action="?action=quitar" onsubmit="return confirm('¿Estás seguro de eliminar este producto?');">
                             <input type="hidden" name="id" value="<?= htmlspecialchars($p['id']) ?>">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                             <button type="submit" class="btn-eliminar">
                                 <i class="fi fi-sr-trash"></i> Quitar producto
                             </button>

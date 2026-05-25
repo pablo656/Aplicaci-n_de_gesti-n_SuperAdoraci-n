@@ -41,7 +41,8 @@ $img_base   = '/mvc/imagenes/';
                 <p class="editar-error"><?= htmlspecialchars($msgs[$_GET["error"]] ?? "Error desconocido.") ?></p>
             <?php endif; ?>
 
-            <form method="post" action="/?action=actualizar_nombre" class="form-editar">
+            <form method="post" action="/perfil?action=actualizar_nombre" class="form-editar">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                 <div class="form-grupo">
                     <label for="nombre">Nombre de usuario</label>
                     <input type="text" id="nombre" name="nombre"

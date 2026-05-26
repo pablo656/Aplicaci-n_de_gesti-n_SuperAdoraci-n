@@ -256,7 +256,5 @@ $img_base   ??= '';
                 document.getElementById('modal-cancelar-pedido').style.display = 'none';
             }
         </script>
-
-
     </main>
 </div>

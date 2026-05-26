@@ -111,7 +111,7 @@ function ejecutarFetch(action, params) {
 async function comprobarStock(id, cantidad) {
     const token = getCSRFToken();
     try {
-        const response = await fetch("?action=comprobar_stock", {
+        const response = await fetch("IndexProducto.php?action=comprobar_stock", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: `id_producto=${id}&cantidad=${cantidad}&csrf_token=${token}`

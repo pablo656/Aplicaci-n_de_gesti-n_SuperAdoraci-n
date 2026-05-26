@@ -167,7 +167,7 @@ if (!defined('ACCESO_PERMITIDO')) {
 
                     <?php else: ?>
                         <!-- Sin reservar: solo botón reservar -->
-                        <form method="post" action="?action=reservar">
+                        <form method="post" action="IndexProducto.php?action=reservar">
                             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                             <input type="hidden" name="id_producto" value="<?= $producto["id"] ?>">
                             <input type="hidden" name="cantidad" value="1">

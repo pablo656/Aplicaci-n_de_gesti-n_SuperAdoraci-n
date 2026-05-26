@@ -15,7 +15,7 @@ if (!defined('ACCESO_PERMITIDO')) {
 </head>
 <body>
 <main>
-<form method="post" id="log" action="?action=comprobar">
+<form method="post" id="log" action="IndexLog.php?action=comprobar">
     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
     <div class="form-header">
         <h1>Iniciar sessión</h1>

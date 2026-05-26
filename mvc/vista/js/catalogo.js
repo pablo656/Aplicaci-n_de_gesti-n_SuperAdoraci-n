@@ -85,7 +85,7 @@ async function cambiarCantidadPeso(id, valor) {
  */
 function ejecutarFetch(action, params) {
     const token = getCSRFToken();
-    return fetch(`?action=${action}`, {
+    return fetch(`IndexProducto.php?action=${action}`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `${params}&csrf_token=${token}`

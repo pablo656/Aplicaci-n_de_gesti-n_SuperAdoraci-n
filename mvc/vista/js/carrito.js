@@ -125,7 +125,7 @@ function cambiarCantidadPedido(id, cambio, precio){
 // --- UTILIDADES ---
 function ejecutarFetch(action, params) {
     const token = getCSRFToken();
-    return fetch(`?action=${action}`, {
+    return fetch(`IndexCarrito.php?action=${action}`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `${params}&csrf_token=${token}`

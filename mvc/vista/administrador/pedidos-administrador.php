@@ -160,7 +160,9 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
         <?php endif; ?>
     </div>
 
+
     <script src="/mvc/vista/administrador/js/pedidos-administrador.js"></script>
+
     </main>
 <?php } ?>
 

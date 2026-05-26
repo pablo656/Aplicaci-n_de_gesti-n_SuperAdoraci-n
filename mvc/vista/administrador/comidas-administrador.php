@@ -78,6 +78,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno"): ?>
     </div>
 </main>
 
+
 <script src="/mvc/vista/administrador/js/comidas-administrador.js"></script>
 
 <?php

@@ -115,7 +115,9 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
                 </div>
             <?php endif; ?>
         </div>
+
 <script src="/mvc/vista/administrador/js/reservas-administrador.js"></script>
+
 </main>
 <?php }?>
  <div id="modal-eliminar" class="modal-overlay">

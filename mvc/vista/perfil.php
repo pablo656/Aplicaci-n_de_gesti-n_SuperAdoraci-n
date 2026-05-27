@@ -60,7 +60,7 @@ $img_base   = '/mvc/imagenes/';
             <?php elseif (isset($_GET['feedback_error'])): ?>
                 <p class="feedback-error">Error al enviar. Inténtalo de nuevo.</p>
             <?php endif; ?>
-            <form method="post" action="/perfil?action=enviar_feedback" class="form-feedback">
+            <form method="post" action="<?= $perfil_url ?>?action=enviar_feedback" class="form-feedback">
                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                 <textarea name="mensaje" rows="4" placeholder="Tu sugerencia o comentario..." required maxlength="1000" aria-label="Mensaje de sugerencia"></textarea>
                 <button type="submit" class="btn-feedback">Enviar</button>

@@ -170,16 +170,21 @@
 
         // Guarda un registro pendiente de confirmar por email
         public function guardar_verificacion($nombre, $email, $hash) {
-            $token    = bin2hex(random_bytes(32));
-            $expira   = date("Y-m-d H:i:s", strtotime("+24 hours"));
-            $sql      = "INSERT INTO verificaciones_email (token, nombre, email, contrasena, expira_en)
-                         VALUES (?, ?, ?, ?, ?)";
-            $stmt = $this->conn->prepare($sql);
-            if (!$stmt) return false;
-            $stmt->bind_param("sssss", $token, $nombre, $email, $hash, $expira);
-            if (!$stmt->execute()) return false;
-            $stmt->close();
-            return $token;
+            try {
+                $token  = bin2hex(random_bytes(32));
+                $expira = date("Y-m-d H:i:s", strtotime("+24 hours"));
+                $sql    = "INSERT INTO verificaciones_email (token, nombre, email, contrasena, expira_en)
+                           VALUES (?, ?, ?, ?, ?)";
+                $stmt = $this->conn->prepare($sql);
+                if (!$stmt) return false;
+                $stmt->bind_param("sssss", $token, $nombre, $email, $hash, $expira);
+                if (!$stmt->execute()) return false;
+                $stmt->close();
+                return $token;
+            } catch (\Exception $e) {
+                error_log("[guardar_verificacion] " . $e->getMessage());
+                return false;
+            }
         }
 
         // Busca la verificación por token; la borra si ha expirado

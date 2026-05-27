@@ -193,7 +193,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
         <p class="modal-descripcion">
             Esta acción eliminará el pedido del sistema de forma permanente.
         </p>
-        <form action="?action=delete" method="POST">
+        <form action="IndexPedidos-administrador.php?action=delete" method="POST">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
             <input type="hidden" name="id_pedido" id="input-id-pedido-eliminar">
             <div class="campo-nota">
@@ -219,7 +219,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
         <p class="modal-descripcion">
             El pedido quedará marcado como entregado al cliente.
         </p>
-        <form action="?action=completar" method="POST">
+        <form action="IndexPedidos-administrador.php?action=completar" method="POST">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
             <input type="hidden" name="id_pedido" id="input-id-pedido-completar">
             <div class="modal-actions">

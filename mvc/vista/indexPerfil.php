@@ -65,6 +65,9 @@ define('ACCESO_PERMITIDO', true);
     } else if($action=="actualizar_nombre"){
         $controller->actualizar_nombre();
 
+    } else if($action=="solicitar_cambio_contrasena"){
+        $controller->solicitar_cambio_contrasena();
+
     } else {
         $id=$_SESSION["id"];
         $pedidos=$controller_pedidos->mostrar_pedidos_user($id);

@@ -68,6 +68,9 @@ if($action=="log"){
 }else if($action=="confirmar_email"){
     $token=$_GET["token"] ?? "";
     $controller->confirmar_email($token);
+}else if($action=="confirmar_contrasena"){
+    $token=$_GET["token"] ?? "";
+    $controller->confirmar_contrasena($token);
 }else if($action=="log_out"){
     session_destroy();
     header("Location:IndexHome.php?action=home");

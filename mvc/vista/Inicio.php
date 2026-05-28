@@ -140,14 +140,14 @@ if (!defined('ACCESO_PERMITIDO')) {
 
 <div class="seccion-invertida">
     <div class="contenedor-video">
-        <div class="video">
-            <iframe src="https://www.youtube.com/embed/VQAXTZOZSq0?si=KLEbfUGrrY5s4gtz"
-                title="SUPER ADORACION"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen>
-            </iframe>
+        <div class="video yt-facade"
+             data-vid="VQAXTZOZSq0"
+             role="button" tabindex="0"
+             aria-label="Reproducir vídeo SUPER ADORACION">
+            <img src="https://i.ytimg.com/vi/VQAXTZOZSq0/hqdefault.jpg"
+                 alt="Vista previa del vídeo SUPER ADORACION"
+                 width="480" height="270" loading="lazy">
+            <button class="yt-play" aria-hidden="true">&#9654;</button>
         </div>
     </div>
     <div class="texto">
@@ -158,4 +158,22 @@ if (!defined('ACCESO_PERMITIDO')) {
     </div>
 </div>
 </main>
+<script>
+document.querySelectorAll('.yt-facade').forEach(function(el) {
+    function cargar() {
+        var vid = el.dataset.vid;
+        var iframe = document.createElement('iframe');
+        iframe.src = 'https://www.youtube.com/embed/' + vid + '?autoplay=1';
+        iframe.title = 'SUPER ADORACION';
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        iframe.allowFullscreen = true;
+        iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:0';
+        el.innerHTML = '';
+        el.appendChild(iframe);
+        el.style.cursor = 'default';
+    }
+    el.addEventListener('click', cargar);
+    el.addEventListener('keydown', function(e) { if (e.key === 'Enter' || e.key === ' ') cargar(); });
+});
+</script>
 <script src="js/home.js"></script>

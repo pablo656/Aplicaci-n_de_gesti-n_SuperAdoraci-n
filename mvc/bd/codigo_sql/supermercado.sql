@@ -23,6 +23,15 @@ CREATE TABLE verificaciones_email (
 );
 
 
+-- VERIFICACIONES DE CAMBIO DE CONTRASEÑA (pendientes de confirmar por email)
+CREATE TABLE verificaciones_cambio (
+    token       VARCHAR(64)  PRIMARY KEY,
+    user_id     INT          NOT NULL,
+    nuevo_hash  VARCHAR(255) NOT NULL,
+    expira_en   DATETIME     NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES usuarios(id) ON DELETE CASCADE
+);
+
 -- PRODUCTOS
 CREATE TABLE productos (
     id                   INT AUTO_INCREMENT PRIMARY KEY,

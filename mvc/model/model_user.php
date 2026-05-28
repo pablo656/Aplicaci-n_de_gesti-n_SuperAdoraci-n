@@ -88,46 +88,7 @@
                 }
             }
         }
-        //Rol predeterminado cliente, para cambiar el rol, se tendra que crear una una función y página para el admin y dueño que permita cambiar el rol.
-        public function crearusuario($user, $password, $email){
-            if (!$this->conn) {
-                return false;
-            }
-            if ($this->comprobarusuario_crear($user, $email)) {
-                return false;
-            }
-            $hash = password_hash($password, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO usuarios (nombre, contrasena, email) VALUES (?, ?, ?)";
-            $stmt = $this->conn->prepare($sql);
-            if ($stmt === false) {
-                return false;
-            }
-            
-            $stmt->bind_param("sss", $user, $hash, $email);
-            //Linea posiblemente obsoleta borrar si llega a ser inutil
-            //$result = $stmt->execute();
-            if(!$stmt->execute()){
-                return false;
-            }
-            //Obtener ID del usuario creado
-            $id=$this->conn->insert_id;
-            $stmt->close();
-            $stmt=$this->conn->prepare("SELECT * FROM usuarios WHERE id=?");
-            $stmt->bind_param("i",$id);
-            if(!$stmt->execute()){
-                return false;
-            }
-            $resultado=$stmt->get_result();
-            $usuario=null;
-            while($row=$resultado->fetch_assoc()){
-                $usuario=$row;
-            }
-            $stmt->close();
-            //Se devuelve al usuario para crear una sessión en el controller
-            return $usuario;
-
-
-        }
+        
         public function crearusuario_admin($user, $password, $email,$rol){
             if (!$this->conn) {
                 return false;
@@ -143,8 +104,6 @@
             }
             
             $stmt->bind_param("ssss", $user, $hash, $email,$rol);
-            //Linea posiblemente obsoleta borrar si llega a ser inutil
-            //$result = $stmt->execute();
             if(!$stmt->execute()){
                 return false;
             }
@@ -242,6 +201,58 @@
             }
             $stmt->close();
             return true;
+        }
+
+        public function obtener_contrasena($id) {
+            $stmt = $this->conn->prepare("SELECT contrasena FROM usuarios WHERE id = ?");
+            if (!$stmt) return false;
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $row = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+            return $row ? $row["contrasena"] : false;
+        }
+
+        public function guardar_verificacion_contrasena($user_id, $nuevo_hash) {
+            $del = $this->conn->prepare("DELETE FROM verificaciones_cambio WHERE user_id = ?");
+            if ($del) { $del->bind_param("i", $user_id); $del->execute(); $del->close(); }
+            $token  = bin2hex(random_bytes(32));
+            $expira = date("Y-m-d H:i:s", strtotime("+1 hour"));
+            $sql    = "INSERT INTO verificaciones_cambio (token, user_id, nuevo_hash, expira_en) VALUES (?, ?, ?, ?)";
+            $stmt   = $this->conn->prepare($sql);
+            if (!$stmt) return false;
+            $stmt->bind_param("siss", $token, $user_id, $nuevo_hash, $expira);
+            if (!$stmt->execute()) return false;
+            $stmt->close();
+            return $token;
+        }
+
+        public function confirmar_verificacion_contrasena($token) {
+            $stmt = $this->conn->prepare("SELECT * FROM verificaciones_cambio WHERE token = ?");
+            if (!$stmt) return false;
+            $stmt->bind_param("s", $token);
+            $stmt->execute();
+            $fila = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+
+            if (!$fila) return false;
+
+            if (strtotime($fila["expira_en"]) < time()) {
+                $del = $this->conn->prepare("DELETE FROM verificaciones_cambio WHERE token = ?");
+                if ($del) { $del->bind_param("s", $token); $del->execute(); $del->close(); }
+                return "expirado";
+            }
+
+            $stmt = $this->conn->prepare("UPDATE usuarios SET contrasena = ? WHERE id = ?");
+            if (!$stmt) return false;
+            $stmt->bind_param("si", $fila["nuevo_hash"], $fila["user_id"]);
+            if (!$stmt->execute()) { $stmt->close(); return false; }
+            $stmt->close();
+
+            $del = $this->conn->prepare("DELETE FROM verificaciones_cambio WHERE token = ?");
+            if ($del) { $del->bind_param("s", $token); $del->execute(); $del->close(); }
+
+            return $fila["user_id"];
         }
 
         public function crearusuario_existe($user, $email){

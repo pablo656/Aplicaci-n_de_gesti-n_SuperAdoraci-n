@@ -122,12 +122,6 @@ class model_reservas{
             
         }
 
-        /*$sql = "UPDATE productos SET stock=stock-? WHERE id=?";
-        $stmt = $this->conn->prepare($sql);
-        if($stmt === false) return false;
-        $stmt->bind_param("di", $cantidad, $id_producto); // ← "d" en lugar de "i"
-        $result = $stmt->execute();
-        $stmt->close();*/
         return $result;
 
     }
@@ -145,47 +139,6 @@ class model_reservas{
         $result = $stmt->execute();
         $stmt->close();
         return $result;
-    }
-
-    public function eliminar_reserva_por_id_usuario($id_usuario){
-        if (!$this->conn) {
-            return false;
-        }
-        $sql = "DELETE FROM reservas WHERE id_usuario = ?";
-        $stmt = $this->conn->prepare($sql);
-        if ($stmt === false) {
-            return false;
-        }
-        $stmt->bind_param("i", $id_usuario);
-        $result = $stmt->execute();
-        $stmt->close();
-        return $result;
-    }
-
-    //podría ser útil para mostrar las reservas de un usuario específico
-    public function mostrar_reservas_usuario($id_usuario){
-        if (!$this->conn) {
-            return null;
-        }
-        $sql = "SELECT * FROM reservas WHERE id_usuario = ?";
-        $stmt = $this->conn->prepare($sql);
-        $reservas_usuario = [];
-        if ($stmt === false) {
-            return null;
-        }
-        $stmt->bind_param("i", $id_usuario);
-        if (!$stmt->execute()) {
-            return null;
-        }
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $reservas_usuario[] = $row;
-            }
-            return $reservas_usuario;
-        } else {
-            return null;
-        }
     }
 
     //funciones de clase

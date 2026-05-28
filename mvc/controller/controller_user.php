@@ -70,7 +70,7 @@ class Controller_user{
             header("Location: IndexHome.php?action=sing_fallido");
             return;
         }
-        $link   = APP_URL . "/IndexHome.php?action=confirmar_email&token=" . $token;
+        $link   = app_url() . "/IndexHome.php?action=confirmar_email&token=" . $token;
         $asunto = "Confirma tu cuenta en SuperAdoracion";
         $cuerpo = "
             <p>Hola <strong>" . htmlspecialchars($username) . "</strong>,</p>
@@ -148,6 +148,63 @@ class Controller_user{
         $_SESSION["nombre"] = $nuevo_nombre;
         header("Location: IndexPerfil.php?ok=1");
     }
+    public function solicitar_cambio_contrasena($perfil_url = "IndexPerfil.php") {
+        if (!isset($_SESSION["id"])) {
+            header("Location: IndexHome.php?action=log");
+            return;
+        }
+        $nueva_pass     = $_POST["nueva_pass"]     ?? "";
+        $confirmar_pass = $_POST["confirmar_pass"] ?? "";
+
+        if (empty($nueva_pass) || empty($confirmar_pass)) {
+            header("Location: {$perfil_url}?error_pass=campos_vacios");
+            return;
+        }
+        if ($nueva_pass !== $confirmar_pass) {
+            header("Location: {$perfil_url}?error_pass=no_coinciden");
+            return;
+        }
+        if (strlen($nueva_pass) < 8) {
+            header("Location: {$perfil_url}?error_pass=muy_corta");
+            return;
+        }
+        $nuevo_hash = password_hash($nueva_pass, PASSWORD_DEFAULT);
+        $token = $this->model_user->guardar_verificacion_contrasena($_SESSION["id"], $nuevo_hash);
+        if (!$token) {
+            header("Location: {$perfil_url}?error_pass=error_guardado");
+            return;
+        }
+        $link   = app_url() . "/IndexHome.php?action=confirmar_contrasena&token=" . $token;
+        $nombre = htmlspecialchars($_SESSION["nombre"]);
+        $asunto = "Confirma el cambio de contraseña en SuperAdoracion";
+        $cuerpo = "
+            <p>Hola <strong>$nombre</strong>,</p>
+            <p>Has solicitado cambiar tu contraseña en SuperAdoracion.</p>
+            <p>Haz clic en el siguiente enlace para confirmar el cambio:</p>
+            <p><a href=\"$link\">$link</a></p>
+            <p>El enlace caduca en 1 hora. Si no fuiste tú, ignora este mensaje.</p>
+        ";
+        $mailer = new Mailer();
+        if (!$mailer->enviar($_SESSION["email"], $asunto, $cuerpo)) {
+            header("Location: {$perfil_url}?error_pass=error_guardado");
+            return;
+        }
+        header("Location: {$perfil_url}?pendiente_pass=1");
+    }
+
+    public function confirmar_contrasena($token) {
+        $resultado = $this->model_user->confirmar_verificacion_contrasena($token);
+        if ($resultado === false) {
+            header("Location: IndexPerfil.php?cambio_error=invalido");
+            return;
+        }
+        if ($resultado === "expirado") {
+            header("Location: IndexPerfil.php?cambio_error=expirado");
+            return;
+        }
+        header("Location: IndexPerfil.php?cambio_ok=contrasena");
+    }
+
     public function cambiarRol($id,$rol){
        if ($this->model_user->cambiarRol($id, $rol)) {
         if($id==$_SESSION["id"]){

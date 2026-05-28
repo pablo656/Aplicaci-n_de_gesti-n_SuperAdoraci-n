@@ -12,10 +12,12 @@ if (!isset($_SESSION["id"])) {
 
 require_once __DIR__ . "/../../controller/controller_reservas.php";
 require_once __DIR__ . "/../../controller/Controller_pedidos.php";
+require_once __DIR__ . "/../../controller/controller_user.php";
 require_once __DIR__ . "/../../model/model_user.php";
 
 $controller_reservas = new Controller_reservas();
 $controller_pedidos  = new Controller_pedidos();
+$controller_user     = new Controller_user();
 $model_user          = new model_user();
 
 $titulo = "Perfil";
@@ -65,6 +67,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $_SESSION["nombre"] = $nuevo_nombre;
         header("Location: IndexPerfil.php?ok=1");
+        exit();
+
+    } else if ($action === "solicitar_cambio_contrasena") {
+        $controller_user->solicitar_cambio_contrasena("IndexPerfil.php");
         exit();
 
     } else {

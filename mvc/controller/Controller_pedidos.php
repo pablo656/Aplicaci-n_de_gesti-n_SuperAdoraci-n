@@ -23,7 +23,6 @@ class Controller_pedidos {
     public function mostrar_pedidos_user($id_usuario) {
         $pedidos = $this->model_pedidos->mostrar_pedidos_user($id_usuario);
         return $pedidos;
-        //require __DIR__ . "/../vista/perfil.php";
     }
 
     // Muestra todos los pedidos ordenados por fecha (panel de administración)

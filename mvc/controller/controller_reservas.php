@@ -38,13 +38,6 @@ class Controller_reservas{
 
     }
 
-    // Elimina todas las reservas de un usuario (útil al confirmar un pedido o al cerrar sesión)
-    public function eliminar_reserva_por_id_usuario($id_usuario){
-        $eliminar_reserva_id = $this->model_reservas->eliminar_reserva_por_id_usuario($id_usuario);
-        require_once __DIR__ . "/../vista/reservas.php";
-
-    }
-
 }
 
 ?>

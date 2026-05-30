@@ -65,6 +65,6 @@ $id       = $_SESSION["id"];
 $pedidos  = $controller_pedidos->mostrar_pedidos_user($id);
 $reservas = $controller_reservas->consultar_reservas_user($id);
 require __DIR__ . "/../vista/perfil.php";
-
+require_once "/mvc/helpers/protect.php";
 require("../vista/footer.html");
 ?>

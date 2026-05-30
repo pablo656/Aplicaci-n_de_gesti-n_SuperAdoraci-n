@@ -20,74 +20,63 @@ $model_user          = new model_user();
 
 $titulo = "Perfil";
 $css    = "<link rel='stylesheet' href='/mvc/vista/css/perfil.css'>";
-$action = $_GET["action"] ?? "list";
-$self   = strtok($_SERVER['REQUEST_URI'], '?');
+ $action = $_GET["action"] ?? "list";
 
-// --- Manejo POST (antes de cualquier output) ---
+require __DIR__ . "/layerHeader-administrador.php";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-        header("Location: $self");
+        // En lugar de un die() con texto, devolvemos un JSON de error
+        header('Content-Type: application/json');
+        echo json_encode([
+            "ok" => false, 
+            "error" => "CSRF_FAIL", 
+            "msg" => "Sesión caducada, recarga la página."
+        ]);
         exit();
     }
-
+}
     if ($action === "borrar_reserva") {
         $id_reserva = (int)($_POST["id_reserva"] ?? 0);
         $controller_reservas->eliminar_reserva($id_reserva);
-        header("Location: $self");
+        header("Location: " . $_SERVER['HTTP_REFERER']);
         exit();
 
-    } elseif ($action === "borrar_pedido") {
+    } else if ($action === "borrar_pedido") {
         $id_pedido  = (int)($_POST["id_pedido"] ?? 0);
         $id_usuario = $_SESSION["id"];
         $ok = $controller_pedidos->eliminar_pedido_usuario($id_pedido, $id_usuario);
-        header("Location: $self?" . ($ok ? "eliminado=1" : "error_eliminar=1"));
+        header("Location: /perfil?" . ($ok ? "eliminado=1" : "error_eliminar=1"));
         exit();
 
-    } elseif ($action === "actualizar_nombre") {
+    } else if ($action === "actualizar_nombre") {
         $nuevo_nombre = trim($_POST["nombre"] ?? "");
         if (empty($nuevo_nombre)) {
-            header("Location: $self?error=nombre_vacio");
+            header("Location: /perfil?error=nombre_vacio");
             exit();
         }
         $resultado = $model_user->actualizar_nombre($_SESSION["id"], $nuevo_nombre);
         if ($resultado === "nombre_duplicado") {
-            header("Location: $self?error=nombre_duplicado");
+            header("Location: /perfil?error=nombre_duplicado");
             exit();
         }
         if ($resultado === false) {
-            header("Location: $self?error=error_guardado");
+            header("Location: /perfil?error=error_guardado");
             exit();
         }
         $_SESSION["nombre"] = $nuevo_nombre;
-        header("Location: $self?ok=1");
+        header("Location: /perfil?ok=1");
         exit();
 
-    } elseif ($action === "enviar_feedback") {
-        require_once __DIR__ . "/../../helpers/Mailer.php";
-        $mensaje = trim($_POST["mensaje"] ?? "");
-        if (!empty($mensaje)) {
-            $mailer = new Mailer();
-            $nombre = htmlspecialchars($_SESSION["nombre"]);
-            $email  = htmlspecialchars($_SESSION["email"]);
-            $cuerpo = "<p><strong>De:</strong> $nombre ($email)</p><p>" . nl2br(htmlspecialchars($mensaje)) . "</p>";
-            $ok = $mailer->enviar("superadoracionpruebas@gmail.com", "Sugerencia de $nombre", $cuerpo);
-            header("Location: $self?" . ($ok ? "feedback_ok=1" : "feedback_error=1"));
-        } else {
-            header("Location: $self");
-        }
-        exit();
+    } else {
+        $id      = $_SESSION["id"];
+        $pedidos  = $controller_pedidos->mostrar_pedidos_user($id);
+        $reservas = $controller_reservas->consultar_reservas_user($id);
+
+        $perfil_url = 'IndexPerfil.php';
+        $home_url   = 'IndexPerfil.php';
+        $img_base   = '../';
+
+        require __DIR__ . "/../../vista/perfil.php";
     }
-}
-
-// --- Renderizado GET ---
-$id      = $_SESSION["id"];
-$pedidos  = $controller_pedidos->mostrar_pedidos_user($id);
-$reservas = $controller_reservas->consultar_reservas_user($id);
-
-$perfil_url = $self;
-$home_url   = $self;
-$img_base   = '../';
-
-require __DIR__ . "/layerHeader-administrador.php";
-require __DIR__ . "/../../vista/perfil.php";
+    require_once "/mvc/helpers/protect-admin.php";
 ?>

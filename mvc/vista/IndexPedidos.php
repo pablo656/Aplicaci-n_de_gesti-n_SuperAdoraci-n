@@ -87,5 +87,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: /pedidos?action=list");
         exit();
     }
+    require_once "/mvc/helpers/protect.php";
 
 ?>

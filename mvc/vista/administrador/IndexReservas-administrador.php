@@ -31,5 +31,5 @@ define('ACCESO_PERMITIDO', true);
         }else{
             $controller->consultar_reservas();
         }
-    
+    require_once "/mvc/helpers/protect-admin.php";
 ?>

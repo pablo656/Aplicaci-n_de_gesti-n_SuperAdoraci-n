@@ -121,5 +121,6 @@ define('ACCESO_PERMITIDO', true);
             $pedidos_carrito = $controller_pedidos->buscar_pedidos_cookie($pedidos_cookie) ?: [];
             $controller->buscar_reservas_incompletas($reservas_cookie, $pedidos_carrito);
         }
+    require_once "/mvc/helpers/protect.php";
     require("../vista/footer.html");
 ?>

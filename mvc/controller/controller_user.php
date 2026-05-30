@@ -22,7 +22,7 @@ class Controller_user{
     public function loginar($username, $password){
         $user = $this->model_user->iniciousuario($username, $password);
         if (is_array($user) && isset($user["bloqueado"])) {
-            //header("Location: IndexHome.php?action=log_bloqueado&min=" . $user["minutos"]);
+            header("Location: IndexHome.php?action=log_bloqueado&min=" . $user["minutos"]);
         }elseif($user["blocked"]){
             header("Location: IndexHome.php?action=blocked");
         } elseif ($user == false) {

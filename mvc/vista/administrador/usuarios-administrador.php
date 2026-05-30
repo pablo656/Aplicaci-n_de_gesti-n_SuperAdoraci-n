@@ -27,7 +27,7 @@ if ($_SESSION["rol"] != "administrador") { ?>
             <h1>Administración de Usuarios</h1>
             <p class="subtitulo">Gestiona los permisos, roles y acceso de los usuarios al sistema.</p>
         </div>
-        
+
         <button name="add"  class="btn-añadir" onclick="abrirModal_Añadir()">
             <i class="fi fi-sr-plus"></i> Añadir usuario
         </button>

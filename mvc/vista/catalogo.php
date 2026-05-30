@@ -85,7 +85,7 @@ if (!defined('ACCESO_PERMITIDO')) {
             // Calcular precio final
             $precio_final = $producto['precio'];
             if($producto['porcentaje_descuento'] != 0){
-                $precio_final = $producto['precio'] - ($producto['precio'] * ($producto['porcentaje_descuento'] / 100));
+                $precio_final = round($producto['precio'] - ($producto['precio'] * ($producto['porcentaje_descuento'] / 100)), 2);
             }
     ?>
         <div class="producto" id="<?= htmlspecialchars($producto["id"]) ?>">

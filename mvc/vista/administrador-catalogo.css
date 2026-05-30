@@ -1,0 +1,560 @@
+/* ── Variables ──────────────────────────────────────────── */
+:root {
+    --color-texto:      #1a1c2c;
+    --color-rojo:       #e31b23;
+    --color-rojo-hover: #b3141a;
+    --color-azul:       #1a3a5c;
+    --color-azul-hover: #254e7a;
+    --gap-lateral:      clamp(1rem, 3vw, 2.5rem);
+}
+
+/* ── Base ───────────────────────────────────────────────── */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    background: #f7f7f8;
+    color: var(--color-texto);
+    margin: 0;
+}
+
+/* ── Layout principal ───────────────────────────────────── */
+.contenido {
+    display: flex;
+    flex: 1;
+}
+
+/* ── Barra lateral (Aside) ────────────────────────────── */
+aside {
+    width: 220px;
+    flex-shrink: 0;
+    background: #121220;
+    border-right: 1px solid #2a2a42;
+    display: flex;
+    flex-direction: column;
+}
+
+.aside-titulo {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #8888aa;
+    padding: 20px 20px 10px;
+    border-bottom: 1px solid #2a2a42;
+    margin-bottom: 6px;
+}
+
+aside ul {
+    list-style: none;
+    padding: 6px 10px;
+    margin: 0;
+}
+
+aside ul li {
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 2px;
+}
+
+aside ul li a {
+    display: block;
+    padding: 11px 14px;
+    color: #c5c5d8;
+    text-decoration: none;
+    font-size: 0.88rem;
+    border-radius: 8px;
+    transition: background .18s, color .18s;
+}
+
+aside ul li a:hover {
+    background: #1e1e38;
+    color: #fff;
+}
+
+aside ul li a.cat-activa {
+    background: var(--color-rojo);
+    color: #fff;
+    font-weight: 600;
+}
+
+/* ── Subcategorías ───────────────────────────────────── */
+.subcategorias {
+    margin: 2px 0 4px;
+    padding: 0;
+    list-style: none;
+    background: #0e0e1c;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.subcategorias li a {
+    display: block;
+    padding: 9px 14px 9px 28px;
+    font-size: 0.82rem;
+    color: #9090aa;
+    text-decoration: none;
+    border-left: 2px solid transparent;
+    transition: background .15s, color .15s, border-color .15s;
+}
+
+.subcategorias li a:hover {
+    background: #1a1a30;
+    color: #fff;
+    border-left-color: var(--color-rojo);
+}
+
+.subcategorias li a.sub-activa {
+    color: #fff;
+    border-left-color: var(--color-rojo);
+    background: #1a1a30;
+}
+
+/* ── Área principal ─────────────────────────────────────── */
+.main-admin {
+    flex: 1;
+    padding: var(--gap-lateral);
+    min-width: 0; /* Evita desbordamiento en flex */
+}
+
+/* Contenedor del Título y el Botón Añadir */
+.header-admin {
+    display: flex;
+    justify-content: space-between; /* Título a la izquierda, Botón a la derecha */
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+.main-admin h1 {
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+    font-weight: 700;
+    color: var(--color-texto);
+    margin: 0 0 4px 0;
+}
+
+.subtitulo {
+    font-size: 1rem;
+    color: #595959;
+    margin: 0;
+}
+
+/* ── Botón Añadir Producto (A la derecha) ──────────────── */
+.btn-añadir {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #006b19; /* Verde éxito */
+    color: white !important;
+    padding: 10px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    transition: background 0.2s, transform 0.1s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-añadir:hover {
+    background-color: #218838;
+    transform: translateY(-1px);
+}
+
+/* ── Breadcrumbs ───────────────────────────────────────── */
+.breadcrumb-wrapper {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.breadcrumb-enlace {
+    font-weight: bolder;
+    color: #595959;
+    font-size: 16px;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+}
+
+.breadcrumb-enlace:hover {
+    color: #555;
+}
+
+.breadcrumb-texto {
+    color: #595959;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.breadcrumb-separador {
+    color: #595959;
+    font-size: 16px;
+    user-select: none;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin-bottom: 28px;
+}
+
+/* ── Grid de productos ──────────────────────────────────── */
+.cuadricula-productos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+    align-items: start; 
+}
+
+/* ── Tarjeta de producto ────────────────────────────────── */
+.producto {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .07);
+    display: flex;
+    flex-direction: column;
+    transition: transform .2s, box-shadow .2s;
+    border: 1px solid #eee;
+}
+
+.producto:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, .13);
+}
+
+.contenedor-img {
+    width: 100%;
+    height: 180px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.contenedor-img img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.info-producto {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    text-align: center;
+}
+
+.producto .nombre {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-texto);
+    margin-bottom: 8px;
+    min-height: 2.4em;
+}
+
+.producto .stock {
+    font-size: 0.8rem;
+    color: #666;
+    background: #f0f0f2;
+    padding: 3px 10px;
+    border-radius: 20px;
+    align-self: center;
+    margin-bottom: 10px;
+}
+
+.descuento {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.producto .sin_descuento {
+    font-size: 0.85rem;
+    color: #767676;
+    text-decoration: line-through;
+}
+
+.producto .precio {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--color-rojo);
+    margin: 0;
+}
+
+/* ── Botones de la Tarjeta ─────────────────────────────── */
+.boton_modificar {
+    background-color: var(--color-azul);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-bottom: 8px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.boton_modificar:hover {
+    background-color: var(--color-azul-hover);
+    transform: translateY(-1px);
+}
+
+.btn-eliminar {
+    width: 100%;
+    padding: 11px;
+    background: var(--color-rojo);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: background .2s;
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-eliminar:hover {
+    background: var(--color-rojo-hover);
+}
+
+/* ── Estilos del Modal ──────────────────────────────────── */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-cerrar {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+}
+
+#form-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#form-modal label {
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #333;
+    margin-bottom: -5px;
+}
+
+#form-modal input[type="text"],
+#form-modal input[type="number"],
+#form-modal select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.input-porcentaje {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-porcentaje input {
+    width: 100%;
+    padding-right: 30px !important;
+}
+
+.input-porcentaje .simbolo {
+    position: absolute;
+    right: 10px;
+    color: #595959;
+    font-weight: bold;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: flex-start;
+}
+
+#precio_descontado_container {
+    color: #1a7a32;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.contenedor-preview {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 10px 0;
+}
+
+#preview {
+    border: 2px dashed #ddd;
+    border-radius: 4px;
+    max-width: 200px;
+}
+
+input[type="submit"][name="modificar"] {
+    background-color: var(--color-azul);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+input[type="submit"][name="modificar"]:hover {
+    background-color: var(--color-azul-hover);
+}
+/* Botón de envío dentro del Modal (Guardar / Actualizar) */
+.btn-actualizar {
+    background-color: var(--color-azul); /* El azul oscuro #1a3a5c */
+    color: white !important;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.1s;
+    margin-top: 10px;
+    width: 100%; /* Para que ocupe todo el ancho del formulario */
+    display: block;
+}
+
+.btn-actualizar:hover {
+    background-color: var(--color-azul-hover); /* El azul claro #254e7a */
+}
+
+.btn-actualizar:active {
+    transform: scale(0.98);
+}
+
+/* ── Responsive ────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .contenido { flex-direction: column; }
+
+    aside {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #2a2a42;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .aside-titulo { display: none; }
+
+    aside ul {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 6px 8px;
+        gap: 4px;
+    }
+
+    aside ul li { border-radius: 6px; margin-bottom: 0; }
+
+    aside ul li a {
+        padding: 7px 12px;
+        font-size: 0.82rem;
+        white-space: nowrap;
+    }
+
+    .subcategorias { display: none; }
+
+    .header-admin {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .btn-añadir {
+        width: 100%;
+        justify-content: center;
+    }
+}
+/* Estilo general del botón de gestión de inicio */
+.boton_Inicio {
+    width: 100%;
+    background-color: #f0f7ff; /* Fondo azul pálido para diferenciarlo de acciones críticas */
+    color: #1a3a5c; /* Tu azul oscuro corporativo */
+    border: 1px solid #1a3a5c;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Efecto al pasar el ratón */
+.boton_Inicio:hover {
+    background-color: #1a3a5c;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(26, 58, 92, 0.2);
+}
+
+/* Efecto al hacer clic */
+.boton_Inicio:active {
+    transform: translateY(0);
+}
+
+/* Icono dinámico opcional (usando caracteres unicode o podrías usar FontAwesome) */
+.boton_Inicio::before {
+    content: "★"; /* Una estrella para representar el "inicio/destacado" */
+    font-size: 1.1rem;
+}

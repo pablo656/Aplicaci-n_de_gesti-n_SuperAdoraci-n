@@ -22,7 +22,9 @@ class Controller_user{
     public function loginar($username, $password){
         $user = $this->model_user->iniciousuario($username, $password);
         if (is_array($user) && isset($user["bloqueado"])) {
-            header("Location: IndexHome.php?action=log_bloqueado&min=" . $user["minutos"]);
+            //header("Location: IndexHome.php?action=log_bloqueado&min=" . $user["minutos"]);
+        }elseif($user["blocked"]){
+            header("Location: IndexHome.php?action=blocked");
         } elseif ($user == false) {
             header("Location: IndexHome.php?action=log_fallido");
         } else {
@@ -40,6 +42,8 @@ class Controller_user{
         $user = $this->model_user->iniciousuario($username, $password);
         if (is_array($user) && isset($user["bloqueado"])) {
             header("Location: IndexLog.php?action=log_bloqueado&min=" . $user["minutos"]);
+        }elseif($user["blocked"]){
+            header("Location: IndexLog.php?action=blocked");
         } elseif ($user == false) {
             header("Location: IndexLog.php?action=log_fallido");
         } else {
@@ -215,6 +219,28 @@ class Controller_user{
         header("Location: IndexUsuarios-administrador.php?res=error");
     }
         exit();
+    }
+
+    public function block($id){
+        if($this->model_user->block($id)){
+            header("Location: IndexUsuarios-administrador.php?res=block");
+        }else{
+              
+            header("Location: IndexUsuarios-administrador.php?res=error");
+        }
+        
+    }
+     public function unblock($id){
+        if($this->model_user->unblock($id)){
+              
+            header("Location: IndexUsuarios-administrador.php?res=unblock");
+        }else{
+              
+            header("Location: IndexUsuarios-administrador.php?res=error");
+        }
+    }
+    public function bloqueado($id){
+        return $this->model_user->bloqueado($id);
     }
 }
 ?>

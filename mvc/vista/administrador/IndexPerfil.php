@@ -84,4 +84,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         require __DIR__ . "/../../vista/perfil.php";
     }
+    require_once "../../helpers/protect-admin.php";
 ?>

@@ -45,9 +45,17 @@
             header("Location: IndexUsuarios-administrador.php");
             exit(); 
         }
+        }elseif($action=="block"){
+            $id = $_POST["id"];
+            $controller->block($id);
+            exit(); 
+        }elseif($action=="unblock"){
+            $id = $_POST["id"];
+            $controller->unblock($id);
+            exit(); 
         }else{
             $controller->mostrarUsuarios();
         }
-    
+    require_once "../../helpers/protect-admin.php";
     
 ?>

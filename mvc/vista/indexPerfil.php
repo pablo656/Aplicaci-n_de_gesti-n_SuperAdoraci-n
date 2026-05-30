@@ -74,5 +74,6 @@ define('ACCESO_PERMITIDO', true);
         $reservas=$controller_reservas->consultar_reservas_user($id);
         require __DIR__ . "/../vista/perfil.php";
     }
+    require_once "../helpers/protect.php";
     require("../vista/footer.html");
 ?>

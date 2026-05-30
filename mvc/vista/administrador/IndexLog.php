@@ -35,6 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $minutos = (int)($_GET["min"] ?? 15);
         $controller->log_admin();
         echo "<script>alert('Cuenta bloqueada por demasiados intentos fallidos. Inténtalo de nuevo en $minutos minuto" . ($minutos === 1 ? "" : "s") . ".')</script>";
+    }else if($action=="blocked"){
+         echo "<script>alert('Un administrador a bloqueado tu cuenta')</script>";
+         $controller->log_admin();
     }else if($action=="comprobar"){
         $nombre=$_POST["user"];
         $pass=$_POST["pass"];

@@ -10,7 +10,8 @@ CREATE TABLE usuarios (
     rol                  ENUM('dueno', 'administrador', 'cliente') DEFAULT 'cliente',
     ultimo_inicio_sesion DATETIME DEFAULT NULL,
     intentos_fallidos    INT DEFAULT 0,
-    bloqueado_hasta      DATETIME DEFAULT NULL
+    bloqueado_hasta      DATETIME DEFAULT NULL,
+    blocked               BIT DEFAULT 0
 );
 
 -- VERIFICACIONES DE EMAIL (registros pendientes de confirmar)

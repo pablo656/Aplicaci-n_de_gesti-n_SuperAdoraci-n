@@ -29,4 +29,5 @@ define('ACCESO_PERMITIDO', true);
         }else{
             $controller->buscar_productos_inicio_administrador();
         }
+        require_once "../../helpers/protect-admin.php";
 ?>

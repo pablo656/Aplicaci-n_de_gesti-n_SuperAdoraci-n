@@ -33,8 +33,13 @@ document.addEventListener("DOMContentLoaded", function() {
     if (resultado === 'updated') {
         alert("¡Éxito! El rol del usuario ha sido actualizado correctamente.");            
         window.history.replaceState({}, document.title, window.location.pathname);
-    } 
-    else if (resultado === 'error') {
+    }else if(resultado === 'block'){
+        alert("¡Éxito! El usuario se ha blockeado correctamente.");            
+        //window.history.replaceState({}, document.title, window.location.pathname);
+    }else if(resultado === 'unblock'){
+         alert("¡Éxito! El usuario se ha desblockeado correctamente.");            
+        //window.history.replaceState({}, document.title, window.location.pathname);
+    }else if (resultado === 'error') {
         alert("Error: No se pudo actualizar el rol. Inténtalo de nuevo.");
         window.history.replaceState({}, document.title, window.location.pathname);
     }else if(resultado==="error_usuario"){

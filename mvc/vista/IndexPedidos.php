@@ -87,5 +87,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: IndexPedidos.php?action=list");
         exit();
     }
+    require_once "../helpers/protect.php";
 
 ?>

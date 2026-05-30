@@ -12,7 +12,7 @@ require_once("../controller/productoController.php");
 $controller=new Controller_user();
 $controller_producto=new ProductoController();
 $action=$_GET["action"] ?? "home";
-if($action=="log"||$action=="comprobar"||$action=="log_fallido"||$action=="log_bloqueado"){
+if($action=="log"||$action=="comprobar"||$action=="log_fallido"||$action=="log_bloqueado"||$action=="blocked"){
     $titulo="Iniciar sesión";
     $css="<link rel='stylesheet' href='css/log_in.css'>";
 }else if($action=="sing"||$action=="crear"||$action=="sing_fallido"){
@@ -39,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 }
+
 if($action=="log"){
     $controller->log();
 }else if($action=="log_fallido"){
@@ -48,6 +49,9 @@ if($action=="log"){
     $minutos = (int)($_GET["min"] ?? 15);
     $controller->log();
     echo "<script>alert('Cuenta bloqueada por demasiados intentos fallidos. Inténtalo de nuevo en $minutos minuto" . ($minutos === 1 ? "" : "s") . ".')</script>";
+}else if($action=="blocked"){
+     $controller->log();
+    echo "<script>alert('Un administrador a bloqueado tu cuenta')</script>";
 }else if($action=="comprobar"){
     $nombre=$_POST["user"];
     $pass=$_POST["pass"];
@@ -77,7 +81,9 @@ if($action=="log"){
 }else{
     $controller_producto->home();
 }
+
 if($action=="home" || $action=="perfil"){
+    require_once "../helpers/protect.php";
     require("../vista/footer.html");
 }
 

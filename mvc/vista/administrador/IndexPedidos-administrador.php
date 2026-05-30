@@ -35,5 +35,6 @@ define('ACCESO_PERMITIDO', true);
         } else {
             $controller->consultar_pedidos_admin();
         }
+       require_once "../../helpers/protect-admin.php";
     
 ?>

@@ -169,6 +169,12 @@
 .btn-eliminar:hover {
     background: #b3141a;
 }
+.btn-bloquear{
+    background-color:#6c757d;
+}
+.btn-bloquear:hover{
+    background-color: #495057;
+}
 
 /* ── Estado Vacío ── */
 .vacio-contenedor {

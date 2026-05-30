@@ -40,4 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
 $controller->listar();
+
+require_once "../../helpers/protect-admin.php";
 ?>

@@ -278,6 +278,43 @@
                 return true;
             }
         }
+        public function block($id){
+            $sql="UPDATE usuarios SET blocked=1 WHERE id=?";
+            $stmt=$this->conn->prepare($sql);
+            $stmt->bind_param("i",$id);
+            if(!$stmt->execute()){
+                return false;
+            }else{
+                return true;
+            }
+        }
+        public function unblock($id){
+            $sql="UPDATE usuarios SET blocked=0 WHERE id=?";
+            $stmt=$this->conn->prepare($sql);
+            $stmt->bind_param("i",$id);
+            if(!$stmt->execute()){
+                return false;
+            }else{
+                return true;
+            }
+        }
+        public function bloqueado($id){
+            $sql="SELECT * FROM usuarios WHERE id=?";
+            $stmt=$this->conn->prepare($sql);
+            $stmt->bind_param("i",$id);
+            $stmt->execute();
+            $usuario=null;
+            $resutado=$stmt->get_result();
+            while($row=$resutado->fetch_assoc()){
+                $usuario=$row;
+            }
+            if($usuario["blocked"]){
+                return true;
+            }else{
+                return false;
+            }
+            
+        }
 
     }
 

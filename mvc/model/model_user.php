@@ -55,7 +55,6 @@
 
             // Comprobar si la cuenta está bloqueada
             if ($userData["bloqueado_hasta"] !== null && strtotime($userData["bloqueado_hasta"]) > time()) {
-                echo "<script>alert('sdfsd')</script>";
                 $segundos_restantes = strtotime($userData["bloqueado_hasta"]) - time();
                 $minutos_restantes  = (int) ceil($segundos_restantes / 60);
                 return ["bloqueado" => true, "minutos" => $minutos_restantes];
@@ -68,7 +67,7 @@
                 );
                 $stmt->bind_param("i", $userData["id"]);
                 $stmt->execute();
-                echo "<script>alert('0')</script>";
+                
                 return $userData;
             } else {
                 // Login fallido: incrementar contador y bloquear si llega a 5
@@ -79,7 +78,7 @@
                     );
                     $stmt->bind_param("ii", $nuevos_intentos, $userData["id"]);
                     $stmt->execute();
-                    echo "<script>alert('1')</script>";
+                  
                     return ["bloqueado" => true, "minutos" => 15];
                 } else {
                     $stmt = $this->conn->prepare(
@@ -87,7 +86,7 @@
                     );
                     $stmt->bind_param("ii", $nuevos_intentos, $userData["id"]);
                     $stmt->execute();
-                    echo "<script>alert('2')</script>";
+                    
                     return false;
                 }
             }

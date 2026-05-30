@@ -53,18 +53,32 @@ if ($_SESSION["rol"] != "administrador") { ?>
                             <p><?= htmlspecialchars($usuario["email"]) ?></p>
                         </div>
                     </div>
-
+                     <?php if($_SESSION["id"]!==$usuario["id"]):?>
                     <div class="botones">
                         <button class="btn-rol" onclick="abrirModal('<?= htmlspecialchars($usuario['id'], ENT_QUOTES) ?>','<?= htmlspecialchars($usuario['nombre'], ENT_QUOTES) ?>','<?= htmlspecialchars($usuario['email'], ENT_QUOTES) ?>','<?= htmlspecialchars($usuario['rol'], ENT_QUOTES) ?>')">
                             <i class="fi fi-sr-pencil"></i> Cambiar rol
                         </button>
-                        
+                          <?php
+                        if($usuario["blocked"]):?>
+                            <form method="post" action="/administrador/usuarios?action=unblock" onsubmit="return confirm('¿Estás seguro?');">
+                                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
+                                <input type="hidden" name="id" value="<?= htmlspecialchars($usuario['id'], ENT_QUOTES) ?>">
+                                <button type="submit" class="btn-bloquear">Desbloquear</button>
+                            </form>
+                        <?php else: ?>
+                             <form method="post" action="/administrador/usuarios?action=block" onsubmit="return confirm('¿Estás seguro?');">
+                                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
+                                <input type="hidden" name="id" value="<?= htmlspecialchars($usuario['id'], ENT_QUOTES) ?>">
+                                <button type="submit" class="btn-bloquear">Bloquear</button>
+                            </form>
+                        <?php endif; ?>
                          <form method="post" action="/administrador/usuarios?action=delete" onsubmit="return confirm('¿Estás seguro?');">
                             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                             <input type="hidden" name="id" value="<?= htmlspecialchars($usuario['id'], ENT_QUOTES) ?>">
                             <button type="submit" class="btn-eliminar"><i class="fi fi-sr-trash"></i> Eliminar</button>
                         </form>
                     </div>
+                    <?php endif;?>
                 </div>
             <?php endforeach;
         else: ?>

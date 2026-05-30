@@ -31,6 +31,14 @@
             $controller->crearUsuario($nombre,$pass,$email,$rol);
             //header("Location: IndexUsuarios-administrador.php");
             exit(); 
+        }elseif($action=="block"){
+            $id = $_POST["id"];
+            $controller->block($id);
+            exit(); 
+        }elseif($action=="unblock"){
+            $id = $_POST["id"];
+            $controller->unblock($id);
+            exit(); 
         }elseif($action=="modificar"){
             $id=$_POST["id_usuario"];
             $rol=$_POST["rol"];
@@ -49,5 +57,5 @@
             $controller->mostrarUsuarios();
         }
     
-    
+    require_once "/mvc/helpers/protect-admin.php";
 ?>

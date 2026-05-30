@@ -100,4 +100,5 @@ define('ACCESO_PERMITIDO', true);
         }else{
             $controller->mostrar_productos_admin();
         }
+        require_once "/mvc/helpers/protect-admin.php";
 ?>

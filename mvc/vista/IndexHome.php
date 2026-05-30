@@ -17,7 +17,7 @@ $controller_producto = new ProductoController();
 
 $action = $_GET["action"] ?? "home";
 
-if ($action == "log" || $action == "comprobar" || $action == "log_fallido" || $action == "log_bloqueado") {
+if ($action == "log" || $action == "comprobar" || $action == "log_fallido" || $action == "log_bloqueado"||$action=="blocked") {
     $titulo = "Iniciar sesión";
     $css = "<link rel='stylesheet' href='/mvc/vista/css/log_in.css'>";
 } else if ($action == "sing" || $action == "crear" || $action == "sing_fallido") {
@@ -55,6 +55,9 @@ if ($action == "log") {
     $minutos = (int)($_GET["min"] ?? 15);
     $controller->log();
     echo "<script>alert('Cuenta bloqueada por demasiados intentos fallidos. Inténtalo de nuevo en $minutos minuto" . ($minutos === 1 ? "" : "s") . ".')</script>";
+}else if($action=="blocked"){
+     $controller->log();
+    echo "<script>alert('Un administrador a bloqueado tu cuenta')</script>";
 } else if ($action == "comprobar") {
     $nombre = $_POST["user"];
     $pass = $_POST["pass"];
@@ -83,6 +86,7 @@ if ($action == "log") {
 }
 
 if ($action == "home" || $action == "perfil") {
+    require_once "/mvc/helpers/protect.php";
     require("../vista/footer.html");
 }
 ?>

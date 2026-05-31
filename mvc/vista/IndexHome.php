@@ -86,7 +86,7 @@ if ($action == "log") {
 }
 
 if ($action == "home" || $action == "perfil") {
-    require_once "/mvc/helpers/protect.php";
+    require_once "../helpers/protect.php";
     require("../vista/footer.html");
 }
 ?>

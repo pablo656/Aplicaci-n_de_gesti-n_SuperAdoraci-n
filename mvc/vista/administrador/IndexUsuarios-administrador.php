@@ -57,5 +57,5 @@
             $controller->mostrarUsuarios();
         }
     
-    require_once "/mvc/helpers/protect-admin.php";
+   require_once "../../helpers/protect-admin.php";
 ?>

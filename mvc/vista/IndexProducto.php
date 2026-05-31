@@ -98,6 +98,6 @@ define('ACCESO_PERMITIDO', true);
     }else{
         $controller->mostrar_productos();
     }
-    require_once "/mvc/helpers/protect.php";
+    require_once "../helpers/protect.php";
     require("../vista/footer.html");
 ?>

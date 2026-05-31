@@ -28,10 +28,18 @@ $img_base   = '/mvc/imagenes/';
         </div>
 
         <div class="editar-sidebar">
-            <h3 class="editar-sidebar-titulo">Editar usuario</h3>
+            <h3 class="editar-sidebar-titulo">Nombre de usuario</h3>
 
             <?php if (isset($_GET["ok"])): ?>
                 <p class="editar-ok">Nombre actualizado correctamente.</p>
+            <?php elseif (isset($_GET["cambio_ok"]) && $_GET["cambio_ok"] === "contrasena"): ?>
+                <p class="editar-ok">Contraseña actualizada correctamente.</p>
+            <?php elseif (isset($_GET["cambio_error"])): ?>
+                <?php $cambio_msgs = [
+                    "invalido" => "El enlace no es válido.",
+                    "expirado" => "El enlace ha caducado. Solicita el cambio de nuevo.",
+                ]; ?>
+                <p class="editar-error"><?= htmlspecialchars($cambio_msgs[$_GET["cambio_error"]] ?? "Error desconocido.") ?></p>
             <?php elseif (isset($_GET["error"])): ?>
                 <?php $msgs = [
                     "nombre_vacio"     => "El nombre no puede estar vacío.",
@@ -50,6 +58,35 @@ $img_base   = '/mvc/imagenes/';
                            maxlength="100" required>
                 </div>
                 <button type="submit" class="btn-guardar">Guardar</button>
+            </form>
+        </div>
+
+        <div class="contrasena-sidebar">
+            <h3 class="contrasena-sidebar-titulo">Cambiar contraseña</h3>
+
+            <?php if (isset($_GET["pendiente_pass"])): ?>
+                <p class="pendiente-info">Revisa tu email para confirmar el cambio. El enlace caduca en 1 hora.</p>
+            <?php elseif (isset($_GET["error_pass"])): ?>
+                <?php $pass_msgs = [
+                    "campos_vacios"  => "Rellena todos los campos.",
+                    "no_coinciden"   => "Las contraseñas nuevas no coinciden.",
+                    "muy_corta"      => "La contraseña debe tener al menos 8 caracteres.",
+                    "error_guardado" => "Error al procesar. Inténtalo de nuevo.",
+                ]; ?>
+                <p class="editar-error"><?= htmlspecialchars($pass_msgs[$_GET["error_pass"]] ?? "Error desconocido.") ?></p>
+            <?php endif; ?>
+
+            <form method="post" action="/perfil?action=solicitar_cambio_contrasena" class="form-editar">
+                <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
+                <div class="form-grupo">
+                    <label for="nueva_pass">Nueva contraseña</label>
+                    <input type="password" id="nueva_pass" name="nueva_pass" required minlength="8" autocomplete="new-password">
+                </div>
+                <div class="form-grupo">
+                    <label for="confirmar_pass">Confirmar nueva contraseña</label>
+                    <input type="password" id="confirmar_pass" name="confirmar_pass" required minlength="8" autocomplete="new-password">
+                </div>
+                <button type="submit" class="btn-guardar">Enviar confirmación</button>
             </form>
         </div>
 

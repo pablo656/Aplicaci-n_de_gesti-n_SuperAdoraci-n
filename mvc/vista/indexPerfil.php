@@ -53,6 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else if ($action == "actualizar_nombre") {
         $controller->actualizar_nombre();
         exit();
+
+    } else if ($action == "solicitar_cambio_contrasena") {
+        require_once("../helpers/Mailer.php");
+        $controller->solicitar_cambio_contrasena();
+        exit();
     }
 }
 

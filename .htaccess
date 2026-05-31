@@ -1,12 +1,13 @@
+Options +FollowSymLinks -Indexes
 RewriteEngine On
 RewriteBase /
+
+# Ruta raíz — debe ir antes de los RewriteCond para no bloquearse con !-d
+RewriteRule ^$ mvc/vista/IndexHome.php [L,QSA]
 
 # Evitar que interfiera con archivos reales (CSS, JS, imágenes)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-
-# Si entran limpios a https://superadoracion.site/ carga el Home
-RewriteRule ^$ mvc/vista/IndexHome.php [L,QSA]
 
 # --- RUTAS DE USUARIO ---
 RewriteRule ^catalogo/?$ mvc/vista/IndexProducto.php [L,QSA]
@@ -22,3 +23,4 @@ RewriteRule ^administrador/comidas/?$ mvc/vista/administrador/IndexComidas-admin
 RewriteRule ^administrador/pedidos/?$ mvc/vista/administrador/IndexPedidos-administrador.php [L,QSA]
 RewriteRule ^administrador/usuarios/?$ mvc/vista/administrador/IndexUsuarios-administrador.php [L,QSA]
 RewriteRule ^administrador/log/?$ mvc/vista/administrador/IndexLog.php [L,QSA]
+RewriteRule ^administrador/perfil/?$ mvc/vista/administrador/IndexPerfil.php [L,QSA]

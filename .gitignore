@@ -8,6 +8,7 @@ CLAUDE.md
 
 # XAMPP / PHP
 /mvc/bd/bd.php
+/mvc/config/mail_config.php
 
 # Uploaded images (runtime content)
 /mvc/imagenes/*

@@ -22,11 +22,11 @@ class Controller_user{
     public function loginar($username, $password){
         $user = $this->model_user->iniciousuario($username, $password);
         if (is_array($user) && isset($user["bloqueado"])) {
-            header("Location: IndexHome.php?action=log_bloqueado&min=" . $user["minutos"]);
+            header("Location: /?action=log_bloqueado&min=" . $user["minutos"]);
         }elseif($user["blocked"]){
-            header("Location: IndexHome.php?action=blocked");
+            header("Location: /?action=blocked");
         } elseif ($user == false) {
-            header("Location: IndexHome.php?action=log_fallido");
+            header("Location: /?action=log_fallido");
         } else {
             $_SESSION["id"]     = $user["id"];
             $_SESSION["nombre"] = $user["nombre"];
@@ -35,23 +35,23 @@ class Controller_user{
             if (empty($_SESSION['csrf_token'])) {
                 $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
             }
-            header("Location: IndexHome.php?action=home");
+            header("Location: /?action=home");
         }
     }
     public function loginar_admin($username, $password){
         $user = $this->model_user->iniciousuario($username, $password);
         if (is_array($user) && isset($user["bloqueado"])) {
-            header("Location: IndexLog.php?action=log_bloqueado&min=" . $user["minutos"]);
+            header("Location: /administrador/log?action=log_bloqueado&min=" . $user["minutos"]);
         }elseif($user["blocked"]){
-            header("Location: IndexLog.php?action=blocked");
+            header("Location: /administrador/log?action=blocked");
         } elseif ($user == false) {
-            header("Location: IndexLog.php?action=log_fallido");
+            header("Location: /administrador/log?action=log_fallido");
         } else {
             $_SESSION["id"]     = $user["id"];
             $_SESSION["nombre"] = $user["nombre"];
             $_SESSION["email"]  = $user["email"];
             $_SESSION["rol"]    = $user["rol"];
-            header("Location: IndexInicio-administrador.php");
+            header("Location: /administrador/inicio");
         }
     }
     public function log_admin(){
@@ -61,20 +61,20 @@ class Controller_user{
     // Envía email de verificación; no crea el usuario hasta que confirme
     public function register($username, $password, $email) {
         if (empty($username) || empty($password) || empty($email)) {
-            header("Location: IndexHome.php?action=sing");
+            header("Location: /?action=sing");
             return;
         }
         if ($this->model_user->crearusuario_existe($username, $email)) {
-            header("Location: IndexHome.php?action=sing_fallido");
+            header("Location: /?action=sing_fallido");
             return;
         }
         $hash  = password_hash($password, PASSWORD_DEFAULT);
         $token = $this->model_user->guardar_verificacion($username, $email, $hash);
         if (!$token) {
-            header("Location: IndexHome.php?action=sing_fallido");
+            header("Location: /?action=sing_fallido");
             return;
         }
-        $link   = app_url() . "/IndexHome.php?action=confirmar_email&token=" . $token;
+        $link   = app_url() . "/?action=confirmar_email&token=" . $token;
         $asunto = "Confirma tu cuenta en SuperAdoracion";
         $cuerpo = "
             <p>Hola <strong>" . htmlspecialchars($username) . "</strong>,</p>
@@ -95,9 +95,9 @@ class Controller_user{
     }
     public function crearUsuario($username, $password, $email,$rol){
         if(!$this->model_user->crearusuario_admin($username, $password, $email,$rol)){
-            header("Location: IndexUsuarios-administrador.php?res=error_usuario");
+            header("Location: /administrador/usuarios");
         }else{
-            header("Location: IndexUsuarios-administrador.php?res=usuario_creado");
+            header("Location: /administrador/usuarios");
         }
     }
 
@@ -106,14 +106,14 @@ class Controller_user{
         $user = $this->model_user->confirmar_verificacion($token);
         if (!$user) {
             $_SESSION["confirm_error"] = "El enlace no es válido o ha caducado.";
-            header("Location: IndexHome.php?action=sing");
+            header("Location: /?action=sing");
             return;
         }
         $_SESSION["id"]     = $user["id"];
         $_SESSION["nombre"] = $user["nombre"];
         $_SESSION["email"]  = $user["email"];
         $_SESSION["rol"]    = $user["rol"];
-        header("Location: IndexHome.php?action=home");
+        header("Location: /?action=home");
     }
 
     //Funciones para moverse entre Home, Log in,Sign in y Perfil
@@ -132,29 +132,29 @@ class Controller_user{
 
     public function actualizar_nombre() {
         if (!isset($_SESSION["id"])) {
-            header("Location: IndexHome.php?action=log");
+            header("Location: /?action=log");
             return;
         }
         $nuevo_nombre = trim($_POST["nombre"] ?? "");
         if (empty($nuevo_nombre)) {
-            header("Location: IndexPerfil.php?error=nombre_vacio");
+            header("Location: /perfil?error=nombre_vacio");
             return;
         }
         $resultado = $this->model_user->actualizar_nombre($_SESSION["id"], $nuevo_nombre);
         if ($resultado === "nombre_duplicado") {
-            header("Location: IndexPerfil.php?error=nombre_duplicado");
+            header("Location: /perfil?error=nombre_duplicado");
             return;
         }
         if ($resultado === false) {
-            header("Location: IndexPerfil.php?error=error_guardado");
+            header("Location: /perfil?error=error_guardado");
             return;
         }
         $_SESSION["nombre"] = $nuevo_nombre;
-        header("Location: IndexPerfil.php?ok=1");
+        header("Location: /perfil?ok=1");
     }
-    public function solicitar_cambio_contrasena($perfil_url = "IndexPerfil.php") {
+    public function solicitar_cambio_contrasena($perfil_url = "/perfil") {
         if (!isset($_SESSION["id"])) {
-            header("Location: IndexHome.php?action=log");
+            header("Location: /?action=log");
             return;
         }
         $nueva_pass     = $_POST["nueva_pass"]     ?? "";
@@ -178,7 +178,7 @@ class Controller_user{
             header("Location: {$perfil_url}?error_pass=error_guardado");
             return;
         }
-        $link   = app_url() . "/IndexHome.php?action=confirmar_contrasena&token=" . $token;
+        $link   = app_url() . "/?action=confirmar_contrasena&token=" . $token;
         $nombre = htmlspecialchars($_SESSION["nombre"]);
         $asunto = "Confirma el cambio de contraseña en SuperAdoracion";
         $cuerpo = "
@@ -199,14 +199,14 @@ class Controller_user{
     public function confirmar_contrasena($token) {
         $resultado = $this->model_user->confirmar_verificacion_contrasena($token);
         if ($resultado === false) {
-            header("Location: IndexPerfil.php?cambio_error=invalido");
+            header("Location: /perfil?cambio_error=invalido");
             return;
         }
         if ($resultado === "expirado") {
-            header("Location: IndexPerfil.php?cambio_error=expirado");
+            header("Location: /perfil?cambio_error=expirado");
             return;
         }
-        header("Location: IndexPerfil.php?cambio_ok=contrasena");
+        header("Location: /perfil?cambio_ok=contrasena");
     }
 
     public function cambiarRol($id,$rol){
@@ -214,29 +214,25 @@ class Controller_user{
         if($id==$_SESSION["id"]){
             $_SESSION["rol"]=$rol;
         }
-        header("Location: IndexUsuarios-administrador.php?res=updated");
+        header("Location: /administrador/usuarios");
     } else {
-        header("Location: IndexUsuarios-administrador.php?res=error");
+        header("Location: /administrador/usuarios");
     }
         exit();
     }
 
     public function block($id){
         if($this->model_user->block($id)){
-            header("Location: IndexUsuarios-administrador.php?res=block");
+            header("Location: /administrador/usuarios?res=block");
         }else{
-              
-            header("Location: IndexUsuarios-administrador.php?res=error");
+            header("Location: /administrador/usuarios?res=error");
         }
-        
     }
-     public function unblock($id){
+    public function unblock($id){
         if($this->model_user->unblock($id)){
-              
-            header("Location: IndexUsuarios-administrador.php?res=unblock");
+            header("Location: /administrador/usuarios?res=unblock");
         }else{
-              
-            header("Location: IndexUsuarios-administrador.php?res=error");
+            header("Location: /administrador/usuarios?res=error");
         }
     }
     public function bloqueado($id){

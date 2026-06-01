@@ -158,6 +158,37 @@ if (!defined('ACCESO_PERMITIDO')) {
     </div>
 </div>
 </main>
+<button id="btn-arriba" aria-label="Volver arriba" style="display:none;position:fixed;bottom:2rem;right:2rem;z-index:999;background:linear-gradient(135deg,#e31b23,#ff5c38);color:#fff;border:none;border-radius:50%;width:48px;height:48px;font-size:1.4rem;cursor:pointer;box-shadow:0 4px 16px rgba(227,27,35,.4);transition:opacity .3s,transform .3s">&#8679;</button>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+$(function () {
+
+    /* ── Fade-in escalonado de tarjetas de producto ── */
+    $('.producto').css({ opacity: 0, transform: 'translateY(30px)', transition: 'opacity .5s ease, transform .5s ease' });
+    $('.producto').each(function (i) {
+        var $el = $(this);
+        setTimeout(function () {
+            $el.css({ opacity: 1, transform: 'translateY(0)' });
+        }, i * 120);
+    });
+
+    /* ── Botón volver arriba ── */
+    $(window).on('scroll', function () {
+        if ($(this).scrollTop() > 300) {
+            $('#btn-arriba').fadeIn(250);
+        } else {
+            $('#btn-arriba').fadeOut(250);
+        }
+    });
+
+    $('#btn-arriba').on('click', function () {
+        $('html, body').animate({ scrollTop: 0 }, 500);
+    });
+
+});
+</script>
+
 <script>
 document.querySelectorAll('.yt-facade').forEach(function(el) {
     function cargar() {

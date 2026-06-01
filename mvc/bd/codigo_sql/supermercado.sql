@@ -76,11 +76,19 @@ CREATE TABLE pedidos (
 -- EVENTOS DE LIMPIEZA AUTOMÁTICA
 SET GLOBAL event_scheduler = ON;
 
-CREATE EVENT IF NOT EXISTS evt_borrar_reservas
+CREATE EVENT evt_borrar_reservas
     ON SCHEDULE EVERY 1 DAY
     DO
+    BEGIN
+        -- 1. Activamos la bandera: el evento está corriendo
+        SET @ejecutado_por_evento = 1;
+
+        -- 2. Ejecutamos el borrado (el trigger se disparará aquí)
         DELETE FROM reservas WHERE fecha < DATE_SUB(NOW(), INTERVAL 7 DAY);
 
+        -- 3. Desactivamos la bandera por seguridad
+        SET @ejecutado_por_evento = 0;
+    END//
 CREATE EVENT IF NOT EXISTS evt_borrar_pedidos
     ON SCHEDULE EVERY 1 DAY
     DO
@@ -110,7 +118,11 @@ CREATE TRIGGER trg_reserva_delete
 AFTER DELETE ON reservas
 FOR EACH ROW
 BEGIN
-    UPDATE productos SET stock = stock + OLD.cantidad WHERE id = OLD.id_producto;
+    -- Si la variable NO es 1, significa que NO lo está borrando el evento.
+    -- Por lo tanto, es un borrado manual/PHP y SÍ devolvemos el stock.
+    IF IFNULL(@ejecutado_por_evento, 0) <> 1 THEN
+        UPDATE productos SET stock = stock + OLD.cantidad WHERE id = OLD.id_producto;
+    END IF;
 END//
 
 DELIMITER ;

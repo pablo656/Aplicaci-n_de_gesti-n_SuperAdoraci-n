@@ -61,7 +61,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno"): ?>
                             </button>
                         </form>
 
-                        <form method="post" action="?action=delete" onsubmit="return confirm('¿Eliminar esta comida?');">
+                        <form method="post" action="IndexComidas-administrador.php?action=delete" onsubmit="return confirm('¿Eliminar esta comida?');">
                             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                             <input type="hidden" name="id_comida" value="<?= htmlspecialchars($c['id']) ?>">
                             <button type="submit" class="btn-eliminar-comida">
@@ -84,7 +84,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno"): ?>
 // ── Modal añadir / modificar ──────────────────────────────
 $mostrar_modal  = false;
 $comida_modal   = null;
-$action_form    = "?action=insertar";
+$action_form    = "IndexComidas-administrador.php?action=insertar";
 $texto_boton    = "Guardar comida";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["abrir_modal"])) {
@@ -93,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["abrir_modal"])) {
         if ((int)$item["id"] === $id_buscado) {
             $comida_modal  = $item;
             $mostrar_modal = true;
-            $action_form   = "?action=modificar";
+            $action_form   = "IndexComidas-administrador.php?action=modificar";
             $texto_boton   = "Actualizar comida";
             break;
         }

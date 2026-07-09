@@ -126,13 +126,13 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
                                 <p class="precio"><?= number_format($precio_f, 2) ?>&euro;<?= $p['precio_por_peso'] ? '/Kg' : '' ?></p>
                             </div>
                             <?php if($p["inicio"]==0):?>
-                            <form method="post" action="?action=inicio">
+                            <form method="post" action="IndexProducto-administrador.php?action=inicio">
                                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                                 <input type="hidden" value="<?= htmlspecialchars($p["id"]) ?>" name="id">
                                 <button type="submit" class="boton_Inicio" name="aniadir_inicio">Poner producto en el inicio</button>
                             </form>
                             <?php else:?>
-                                <form method="post" action="?action=quitar_inicio">
+                                <form method="post" action="IndexProducto-administrador.php?action=quitar_inicio">
                                     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                                     <input type="hidden" value="<?= htmlspecialchars($p["id"]) ?>" name="id">
                                     <button type="submit" class="boton_Inicio" name="quitar_inicio">Quitar el producto del inicio</button>
@@ -144,7 +144,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
                                 <button type="submit" class="boton_modificar" name="abrir_modal">Modificar</button>
                             </form>
 
-                            <form method="post" action="?action=delete" onsubmit="return confirm('¿Estás seguro?');">
+                            <form method="post" action="IndexProducto-administrador.php?action=delete" onsubmit="return confirm('¿Estás seguro?');">
                                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
                                 <input type="hidden" name="id_producto" value="<?= htmlspecialchars($p['id']) ?>">
                                 <button type="submit" class="btn-eliminar"><i class="fi fi-sr-trash"></i> Eliminar</button>
@@ -165,7 +165,7 @@ if ($_SESSION["rol"] != "administrador" && $_SESSION["rol"] != "dueno") { ?>
 // ── LÓGICA REUTILIZABLE DEL MODAL (AÑADIR / MODIFICAR) ──────────────────
 $mostrar_modal = false;
 $producto_modal = null;
-$action_form = "?action=modificar";
+$action_form = "IndexProducto-administrador.php?action=modificar";
 $texto_boton = "Actualizar";
 
 // Caso 1: Abrir para MODIFICAR (POST)
@@ -182,7 +182,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["abrir_modal"])) {
 // Caso 2: Abrir para AÑADIR (GET)
 elseif ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["add"])) {
     $mostrar_modal = true;
-    $action_form = "?action=insertar";
+    $action_form = "IndexProducto-administrador.php?action=insertar";
     $texto_boton = "Guardar Producto";
     // Objeto vacío para el formulario
     $producto_modal = [

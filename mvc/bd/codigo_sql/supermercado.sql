@@ -37,6 +37,7 @@ CREATE TABLE verificaciones_cambio (
 CREATE TABLE productos (
     id                   INT AUTO_INCREMENT PRIMARY KEY,
     nombre               VARCHAR(150) NOT NULL,
+    codigo_barras        VARCHAR(20) UNIQUE NOT NULL,
     stock                DECIMAL(10,1) DEFAULT 0,
     precio               DECIMAL(10,2) NOT NULL,
     precio_por_peso      BIT DEFAULT 0,

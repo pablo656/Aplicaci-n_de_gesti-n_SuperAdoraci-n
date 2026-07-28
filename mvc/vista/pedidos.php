@@ -86,11 +86,10 @@ if (!defined('ACCESO_PERMITIDO')) {
         <form method="POST" action="IndexPedidos.php?action=crear">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
             <input type="hidden" name="id_comida" id="modalIdComida">
-
             <label for="fecha_entrega">Fecha de entrega <span class="label-req">*</span></label>
             <div class="fecha-input-wrap">
                 <i class="fi fi-sr-calendar-day fecha-icono"></i>
-                <input type="date" name="fecha_entrega" id="fecha_entrega" required>
+                <input type="date" name="fecha_entrega" id="fecha_entrega" onchange="comprobarFecha(this)" required>
             </div>
             <p class="modal-fecha-hint"><i class="fi fi-sr-info"></i> hacer pedidos con 3 días de antelación</p>
 

@@ -44,6 +44,7 @@ class model_productos{
         if($stmt->execute()){
             return true;
         } else {
+            echo "Error: ". $stmt->error;
             return false;
         }
     }

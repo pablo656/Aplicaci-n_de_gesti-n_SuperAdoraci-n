@@ -207,4 +207,119 @@ function inicializar(){
     inputs.forEach(inp => inp.setAttribute("data-anterior", inp.value));
 }
 
+// Inicializa Stripe con tu clave pública de pruebas (pk_test_...)
+const stripe = Stripe('pk_test_51Tu80BIDWMgUhNXOc2i5JVmqmPVeg4UlnzOoIKtXag2fp89Iq3u9aMWZJLXaMULG6sYyRAm5mwJ8kipGH0SOXe3J00ZdLqA7on');
+const botonPagar = document.getElementById('btn-confirmar');
+if(botonPagar){
+    botonPagar.addEventListener('click', async () => {
+        if(confirm("¿Deseas realizar esta reserva?")){
+            botonPagar.disabled = true;
+            botonPagar.textContent = 'Procesando...';
+    
+            let productosCarrito=[];
+            let reservas=document.querySelectorAll(".item-reserva");
+            for(i=0;i<reservas.length;i++){
+                let nombre=reservas[i].querySelector(".nombre").textContent;
+                let cantidad;
+                if(reservas[i].querySelector(".cantidad") &&!isNaN(parseFloat(reservas[i].querySelector(".cantidad").textContent))){
+                    cantidad=parseFloat(reservas[i].querySelector(".cantidad").textContent);
+                }else{
+                    cantidad=1;
+                    nombre=nombre+"("+parseFloat(reservas[i].querySelector(".input-peso").value)+" Kg)";
+                }
+                let precio=parseFloat(reservas[i].querySelector(".precio").textContent);
+                precio=precio/cantidad;
+                productosCarrito.push({"nombre":nombre,"precio":precio,"cantidad":cantidad});
+            }
+    
+            // Llamamos a nuestro controlador PHP para obtener el ID de la sesión
+            const response = await fetch('../controller/controller_pagos.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json' // Le decimos a PHP que enviamos JSON
+                },
+                // Convertimos nuestro array de productos a texto JSON
+                body: JSON.stringify({ carrito: productosCarrito })
+            });
+            
+            const session = await response.json();
+    
+            if (session.error) {
+                alert("Error al iniciar el pago: " + session.error);
+                botonPagar.disabled = false;
+                botonPagar.textContent = 'Confirmar reservas';
+                return;
+            }
+    
+            // Redirigimos al usuario a la pasarela segura de Stripe
+            const result = await stripe.redirectToCheckout({
+                sessionId: session.id,
+            });
+    
+            if (result.error) {
+                alert(result.error.message);
+                botonPagar.disabled = false;
+            }
+        }
+        
+    });
+}
+
+let botonPedidos=document.getElementById('btn-confirmar-pedidos');
+if(botonPedidos){
+    botonPedidos.addEventListener('click', async () => {
+        if(confirm("¿Deseas realizar este pedido?")){
+            botonPedidos.disabled = true;
+            botonPedidos.textContent = 'Procesando...';
+    
+            let productosCarrito=[];
+            let reservas=document.querySelectorAll(".item-reserva");
+            for(i=0;i<reservas.length;i++){
+                let nombre=reservas[i].querySelector(".nombre").textContent;
+                let cantidad;
+                if(reservas[i].querySelector(".cantidad") &&!isNaN(parseFloat(reservas[i].querySelector(".cantidad").textContent))){
+                    cantidad=parseFloat(reservas[i].querySelector(".cantidad").textContent);
+                }else{
+                    cantidad=1;
+                    nombre=nombre+"("+parseFloat(reservas[i].querySelector(".input-peso").value)+" Kg)";
+                }
+                let precio=parseFloat(reservas[i].querySelector(".precio").textContent);
+                precio=precio/cantidad;
+                productosCarrito.push({"nombre":nombre,"precio":precio,"cantidad":cantidad});
+            }
+    
+            // Llamamos a nuestro controlador PHP para obtener el ID de la sesión
+            const response = await fetch('../controller/controller_pagos_pedidos.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json' // Le decimos a PHP que enviamos JSON
+                },
+                // Convertimos nuestro array de productos a texto JSON
+                body: JSON.stringify({ carrito: productosCarrito })
+            });
+            
+            const session = await response.json();
+    
+            if (session.error) {
+                alert("Error al iniciar el pago: " + session.error);
+                botonPedidos.disabled = false;
+                botonPedidos.textContent = 'Confirmar pedidos';
+                return;
+            }
+    
+            // Redirigimos al usuario a la pasarela segura de Stripe
+            const result = await stripe.redirectToCheckout({
+                sessionId: session.id,
+            });
+    
+            if (result.error) {
+                alert(result.error.message);
+                botonPedidos.disabled = false;
+            }
+        }
+        
+    });
+}
+
+
 window.onload = inicializar;

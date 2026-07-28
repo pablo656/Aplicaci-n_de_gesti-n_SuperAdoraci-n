@@ -9,16 +9,17 @@ define('ACCESO_PERMITIDO', true);
     $action = $_GET["action"] ?? "list";
     $titulo = "Administración de catálogo";
     $css = "<link rel='stylesheet' href='../css/administrador-catalogo.css'>";
-    $categorias = ["Comida","Bebidas","Mascotas","Papeleria_oficina","Salud_bienestar"];
+    $categorias = ["Comida","Bebidas","Mascotas","Papeleria_oficina","Ropa","Salud_bienestar"];
     $subcategoria = $_GET["subcategoria"] ?? null;
     $subcategorias = [
-        "Comida"            => ["Carne", "Panadería", "Pescados", "Snacks", "Pasta", "Conservas", "Salsas", "Arroz y legumbres", "Condimentos y salsas", "Despensa", "Congelados"],
-        "Bebidas"           => ["Agua", "Refrescos", "Zumos", "Bebidas alcohólicas"],
+        "Comida"            => ["Carne", "Panadería", "Pescados", "Snacks","Dulces","Pasta", "Conservas", "Salsas", "Arroz y legumbres", "Condimentos y salsas", "Despensa", "Congelados"],
+        "Bebidas"           => ["Agua", "Refrescos", "Zumos", "Bebidas alcohólicas","Leche"],
         "Limpieza_hogar"    => ["Limpieza del hogar", "Limpieza de ropa", "Higiene personal", "Papel e higiene", "Ambientadores y velas", "Utensilios de limpieza"],
         "Mascotas"          => ["Gatos", "Perros", "Pájaros"],
         "Papeleria_oficina" => ["Material escolar", "Material de oficina", "Escritura y dibujo", "Archivadores y carpetas", "Folios"],
+        "Ropa"              => ["Ropa interior", "Lenceria"],
         "Salud_bienestar"   => []
-    ];
+        ];
     require("layerHeader-administrador.php");
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {

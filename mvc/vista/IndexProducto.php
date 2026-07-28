@@ -59,15 +59,16 @@ define('ACCESO_PERMITIDO', true);
 
     $titulo = "Catálogo";
     $css = "<link rel='stylesheet' href='css/catalogo_style.css'>";
-    $categorias = ["Comida","Bebidas","Mascotas","Papeleria_oficina","Salud_bienestar"];
+    $categorias = ["Comida","Bebidas","Mascotas","Papeleria_oficina","Ropa","Salud_bienestar"];
     $subcategorias = [
-        "Comida"            => ["Carne", "Panadería", "Pescados", "Snacks", "Pasta", "Conservas", "Salsas", "Arroz y legumbres", "Condimentos y salsas", "Despensa", "Congelados"],
-        "Bebidas"           => ["Agua", "Refrescos", "Zumos", "Bebidas alcohólicas"],
+        "Comida"            => ["Carne", "Panadería", "Pescados", "Snacks","Dulces","Pasta", "Conservas", "Salsas", "Arroz y legumbres", "Condimentos y salsas", "Despensa", "Congelados"],
+        "Bebidas"           => ["Agua", "Refrescos", "Zumos", "Bebidas alcohólicas","Leche"],
         "Limpieza_hogar"    => ["Limpieza del hogar", "Limpieza de ropa", "Higiene personal", "Papel e higiene", "Ambientadores y velas", "Utensilios de limpieza"],
         "Mascotas"          => ["Gatos", "Perros", "Pájaros"],
         "Papeleria_oficina" => ["Material escolar", "Material de oficina", "Escritura y dibujo", "Archivadores y carpetas", "Folios"],
+        "Ropa"              => ["Ropa interior", "Lenceria"],
         "Salud_bienestar"   => []
-    ];
+        ];
     require("../vista/layerHeader.php");
 
 

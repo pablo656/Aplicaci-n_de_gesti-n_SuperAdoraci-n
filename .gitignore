@@ -1,23 +1,41 @@
 # Claude Code
 CLAUDE.md
 
-# IDE
+# IDEs y Editores
 .idea/
 .vscode/
 *.iml
+*.suo
+*.ntvs*
+*.njsproj
 
-# Uploaded images (runtime content)
+# Dependencias (Composer / NPM)
+/vendor/
+/node_modules/
+
+# Uploads e imágenes en runtime (Mantiene la carpeta activa en Git gracias a .gitkeep)
 /mvc/imagenes/*
 !/mvc/imagenes/.gitkeep
 
-# OS
+# Archivos de configuración con credenciales
+/mvc/config/config.php
+/mvc/config/mail_config.php
+.env
+.env.*
+!.env.example
+
+# Base de datos (Exports locales de phpMyAdmin/XAMPP)
+*.sql
+*.sqlite
+
+# OS / Sistema Operativo
 .DS_Store
 Thumbs.db
 desktop.ini
 
-# Logs
+# Logs y temporales
 *.log
-
-# Configuration files
-/mvc/config/config.php
-/mvc/config/mail_config.php
+/tmp/
+# Stripe
+/mvc/controller/controller_pagos.php
+/mvc/controller/controller_pagos_pedidos.php

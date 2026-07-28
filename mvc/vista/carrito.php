@@ -179,9 +179,10 @@ if (!isset($_SESSION["id"])) {
                 <span>Subtotal</span>
                 <span id="subtotal_reservas"><?= number_format($subtotal_reservas, 2) ?> €</span>
             </div>
-            <form method="post" action="IndexCarrito.php?action=confirmar_reservas" id="confirmar_reservas">
+            <!--<form method="post"  action="IndexCarrito.php?action=confirmar_reservas" id="confirmar_reservas">-->
+            <form method="post" id="confirmar_reservas">
                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
-                <button class="btn-confirmar" type="submit">Confirmar reservas</button>
+                <button class="btn-confirmar" type="submit" id="btn-confirmar">Confirmar reservas</button>
             </form>
         <?php else: ?>
             <p class="sin-items">No hay reservas.</p>
@@ -209,9 +210,10 @@ if (!isset($_SESSION["id"])) {
                 <span>Subtotal</span>
                 <span id="subtotal_pedidos"><?= number_format($subtotal_pedidos, 2) ?> €</span>
             </div>
-            <form method="post" action="IndexCarrito.php?action=confirmar_pedidos" id="confirmar_pedidos">
+            <!--<form method="post" action="IndexCarrito.php?action=confirmar_pedidos" id="confirmar_pedidos">-->
+            <form method="post" id="confirmar_pedidos">
                 <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'])?>">
-                <button class="btn-confirmar btn-confirmar-pedidos" type="submit">Confirmar pedidos</button>
+                <button class="btn-confirmar btn-confirmar-pedidos" type="submit" id="btn-confirmar-pedidos">Confirmar pedidos</button>
             </form>
         <?php else: ?>
             <p class="sin-items">No hay pedidos.</p>
@@ -225,5 +227,5 @@ if (!isset($_SESSION["id"])) {
         </div>
     </aside>
 </div>
-
+<script src="https://js.stripe.com/v3/"></script>
 <script src="js/carrito.js" defer></script>

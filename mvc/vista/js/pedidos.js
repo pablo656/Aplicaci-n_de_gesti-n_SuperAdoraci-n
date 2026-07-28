@@ -33,14 +33,26 @@ function abrirModal(idComida, nombre) {
     const inputFecha = document.getElementById('fecha_entrega');
     const minDate = new Date();
     minDate.setDate(minDate.getDate() + 3);
+    if(minDate.getDay()==6){
+        minDate.setDate(minDate.getDate()+2);
+    }else if(minDate.getDay()==0){
+        minDate.setDate(minDate.getDate()+1);
+    }
     const maxDate = new Date();
     maxDate.setMonth(maxDate.getMonth() + 6);
     inputFecha.min = minDate.toISOString().split('T')[0];
     inputFecha.max = maxDate.toISOString().split('T')[0];
     inputFecha.value = '';
-
     document.querySelector('.btn-menos').style.visibility = 'hidden';
     document.getElementById('modalPedir').classList.add('activo');
+}
+function comprobarFecha(input){
+    
+    let fecha=new Date(input.value);
+    if (fecha.getDay()==0 || fecha.getDay()==6){
+        alert("No se pueden hacer pedidos los fines de semana")
+        input.value=""
+    }
 }
 
 function cambiarCantidad(delta) {

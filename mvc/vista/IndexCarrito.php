@@ -99,7 +99,8 @@ define('ACCESO_PERMITIDO', true);
             }
             $reservas=[];
             setcookie("reservas", json_encode($reservas), time() + (60 * 60 * 24), "/");
-            header("Location: " . $_SERVER['HTTP_REFERER']);
+            $url_destino = $_SERVER['HTTP_REFERER'] ?? 'http://localhost/proyecto/Aplicaci-n_de_gesti-n_SuperAdoraci-n/mvc/vista/IndexCarrito.php';
+            header("Location: " . $url_destino);
         }else if($action == "confirmar_pedidos"){
             $pedidos_cookie = isset($_COOKIE["pedidos"]) ? json_decode($_COOKIE["pedidos"], true) : [];
             $usuario = $_SESSION["id"];
@@ -112,7 +113,14 @@ define('ACCESO_PERMITIDO', true);
             }
             setcookie("pedidos", json_encode([]), time() + (60 * 60 * 24), "/");
             $_SESSION["pedidos_ok"] = true;
-            header("Location: " . $_SERVER['HTTP_REFERER']);
+            $url_destino = $_SERVER['HTTP_REFERER'] ?? 'http://localhost/proyecto/Aplicaci-n_de_gesti-n_SuperAdoraci-n/mvc/vista/IndexCarrito.php';
+            header("Location: " . $url_destino);
+        }else if($action == "pago_cancelado"){
+            echo "<script>alert('El pago ha sido cancelado.');</script>";
+            $reservas_cookie = isset($_COOKIE["reservas"]) ? json_decode($_COOKIE["reservas"], true) : [];
+            $pedidos_cookie  = isset($_COOKIE["pedidos"])  ? json_decode($_COOKIE["pedidos"],  true) : [];
+            $pedidos_carrito = $controller_pedidos->buscar_pedidos_cookie($pedidos_cookie) ?: [];
+            $controller->buscar_reservas_incompletas($reservas_cookie, $pedidos_carrito);
         }else{
             $reservas_cookie = isset($_COOKIE["reservas"]) ? json_decode($_COOKIE["reservas"], true) : [];
             $pedidos_cookie  = isset($_COOKIE["pedidos"])  ? json_decode($_COOKIE["pedidos"],  true) : [];

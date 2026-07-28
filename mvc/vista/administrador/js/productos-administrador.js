@@ -7,6 +7,7 @@ const subcategorias = {
     "Limpieza_hogar": ["Limpieza del hogar", "Limpieza de ropa", "Higiene personal", "Papel e higiene", "Ambientadores y velas", "Utensilios de limpieza"],
     "Mascotas": ["Gatos", "Perros", "Pájaros"],
     "Papeleria_oficina": ["Material escolar", "Material de oficina", "Escritura y dibujo", "Archivadores y carpetas", "Folios"],
+    "Ropa": ["Ropa interior", "Lenceria"],
     "Salud_bienestar": []
 };
 
